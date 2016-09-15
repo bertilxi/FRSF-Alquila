@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-public class MainController implements Initializable{
+public class MainController implements Initializable {
 
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 
