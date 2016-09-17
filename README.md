@@ -1,6 +1,6 @@
 # Odiseo
 
-## Trabajo Práctico de Métodos Ágiles - 2016
+# Trabajo Práctico de Métodos Ágiles - 2016
 
 ## Getting Started
 
