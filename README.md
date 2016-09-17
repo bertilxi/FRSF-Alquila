@@ -11,6 +11,6 @@ Trabajo Práctico de Métodos Ágiles - 2016
 * **Fernando Berti** - [bertilxi](https://github.com/bertilxi)
 * **Lucas Moretti** - [morettilucas](https://github.com/morettilucas)
 
-## Licensia
+## Licencia
 
-Este proyecto esta licenciado bajo la GPL V3 ver [LICENSE.md](LICENSE.md) para mas detalles 
+Este proyecto esta licenciado bajo la GPL V3. Ver [LICENSE.md](LICENSE.md) para mas detalles 
