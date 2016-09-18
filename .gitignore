@@ -1,9 +1,7 @@
 /target/
 /.idea/
 /.settings/
-.classpath
 tp.iml
-.project
 codeFormatterConfig.xml
 # Compiled source #
 ###################
