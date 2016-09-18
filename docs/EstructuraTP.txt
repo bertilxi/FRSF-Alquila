@@ -1,0 +1,40 @@
+
+Planificación del Release
+
+    Listado de Historias
+
+    Historias Refinadas
+
+    Estimación de Esfuerzo, Riesgo y Prioridad (comentar la interacción con el cliente)
+
+    Spikes (si hubo)
+
+    Definición de Velocidad y Alcance
+
+    Metáfora (comentar que se eligió y porqué)
+
+    Fecha de Inicio del desarrollo
+
+Planificación Iteracion 1
+
+     Tareas
+
+     Estimación de Esfuerzo
+
+     Conclusiones parciales de lo estimado
+
+Planificación Iteracion 1
+
+     Tareas
+
+     Estimación de Esfuerzo
+
+     Conclusiones parciales de lo estimado
+
+Código Fuente (debe estar ordenado por iteración y por tarea - debe estar comentado)
+
+Pruebas de Unidad (deben especificarse a que tarea corresponden)
+
+Refactorización (deben especificarse a que tarea corresponden)
+
+Conclusiones (deben ser exahustivas respecto al trabajo realizado y la metodología, criticando a favor y en contra de la misma en base a la experiencia adquirida)
