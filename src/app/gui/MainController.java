@@ -1,4 +1,4 @@
-package app.gui.controladores;
+package app.gui;
 
 import javafx.fxml.FXML;
 
