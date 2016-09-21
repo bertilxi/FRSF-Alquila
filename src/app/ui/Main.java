@@ -18,9 +18,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try{
-			Pane root = FXMLLoader.load(getClass().getResource("/olimpo/ui/vistas/main.fxml"));
+			Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/main.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("/olimpo/ui/estilos/application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e){
