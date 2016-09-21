@@ -6,7 +6,7 @@ package app.excepciones;
  * @author Acosta - Gioria - Moretti - Rebechi
  *
  */
-public class ConsultaException extends olimpo.excepciones.PersistenciaException {
+public class ConsultaException extends PersistenciaException {
 
 	private static final long serialVersionUID = 1L;
 
