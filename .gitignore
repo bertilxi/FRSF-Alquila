@@ -2,7 +2,6 @@
 /.idea/
 /.settings/
 tp.iml
-codeFormatterConfig.xml
 # Compiled source #
 ###################
 *.com
