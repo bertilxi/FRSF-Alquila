@@ -41,11 +41,8 @@
             <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
          </children>
          <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets />
          </GridPane.margin>
-         <padding>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </padding>
       </HBox>
       <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Repita su Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       <ComboBox maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de documento" GridPane.columnIndex="1" GridPane.rowIndex="4" />

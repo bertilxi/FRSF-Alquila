@@ -1,0 +1,87 @@
+.root{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Arial";
+    -fx-background: #ffffff;
+
+}
+
+.text-field {
+    -fx-font-size: 1.5em;
+    -fx-border-radius: 0.3em;
+    -fx-background-radius: 0.3em;
+}
+
+.grid-pane {
+    -fx-padding: 20 15 10 15;
+    -fx-vgap: 10;
+    -fx-hgap: 15;
+}
+
+.app-name {
+    -fx-font-size: 4em;
+    -fx-font-family: "Tahoma";
+    -fx-text-fill: #929292;
+}
+
+.label-large {
+    -fx-font-size: 2.5em;
+    -fx-text-fill: #929292;
+}
+
+.label-medium {
+    -fx-font-size: 1.5em;
+    -fx-text-fill: lightgray;
+
+}
+
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-font-size: 1.5em;
+    -fx-text-fill: black;
+    -fx-border-color: #b1b1b1;
+    -fx-border-radius: 0.3em;
+    -fx-background-radius: 0.3em;
+
+}
+
+.button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-border-color: #b1b1b1;
+    -fx-border-radius: 0.3em;
+    -fx-background-radius: 0.3em;
+}
+
+.button-confirm {
+    -fx-font-size: 1.5em;
+    -fx-background-color: linear-gradient(#448AC9 0%, #228CEB 100%);
+    -fx-text-fill: white;
+}
+
+.button-cancel {
+    -fx-font-size: 1.5em;
+    -fx-background-color: linear-gradient(#FF5C4A 0%, #FF1900 100%);
+    -fx-text-fill: white;
+}
+
+.statusbar {
+	-fx-border-color: #eeeeee;
+	-fx-background-color: #ffffff 0%;
+}
+
+
+
+.scroll-bar {
+	-fx-border-color: #eeeeee;
+	-fx-background-color:transparent;
+    -fx-background-radius: 0.5em;
+    -fx-shape: " ";
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+	-fx-background-color: transparent;
+	-fx-border-color:derive(gray,80%);
+	-fx-background-radius: 0.5em;
+	-fx-border-radius:0.5em;
+}
