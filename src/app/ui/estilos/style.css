@@ -17,7 +17,7 @@
     -fx-hgap: 15px;
 }
 .grid-pane2 {
-    -fx-padding: 50 30 30 50;
+    -fx-padding: 50 30 10 30;
     -fx-vgap: 30px;
     -fx-hgap: 35px;
 }
@@ -25,17 +25,17 @@
 .app-name {
     -fx-font-size: 4em;
     -fx-font-family: "Tahoma";
-    -fx-text-fill: gray;
+    -fx-text-fill: #5d5d5d;
 }
 
 .label-large {
     -fx-font-size: 2em;
-    -fx-text-fill: gray;
+    -fx-text-fill: #5d5d5d;
 }
 
 .label-medium {
     -fx-font-size: 1.2em;
-    -fx-text-fill: gray;
+    -fx-text-fill: #5d5d5d;
 
 }
 
@@ -84,7 +84,7 @@
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track{
 	-fx-background-color: transparent;
-	-fx-border-color:derive(gray,80%);
+	-fx-border-color:derive(#5d5d5d,80%);
 	-fx-background-radius: 0.5em;
 	-fx-border-radius:0.5em;
 }
