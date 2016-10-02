@@ -1,46 +1,51 @@
 .root{
-    -fx-font-size: 12pt;
-    -fx-font-family: "Arial";
+    -fx-font-size: 1em;
+    -fx-font-family: "System";
     -fx-background: #ffffff;
 
 }
 
 .text-field {
-    -fx-font-size: 1.5em;
-    -fx-border-radius: 0.3em;
-    -fx-background-radius: 0.3em;
+    -fx-font-size: 1.2em;
+    -fx-border-radius: 0.4em;
+    -fx-background-radius: 0.4em;
 }
 
 .grid-pane {
     -fx-padding: 20 15 10 15;
-    -fx-vgap: 10;
-    -fx-hgap: 15;
+    -fx-vgap: 10px;
+    -fx-hgap: 15px;
+}
+.grid-pane2 {
+    -fx-padding: 50 30 30 50;
+    -fx-vgap: 30px;
+    -fx-hgap: 35px;
 }
 
 .app-name {
     -fx-font-size: 4em;
     -fx-font-family: "Tahoma";
-    -fx-text-fill: #929292;
+    -fx-text-fill: gray;
 }
 
 .label-large {
-    -fx-font-size: 2.5em;
-    -fx-text-fill: #929292;
+    -fx-font-size: 2em;
+    -fx-text-fill: gray;
 }
 
 .label-medium {
-    -fx-font-size: 1.5em;
-    -fx-text-fill: lightgray;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: gray;
 
 }
 
 .combo-box {
     -fx-background-color: #ffffff;
-    -fx-font-size: 1.5em;
+    -fx-font-size: 1.2em;
     -fx-text-fill: black;
     -fx-border-color: #b1b1b1;
-    -fx-border-radius: 0.3em;
-    -fx-background-radius: 0.3em;
+    -fx-border-radius: 0.4em;
+    -fx-background-radius: 0.4em;
 
 }
 
@@ -48,19 +53,19 @@
     -fx-background-color: #ffffff;
     -fx-text-fill: black;
     -fx-border-color: #b1b1b1;
-    -fx-border-radius: 0.3em;
-    -fx-background-radius: 0.3em;
+    -fx-border-radius: 0.4em;
+    -fx-background-radius: 0.4em;
 }
 
 .button-confirm {
-    -fx-font-size: 1.5em;
-    -fx-background-color: linear-gradient(#448AC9 0%, #228CEB 100%);
+    -fx-font-size: 1.2em;
+    -fx-background-color: linear-gradient(#278eeb 0%, #228CEB 100%);
     -fx-text-fill: white;
 }
 
 .button-cancel {
-    -fx-font-size: 1.5em;
-    -fx-background-color: linear-gradient(#FF5C4A 0%, #FF1900 100%);
+    -fx-font-size: 1.2em;
+    -fx-background-color: linear-gradient(#ff4a4a 0%, #f22a2a 100%);
     -fx-text-fill: white;
 }
 
@@ -68,8 +73,6 @@
 	-fx-border-color: #eeeeee;
 	-fx-background-color: #ffffff 0%;
 }
-
-
 
 .scroll-bar {
 	-fx-border-color: #eeeeee;
