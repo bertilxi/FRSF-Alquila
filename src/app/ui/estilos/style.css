@@ -1,6 +1,6 @@
 .root{
     -fx-font-size: 1em;
-    -fx-font-family: "System";
+    -fx-font-family: "Arial";
     -fx-background: #ffffff;
     -fx-text-fill: black;
 
@@ -51,28 +51,30 @@
 }
 
 .button {
-    -fx-background-color: linear-gradient(#ffffff 0%, #e6e6e6 100%);
+    -fx-background-color: #f6f6f6;
     -fx-text-fill: black;
+    -fx-font-weight: bold;
     -fx-border-color: #b1b1b1;
     -fx-border-radius: 0.4em;
     -fx-background-radius: 0.4em;
+    -fx-font-size: 1.2em;
 }
 
 .button-confirm {
-    -fx-font-size: 1.2em;
-    -fx-background-color: linear-gradient(#38a1ff 0%, #0062ba 100%);
+    /*-fx-background-color: linear-gradient(#38a1ff 0%, #0062ba 100%);*/
+    -fx-background-color: #007be9;
     -fx-text-fill: white;
 }
 
 .button-cancel {
-    -fx-font-size: 1.2em;
-    -fx-background-color: linear-gradient(#ff2121 0%, #bd0000 100%);
+    /*-fx-background-color: linear-gradient(#ff2121 0%, #bd0000 100%);*/
+    -fx-background-color: #ed0000;
     -fx-text-fill: white;
 }
 
 .button-action {
-    -fx-font-size: 1.2em;
-    -fx-background-color: linear-gradient(#3bf743 0%, #00a206 100%);
+    /*-fx-background-color: linear-gradient(#3bf743 0%, #00a206 100%);*/
+    -fx-background-color: #00e20a;
     -fx-text-fill: white;
 }
 

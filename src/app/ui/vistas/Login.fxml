@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane styleClass="grid-pane2">
         <columnConstraints>
@@ -26,7 +26,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.halignment="LEFT">
+            <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.halignment="LEFT">
                <children>
                   <VBox HBox.hgrow="NEVER">
                      <children>
@@ -71,7 +71,7 @@
             <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Contraseña" styleClass="textfield" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label styleClass="label-large" text="Ingrese al sistema" GridPane.columnIndex="1" />
             <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="button-confirm" text="Ingresar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="button-action" text="Registrarse" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Registrarse" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <HBox id="HBox" alignment="CENTER_LEFT" minHeight="27.0" spacing="5.0" styleClass="statusbar">
