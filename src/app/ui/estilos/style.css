@@ -2,6 +2,7 @@
     -fx-font-size: 1em;
     -fx-font-family: "System";
     -fx-background: #ffffff;
+    -fx-text-fill: black;
 
 }
 
@@ -13,29 +14,29 @@
 
 .grid-pane {
     -fx-padding: 20 15 10 15;
-    -fx-vgap: 10px;
-    -fx-hgap: 15px;
+    -fx-vgap: 0.625em;
+    -fx-hgap: 0.938em;
 }
 .grid-pane2 {
     -fx-padding: 50 30 10 30;
-    -fx-vgap: 30px;
-    -fx-hgap: 35px;
+    -fx-vgap: 0.938em;
+    -fx-hgap: 2.188em;
 }
 
 .app-name {
     -fx-font-size: 4em;
     -fx-font-family: "Tahoma";
-    -fx-text-fill: #5d5d5d;
+    -fx-text-fill: black;
 }
 
 .label-large {
     -fx-font-size: 2em;
-    -fx-text-fill: #5d5d5d;
+    -fx-text-fill: #2b2b2b;
 }
 
 .label-medium {
     -fx-font-size: 1.2em;
-    -fx-text-fill: #5d5d5d;
+    -fx-text-fill: #2b2b2b;
 
 }
 
@@ -50,7 +51,7 @@
 }
 
 .button {
-    -fx-background-color: #ffffff;
+    -fx-background-color: linear-gradient(#ffffff 0%, #e6e6e6 100%);
     -fx-text-fill: black;
     -fx-border-color: #b1b1b1;
     -fx-border-radius: 0.4em;
@@ -59,15 +60,22 @@
 
 .button-confirm {
     -fx-font-size: 1.2em;
-    -fx-background-color: linear-gradient(#278eeb 0%, #228CEB 100%);
+    -fx-background-color: linear-gradient(#38a1ff 0%, #0062ba 100%);
     -fx-text-fill: white;
 }
 
 .button-cancel {
     -fx-font-size: 1.2em;
-    -fx-background-color: linear-gradient(#ff4a4a 0%, #f22a2a 100%);
+    -fx-background-color: linear-gradient(#ff2121 0%, #bd0000 100%);
     -fx-text-fill: white;
 }
+
+.button-action {
+    -fx-font-size: 1.2em;
+    -fx-background-color: linear-gradient(#3bf743 0%, #00a206 100%);
+    -fx-text-fill: white;
+}
+
 
 .statusbar {
 	-fx-border-color: #eeeeee;
@@ -84,7 +92,7 @@
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track{
 	-fx-background-color: transparent;
-	-fx-border-color:derive(#5d5d5d,80%);
+	-fx-border-color:derive(#2b2b2b,80%);
 	-fx-background-radius: 0.5em;
 	-fx-border-radius:0.5em;
 }

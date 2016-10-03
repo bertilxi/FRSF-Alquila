@@ -26,17 +26,18 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label styleClass="label-medium" text="Donde viven los dioses" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="50.0" />
-               </GridPane.margin></Label>
             <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.halignment="LEFT">
                <children>
-                  <Label styleClass="app-name" text="Olimpo" HBox.hgrow="ALWAYS">
-                     <padding>
-                        <Insets right="20.0" top="25.0" />
-                     </padding>
-                  </Label>
+                  <VBox HBox.hgrow="NEVER">
+                     <children>
+                        <Label styleClass="app-name" text="Olimpo">
+                           <padding>
+                              <Insets right="20.0" top="15.0" />
+                           </padding>
+                        </Label>
+                        <Label styleClass="label-medium" text="Donde viven los dioses" />
+                     </children>
+                  </VBox>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../res/img/icono-128.png" />
@@ -70,6 +71,7 @@
             <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Contraseña" styleClass="textfield" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label styleClass="label-large" text="Ingrese al sistema" GridPane.columnIndex="1" />
             <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="button-confirm" text="Ingresar" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="button-action" text="Registrarse" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <HBox id="HBox" alignment="CENTER_LEFT" minHeight="27.0" spacing="5.0" styleClass="statusbar">
