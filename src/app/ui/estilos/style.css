@@ -1,100 +1,137 @@
 .root{
-    -fx-font-size: 1em;
-    -fx-font-family: "Arial";
-    -fx-background: #ffffff;
-    -fx-text-fill: black;
+  -fx-font-size: 1em;
+  -fx-font-family: "Arial";
+  -fx-background: #f9f9f9;
+  -fx-background-color: linear-gradient(#ffffff 0%, #eeeeee 100%);
+  -fx-text-fill: black;
+  -fx-background-image: url("../../../../res/img/background.png");
+  -fx-background-repeat: stretch;
+  -fx-background-size: 500 500;
+  -fx-background-position: center center;
 
 }
 
 .text-field {
-    -fx-font-size: 1.2em;
-    -fx-border-radius: 0.4em;
-    -fx-background-radius: 0.4em;
+  -fx-font-size: 1.2em;
+  -fx-border-radius: 0.4em;
+  -fx-background-radius: 0.4em;
 }
 
 .grid-pane {
-    -fx-padding: 20 15 10 15;
-    -fx-vgap: 0.625em;
-    -fx-hgap: 0.938em;
+  -fx-padding: 20 15 10 15;
+  -fx-vgap: 0.625em;
+  -fx-hgap: 0.938em;
 }
 .grid-pane2 {
-    -fx-padding: 50 30 10 30;
-    -fx-vgap: 0.938em;
-    -fx-hgap: 2.188em;
+  -fx-padding: 15 30 10 30;
+  -fx-vgap: 0.938em;
+  -fx-hgap: 2.188em;
 }
 
 .app-name {
-    -fx-font-size: 4em;
-    -fx-font-family: "Tahoma";
-    -fx-text-fill: black;
+  -fx-font-size: 3em;
+  -fx-font-family: "Tahoma";
+  -fx-text-fill: black;
+  -fx-font-weight: bold;
 }
 
 .label-large {
-    -fx-font-size: 2em;
-    -fx-text-fill: #2b2b2b;
+  -fx-font-size: 2em;
+  -fx-text-fill: #2b2b2b;
+  -fx-font-weight: bold;
 }
 
 .label-medium {
-    -fx-font-size: 1.2em;
-    -fx-text-fill: #2b2b2b;
-
+  -fx-font-size: 1.2em;
+  -fx-text-fill: #2b2b2b;
 }
 
 .combo-box {
-    -fx-background-color: #ffffff;
-    -fx-font-size: 1.2em;
-    -fx-text-fill: black;
-    -fx-border-color: #b1b1b1;
-    -fx-border-radius: 0.4em;
-    -fx-background-radius: 0.4em;
+  -fx-background-color: #ffffff;
+  -fx-font-size: 1.2em;
+  -fx-text-fill: black;
+  -fx-border-color: #b1b1b1;
+  -fx-border-radius: 0.4em;
+  -fx-background-radius: 0.4em;
 
 }
+.button{
+  /*-fx-effect: dropshadow(two-pass-box , gray, 5, 0.0 , 2, 3);*/
+  -fx-background-color: #ffffff ;
+  -fx-border-color: gray;
+  -fx-font-weight: bold;
+  -fx-border-radius: 0.4em;
+  -fx-font-size: 1.2em;
+  -fx-background-insets: 1 1 1 1 ;
+}
 
-.button {
-    -fx-background-color: #f6f6f6;
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-border-color: #b1b1b1;
-    -fx-border-radius: 0.4em;
-    -fx-background-radius: 0.4em;
-    -fx-font-size: 1.2em;
+.button:pressed{
+  -fx-background-color: #f4f4f4;
+  -fx-text-fill: black;
+}
+
+.button:hover{
+  -fx-background-color: white;
+  -fx-text-fill: black;
+}
+
+.button:focused{
+  -fx-background-color: #9cd0ff;
+  -fx-text-fill: black;
+
 }
 
 .button-confirm {
-    /*-fx-background-color: linear-gradient(#38a1ff 0%, #0062ba 100%);*/
-    -fx-background-color: #007be9;
-    -fx-text-fill: white;
+  /*-fx-background-color: linear-gradient(#38a1ff 0%, #0062ba 100%);*/
+  -fx-background-color: #44bf49;
+  -fx-text-fill: white;
 }
 
 .button-cancel {
-    /*-fx-background-color: linear-gradient(#ff2121 0%, #bd0000 100%);*/
-    -fx-background-color: #ed0000;
-    -fx-text-fill: white;
+  /*-fx-background-color: linear-gradient(#ff2121 0%, #bd0000 100%);*/
+  -fx-background-color: #e63e3e;
+  -fx-text-fill: white;
 }
 
 .button-action {
-    /*-fx-background-color: linear-gradient(#3bf743 0%, #00a206 100%);*/
-    -fx-background-color: #00e20a;
-    -fx-text-fill: white;
+  /*-fx-background-color: linear-gradient(#3bf743 0%, #00a206 100%);*/
+  -fx-background-color: #00a0ee;
+  -fx-text-fill: white;
 }
 
 
 .statusbar {
-	-fx-border-color: #eeeeee;
-	-fx-background-color: #ffffff 0%;
+  -fx-border-color: #eeeeee;
+  -fx-background-color: linear-gradient(#f5f5f5 0%, #ececec 100%);
+}
+
+.navbar{
+  -fx-padding: 0 10 0 10;
+  -fx-spacing: 5;
+  -fx-border-color: transparent;
+  /*-fx-background-color: linear-gradient(#ffffff 0%, #f9f9f9 100%);*/
+  -fx-background-color: white;
+  -fx-text-fill: white;
+}
+
+.buttonbar{
+  -fx-padding: 30 30 30 30;
+  -fx-spacing: 7;
+  -fx-border-color: transparent;
+  -fx-text-fill: white;
 }
 
 .scroll-bar {
-	-fx-border-color: #eeeeee;
-	-fx-background-color:transparent;
-    -fx-background-radius: 0.5em;
-    -fx-shape: " ";
+  -fx-border-color: #eeeeee;
+  -fx-background-color:transparent;
+  -fx-background-radius: 0.5em;
+  -fx-shape: " ";
 }
 
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track{
-	-fx-background-color: transparent;
-	-fx-border-color:derive(#2b2b2b,80%);
-	-fx-background-radius: 0.5em;
-	-fx-border-radius:0.5em;
+  -fx-background-color: transparent;
+  -fx-border-color:derive(#2b2b2b,80%);
+  -fx-background-radius: 0.5em;
+  -fx-border-radius:0.5em;
 }
