@@ -20,7 +20,7 @@ public class Main extends Application {
 		try{
 			Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/main.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e){

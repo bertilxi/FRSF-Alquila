@@ -1,4 +1,4 @@
-# Odiseo
+# Olimpo
 
 Trabajo Práctico de Métodos Ágiles - 2016
 
@@ -13,4 +13,4 @@ Trabajo Práctico de Métodos Ágiles - 2016
 
 ## Licencia
 
-Este proyecto esta licenciado bajo la GPL V3. Ver [LICENSE.md](LICENSE.md) para mas detalles 
+Este proyecto esta licenciado bajo la GPL V3. Ver [LICENSE.md](LICENSE.md) para mas detalles
