@@ -18,7 +18,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try{
-			Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/main.fxml"));
+			Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/Login.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
 			primaryStage.setScene(scene);
