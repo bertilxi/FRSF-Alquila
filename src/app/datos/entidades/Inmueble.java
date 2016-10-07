@@ -6,13 +6,13 @@ import java.util.ArrayList;
  * Created by fer on 07/10/16.
  */
 public class Inmueble {
-    Integer id;
-    String direccion;
-    TipoInmueble tipo;
-    Double Precio;
+    private Integer id;
+    private String direccion;
+    private TipoInmueble tipo;
+    private Double Precio;
     // caracteristicas secundarias del inmueble
-    CaracteristicasInmuebles caracteristicas;
-    ArrayList<String> fotos;
-    StringBuffer observaciones;
-    ArrayList<Reserva> reservas;
+    private CaracteristicasInmuebles caracteristicas;
+    private ArrayList<String> fotos;
+    private StringBuffer observaciones;
+    private ArrayList<Reserva> reservas;
 }

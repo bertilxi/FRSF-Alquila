@@ -7,12 +7,12 @@ import java.util.ArrayList;
  */
 
 public class Vendedor {
-    Integer id;
-    String Nombre;
-    String Apellido;
-    TipoDocumento tipoDocumento;
-    Integer numeroDocumento;
-    String password;
-    String salt;
-    ArrayList<Venta> ventas;
+	private Integer id;
+	private String Nombre;
+	private String Apellido;
+	private TipoDocumento tipoDocumento;
+	private Integer numeroDocumento;
+	private String password;
+	private String salt;
+	private ArrayList<Venta> ventas;
 }
