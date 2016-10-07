@@ -8,9 +8,10 @@ import java.util.ArrayList;
 public class Inmueble {
     Integer id;
     String direccion;
-    String tipo;
+    TipoInmueble tipo;
     Double Precio;
-    StringBuffer caracteristicas;
+    // caracteristicas secundarias del inmueble
+    CaracteristicasInmuebles caracteristicas;
     ArrayList<String> fotos;
     StringBuffer observaciones;
     ArrayList<Reserva> reservas;

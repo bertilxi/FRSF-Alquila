@@ -1,5 +1,7 @@
 package app.datos.entidades;
 
+import java.util.ArrayList;
+
 /**
  * Created by fer on 07/10/16.
  */
@@ -10,7 +12,10 @@ public class Cliente {
     TipoDocumento tipoDocumento;
     Integer numeroDocumento;
     String telefono;
-    Inmueble buscado;
     Propietario propietario;
+    InmuebleBuscado buscado;
+    ArrayList<Venta> compras;
+    ArrayList<Reserva> reservas;
+    ArrayList<Catalogo> catalogos;
 
 }

@@ -12,5 +12,6 @@ public class Propietario {
     String direccion;
     String telefono;
     String email;
+    Inmueble inmueble;
 
 }
