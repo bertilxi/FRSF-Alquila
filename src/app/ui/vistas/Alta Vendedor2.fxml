@@ -75,10 +75,10 @@
                      <children>
                         <TextField maxHeight="1000.0" maxWidth="1000.0" prefWidth="224.0" promptText="Nombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Apellido" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de documento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Numero de Documento" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Repita su Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <ComboBox maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de documento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />

@@ -4,7 +4,8 @@
   -fx-background: #f9f9f9;
   -fx-background-color: linear-gradient(#ffffff 0%, #eeeeee 100%);
   -fx-text-fill: black;
-  -fx-background-image: url("../../../../res/img/background.png");
+  /*-fx-background-image: url("../../../../res/img/background.png");*/
+  /*-fx-background-image: url("../../../../../res/img/background.png");*/
   -fx-background-repeat: stretch;
   -fx-background-size: 500 500;
   -fx-background-position: center center;
@@ -18,7 +19,7 @@
 }
 
 .grid-pane {
-  -fx-padding: 20 15 10 15;
+  -fx-padding: 10 10 10 10;
   -fx-vgap: 0.625em;
   -fx-hgap: 0.938em;
 }
@@ -83,13 +84,13 @@
 
 .button-confirm {
   /*-fx-background-color: linear-gradient(#38a1ff 0%, #0062ba 100%);*/
-  -fx-background-color: #44bf49;
+  -fx-background-color: linear-gradient(#3bf743 0%, #00a206 100%);
   -fx-text-fill: white;
 }
 
 .button-cancel {
   /*-fx-background-color: linear-gradient(#ff2121 0%, #bd0000 100%);*/
-  -fx-background-color: #e63e3e;
+  -fx-background-color: #ff2121;
   -fx-text-fill: white;
 }
 
