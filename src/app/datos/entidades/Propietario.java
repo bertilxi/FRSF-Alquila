@@ -1,17 +1,19 @@
 package app.datos.entidades;
 
+import java.util.ArrayList;
+
 /**
  * Created by fer on 07/10/16.
  */
 public class Propietario {
-    Integer id;
-    String nombre;
-    String Apellido;
-    TipoDocumento tipoDocumento;
-    Integer numeroDocumento;
-    String direccion;
-    String telefono;
-    String email;
-    Inmueble inmueble;
+	private Integer id;
+	private String nombre;
+	private String Apellido;
+	private TipoDocumento tipoDocumento;
+	private String numeroDocumento;
+	private Direccion direccion;
+	private String telefono;
+	private String email;
+	private ArrayList<Inmueble> inmuebles;
 
 }

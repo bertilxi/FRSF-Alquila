@@ -1,11 +1,13 @@
 package app.datos.servicios;
 
+import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 
 public interface VendedorService {
 
-	void guardarVendedor(Vendedor vendedor) throws PersistenciaException;
-	void modificarVendedor(Vendedor vendedor) throws PersistenciaException;
-	Vendedor obtenerVendedor(Integer dni)  throws PersistenciaException;
+	public void guardarVendedor(Vendedor vendedor) throws PersistenciaException;
+	public void modificarVendedor(Vendedor vendedor) throws PersistenciaException;
+	public Vendedor obtenerVendedor(TipoDocumento tipoDocumento, Integer documento)  throws PersistenciaException;
+
 }
