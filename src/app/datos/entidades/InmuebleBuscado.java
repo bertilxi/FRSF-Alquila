@@ -8,5 +8,5 @@ public class InmuebleBuscado {
 	private Double precioMax;
 
 	//Relaciones
-	private ArrayList<TipoInmueble> tipos; //VER
+	private ArrayList<TipoInmueble> tiposInmueblesBuscados; //Relacion muchos a muchos
 }
