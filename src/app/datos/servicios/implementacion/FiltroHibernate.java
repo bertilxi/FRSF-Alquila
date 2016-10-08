@@ -7,13 +7,13 @@ public interface FiltroHibernate {
 
 	String getConsulta();
 
-	public String getSelect(String nombreEntidad);
+	String getSelect(String nombreEntidad);
 
-	public String getFrom(String nombreEntidad);
+	String getFrom(String nombreEntidad);
 
-	public String getWhere(String nombreEntidad);
+	String getWhere(String nombreEntidad);
 
-	public String getOrden(String nombreEntidad);
+	String getOrden(String nombreEntidad);
 
 	void setParametros(Query query);
 

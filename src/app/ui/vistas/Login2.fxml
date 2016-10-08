@@ -69,7 +69,7 @@
       </HBox>
       <HBox alignment="CENTER" maxHeight="100.0" minHeight="50.0" prefHeight="100.0" styleClass="buttonbar">
          <children>
-            <Button maxHeight="50.0" maxWidth="200.0" minHeight="40.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Registrarse" HBox.hgrow="ALWAYS" />
+            <Button maxHeight="50.0" maxWidth="200.0" minHeight="40.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="button-action" text="Registrarse" HBox.hgrow="ALWAYS" />
             <Button maxHeight="50.0" maxWidth="200.0" minHeight="40.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="button-confirm" text="Ingresar" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>

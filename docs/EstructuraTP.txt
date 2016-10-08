@@ -1,40 +1,40 @@
 
-Planificación del Release
+Planificaciï¿½n del Release
 
     Listado de Historias
 
     Historias Refinadas
 
-    Estimación de Esfuerzo, Riesgo y Prioridad (comentar la interacción con el cliente)
+    Estimaciï¿½n de Esfuerzo, Riesgo y Prioridad (comentar la interacciï¿½n con el cliente)
 
     Spikes (si hubo)
 
-    Definición de Velocidad y Alcance
+    Definiciï¿½n de Velocidad y Alcance
 
-    Metáfora (comentar que se eligió y porqué)
+    Metï¿½fora (comentar que se eligiï¿½ y porquï¿½)
 
     Fecha de Inicio del desarrollo
 
-Planificación Iteracion 1
+Planificaciï¿½n Iteracion 1
 
      Tareas
 
-     Estimación de Esfuerzo
+     Estimaciï¿½n de Esfuerzo
 
      Conclusiones parciales de lo estimado
 
-Planificación Iteracion 1
+Planificaciï¿½n Iteracion 1
 
      Tareas
 
-     Estimación de Esfuerzo
+     Estimaciï¿½n de Esfuerzo
 
      Conclusiones parciales de lo estimado
 
-Código Fuente (debe estar ordenado por iteración y por tarea - debe estar comentado)
+Cï¿½digo Fuente (debe estar ordenado por iteraciï¿½n y por tarea - debe estar comentado)
 
 Pruebas de Unidad (deben especificarse a que tarea corresponden)
 
-Refactorización (deben especificarse a que tarea corresponden)
+Refactorizaciï¿½n (deben especificarse a que tarea corresponden)
 
-Conclusiones (deben ser exahustivas respecto al trabajo realizado y la metodología, criticando a favor y en contra de la misma en base a la experiencia adquirida)
+Conclusiones (deben ser exahustivas respecto al trabajo realizado y la metodologï¿½a, criticando a favor y en contra de la misma en base a la experiencia adquirida)

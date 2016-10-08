@@ -12,6 +12,6 @@ public class Venta {
     Propietario propietario;
     Inmueble inmueble;
     Double monto;
-    Date Fecha
+    Date Fecha;
 
 }

@@ -59,7 +59,7 @@
 .button{
   /*-fx-effect: dropshadow(two-pass-box , gray, 5, 0.0 , 2, 3);*/
   -fx-background-color: #ffffff ;
-  -fx-border-color: gray;
+  -fx-border-color: #ddd4d4;
   -fx-font-weight: bold;
   -fx-border-radius: 0.4em;
   -fx-font-size: 1.2em;
@@ -67,36 +67,39 @@
 }
 
 .button:pressed{
-  -fx-background-color: #f4f4f4;
+  -fx-background-color: #87e0f7;
   -fx-text-fill: black;
+  -fx-border-color: #0066ff;
 }
 
 .button:hover{
-  -fx-background-color: white;
+  -fx-background-color: #6bcbee;
   -fx-text-fill: black;
+  -fx-border-color: #0066ff;
 }
 
 .button:focused{
-  -fx-background-color: #9cd0ff;
-  -fx-text-fill: black;
+  -fx-background-color: #0062ba;
+  -fx-text-fill: white;
+  -fx-border-color: #0066ff;
 
 }
 
 .button-confirm {
   /*-fx-background-color: linear-gradient(#38a1ff 0%, #0062ba 100%);*/
-  -fx-background-color: linear-gradient(#3bf743 0%, #00a206 100%);
+  -fx-background-color: #43A047;
   -fx-text-fill: white;
 }
 
 .button-cancel {
   /*-fx-background-color: linear-gradient(#ff2121 0%, #bd0000 100%);*/
-  -fx-background-color: #ff2121;
+  -fx-background-color: #E53935;
   -fx-text-fill: white;
 }
 
 .button-action {
   /*-fx-background-color: linear-gradient(#3bf743 0%, #00a206 100%);*/
-  -fx-background-color: #00a0ee;
+  -fx-background-color: #039BE5;
   -fx-text-fill: white;
 }
 
@@ -109,17 +112,29 @@
 .navbar{
   -fx-padding: 0 10 0 10;
   -fx-spacing: 5;
-  -fx-border-color: transparent;
-  /*-fx-background-color: linear-gradient(#ffffff 0%, #f9f9f9 100%);*/
-  -fx-background-color: white;
+  -fx-background-insets: 0 0 1 0 ;
+  -fx-border-color: gray;
+  /*-fx-background-color: linear-gradient(#ffffff 0%, #B2B2B2 100%);*/
+  -fx-background-color: linear-gradient(#ffffff 0%, #B2B2B2 100%);
   -fx-text-fill: white;
 }
 
 .buttonbar{
-  -fx-padding: 30 30 30 30;
+  -fx-padding: 15 15 15 15;
+  -fx-spacing: 7;
+  -fx-border-color: gray;
+  -fx-background-color: linear-gradient(#f7f7f7 0%, #B1B1B1 100%);
+  -fx-text-fill: white;
+}
+.sidebar{
+  -fx-padding: 15 15 15 15;
   -fx-spacing: 7;
   -fx-border-color: transparent;
   -fx-text-fill: white;
+  -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+  -fx-background-radius: 3px, 3px, 2px, 1px;
+  -fx-border-color: gray;
+  -fx-background-color: linear-gradient(to right, #B7B7B7 0%, #B7B7B7 100%);
 }
 
 .scroll-bar {
