@@ -6,10 +6,10 @@ public class DatosEdificio {
 	private Integer antiguedad; // en años
 	private Integer dormitorios;
 	private Integer baños;
-	private Integer garaje;
-	private Integer patio;
-	private Integer piscina;
-	private String telefono;
+	private Boolean garaje;
+	private Boolean patio;
+	private Boolean piscina;
+	private Boolean telefono;
 	private Boolean propiedadHorizontal;
 	private Boolean aguaCorriente;
 	private Boolean cloacas;

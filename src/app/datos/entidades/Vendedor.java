@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Vendedor {
 	private Integer id;
-	private String Nombre;
-	private String Apellido;
+	private String nombre;
+	private String apellido;
 	private String numeroDocumento;
 	private String password;
 	private String salt;
