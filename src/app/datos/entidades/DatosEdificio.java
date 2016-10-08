@@ -4,7 +4,7 @@ package app.datos.entidades;
  * Created by fer on 07/10/16.
  */
 public class DatosEdificio {
-	Integer id;
+	Inmueble inmueble;
 	Boolean propiedadHorizontal;
 	Double superficie; // en metros cuadrados
 	Integer antiguedad; // en años
