@@ -10,8 +10,9 @@ public class Cliente {
 	private String nombre;
 	private String apellido;
 	private TipoDocumento tipoDocumento;
-	private Integer numeroDocumento;
+	private String numeroDocumento;
 	private String telefono;
+	//por qué cliente tiene propietario?
 	private Propietario propietario;
 	private InmuebleBuscado buscado;
 	private ArrayList<Venta> compras;

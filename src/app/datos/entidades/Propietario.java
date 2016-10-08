@@ -10,8 +10,8 @@ public class Propietario {
 	private String nombre;
 	private String Apellido;
 	private TipoDocumento tipoDocumento;
-	private Integer numeroDocumento;
-	private String direccion;
+	private String numeroDocumento;
+	private Direccion direccion;
 	private String telefono;
 	private String email;
 	private ArrayList<Inmueble> inmuebles;

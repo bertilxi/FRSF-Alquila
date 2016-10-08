@@ -11,7 +11,7 @@ public class Vendedor {
 	private String Nombre;
 	private String Apellido;
 	private TipoDocumento tipoDocumento;
-	private Integer numeroDocumento;
+	private String numeroDocumento;
 	private String password;
 	private String salt;
 	private ArrayList<Venta> ventas;
