@@ -1,7 +1,7 @@
 package app.datos.entidades;
 
 public class Localidad {
-	Integer id;
-	String nombre;
-	Provincia provincia;
+	private Integer id;
+	private String nombre;
+	private Provincia provincia;
 }

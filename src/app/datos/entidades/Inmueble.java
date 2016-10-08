@@ -7,17 +7,17 @@ import java.util.Date;
  * Created by fer on 07/10/16.
  */
 public class Inmueble {
-	Integer id;
-	String codigo;
-	Date fechaCarga;
-	Propietario propietario;
-	TipoInmueble tipo;
-	Double precio;
-	DatosEdificio datosEdificio;
-	ArrayList<String> fotos;
-	StringBuffer observaciones;
-	ArrayList<Reserva> reservas;
-	Direccion direccion;
-	Orientacion orientacion;
-	Medidas medidas;
+	private Integer id;
+	private String codigo;
+	private Date fechaCarga;
+	private Propietario propietario;
+	private TipoInmueble tipo;
+	private Double precio;
+	private DatosEdificio datosEdificio;
+	private ArrayList<String> fotos;
+	private StringBuffer observaciones;
+	private ArrayList<Reserva> reservas;
+	private Direccion direccion;
+	private Orientacion orientacion;
+	private Medidas medidas;
 }
