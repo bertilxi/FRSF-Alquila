@@ -1,6 +1,8 @@
 package app.datos.entidades;
 
+import app.datos.clases.OrientacionStr;
+
 public class Orientacion {
 	private Integer id;
-	private String orientacion;
+	private OrientacionStr orientacion;
 }

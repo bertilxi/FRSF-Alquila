@@ -3,21 +3,24 @@ package app.datos.entidades;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by fer on 07/10/16.
- */
 public class Inmueble {
-	private Integer id;
+	private Integer id; //ID
 	private String codigo;
+	private String observaciones;
 	private Date fechaCarga;
-	private Propietario propietario;
-	private TipoInmueble tipo;
 	private Double precio;
-	private DatosEdificio datosEdificio;
-	private ArrayList<String> fotos;
-	private StringBuffer observaciones;
-	private ArrayList<Reserva> reservas;
-	private Direccion direccion;
+	private Double frente; // en metros
+	private Double fondo; // en metros
+	private Double superficie; // en metros cuadrados
+
+	//Relaciones
+	private TipoInmueble tipo;
 	private Orientacion orientacion;
-	private Medidas medidas;
+	private Direccion direccion;
+	private Propietario propietario;
+	private ArrayList<Imagen> fotos; //VER
+
+	//Opcionales
+	private DatosEdificio datosEdificio;
+	private ArrayList<Reserva> reservas;
 }

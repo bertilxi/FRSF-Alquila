@@ -2,13 +2,12 @@ package app.datos.entidades;
 
 import java.util.Date;
 
-/**
- * Created by fer on 07/10/16.
- */
 public class Reserva {
-	private Integer id;
+	private Integer id; //ID
 	private Double importe;
 	private Date tiempoVigencia;
+
+	//Relaciones
 	private Cliente cliente;
 	private Inmueble inmueble;
 }
