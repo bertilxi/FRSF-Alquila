@@ -7,6 +7,7 @@ public class Venta {
 	private Integer id; //ID
 	private Double monto;
 	private Date fecha;
+	private PDF venta;
 
 	//Relaciones
 	private Vendedor vendedor;
