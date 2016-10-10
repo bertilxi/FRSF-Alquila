@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class Vendedor {
 
-	private Integer id;
+	private Integer id; //ID
 	private String nombre;
 	private String apellido;
 	private String numeroDocumento;
 	private String password;
 	private String salt;
 
-    //Relaciones
-    private TipoDocumento tipoDocumento;
+	//Relaciones
+	private TipoDocumento tipoDocumento;
 
-    //Opcionales
-    private ArrayList<Venta> ventas;
+	//Opcionales
+	private ArrayList<Venta> ventas;
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import app.datos.clases.TipoInmuebleStr;
 
 public class TipoInmueble {
-	private Integer id;
+	private Integer id; //ID
 	private TipoInmuebleStr tipo;
 
 	//Relaciones
