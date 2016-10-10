@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Propietario {
 	private Integer id; //ID
 	private String nombre;
-	private String Apellido;
+	private String apellido;
 	private String numeroDocumento;
 	private String telefono;
 	private String email;

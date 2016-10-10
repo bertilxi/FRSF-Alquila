@@ -18,7 +18,7 @@ public class Inmueble {
 	private Orientacion orientacion;
 	private Direccion direccion;
 	private Propietario propietario;
-	private ArrayList<Imagen> fotos; //VER
+	private ArrayList<Imagen> fotos; //Relacion muchos a muchos
 
 	//Opcionales
 	private DatosEdificio datosEdificio;

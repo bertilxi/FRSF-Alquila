@@ -6,6 +6,7 @@ public class Reserva {
 	private Integer id; //ID
 	private Double importe;
 	private Date tiempoVigencia;
+	private PDF reserva;
 
 	//Relaciones
 	private Cliente cliente;
