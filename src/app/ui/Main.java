@@ -3,17 +3,22 @@ package app.ui;
  * Created by fer on 13/09/16.
  */
 
+import app.ui.controladores.BaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.net.URL;
+import java.nio.charset.Charset;
+
 public class Main extends Application {
 
-    private static double xOffset = 0;
-    private static double yOffset = 0;
+
 
 	public static void main(String[] args) {
 		launch(args);
@@ -22,30 +27,30 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try{
-			Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/alta cliente2.fxml"));
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
+//            Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/alta cliente2.fxml"));
 
+//            Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/base.fxml"));
+
+            URL location = getClass().getResource("/app/ui/vistas/base.fxml");
+            FXMLLoader loader = createFXMLLoader(location);
+            Parent root = loader.load(location.openStream());
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
             // para emular el estilo de windows 10 se usa la ventana sin decorar
             primaryStage.initStyle(StageStyle.UNDECORATED);
+            primaryStage.setScene(scene);
 
-            // como se pierden las propiedades del sistema por no tener barra de titulo
-            // se implementan dos handlers que manejan el movimiento de arrastre de la ventana
-            // se pierden mas propiedades que por el momento ignoro
-            root.setOnMousePressed(event -> {
-                xOffset = primaryStage.getX() - event.getScreenX();
-                yOffset = primaryStage.getY() - event.getScreenY();
-            });
+            BaseController controller = loader.getController();
+            controller.controlerPassing(primaryStage);
 
-            root.setOnMouseDragged(event -> {
-                primaryStage.setX(event.getScreenX() + xOffset);
-                primaryStage.setY(event.getScreenY() + yOffset);
-            });
 
-			primaryStage.setScene(scene);
-			primaryStage.show();
+            primaryStage.show();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
 	}
+
+    public FXMLLoader createFXMLLoader(URL location) {
+        return new FXMLLoader(location, null, new JavaFXBuilderFactory(), null, Charset.forName(FXMLLoader.DEFAULT_CHARSET_NAME));
+    }
 }

@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 /**
  * Created by fer on 10/10/16.
  */
-public class AltaClienteController extends baseController {
+public class AltaClienteController extends BaseController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
