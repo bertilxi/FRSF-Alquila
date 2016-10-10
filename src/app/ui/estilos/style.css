@@ -162,6 +162,10 @@
   -fx-border-radius:0.5em;
 }
 
+.main{
+    -fx-padding: 30 0 0 0;
+}
+
 
 .sidebar{
   -fx-font-weight: bold;
@@ -171,54 +175,54 @@
   -fx-text-fill: white;
   -fx-background-color: #ffffff ;
   -fx-border-color: transparent;
-  -fx-background-color: #3F4663 ;
+  -fx-background-color: #37474F ;
 }
 
 /* Function buttons */
 
-.toggle-button-fn1 {
+.toggle-button-ayuda {
   -fx-graphic: url("../../../../res/img/ayuda-icon.png");
   -fx-background-color: transparent;
 }
 
-.toggle-button-fn1:selected {
-  -fx-background-color: #d4d4d4;
+.toggle-button-ayuda:selected {
+  -fx-graphic: url("../../../../res/img/ayuda-icon-selected.png");
 }
 
-.toggle-button-fn2 {
+.toggle-button-cliente {
   -fx-graphic: url('../../../../res/img/cliente-icon.png');
   -fx-background-color: transparent;
 }
 
-.toggle-button-fn2:selected {
-  -fx-background-color: #d4d4d4;
+.toggle-button-cliente:selected {
+  -fx-graphic: url('../../../../res/img/cliente-icon-selected.png');
 }
 
-.toggle-button-fn3 {
+.toggle-button-inmueble {
   -fx-graphic: url('../../../../res/img/inmueble-icon.png');
   -fx-background-color: transparent;
 }
 
-.toggle-button-fn3:selected {
-  -fx-background-color: #d4d4d4;
+.toggle-button-inmueble:selected {
+  -fx-graphic: url('../../../../res/img/inmueble-icon-selected.png');
 }
 
-.toggle-button-fn4 {
+.toggle-button-vendedor {
   -fx-graphic: url('../../../../res/img/vendedor_icon_w.png');
   -fx-background-color: transparent;
 }
 
-.toggle-button-fn4:selected {
-  -fx-background-color: #d4d4d4;
+.toggle-button-vendedor:selected {
+  -fx-graphic: url('../../../../res/img/vendedor_icon_selected.png');
 }
 
-.toggle-button-fn5 {
+.toggle-button-propietario {
   -fx-graphic: url('../../../../res/img/propietario-icon.png');
   -fx-background-color: transparent;
 }
 
-.toggle-button-fn5:selected {
-  -fx-background-color: #d4d4d4;
+.toggle-button-propietario:selected {
+  -fx-graphic: url('../../../../res/img/propietario-icon-selected.png');
 }
 
 .toggle-button-close {

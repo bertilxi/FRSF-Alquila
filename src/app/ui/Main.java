@@ -27,15 +27,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try{
-//            Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/alta cliente2.fxml"));
-
-//            Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/base.fxml"));
 
             URL location = getClass().getResource("/app/ui/vistas/base.fxml");
             FXMLLoader loader = createFXMLLoader(location);
             Parent root = loader.load(location.openStream());
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
+
             // para emular el estilo de windows 10 se usa la ventana sin decorar
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
@@ -43,8 +41,8 @@ public class Main extends Application {
             BaseController controller = loader.getController();
             controller.controlerPassing(primaryStage);
 
-
             primaryStage.show();
+
 		} catch(Exception e){
 			e.printStackTrace();
 		}

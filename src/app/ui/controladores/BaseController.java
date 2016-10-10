@@ -1,11 +1,14 @@
 package app.ui.controladores;
 
-import app.ui.Main;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -13,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by fer on 10/10/16.
+ * Controlador base que se encarga de manejar la barra de titulos y la barra lateral
  */
 public class BaseController implements Initializable{
 
@@ -21,11 +24,19 @@ public class BaseController implements Initializable{
     private static double yOffset = 0;
 
     @FXML
-    private ToggleButton closeButton;
+    private ToggleButton toggleButtonClientes;
     @FXML
-    private ToggleButton maximizeButton;
+    private ToggleButton toggleButtonInmuebles;
     @FXML
-    private ToggleButton minimizeButton;
+    private ToggleButton toggleButtonVendedores;
+    @FXML
+    private ToggleButton toggleButtonPropietarios;
+    @FXML
+    private ToggleButton toggleButtonAyuda;
+
+    private ToggleGroup toggleGroupSidebar = new ToggleGroup();
+
+
     @FXML
     private HBox titlebar;
     private Stage stage;
@@ -55,8 +66,6 @@ public class BaseController implements Initializable{
     }
 
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -72,5 +81,12 @@ public class BaseController implements Initializable{
             stage.setX(event.getScreenX() + xOffset);
             stage.setY(event.getScreenY() + yOffset);
         });
+
+        toggleButtonAyuda.setToggleGroup(toggleGroupSidebar);
+        toggleButtonClientes.setToggleGroup(toggleGroupSidebar);
+        toggleButtonInmuebles.setToggleGroup(toggleGroupSidebar);
+        toggleButtonPropietarios.setToggleGroup(toggleGroupSidebar);
+        toggleButtonVendedores.setToggleGroup(toggleGroupSidebar);
+        
     }
 }
