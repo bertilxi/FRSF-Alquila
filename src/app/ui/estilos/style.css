@@ -235,19 +235,19 @@
 }
 
 .toggle-button-minimize {
-  -fx-graphic: url('../../../../res/img/minimize-unfocused-normal.png');
+  -fx-graphic: url('../../../../res/img/minimize-focused-normal.png');
   -fx-background-color: transparent;
 }
 
 .toggle-button-minimize:selected {
-  -fx-background-color: #d4d4d4;
+
 }
 
 .toggle-button-maximize {
-  -fx-graphic: url('../../../../res/img/restore-focused-normal.png');
+  -fx-graphic: url('../../../../res/img/maximize-focused-normal.png');
   -fx-background-color: transparent;
 }
 
 .toggle-button-maximize:selected {
-  -fx-background-color: #d4d4d4;
+  -fx-graphic: url('../../../../res/img/restore-focused-normal.png');
 }

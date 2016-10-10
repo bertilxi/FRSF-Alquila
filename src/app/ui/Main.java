@@ -12,6 +12,9 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
+    private static double xOffset = 0;
+    private static double yOffset = 0;
+
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -22,7 +25,23 @@ public class Main extends Application {
 			Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/alta cliente2.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
-			primaryStage.initStyle(StageStyle.UNDECORATED);
+
+            // para emular el estilo de windows 10 se usa la ventana sin decorar
+            primaryStage.initStyle(StageStyle.UNDECORATED);
+
+            // como se pierden las propiedades del sistema por no tener barra de titulo
+            // se implementan dos handlers que manejan el movimiento de arrastre de la ventana
+            // se pierden mas propiedades que por el momento ignoro
+            root.setOnMousePressed(event -> {
+                xOffset = primaryStage.getX() - event.getScreenX();
+                yOffset = primaryStage.getY() - event.getScreenY();
+            });
+
+            root.setOnMouseDragged(event -> {
+                primaryStage.setX(event.getScreenX() + xOffset);
+                primaryStage.setY(event.getScreenY() + yOffset);
+            });
+
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e){

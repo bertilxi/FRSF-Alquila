@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="altaClienteBox" prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaClienteController">
    <children>
       <VBox alignment="TOP_CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="sidebar">
          <children>
@@ -69,16 +69,16 @@
       </VBox>
       <VBox HBox.hgrow="ALWAYS">
          <children>
-            <HBox alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+            <HBox fx:id="titlebar" alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
                <children>
                   <Label styleClass="label-large" text="Alta Cliente">
                      <padding>
                         <Insets left="30.0" right="10.0" top="30.0" />
                      </padding></Label>
                   <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <ToggleButton mnemonicParsing="false" styleClass="toggle-button-minimize" />
-                  <ToggleButton mnemonicParsing="false" styleClass="toggle-button-maximize" />
-                  <ToggleButton mnemonicParsing="false" styleClass="toggle-button-close" />
+                  <ToggleButton fx:id="minimizeButton" mnemonicParsing="false" onAction="#minimizePlatform" styleClass="toggle-button-minimize" />
+                  <ToggleButton fx:id="maximizeButton" mnemonicParsing="false" onAction="#maximizePlatform" styleClass="toggle-button-maximize" />
+                  <ToggleButton fx:id="closeButton" mnemonicParsing="false" onAction="#exitPlatform" styleClass="toggle-button-close" />
                </children>
             </HBox>
             <GridPane alignment="CENTER" hgap="15.0" styleClass="grid-pane" stylesheets="@../estilos/style.css" vgap="10.0" VBox.vgrow="SOMETIMES">
