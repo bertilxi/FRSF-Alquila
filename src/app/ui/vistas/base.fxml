@@ -18,7 +18,7 @@
               <children>
                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
                     <image>
-                       <Image url="@../../../../res/img/icono-w-64.png" />
+                       <Image url="@../../../res/img/icono-w-128.png" />
                     </image>
                  </ImageView>
                  <Label alignment="CENTER" styleClass="label-white-title" text="Olimpo" />

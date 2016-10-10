@@ -181,65 +181,65 @@
 /* Function buttons */
 
 .toggle-button-ayuda {
-  -fx-graphic: url("../../../../res/img/ayuda-icon.png");
+  -fx-graphic: url("/res/img/ayuda-icon.png");
   -fx-background-color: transparent;
 }
 
 .toggle-button-ayuda:selected {
-  -fx-graphic: url("../../../../res/img/ayuda-icon-selected.png");
+  -fx-graphic: url("/res/img/ayuda-icon-selected.png");
 }
 
 .toggle-button-cliente {
-  -fx-graphic: url('../../../../res/img/cliente-icon.png');
+  -fx-graphic: url('/res/img/cliente-icon.png');
   -fx-background-color: transparent;
 }
 
 .toggle-button-cliente:selected {
-  -fx-graphic: url('../../../../res/img/cliente-icon-selected.png');
+  -fx-graphic: url('/res/img/cliente-icon-selected.png');
 }
 
 .toggle-button-inmueble {
-  -fx-graphic: url('../../../../res/img/inmueble-icon.png');
+  -fx-graphic: url('/res/img/inmueble-icon.png');
   -fx-background-color: transparent;
 }
 
 .toggle-button-inmueble:selected {
-  -fx-graphic: url('../../../../res/img/inmueble-icon-selected.png');
+  -fx-graphic: url('/res/img/inmueble-icon-selected.png');
 }
 
 .toggle-button-vendedor {
-  -fx-graphic: url('../../../../res/img/vendedor_icon_w.png');
+  -fx-graphic: url('/res/img/vendedor_icon_w.png');
   -fx-background-color: transparent;
 }
 
 .toggle-button-vendedor:selected {
-  -fx-graphic: url('../../../../res/img/vendedor_icon_selected.png');
+  -fx-graphic: url('/res/img/vendedor_icon_selected.png');
 }
 
 .toggle-button-propietario {
-  -fx-graphic: url('../../../../res/img/propietario-icon.png');
+  -fx-graphic: url('/res/img/propietario-icon.png');
   -fx-background-color: transparent;
 }
 
 .toggle-button-propietario:selected {
-  -fx-graphic: url('../../../../res/img/propietario-icon-selected.png');
+  -fx-graphic: url('/res/img/propietario-icon-selected.png');
 }
 
 .toggle-button-close {
-  -fx-graphic: url('../../../../res/img/close-focused-normal.png');
+  -fx-graphic: url('/res/img/close-focused-normal.png');
   -fx-background-color: transparent;
 }
 
 .toggle-button-close:selected {
-  -fx-graphic: url('../../../../res/img/close-focused-pressed.png');
+  -fx-graphic: url('/res/img/close-focused-pressed.png');
 }
 
 .toggle-button-close:hover {
-    -fx-graphic: url('../../../../res/img/close-focused-active.png');
+    -fx-graphic: url('/res/img/close-focused-active.png');
 }
 
 .toggle-button-minimize {
-  -fx-graphic: url('../../../../res/img/minimize-focused-normal.png');
+  -fx-graphic: url('/res/img/minimize-focused-normal.png');
   -fx-background-color: transparent;
 }
 
@@ -248,10 +248,10 @@
 }
 
 .toggle-button-maximize {
-  -fx-graphic: url('../../../../res/img/maximize-focused-normal.png');
+  -fx-graphic: url('/res/img/maximize-focused-normal.png');
   -fx-background-color: transparent;
 }
 
 .toggle-button-maximize:selected {
-  -fx-graphic: url('../../../../res/img/restore-focused-normal.png');
+  -fx-graphic: url('/res/img/restore-focused-normal.png');
 }
