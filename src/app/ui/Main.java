@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -18,9 +19,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try{
-			Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/Login.fxml"));
+			Pane root = FXMLLoader.load(getClass().getResource("/app/ui/vistas/alta cliente2.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
+			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e){

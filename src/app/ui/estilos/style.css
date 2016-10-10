@@ -1,11 +1,9 @@
 .root{
   -fx-font-size: 1em;
-  -fx-font-family: "Arial";
+  -fx-font-family: "System";
   -fx-background: #f9f9f9;
-  -fx-background-color: linear-gradient(#ffffff 0%, #eeeeee 100%);
+  -fx-background-color: linear-gradient(#ffffff 0%, #ffffff 100%);
   -fx-text-fill: black;
-  /*-fx-background-image: url("../../../../res/img/background.png");*/
-  /*-fx-background-image: url("../../../../../res/img/background.png");*/
   -fx-background-repeat: stretch;
   -fx-background-size: 500 500;
   -fx-background-position: center center;
@@ -47,6 +45,17 @@
   -fx-text-fill: #2b2b2b;
 }
 
+.label-white {
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 10px;
+}
+
+.label-white-title {
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
 .combo-box {
   -fx-background-color: #ffffff;
   -fx-font-size: 1.2em;
@@ -60,7 +69,7 @@
   /*-fx-effect: dropshadow(two-pass-box , gray, 5, 0.0 , 2, 3);*/
   -fx-background-color: #ffffff ;
   -fx-border-color: #ddd4d4;
-  -fx-font-weight: bold;
+  /*-fx-font-weight: bold;*/
   -fx-border-radius: 0.4em;
   -fx-font-size: 1.2em;
   -fx-background-insets: 1 1 1 1 ;
@@ -110,32 +119,33 @@
 }
 
 .navbar{
-  -fx-padding: 0 10 0 10;
+  -fx-padding: 5 15 5 15;
   -fx-spacing: 5;
   -fx-background-insets: 0 0 1 0 ;
-  -fx-border-color: gray;
+  -fx-border-color: transparent;
   /*-fx-background-color: linear-gradient(#ffffff 0%, #B2B2B2 100%);*/
-  -fx-background-color: linear-gradient(#ffffff 0%, #B2B2B2 100%);
+  -fx-background-color: transparent;
   -fx-text-fill: white;
 }
 
 .buttonbar{
   -fx-padding: 15 15 15 15;
   -fx-spacing: 7;
-  -fx-border-color: gray;
-  -fx-background-color: linear-gradient(#f7f7f7 0%, #B1B1B1 100%);
+  -fx-border-color: transparent;
+  /*-fx-background-color: linear-gradient(#f7f7f7 0%, #B1B1B1 100%);*/
+  -fx-background-color: transparent;
   -fx-text-fill: white;
 }
-.sidebar{
+
+.buttonbar-login{
   -fx-padding: 15 15 15 15;
   -fx-spacing: 7;
   -fx-border-color: transparent;
+  -fx-background-color: transparent;
+  /*-fx-background-color: linear-gradient(#f7f7f7 0%, #B1B1B1 100%);*/
   -fx-text-fill: white;
-  -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-  -fx-background-radius: 3px, 3px, 2px, 1px;
-  -fx-border-color: gray;
-  -fx-background-color: linear-gradient(to right, #B7B7B7 0%, #B7B7B7 100%);
 }
+
 
 .scroll-bar {
   -fx-border-color: #eeeeee;
@@ -150,4 +160,94 @@
   -fx-border-color:derive(#2b2b2b,80%);
   -fx-background-radius: 0.5em;
   -fx-border-radius:0.5em;
+}
+
+
+.sidebar{
+  -fx-font-weight: bold;
+  -fx-padding: 10 10 10 10;
+  -fx-spacing: 20;
+  -fx-border-color: transparent;
+  -fx-text-fill: white;
+  -fx-background-color: #ffffff ;
+  -fx-border-color: transparent;
+  -fx-background-color: #3F4663 ;
+}
+
+/* Function buttons */
+
+.toggle-button-fn1 {
+  -fx-graphic: url("../../../../res/img/ayuda-icon.png");
+  -fx-background-color: transparent;
+}
+
+.toggle-button-fn1:selected {
+  -fx-background-color: #d4d4d4;
+}
+
+.toggle-button-fn2 {
+  -fx-graphic: url('../../../../res/img/cliente-icon.png');
+  -fx-background-color: transparent;
+}
+
+.toggle-button-fn2:selected {
+  -fx-background-color: #d4d4d4;
+}
+
+.toggle-button-fn3 {
+  -fx-graphic: url('../../../../res/img/inmueble-icon.png');
+  -fx-background-color: transparent;
+}
+
+.toggle-button-fn3:selected {
+  -fx-background-color: #d4d4d4;
+}
+
+.toggle-button-fn4 {
+  -fx-graphic: url('../../../../res/img/vendedor_icon_w.png');
+  -fx-background-color: transparent;
+}
+
+.toggle-button-fn4:selected {
+  -fx-background-color: #d4d4d4;
+}
+
+.toggle-button-fn5 {
+  -fx-graphic: url('../../../../res/img/propietario-icon.png');
+  -fx-background-color: transparent;
+}
+
+.toggle-button-fn5:selected {
+  -fx-background-color: #d4d4d4;
+}
+
+.toggle-button-close {
+  -fx-graphic: url('../../../../res/img/close-focused-normal.png');
+  -fx-background-color: transparent;
+}
+
+.toggle-button-close:selected {
+  -fx-graphic: url('../../../../res/img/close-focused-pressed.png');
+}
+
+.toggle-button-close:hover {
+    -fx-graphic: url('../../../../res/img/close-focused-active.png');
+}
+
+.toggle-button-minimize {
+  -fx-graphic: url('../../../../res/img/minimize-unfocused-normal.png');
+  -fx-background-color: transparent;
+}
+
+.toggle-button-minimize:selected {
+  -fx-background-color: #d4d4d4;
+}
+
+.toggle-button-maximize {
+  -fx-graphic: url('../../../../res/img/restore-focused-normal.png');
+  -fx-background-color: transparent;
+}
+
+.toggle-button-maximize:selected {
+  -fx-background-color: #d4d4d4;
 }
