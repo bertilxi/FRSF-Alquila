@@ -87,6 +87,6 @@ public class BaseController implements Initializable{
         toggleButtonInmuebles.setToggleGroup(toggleGroupSidebar);
         toggleButtonPropietarios.setToggleGroup(toggleGroupSidebar);
         toggleButtonVendedores.setToggleGroup(toggleGroupSidebar);
-        
+
     }
 }
