@@ -1,21 +1,17 @@
-package app.logica;
+package app.logica.gestores;
 
-import javax.annotation.Resource;
-
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import app.datos.clases.DatosLogin;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorLogin;
 import app.logica.resultados.ResultadoLogin;
 
 @Service
-public class CoordinadorJavaFX {
-
-	@Resource
-	GestorLogin gestorLogin;
+public class GestorLogin {
 
 	public ResultadoLogin loguearVendedor(DatosLogin login) throws PersistenciaException {
-		return gestorLogin.loguearVendedor(login);
+		throw new NotYetImplementedException();
 	}
+
 }
