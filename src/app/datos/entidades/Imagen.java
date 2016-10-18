@@ -13,5 +13,5 @@ public class Imagen extends Archivo {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "codinmueble", foreignKey = @ForeignKey(name = "imagen_codinmueble_fk"))
-	private ArrayList<Inmueble> inmuebles;
+	private Inmueble inmueble;
 }

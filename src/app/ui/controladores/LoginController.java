@@ -4,9 +4,13 @@ import app.datos.clases.DatosLogin;
 import app.excepciones.ManejadorExcepciones;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
+import app.logica.resultados.Resultado;
 import app.logica.resultados.ResultadoLogin;
 import app.logica.resultados.ResultadoLogin.ErrorResultadoLogin;
 import app.ui.componentes.VentanaError;
+import app.ui.controladores.Resultado.ResultadoControlador;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -15,22 +19,25 @@ import javafx.stage.Stage;
 public class LoginController {
 
 	@FXML
-	private TextField tfNombre;
+	protected TextField tfNombre;
 
 	@FXML
-	private PasswordField pfContra;
+	protected PasswordField pfContra;
+
 
 	@FXML
-	public void registrar() {
-
+	public ResultadoControlador registrar() {
+		ResultadoControlador salida = new ResultadoControlador();
+		return salida;
 	}
 
 	@FXML
-	public void ingresar() {
+	public ResultadoControlador ingresar() {
 		//TODO borrar para activar login
 		//Ir siguiente pantalla
+		ResultadoControlador salida = new ResultadoControlador();
 		if(true){
-			return;
+			return salida;
 		}
 		@SuppressWarnings("unused")
 		CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
@@ -46,7 +53,7 @@ public class LoginController {
 		char[] pass = pfContra.getText().toCharArray();
 		if(user.isEmpty() || pass.length < 1){
 			new VentanaError("No se ha podido iniciar sesión", "Campos vacíos.", new Stage()); //apilador.getStage()
-			return;
+			return salida;
 		}
 		datos = new DatosLogin(user, pass);
 
@@ -55,10 +62,10 @@ public class LoginController {
 			resultado = coordinador.loguearVendedor(datos);
 		} catch(PersistenciaException e){
 			ManejadorExcepciones.presentarExcepcion(e, new Stage()); //apilador.getStage()
-			return;
+			return salida;
 		} catch(Exception e){
 			ManejadorExcepciones.presentarExcepcionInesperada(e, new Stage()); //apilador.getStage()
-			return;
+			return salida;
 		}
 
 		//Tratamiento de errores
@@ -80,6 +87,7 @@ public class LoginController {
 			// Ir otra pantalla
 			// ControladorRomano.cambiarScene(MenuAdministracionController.URLVista, apilador, coordinador);
 		}
+		return salida;
 	}
 
 }

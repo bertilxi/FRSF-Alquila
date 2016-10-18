@@ -27,7 +27,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try{
 
-            URL location = getClass().getResource("/app/ui/vistas/base.fxml");
+            URL location = getClass().getResource("/app/ui/vistas/Login.fxml");
             FXMLLoader loader = createFXMLLoader(location);
             Parent root = loader.load(location.openStream());
             Scene scene = new Scene(root);
@@ -37,8 +37,8 @@ public class Main extends Application {
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
 
-            BaseController controller = loader.getController();
-            controller.controlerPassing(primaryStage);
+            //BaseController controller = loader.getController();
+            //controller.controlerPassing(primaryStage);
 
             primaryStage.show();
 

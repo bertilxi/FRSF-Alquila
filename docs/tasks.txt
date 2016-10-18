@@ -1,4 +1,4 @@
-## Grupo alfa
+## Grupo Beta Romeo
 
 2 Entidad vendedor                                1
 5 Lógica alta, modificación y baja vendedor       4
@@ -9,7 +9,7 @@
 
 ### total : 15
 
-## Grupo Beta
+## Grupo Charlie Mike
 
 3 Vista alta, modificar y baja vendedor           3
 6 Persistidor vendedor                            3
@@ -20,7 +20,7 @@
 
 ### total : 15
 
-## Grupo Gama
+## Grupo Golf Romeo 
 
 1 Vista y lógica del Login                        2
 4 Vista principal para la administración          2
