@@ -1,0 +1,36 @@
+## Grupo alfa
+
+2 Entidad vendedor                                1
+5 Lógica alta, modificación y baja vendedor       4
+8 Vista alta, modificar y baja propietario        3
+10 Persistidor Propietario                        3
+16 Vista alta, modificar y baja cliente           1
+17 Lógica alta, modificación y baja cliente       3
+
+### total : 15
+
+## Grupo Beta
+
+3 Vista alta, modificar y baja vendedor           3
+6 Persistidor vendedor                            3
+7 Entidad Propietario                             1
+9 Lógica alta, modificación y baja Propietario    3
+12 Clases de datos                                1
+14 Persistidor inmueble                           4
+
+### total : 15
+
+## Grupo Gama
+
+1 Vista y lógica del Login                        2
+4 Vista principal para la administración          2
+11 Entidad inmueble                               1
+13 Vista alta, modificar y baja inmueble          3
+15 Entidad cliente                                3
+18 Persistidor cliente                            4
+
+### total : 15
+
+### fecha de inicio: martes 18 de octubre
+### fecha de fin primera iteracion: 1 de noviembre
+### con task points de 1 dia de 3 horas de trabajo
