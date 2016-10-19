@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
  */
 public class BaseController implements Initializable {
 
-    private static double xOffset = 0;
-    private static double yOffset = 0;
 
     @FXML
     private ToggleButton toggleButtonClientes;
@@ -33,51 +31,10 @@ public class BaseController implements Initializable {
 
     private ToggleGroup toggleGroupSidebar = new ToggleGroup();
 
-
-    @FXML
-    private HBox titlebar;
-    private Stage stage;
-
-    public void controlerPassing(Stage stage) {
-        this.stage = stage;
-    }
-
-    @FXML
-    private void exitPlatform(ActionEvent event) {
-        Platform.exit();
-    }
-
-    @FXML
-    private void minimizePlatform(ActionEvent event) {
-        stage.setIconified(true);
-    }
-
-    @FXML
-    private void maximizePlatform(ActionEvent event) {
-
-        if (stage.isMaximized()) {
-            stage.setMaximized(false);
-        } else {
-            stage.setMaximized(true);
-        }
-    }
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // como se pierden las propiedades del sistema por no tener barra de titulo
-        // se implementan dos handlers que manejan el movimiento de arrastre de la ventana
-        // se pierden mas propiedades que por el momento ignoro
-        titlebar.setOnMousePressed(event -> {
-            xOffset = stage.getX() - event.getScreenX();
-            yOffset = stage.getY() - event.getScreenY();
-        });
 
-        titlebar.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() + xOffset);
-            stage.setY(event.getScreenY() + yOffset);
-        });
 
         toggleButtonAyuda.setToggleGroup(toggleGroupSidebar);
         toggleButtonClientes.setToggleGroup(toggleGroupSidebar);

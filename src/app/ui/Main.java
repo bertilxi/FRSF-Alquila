@@ -3,6 +3,7 @@ package app.ui;
  * Created by fer on 13/09/16.
  */
 
+import app.ui.controladores.WindowTitleController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -35,8 +36,8 @@ public class Main extends Application {
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
 
-            //BaseController controller = loader.getController();
-            //controller.controlerPassing(primaryStage);
+            WindowTitleController controller = loader.getController();
+            controller.controlerPassing(primaryStage);
 
             primaryStage.show();
 
