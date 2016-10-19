@@ -1,8 +1,9 @@
-package app.ui.controladores;
+package test.app.ui.controladores;
 
+import app.ui.controladores.LoginController;
 import app.ui.controladores.Resultado.ResultadoControlador;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class LoginControllerTest {
     @org.junit.Test

@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 
 public class MainController {
 
-	@FXML
-	private void initialize() {
-		//Inicializar
-	}
+    @FXML
+    private void initialize() {
+        //Inicializar
+    }
 }

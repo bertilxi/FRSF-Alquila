@@ -3,7 +3,6 @@ package app.ui;
  * Created by fer on 13/09/16.
  */
 
-import app.ui.controladores.BaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -18,14 +17,13 @@ import java.nio.charset.Charset;
 public class Main extends Application {
 
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	@Override
-	public void start(Stage primaryStage) {
-		try{
+    @Override
+    public void start(Stage primaryStage) {
+        try {
 
             URL location = getClass().getResource("/app/ui/vistas/Login.fxml");
             FXMLLoader loader = createFXMLLoader(location);
@@ -42,10 +40,10 @@ public class Main extends Application {
 
             primaryStage.show();
 
-		} catch(Exception e){
-			e.printStackTrace();
-		}
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public FXMLLoader createFXMLLoader(URL location) {
         return new FXMLLoader(location, null, new JavaFXBuilderFactory(), null, Charset.forName(FXMLLoader.DEFAULT_CHARSET_NAME));

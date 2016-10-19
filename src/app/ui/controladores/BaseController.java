@@ -1,12 +1,9 @@
 package app.ui.controladores;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -18,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * Controlador base que se encarga de manejar la barra de titulos y la barra lateral
  */
-public class BaseController implements Initializable{
+public class BaseController implements Initializable {
 
     private static double xOffset = 0;
     private static double yOffset = 0;
@@ -41,7 +38,7 @@ public class BaseController implements Initializable{
     private HBox titlebar;
     private Stage stage;
 
-    public void controlerPassing(Stage stage){
+    public void controlerPassing(Stage stage) {
         this.stage = stage;
     }
 
