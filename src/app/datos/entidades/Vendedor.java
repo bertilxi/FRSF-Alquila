@@ -3,21 +3,22 @@ package app.datos.entidades;
 import javax.persistence.*;
 import java.util.ArrayList;
 
+@NamedQuery(name="obtenerVendedor", query="SELECT v FROM Vendedor v WHERE numeroDocumento = :documento AND tipoDocumento.tipo = :tipoDocumento")
 @Entity
-@Table(name = "vendedor")
+@Table(name = "vendedor", uniqueConstraints = @UniqueConstraint(name = "vendedor_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 public class Vendedor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; //ID
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", length = 30)
     private String nombre;
 
-    @Column(name = "apellido")
+    @Column(name = "apellido", length = 30)
     private String apellido;
 
-    @Column(name = "numeroDocumento")
+    @Column(name = "numerodocumento", length = 30)
     private String numeroDocumento;
 
     @Column(name = "password")
@@ -26,14 +27,22 @@ public class Vendedor {
     @Column(name = "salt")
     private String salt;
 
-    //Relaciones
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"))
     private TipoDocumento tipoDocumento;
 
-    //Opcionales
+    //@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "vendedor")
+    @Transient
     private ArrayList<Venta> ventas;
 
-    public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, ArrayList<Venta> ventas) {
-        this.id = id;
+    public Vendedor() {
+		super();
+		this.ventas = new ArrayList<Venta>();
+	}
+
+	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, ArrayList<Venta> ventas) {
+        this();
+		this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.numeroDocumento = numeroDocumento;
