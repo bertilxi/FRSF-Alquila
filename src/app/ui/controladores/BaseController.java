@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * Controlador base que se encarga de manejar la barra de titulos y la barra lateral
  */
-public class BaseController implements Initializable {
+public class BaseController extends WindowTitleController {
 
 
     @FXML
@@ -33,8 +33,6 @@ public class BaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
 
         toggleButtonAyuda.setToggleGroup(toggleGroupSidebar);
         toggleButtonClientes.setToggleGroup(toggleGroupSidebar);

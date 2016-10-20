@@ -2,11 +2,12 @@ package test.app.ui.controladores;
 
 import app.ui.controladores.LoginController;
 import app.ui.controladores.Resultado.ResultadoControlador;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class LoginControllerTest {
-    @org.junit.Test
+    @Test
     public void registrar() throws Exception {
         LoginController loginController = new LoginController() {
             @Override
@@ -19,7 +20,7 @@ public class LoginControllerTest {
         assertEquals("", loginController.registrar());
     }
 
-    @org.junit.Test
+    @Test
     public void ingresar() throws Exception {
 
     }
