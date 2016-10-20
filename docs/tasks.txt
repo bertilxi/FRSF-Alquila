@@ -5,7 +5,10 @@
 6 Persistidor vendedor                            3
 8 Vista alta, modificar y baja propietario        3
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 6 Persistidor vendedor                            3
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 16 Vista alta, modificar y baja cliente           1
