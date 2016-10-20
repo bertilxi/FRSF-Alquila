@@ -1,5 +1,7 @@
 package app.datos.servicios.implementacion;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +54,14 @@ public class VendedorServiceJPA implements VendedorService {
 	@Override
 	@Transactional(readOnly = true)
 	public Vendedor obtenerVendedor(TipoDocumento tipoDocumento, Integer documento) throws PersistenciaException {
-		Vendedor vendedor;
+		Vendedor vendedor = null;
 		Session session = getSessionFactory().getCurrentSession();
 		try {
 			vendedor = (Vendedor) session.getNamedQuery("obtenerVendedor").setParameter("tipoDocumento", tipoDocumento.getTipo()).setParameter("documento", documento).uniqueResult();
+		} catch (NoResultException e) {
+			return null;
 		} catch (Exception e) {
-			throw new SaveUpdateException();
+			//hacer algo
 		}
 		return vendedor;
 	}
