@@ -16,4 +16,5 @@ public class ResultadoCrearCliente extends Resultado<ErrorResultadoCrearCliente>
 		Formato_Documento_Incorrecto,
 		Ya_Existe_Cliente
 	}
+
 }

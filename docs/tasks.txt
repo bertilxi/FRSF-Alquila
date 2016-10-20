@@ -2,8 +2,15 @@
 
 2 Entidad vendedor                                1
 5 Lógica alta, modificación y baja vendedor       4
-8 Vista alta, modificar y baja propietario        3
 6 Persistidor vendedor                            3
+8 Vista alta, modificar y baja propietario        3
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+6 Persistidor vendedor                            3
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 16 Vista alta, modificar y baja cliente           1
 17 Lógica alta, modificación y baja cliente       3
 
@@ -20,7 +27,7 @@
 
 ### total : 15
 
-## Grupo Golf Romeo 
+## Grupo Golf Romeo
 
 1 Vista y lógica del Login                        2
 4 Vista principal para la administración          2

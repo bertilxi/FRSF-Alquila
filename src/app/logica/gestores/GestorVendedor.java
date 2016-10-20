@@ -16,7 +16,7 @@ public class GestorVendedor {
 
     private VendedorService persistidorVendedor;
 
-/*
+
     public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
 
     }
@@ -27,5 +27,5 @@ public class GestorVendedor {
 
     public ResultadoEliminarVendedor eliminarVendedor() throws PersistenciaException {
 
-    }*/
+    }
 }
