@@ -10,5 +10,5 @@ public interface ClienteService {
 
     public void modificarCliente(Cliente cliente) throws PersistenciaException;
 
-    public Cliente obtenerCliente(TipoDocumento tipoDocumento, Integer documento) throws PersistenciaException;
+    public Cliente obtenerCliente(TipoDocumento tipoDocumento, String documento) throws PersistenciaException;
 }
