@@ -7,7 +7,7 @@ import java.util.ArrayList;
 @Entity
 @Table(name = "vendedor", uniqueConstraints = @UniqueConstraint(name = "vendedor_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 public class Vendedor {
-
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; //ID
