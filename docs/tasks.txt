@@ -3,7 +3,7 @@
 2 Entidad vendedor                                1
 5 Lógica alta, modificación y baja vendedor       4
 8 Vista alta, modificar y baja propietario        3
-10 Persistidor Propietario                        3
+6 Persistidor vendedor                            3
 16 Vista alta, modificar y baja cliente           1
 17 Lógica alta, modificación y baja cliente       3
 
@@ -12,7 +12,7 @@
 ## Grupo Charlie Mike
 
 3 Vista alta, modificar y baja vendedor           3
-6 Persistidor vendedor                            3
+10 Persistidor Propietario                        3
 7 Entidad Propietario                             1
 9 Lógica alta, modificación y baja Propietario    3
 12 Clases de datos                                1
