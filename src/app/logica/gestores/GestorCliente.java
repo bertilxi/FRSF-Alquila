@@ -5,11 +5,15 @@ import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Cliente;
+import app.datos.entidades.TipoDocumento;
 import app.datos.servicios.ClienteService;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCliente;
+import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorResultadoCrearCliente;
+import app.logica.resultados.ResultadoModificarCliente.ErrorResultadoModificarCliente;
 
 @Service
 public class GestorCliente {
@@ -64,5 +68,56 @@ public class GestorCliente {
 		}
 
 		return new ResultadoCrearCliente(errores.toArray(new ErrorResultadoCrearCliente[0]));
+	}
+
+	public ResultadoModificarCliente modificarCliente(Cliente cliente) throws PersistenciaException {
+		ArrayList<ErrorResultadoModificarCliente> errores = new ArrayList<ErrorResultadoModificarCliente>();
+
+
+		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,100}");
+		if (!pat.matcher(cliente.getNombre()).matches()) {
+			errores.add(ErrorResultadoModificarCliente.Formato_Nombre_Incorrecto);
+		}
+
+		if (!pat.matcher(cliente.getApellido()).matches()) {
+			errores.add(ErrorResultadoModificarCliente.Formato_Apellido_Incorrecto);
+		}
+
+		pat = Pattern.compile("[0-9\\-]{0,20}");
+		if (!pat.matcher(cliente.getTelefono()).matches()) {
+			errores.add(ErrorResultadoModificarCliente.Formato_Telefono_Incorrecto);
+		}
+
+		switch (cliente.getTipoDocumento().getTipo()) {
+		case DNI:
+			pat = Pattern.compile("[0-9]{7,8}");
+			break;
+		case LC:
+			pat = Pattern.compile("[0-9\\-]{0,20}");
+			break;
+		case LE:
+			pat = Pattern.compile("[0-9\\-]{0,20}");
+			break;
+		case Pasaporte:
+			pat = Pattern.compile("[0-9\\-]{0,20}");
+			break;
+		case CedulaExtranjera:
+			pat = Pattern.compile("[0-9\\-]{0,20}");
+			break;
+		}
+		if (!pat.matcher(cliente.getNumeroDocumento()).matches()) {
+			errores.add(ErrorResultadoModificarCliente.Formato_Documento_Incorrecto);
+		}
+
+		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(cliente.getTipoDocumento(), cliente.getNumeroDocumento());
+		if(null!=clienteAuxiliar && !cliente.getId().equals(clienteAuxiliar.getId())) {
+			errores.add(ErrorResultadoModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
+		}
+
+		if(errores.isEmpty()) {
+			persistidorCliente.modificarCliente(cliente);
+		}
+
+		return new ResultadoModificarCliente(errores.toArray(new ErrorResultadoModificarCliente[0]));
 	}
 }
