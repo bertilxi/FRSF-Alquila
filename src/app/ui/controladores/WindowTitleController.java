@@ -10,9 +10,6 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by fer on 19/10/16.
- */
 public class WindowTitleController implements Initializable {
 
 
