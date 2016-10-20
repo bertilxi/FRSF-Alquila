@@ -1,7 +1,13 @@
 package app.ui.controladores;
 
 
+import app.datos.clases.TipoDocumentoStr;
+import app.datos.entidades.Calle;
+import app.datos.entidades.Direccion;
+import app.datos.entidades.Propietario;
+import app.datos.entidades.TipoDocumento;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,10 +32,6 @@ public class AltaPropietarioController extends BaseController{
     @FXML
     private TextField textFieldNumeroDocumento;
     @FXML
-    private TextField textFieldContraseña;
-    @FXML
-    private TextField textFieldRepetirContraseña;
-    @FXML
     private TextField textFieldCalle;
     @FXML
     private TextField textFieldAlturaCalle;
@@ -47,7 +49,32 @@ public class AltaPropietarioController extends BaseController{
     private TextField textFieldCorreoElectronico;
 
     @FXML
-    private ComboBox comboBoxTipoDocumento;
+    private ComboBox<TipoDocumentoStr> comboBoxTipoDocumento;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
 
 
+    }
+
+    @FXML
+    public void onClickButtonAccept(){
+        String nombre = textFieldNombre.toString().trim();
+        String apellido = textFieldApellido.toString().trim();
+        String numeroDocumento = textFieldNumeroDocumento.toString().trim();
+        String calle = textFieldCalle.toString().trim();
+        String alturaCalle = textFieldAlturaCalle.toString().trim();
+        String piso = textFieldPiso.toString().trim();
+        String departamento = textFieldDepartamento.toString().trim();
+        String localidad = textFieldLocalidad.toString().trim();
+        String provincia = textFieldProvincia.toString().trim();
+        String telefono = textFieldTelefono.toString().trim();
+        String correoElectronico = textFieldCorreoElectronico.toString().trim();
+
+        //Direccion direccion = new Direccion(null, alturaCalle, new Calle(null,calle), )
+
+        TipoDocumento tipoDocumento = new TipoDocumento(null,comboBoxTipoDocumento.getValue());
+        Propietario propietario = new Propietario(null, nombre, apellido, numeroDocumento, calle, alturaCalle )
+    }
 }

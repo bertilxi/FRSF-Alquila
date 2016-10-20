@@ -28,17 +28,17 @@ public class WindowTitleController implements Initializable {
     }
 
     @FXML
-    private void exitPlatform(ActionEvent event) {
+    private void exitPlatform() {
         Platform.exit();
     }
 
     @FXML
-    private void minimizePlatform(ActionEvent event) {
+    private void minimizePlatform() {
         stage.setIconified(true);
     }
 
     @FXML
-    private void maximizePlatform(ActionEvent event) {
+    private void maximizePlatform() {
 
         if (stage.isMaximized()) {
             stage.setMaximized(false);
