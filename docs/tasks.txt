@@ -4,13 +4,6 @@
 5 Lógica alta, modificación y baja vendedor       4
 6 Persistidor vendedor                            3
 8 Vista alta, modificar y baja propietario        3
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-6 Persistidor vendedor                            3
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 16 Vista alta, modificar y baja cliente           1
 17 Lógica alta, modificación y baja cliente       3
 
