@@ -10,6 +10,7 @@ import app.datos.servicios.PropietarioService;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoModificarCliente;
+import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoCrearCliente.ErrorResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorResultadoCrearPropietario;
@@ -18,9 +19,9 @@ import app.logica.resultados.ResultadoModificarCliente.ErrorResultadoModificarCl
 public class GestorPropietario {
 
 	private PropietarioService persistidorPropietario;
-	private Validador validador;
+	private ValidadorFormato validador;
 	
-	public GestorPropietario(PropietarioService persistidorPropietario, Validador validador) {
+	public GestorPropietario(PropietarioService persistidorPropietario, ValidadorFormato validador) {
 		super();
 		this.persistidorPropietario = persistidorPropietario;
 		this.validador = validador;
@@ -37,7 +38,23 @@ public class GestorPropietario {
 			errores.add(ErrorResultadoCrearPropietario.Formato_Apellido_Incorrecto);
 		}
 
-		if(null!=persistidorPropietario.obtenerPropietario(propietario.getTipoDocumento(), propietario.getNumeroDocumento())) {
+		if(!validador.validarDocumento(propietario.getTipoDocumento(),propietario.getNumeroDocumento())) {
+			errores.add(ErrorResultadoCrearPropietario.Formato_Documento_Incorrecto);
+		}
+		
+		if(!validador.validarTelefono(propietario.getTelefono())) {
+			errores.add(ErrorResultadoCrearPropietario.Formato_Telefono_Incorrecto);
+		}
+		
+		if(!validador.validarEmail(propietario.getEmail())) {
+			errores.add(ErrorResultadoCrearPropietario.Formato_Email_Incorrecto);
+		}
+		
+		if(!validador.validarDireccion(propietario.getDireccion())) {
+			errores.add(ErrorResultadoCrearPropietario.Formato_Direccion_Incorrecto);
+		}
+		
+		if(persistidorPropietario.obtenerPropietario(propietario.getTipoDocumento(), propietario.getNumeroDocumento())!=null) {
 			errores.add(ErrorResultadoCrearPropietario.Ya_Existe_Propietario);
 		}
 
@@ -48,7 +65,7 @@ public class GestorPropietario {
 		return new ResultadoCrearPropietario(errores.toArray(new ErrorResultadoCrearPropietario[0]));
 	}
 
-	public ResultadoModificarCliente modificarCliente(Cliente cliente) throws PersistenciaException {
+	public ResultadoModificarPropietario modificarPropietario(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorResultadoModificarCliente> errores = new ArrayList<ErrorResultadoModificarCliente>();
 
 
