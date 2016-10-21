@@ -6,11 +6,11 @@ import app.datos.entidades.Direccion;
 import app.datos.entidades.TipoDocumento;
 import app.logica.resultados.ResultadoCrearCliente.ErrorResultadoCrearCliente;
 
-public class Validador {
+public class ValidadorFormato {
 	
 	private Pattern pat;
 	
-	public Validador() {
+	public ValidadorFormato() {
 		super();
 	}
 	
