@@ -1,13 +1,10 @@
 package app.logica.gestores;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
-import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Cliente;
-import app.datos.entidades.TipoDocumento;
 import app.datos.servicios.ClienteService;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCliente;
@@ -20,42 +17,24 @@ public class GestorCliente {
 
 	private ClienteService persistidorCliente;
 
+	private ValidadorFormato validador;
+
 	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorResultadoCrearCliente> errores = new ArrayList<ErrorResultadoCrearCliente>();
 
-
-		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,100}");
-		if (!pat.matcher(cliente.getNombre()).matches()) {
+		if (!validador.validarNombre(cliente.getNombre())) {
 			errores.add(ErrorResultadoCrearCliente.Formato_Nombre_Incorrecto);
 		}
 
-		if (!pat.matcher(cliente.getApellido()).matches()) {
+		if (!validador.validarApellido(cliente.getApellido())) {
 			errores.add(ErrorResultadoCrearCliente.Formato_Apellido_Incorrecto);
 		}
 
-		pat = Pattern.compile("[0-9\\-]{0,20}");
-		if (!pat.matcher(cliente.getTelefono()).matches()) {
+		if (!validador.validarTelefono(cliente.getTelefono())) {
 			errores.add(ErrorResultadoCrearCliente.Formato_Telefono_Incorrecto);
 		}
 
-		switch (cliente.getTipoDocumento().getTipo()) {
-		case DNI:
-			pat = Pattern.compile("[0-9]{7,8}");
-			break;
-		case LC:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case LE:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case Pasaporte:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case CedulaExtranjera:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		}
-		if (!pat.matcher(cliente.getNumeroDocumento()).matches()) {
+		if (!validador.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())) {
 			errores.add(ErrorResultadoCrearCliente.Formato_Documento_Incorrecto);
 		}
 
@@ -73,39 +52,19 @@ public class GestorCliente {
 	public ResultadoModificarCliente modificarCliente(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorResultadoModificarCliente> errores = new ArrayList<ErrorResultadoModificarCliente>();
 
-
-		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,100}");
-		if (!pat.matcher(cliente.getNombre()).matches()) {
+		if (!validador.validarNombre(cliente.getNombre())) {
 			errores.add(ErrorResultadoModificarCliente.Formato_Nombre_Incorrecto);
 		}
 
-		if (!pat.matcher(cliente.getApellido()).matches()) {
+		if (!validador.validarApellido(cliente.getApellido())) {
 			errores.add(ErrorResultadoModificarCliente.Formato_Apellido_Incorrecto);
 		}
 
-		pat = Pattern.compile("[0-9\\-]{0,20}");
-		if (!pat.matcher(cliente.getTelefono()).matches()) {
+		if (!validador.validarTelefono(cliente.getTelefono())) {
 			errores.add(ErrorResultadoModificarCliente.Formato_Telefono_Incorrecto);
 		}
 
-		switch (cliente.getTipoDocumento().getTipo()) {
-		case DNI:
-			pat = Pattern.compile("[0-9]{7,8}");
-			break;
-		case LC:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case LE:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case Pasaporte:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case CedulaExtranjera:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		}
-		if (!pat.matcher(cliente.getNumeroDocumento()).matches()) {
+		if (!validador.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())) {
 			errores.add(ErrorResultadoModificarCliente.Formato_Documento_Incorrecto);
 		}
 
