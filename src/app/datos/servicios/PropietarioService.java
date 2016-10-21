@@ -10,5 +10,5 @@ public interface PropietarioService {
 
     public void modificarPropietario(Propietario propietario) throws PersistenciaException;
 
-    public Propietario obtenerPropietario(TipoDocumento tipoDocumento, Integer documento) throws PersistenciaException;
+    public Propietario obtenerPropietario(TipoDocumento tipoDocumento, String documento) throws PersistenciaException;
 }
