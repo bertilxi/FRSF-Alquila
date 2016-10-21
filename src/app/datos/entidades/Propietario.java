@@ -36,7 +36,7 @@ public class Propietario {
 	@Column(name = "telefono", length = 30)
 	private String telefono;
 	
-	@Column(name = "email", length = 30)	
+	@Column(name = "email", length = 30)
     private String email;
 
     //Reclaciones
@@ -53,7 +53,6 @@ public class Propietario {
     @Transient
     private ArrayList<Inmueble> inmuebles;
     
-
 	public Propietario() {
 		super();
 		this.inmuebles = new ArrayList<Inmueble>();

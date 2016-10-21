@@ -14,7 +14,7 @@ public class ResultadoCrearPropietario extends Resultado<ErrorResultadoCrearProp
 		Formato_Apellido_Incorrecto,
 		Formato_Telefono_Incorrecto,
 		Formato_Documento_Incorrecto,
-		Ya_Existe_Cliente
+		Ya_Existe_Propietario
 	}
 
 }

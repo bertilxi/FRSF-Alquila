@@ -1,4 +1,4 @@
-package test.app.logica.gestores.stubs;
+package test.app.logica.gestores.mocks;
 
 import org.hibernate.SessionFactory;
 
@@ -8,13 +8,13 @@ import app.datos.entidades.TipoDocumento;
 import app.datos.servicios.implementacion.PropietarioServiceJPA;
 import app.excepciones.PersistenciaException;
 
-public class PropietarioServiceStub extends PropietarioServiceJPA{
+public class PropietarioServiceMock extends PropietarioServiceJPA{
 
-	public PropietarioServiceStub(SessionFactory sessionFactory) {
+	public PropietarioServiceMock(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 
-	public PropietarioServiceStub() {
+	public PropietarioServiceMock() {
 		super(null);
 	}
 	
@@ -36,10 +36,10 @@ public class PropietarioServiceStub extends PropietarioServiceJPA{
 		String documentoExistente = "11111111";
 	
 		if(tipoDocumento.equals(tipoExistente)&&documento.equals(documentoExistente)) {
-			return true;
+			return new Propietario();
 		}
 		else {
-			return false;
+			return null;
 		}
 	}
 }
