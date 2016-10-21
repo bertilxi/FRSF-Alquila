@@ -17,7 +17,7 @@ public class Direccion {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; //ID
-	
+		
 	@Column(name = "numero", length = 30)
     private String numero;
 	
@@ -40,7 +40,6 @@ public class Direccion {
     @JoinColumn(name = "idlocalidad", referencedColumnName = "id", foreignKey = @ForeignKey(name = "direccion_idlocalidad_fk"))
     private Localidad localidad;
 
-	
 	public Direccion() {
 		super();
 	}

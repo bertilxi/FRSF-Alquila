@@ -1,6 +1,8 @@
 package app.datos.entidades;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,9 +19,21 @@ public class TipoDocumento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; //ID
 
-	@Enumerated
+	//TODO ver enum
+	@Column(name="tipo_documento_enum")
+	@Enumerated(EnumType.STRING)
     private TipoDocumentoStr tipo;
 
+	public TipoDocumento() {
+		super();
+	}
+
+	public TipoDocumento(Integer id, TipoDocumentoStr tipo) {
+		super();
+		this.id = id;
+		this.tipo = tipo;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -63,16 +77,4 @@ public class TipoDocumento {
 			return false;
 		return true;
 	}
-
-	public TipoDocumento() {
-		super();
-	}
-
-	public TipoDocumento(Integer id, TipoDocumentoStr tipo) {
-		super();
-		this.id = id;
-		this.tipo = tipo;
-	}
-
-
 }
