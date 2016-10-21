@@ -21,41 +21,41 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "propietario", uniqueConstraints = @UniqueConstraint(name = "propietario_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 public class Propietario {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //ID
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id; //ID
+
 	@Column(name = "nombre", length = 30)
-    private String nombre;
-	
+	private String nombre;
+
 	@Column(name = "apellido", length = 30)
-    private String apellido;
-	
+	private String apellido;
+
 	@Column(name = "numerodocumento", length = 30)
 	private String numeroDocumento;
-	
+
 	@Column(name = "telefono", length = 30)
 	private String telefono;
-	
+
 	@Column(name = "email", length = 30)
-    private String email;
+	private String email;
 
-    //Reclaciones
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_idtipo_fk"))
-    private TipoDocumento tipoDocumento;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_iddireccion_fk"))
-    private Direccion direccion;
+	//Reclaciones
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_idtipo_fk"))
+	private TipoDocumento tipoDocumento;
 
-    //Opcionales
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "propietario")
-    @Transient
-    private ArrayList<Inmueble> inmuebles;
-    
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_iddireccion_fk"))
+	private Direccion direccion;
+
+	//Opcionales
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "propietario")
+	@Transient
+	private ArrayList<Inmueble> inmuebles;
+
 	public Propietario() {
 		super();
-		this.inmuebles = new ArrayList<Inmueble>();
+		this.inmuebles = new ArrayList<>();
 	}
 
 	public Propietario(Integer id, String nombre, String apellido, String numeroDocumento, String telefono,
@@ -143,79 +143,56 @@ public class Propietario {
 	public void setInmuebles(ArrayList<Inmueble> inmuebles) {
 		this.inmuebles = inmuebles;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
-		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((inmuebles == null) ? 0 : inmuebles.hashCode());
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
-		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
 		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Propietario other = (Propietario) obj;
-		if (apellido == null) {
-			if (other.apellido != null)
+		if(id == null){
+			if(other.id != null){
 				return false;
-		} else if (!apellido.equals(other.apellido))
+			}
+		}
+		else if(!id.equals(other.id)){
 			return false;
-		if (direccion == null) {
-			if (other.direccion != null)
+		}
+		else{
+			return true;
+		}
+		if(numeroDocumento == null){
+			if(other.numeroDocumento != null){
 				return false;
-		} else if (!direccion.equals(other.direccion))
+			}
+		}
+		else if(!numeroDocumento.equals(other.numeroDocumento)){
 			return false;
-		if (email == null) {
-			if (other.email != null)
+		}
+		if(tipoDocumento == null){
+			if(other.tipoDocumento != null){
 				return false;
-		} else if (!email.equals(other.email))
+			}
+		}
+		else if(!tipoDocumento.equals(other.tipoDocumento)){
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (inmuebles == null) {
-			if (other.inmuebles != null)
-				return false;
-		} else if (!inmuebles.equals(other.inmuebles))
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (numeroDocumento == null) {
-			if (other.numeroDocumento != null)
-				return false;
-		} else if (!numeroDocumento.equals(other.numeroDocumento))
-			return false;
-		if (telefono == null) {
-			if (other.telefono != null)
-				return false;
-		} else if (!telefono.equals(other.telefono))
-			return false;
-		if (tipoDocumento == null) {
-			if (other.tipoDocumento != null)
-				return false;
-		} else if (!tipoDocumento.equals(other.tipoDocumento))
-			return false;
+		}
 		return true;
 	}
-
 }

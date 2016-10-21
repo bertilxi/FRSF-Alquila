@@ -12,17 +12,17 @@ import javax.persistence.Table;
 import app.datos.clases.TipoDocumentoStr;
 
 @Entity
-@Table(name="tipo_documento")
+@Table(name = "tipo_documento")
 public class TipoDocumento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //ID
+	private Integer id; //ID
 
 	//TODO ver enum
-	@Column(name="tipo_documento_enum")
+	@Column(name = "tipo_documento")
 	@Enumerated(EnumType.STRING)
-    private TipoDocumentoStr tipo;
+	private TipoDocumentoStr tipo;
 
 	public TipoDocumento() {
 		super();
@@ -33,7 +33,7 @@ public class TipoDocumento {
 		this.id = id;
 		this.tipo = tipo;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -61,20 +61,27 @@ public class TipoDocumento {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		TipoDocumento other = (TipoDocumento) obj;
-		if (id == null) {
-			if (other.id != null)
+		if(id == null){
+			if(other.id != null){
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		}
+		else if(!id.equals(other.id)){
 			return false;
-		if (tipo != other.tipo)
+		}
+		if(tipo != other.tipo){
 			return false;
+		}
 		return true;
 	}
 }

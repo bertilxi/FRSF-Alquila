@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -68,15 +69,15 @@ public class InmuebleBuscado {
 
 	//Relaciones
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "inmueble_buscado_localidad", joinColumns = @JoinColumn(name = "idlocalidad"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"))
+	@JoinTable(name = "inmueble_buscado_localidad", joinColumns = @JoinColumn(name = "idlocalidad"), foreignKey = @ForeignKey(name = "inmueble_buscado_localidad_idlocalidadfk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_inmueble_idinmueblefk"))
 	private ArrayList<Localidad> localidades;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "inmueble_buscado_barrio", joinColumns = @JoinColumn(name = "idbarrio"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"))
-	private ArrayList<Barrio> barrios; //Relacion muchos a muchos 
+	@JoinTable(name = "inmueble_buscado_barrio", joinColumns = @JoinColumn(name = "idbarrio"), foreignKey = @ForeignKey(name = "inmueble_buscado_barrio_idbarriofk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_barrio_idinmueblefk"))
+	private ArrayList<Barrio> barrios; //Relacion muchos a muchos
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "inmueble_buscado_tipo_inmueble", joinColumns = @JoinColumn(name = "idtipoinmueble"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"))
+	@JoinTable(name = "inmueble_buscado_tipo_inmueble", joinColumns = @JoinColumn(name = "idtipoinmueble"), foreignKey = @ForeignKey(name = "inmueble_buscado_tipo_idtipofk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_inmueble_idinmueblefk"))
 	private ArrayList<TipoInmueble> tiposInmueblesBuscados; //Relacion muchos a muchos
 
 	public InmuebleBuscado() {

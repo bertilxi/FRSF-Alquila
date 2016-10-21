@@ -14,18 +14,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "provincia")
 public class Provincia {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //ID
-	
-	@Column(name = "nombre", length = 30)
-    private String nombre;
 
-    //Relaciones
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id; //ID
+
+	@Column(name = "nombre", length = 30)
+	private String nombre;
+
+	//Relaciones
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idpais", referencedColumnName = "id", foreignKey = @ForeignKey(name = "provincia_idpais_fk"))
-    private Pais pais;
+	@JoinColumn(name = "idpais", referencedColumnName = "id", foreignKey = @ForeignKey(name = "provincia_idpais_fk"))
+	private Pais pais;
 
 	public Provincia() {
 		super();
@@ -37,29 +37,27 @@ public class Provincia {
 		this.nombre = nombre;
 		this.pais = pais;
 	}
-	
+
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public Provincia setNombre(String nombre) {
 		this.nombre = nombre;
+		return this;
 	}
 
 	public Pais getPais() {
 		return pais;
 	}
 
-	public void setPais(Pais pais) {
+	public Provincia setPais(Pais pais) {
 		this.pais = pais;
+		return this;
 	}
 
 	@Override
@@ -74,28 +72,40 @@ public class Provincia {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Provincia other = (Provincia) obj;
-		if (id == null) {
-			if (other.id != null)
+		if(id == null){
+			if(other.id != null){
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		}
+		else if(!id.equals(other.id)){
 			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
+		}
+		if(nombre == null){
+			if(other.nombre != null){
 				return false;
-		} else if (!nombre.equals(other.nombre))
+			}
+		}
+		else if(!nombre.equals(other.nombre)){
 			return false;
-		if (pais == null) {
-			if (other.pais != null)
+		}
+		if(pais == null){
+			if(other.pais != null){
 				return false;
-		} else if (!pais.equals(other.pais))
+			}
+		}
+		else if(!pais.equals(other.pais)){
 			return false;
+		}
 		return true;
 	}
 }

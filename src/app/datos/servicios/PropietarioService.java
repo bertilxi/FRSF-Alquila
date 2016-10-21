@@ -6,9 +6,11 @@ import app.excepciones.PersistenciaException;
 
 public interface PropietarioService {
 
-    public void guardarPropietario(Propietario propietario) throws PersistenciaException;
+	public void guardarPropietario(Propietario propietario) throws PersistenciaException;
 
-    public void modificarPropietario(Propietario propietario) throws PersistenciaException;
+	public void modificarPropietario(Propietario propietario) throws PersistenciaException;
 
-    public Propietario obtenerPropietario(TipoDocumento tipoDocumento, String documento) throws PersistenciaException;
+	public Propietario obtenerPropietario(TipoDocumento tipoDocumento, String documento) throws PersistenciaException;
+
+	public void eliminarPropietario(Propietario propietario) throws PersistenciaException;
 }

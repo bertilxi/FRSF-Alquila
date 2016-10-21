@@ -8,20 +8,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="medidas_inmueble")
+@Table(name = "medidas_inmueble")
 public class MedidasInmueble {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name="frente")
+
+	@Column(name = "frente")
 	private Double frente;
-	
-	@Column(name="fondo")
+
+	@Column(name = "fondo")
 	private Double fondo;
-	
-	@Column(name="superficie")
+
+	@Column(name = "superficie")
 	private Double superficie;
 
 	public MedidasInmueble() {
@@ -40,32 +40,36 @@ public class MedidasInmueble {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public MedidasInmueble setId(Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	public Double getFrente() {
 		return frente;
 	}
 
-	public void setFrente(Double frente) {
+	public MedidasInmueble setFrente(Double frente) {
 		this.frente = frente;
+		return this;
 	}
 
 	public Double getFondo() {
 		return fondo;
 	}
 
-	public void setFondo(Double fondo) {
+	public MedidasInmueble setFondo(Double fondo) {
 		this.fondo = fondo;
+		return this;
 	}
 
 	public Double getSuperficie() {
 		return superficie;
 	}
 
-	public void setSuperficie(Double superficie) {
+	public MedidasInmueble setSuperficie(Double superficie) {
 		this.superficie = superficie;
+		return this;
 	}
 
 	@Override
@@ -81,33 +85,51 @@ public class MedidasInmueble {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		MedidasInmueble other = (MedidasInmueble) obj;
-		if (fondo == null) {
-			if (other.fondo != null)
+		if(id == null){
+			if(other.id != null){
 				return false;
-		} else if (!fondo.equals(other.fondo))
+			}
+		}
+		else if(!id.equals(other.id)){
 			return false;
-		if (frente == null) {
-			if (other.frente != null)
+		}
+		else{
+			return true;
+		}
+		if(fondo == null){
+			if(other.fondo != null){
 				return false;
-		} else if (!frente.equals(other.frente))
+			}
+		}
+		else if(!fondo.equals(other.fondo)){
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		}
+		if(frente == null){
+			if(other.frente != null){
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		}
+		else if(!frente.equals(other.frente)){
 			return false;
-		if (superficie == null) {
-			if (other.superficie != null)
+		}
+		if(superficie == null){
+			if(other.superficie != null){
 				return false;
-		} else if (!superficie.equals(other.superficie))
+			}
+		}
+		else if(!superficie.equals(other.superficie)){
 			return false;
+		}
 		return true;
 	}
 }
