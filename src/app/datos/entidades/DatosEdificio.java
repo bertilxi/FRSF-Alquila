@@ -8,68 +8,67 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="datos_edificio")
+@Table(name = "datos_edificio")
 public class DatosEdificio {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(name="superficie")
-    private Double superficie; // en metros cuadrados
-    
-	@Column(name="antiguedad")
+	private Inmueble idInmueble;
+
+	@Column(name = "superficie")
+	private Double superficie; // en metros cuadrados
+
+	@Column(name = "antiguedad")
 	private Integer antiguedad; // en años
-	
-	@Column(name="dormitorios")
-    private Integer dormitorios;
-	
-	@Column(name="baños")
-    private Integer baños;
-	
-	@Column(name="garaje")
-    private Integer garaje;
-	
-	@Column(name="patio")
-    private Integer patio;
-	
-	@Column(name="piscina")
-    private Integer piscina;
-	
-	@Column(name="telefono")
-    private Boolean telefono;
-	
-	@Column(name="propiedad_horizontal")
-    private Boolean propiedadHorizontal;
-	
-	@Column(name="agua_corriente")
-    private Boolean aguaCorriente;
-	
-	@Column(name="cloacas")
-    private Boolean cloacas;
-	
-	@Column(name="gas_natural")
-    private Boolean gasNatural;
-	
-	@Column(name="agua_caliente")
-    private Boolean aguaCaliente;
-	
-	@Column(name="lavadero")
-    private Boolean lavadero;
-	
-	@Column(name="pavimento")
-    private Boolean pavimento;
+
+	@Column(name = "dormitorios")
+	private Integer dormitorios;
+
+	@Column(name = "baños")
+	private Integer baños;
+
+	@Column(name = "garaje")
+	private Integer garaje;
+
+	@Column(name = "patio")
+	private Integer patio;
+
+	@Column(name = "piscina")
+	private Integer piscina;
+
+	@Column(name = "telefono")
+	private Boolean telefono;
+
+	@Column(name = "propiedad_horizontal")
+	private Boolean propiedadHorizontal;
+
+	@Column(name = "agua_corriente")
+	private Boolean aguaCorriente;
+
+	@Column(name = "cloacas")
+	private Boolean cloacas;
+
+	@Column(name = "gas_natural")
+	private Boolean gasNatural;
+
+	@Column(name = "agua_caliente")
+	private Boolean aguaCaliente;
+
+	@Column(name = "lavadero")
+	private Boolean lavadero;
+
+	@Column(name = "pavimento")
+	private Boolean pavimento;
 
 	public DatosEdificio() {
 		super();
 	}
 
-	public DatosEdificio(Integer id, Double superficie, Integer antiguedad, Integer dormitorios, Integer baños,
+	public DatosEdificio(Double superficie, Integer antiguedad, Integer dormitorios, Integer baños,
 			Integer garaje, Integer patio, Integer piscina, Boolean telefono, Boolean propiedadHorizontal,
 			Boolean aguaCorriente, Boolean cloacas, Boolean gasNatural, Boolean aguaCaliente, Boolean lavadero,
 			Boolean pavimento) {
 		super();
-		this.id = id;
 		this.superficie = superficie;
 		this.antiguedad = antiguedad;
 		this.dormitorios = dormitorios;
@@ -87,12 +86,8 @@ public class DatosEdificio {
 		this.pavimento = pavimento;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	public Inmueble getId() {
+		return idInmueble;
 	}
 
 	public Double getSuperficie() {
@@ -227,7 +222,7 @@ public class DatosEdificio {
 		result = prime * result + ((dormitorios == null) ? 0 : dormitorios.hashCode());
 		result = prime * result + ((garaje == null) ? 0 : garaje.hashCode());
 		result = prime * result + ((gasNatural == null) ? 0 : gasNatural.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idInmueble == null) ? 0 : idInmueble.hashCode());
 		result = prime * result + ((lavadero == null) ? 0 : lavadero.hashCode());
 		result = prime * result + ((patio == null) ? 0 : patio.hashCode());
 		result = prime * result + ((pavimento == null) ? 0 : pavimento.hashCode());
@@ -240,93 +235,147 @@ public class DatosEdificio {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		DatosEdificio other = (DatosEdificio) obj;
-		if (aguaCaliente == null) {
-			if (other.aguaCaliente != null)
+		if(idInmueble == null){
+			if(other.idInmueble != null){
 				return false;
-		} else if (!aguaCaliente.equals(other.aguaCaliente))
+			}
+		}
+		else if(!idInmueble.equals(other.idInmueble)){
 			return false;
-		if (aguaCorriente == null) {
-			if (other.aguaCorriente != null)
+		}
+		else{
+			return true;
+		}
+		if(aguaCaliente == null){
+			if(other.aguaCaliente != null){
 				return false;
-		} else if (!aguaCorriente.equals(other.aguaCorriente))
+			}
+		}
+		else if(!aguaCaliente.equals(other.aguaCaliente)){
 			return false;
-		if (antiguedad == null) {
-			if (other.antiguedad != null)
+		}
+		if(aguaCorriente == null){
+			if(other.aguaCorriente != null){
 				return false;
-		} else if (!antiguedad.equals(other.antiguedad))
+			}
+		}
+		else if(!aguaCorriente.equals(other.aguaCorriente)){
 			return false;
-		if (baños == null) {
-			if (other.baños != null)
+		}
+		if(antiguedad == null){
+			if(other.antiguedad != null){
 				return false;
-		} else if (!baños.equals(other.baños))
+			}
+		}
+		else if(!antiguedad.equals(other.antiguedad)){
 			return false;
-		if (cloacas == null) {
-			if (other.cloacas != null)
+		}
+		if(baños == null){
+			if(other.baños != null){
 				return false;
-		} else if (!cloacas.equals(other.cloacas))
+			}
+		}
+		else if(!baños.equals(other.baños)){
 			return false;
-		if (dormitorios == null) {
-			if (other.dormitorios != null)
+		}
+		if(cloacas == null){
+			if(other.cloacas != null){
 				return false;
-		} else if (!dormitorios.equals(other.dormitorios))
+			}
+		}
+		else if(!cloacas.equals(other.cloacas)){
 			return false;
-		if (garaje == null) {
-			if (other.garaje != null)
+		}
+		if(dormitorios == null){
+			if(other.dormitorios != null){
 				return false;
-		} else if (!garaje.equals(other.garaje))
+			}
+		}
+		else if(!dormitorios.equals(other.dormitorios)){
 			return false;
-		if (gasNatural == null) {
-			if (other.gasNatural != null)
+		}
+		if(garaje == null){
+			if(other.garaje != null){
 				return false;
-		} else if (!gasNatural.equals(other.gasNatural))
+			}
+		}
+		else if(!garaje.equals(other.garaje)){
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		}
+		if(gasNatural == null){
+			if(other.gasNatural != null){
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		}
+		else if(!gasNatural.equals(other.gasNatural)){
 			return false;
-		if (lavadero == null) {
-			if (other.lavadero != null)
+		}
+		if(lavadero == null){
+			if(other.lavadero != null){
 				return false;
-		} else if (!lavadero.equals(other.lavadero))
+			}
+		}
+		else if(!lavadero.equals(other.lavadero)){
 			return false;
-		if (patio == null) {
-			if (other.patio != null)
+		}
+		if(patio == null){
+			if(other.patio != null){
 				return false;
-		} else if (!patio.equals(other.patio))
+			}
+		}
+		else if(!patio.equals(other.patio)){
 			return false;
-		if (pavimento == null) {
-			if (other.pavimento != null)
+		}
+		if(pavimento == null){
+			if(other.pavimento != null){
 				return false;
-		} else if (!pavimento.equals(other.pavimento))
+			}
+		}
+		else if(!pavimento.equals(other.pavimento)){
 			return false;
-		if (piscina == null) {
-			if (other.piscina != null)
+		}
+		if(piscina == null){
+			if(other.piscina != null){
 				return false;
-		} else if (!piscina.equals(other.piscina))
+			}
+		}
+		else if(!piscina.equals(other.piscina)){
 			return false;
-		if (propiedadHorizontal == null) {
-			if (other.propiedadHorizontal != null)
+		}
+		if(propiedadHorizontal == null){
+			if(other.propiedadHorizontal != null){
 				return false;
-		} else if (!propiedadHorizontal.equals(other.propiedadHorizontal))
+			}
+		}
+		else if(!propiedadHorizontal.equals(other.propiedadHorizontal)){
 			return false;
-		if (superficie == null) {
-			if (other.superficie != null)
+		}
+		if(superficie == null){
+			if(other.superficie != null){
 				return false;
-		} else if (!superficie.equals(other.superficie))
+			}
+		}
+		else if(!superficie.equals(other.superficie)){
 			return false;
-		if (telefono == null) {
-			if (other.telefono != null)
+		}
+		if(telefono == null){
+			if(other.telefono != null){
 				return false;
-		} else if (!telefono.equals(other.telefono))
+			}
+		}
+		else if(!telefono.equals(other.telefono)){
 			return false;
+		}
 		return true;
 	}
 }

@@ -35,7 +35,6 @@
         <mapping class="app.datos.entidades.Inmueble"/>
         <mapping class="app.datos.entidades.InmuebleBuscado"/>
         <mapping class="app.datos.entidades.Localidad"/>
-        <mapping class="app.datos.entidades.MedidasInmueble"/>
         <mapping class="app.datos.entidades.Orientacion"/>
         <mapping class="app.datos.entidades.Pais"/>
         <mapping class="app.datos.entidades.PDF"/>

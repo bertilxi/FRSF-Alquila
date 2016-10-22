@@ -12,11 +12,11 @@ import javax.persistence.Table;
 public class Pais {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //ID
-	
-	@Column(name = "nombre", length = 30)
-    private String nombre;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id; //ID
+
+	@Column(name = "nombre", length = 30, nullable = false)
+	private String nombre;
 
 	public Pais() {
 		super();
@@ -55,23 +55,35 @@ public class Pais {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Pais other = (Pais) obj;
-		if (id == null) {
-			if (other.id != null)
+		if(id == null){
+			if(other.id != null){
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		}
+		else if(!id.equals(other.id)){
 			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
+		}
+		else{
+			return true;
+		}
+		if(nombre == null){
+			if(other.nombre != null){
 				return false;
-		} else if (!nombre.equals(other.nombre))
+			}
+		}
+		else if(!nombre.equals(other.nombre)){
 			return false;
+		}
 		return true;
 	}
 }

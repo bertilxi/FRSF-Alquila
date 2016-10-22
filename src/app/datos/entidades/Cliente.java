@@ -66,40 +66,45 @@ public class Cliente {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public Cliente setNombre(String nombre) {
 		this.nombre = nombre;
+		return this;
 	}
 
 	public String getApellido() {
 		return apellido;
 	}
 
-	public void setApellido(String apellido) {
+	public Cliente setApellido(String apellido) {
 		this.apellido = apellido;
+		return this;
 	}
 
 	public String getNumeroDocumento() {
 		return numeroDocumento;
 	}
 
-	public void setNumeroDocumento(String numeroDocumento) {
+	public Cliente setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
+		return this;
 	}
 
 	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(String telefono) {
+	public Cliente setTelefono(String telefono) {
 		this.telefono = telefono;
+		return this;
 	}
 
 	public TipoDocumento getTipoDocumento() {
 		return tipoDocumento;
 	}
 
-	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+	public Cliente setTipoDocumento(TipoDocumento tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+		return this;
 	}
 
 	@Override

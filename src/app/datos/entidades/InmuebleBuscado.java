@@ -19,7 +19,7 @@ public class InmuebleBuscado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Cliente idCliente;
 
 	@Column(name = "precio_max")
 	private Double precioMax;
@@ -86,13 +86,12 @@ public class InmuebleBuscado {
 		this.tiposInmueblesBuscados = new ArrayList<>();
 	}
 
-	public InmuebleBuscado(Integer id, Double precioMax, Double superficieMin, Integer antiguedadMax,
+	public InmuebleBuscado(Double precioMax, Double superficieMin, Integer antiguedadMax,
 			Integer dormitoriosMin, Integer bañosMin, Boolean garaje, Boolean patio, Boolean piscina,
 			Boolean propiedadHorizontal, Boolean aguaCorriente, Boolean cloacas, Boolean gasNatural,
 			Boolean aguaCaliente, Boolean lavadero, Boolean pavimento, ArrayList<Localidad> localidades,
 			ArrayList<Barrio> barrios, ArrayList<TipoInmueble> tiposInmueblesBuscados) {
 		super();
-		this.id = id;
 		this.precioMax = precioMax;
 		this.superficieMin = superficieMin;
 		this.antiguedadMax = antiguedadMax;
@@ -113,12 +112,8 @@ public class InmuebleBuscado {
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	public Cliente getId() {
+		return idCliente;
 	}
 
 	public Double getPrecioMax() {
@@ -278,7 +273,7 @@ public class InmuebleBuscado {
 		result = prime * result + ((dormitoriosMin == null) ? 0 : dormitoriosMin.hashCode());
 		result = prime * result + ((garaje == null) ? 0 : garaje.hashCode());
 		result = prime * result + ((gasNatural == null) ? 0 : gasNatural.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idCliente == null) ? 0 : idCliente.hashCode());
 		result = prime * result + ((lavadero == null) ? 0 : lavadero.hashCode());
 		result = prime * result + ((localidades == null) ? 0 : localidades.hashCode());
 		result = prime * result + ((patio == null) ? 0 : patio.hashCode());
@@ -375,12 +370,12 @@ public class InmuebleBuscado {
 		else if(!gasNatural.equals(other.gasNatural)){
 			return false;
 		}
-		if(id == null){
-			if(other.id != null){
+		if(idCliente == null){
+			if(other.idCliente != null){
 				return false;
 			}
 		}
-		else if(!id.equals(other.id)){
+		else if(!idCliente.equals(other.idCliente)){
 			return false;
 		}
 		if(lavadero == null){
