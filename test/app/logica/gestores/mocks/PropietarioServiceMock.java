@@ -32,7 +32,7 @@ public class PropietarioServiceMock extends PropietarioServiceImpl {
 
 	@Override
 	public Propietario obtenerPropietario(TipoDocumento tipoDocumento, String documento) throws PersistenciaException {
-		TipoDocumentoStr tipoExistente = new TipoDocumento().getTipo().DNI;
+		TipoDocumentoStr tipoExistente = TipoDocumentoStr.DNI;
 		String documentoExistente = "11111111";
 
 		if(tipoDocumento.equals(tipoExistente) && documento.equals(documentoExistente)){
