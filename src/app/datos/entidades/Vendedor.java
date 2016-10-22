@@ -123,12 +123,7 @@ public class Vendedor {
 
         Vendedor vendedor = (Vendedor) o;
 
-        if (!getId().equals(vendedor.getId())) return false;
-        if (!getNombre().equals(vendedor.getNombre())) return false;
-        if (!getApellido().equals(vendedor.getApellido())) return false;
         if (!getNumeroDocumento().equals(vendedor.getNumeroDocumento())) return false;
-        if (!getPassword().equals(vendedor.getPassword())) return false;
-        if (!getSalt().equals(vendedor.getSalt())) return false;
         if (!getTipoDocumento().equals(vendedor.getTipoDocumento())) return false;
         return getVentas() != null ? getVentas().equals(vendedor.getVentas()) : vendedor.getVentas() == null;
 

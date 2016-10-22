@@ -75,6 +75,6 @@ public class AltaPropietarioController extends BaseController{
         //Direccion direccion = new Direccion(null, alturaCalle, new Calle(null,calle), )
 
         TipoDocumento tipoDocumento = new TipoDocumento(null,comboBoxTipoDocumento.getValue());
-        Propietario propietario = new Propietario(null, nombre, apellido, numeroDocumento, calle, alturaCalle )
+        //Propietario propietario = new Propietario(null, nombre, apellido, numeroDocumento, calle, alturaCalle );
     }
 }
