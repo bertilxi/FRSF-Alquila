@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "cliente", uniqueConstraints = @UniqueConstraint(name = "cliente_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
+@Table(name = "cliente", uniqueConstraints = @UniqueConstraint(name = "cliente_numerodocumento_idtipodocumento_uk", columnNames = { "numerodocumento", "idtipodocumento" }))
 public class Cliente {
 
 	@Id
@@ -21,13 +21,13 @@ public class Cliente {
 	@Column(name = "id")
 	private Integer id; //ID
 
-	@Column(name = "nombre", length = 100)
+	@Column(name = "nombre", length = 100, nullable = true)
 	private String nombre;
 
-	@Column(name = "apellido", length = 100)
+	@Column(name = "apellido", length = 100, nullable = true)
 	private String apellido;
 
-	@Column(name = "numerodocumento", length = 20)
+	@Column(name = "numerodocumento", length = 20, nullable = true)
 	private String numeroDocumento;
 
 	@Column(name = "telefono", length = 20)
@@ -36,7 +36,7 @@ public class Cliente {
 	//Relaciones
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idtipodocumento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "cliente_idtipodocumento_fk"))
+	@JoinColumn(name = "idtipodocumento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "cliente_idtipodocumento_fk"), nullable = true)
 	private TipoDocumento tipoDocumento;
 
 	//Opcionales
@@ -127,14 +127,6 @@ public class Cliente {
 			return false;
 		}
 		Cliente other = (Cliente) obj;
-		if(apellido == null){
-			if(other.apellido != null){
-				return false;
-			}
-		}
-		else if(!apellido.equals(other.apellido)){
-			return false;
-		}
 		if(id == null){
 			if(other.id != null){
 				return false;
@@ -143,13 +135,8 @@ public class Cliente {
 		else if(!id.equals(other.id)){
 			return false;
 		}
-		if(nombre == null){
-			if(other.nombre != null){
-				return false;
-			}
-		}
-		else if(!nombre.equals(other.nombre)){
-			return false;
+		else{
+			return true;
 		}
 		if(numeroDocumento == null){
 			if(other.numeroDocumento != null){
@@ -157,6 +144,22 @@ public class Cliente {
 			}
 		}
 		else if(!numeroDocumento.equals(other.numeroDocumento)){
+			return false;
+		}
+		if(apellido == null){
+			if(other.apellido != null){
+				return false;
+			}
+		}
+		else if(!apellido.equals(other.apellido)){
+			return false;
+		}
+		if(nombre == null){
+			if(other.nombre != null){
+				return false;
+			}
+		}
+		else if(!nombre.equals(other.nombre)){
 			return false;
 		}
 		if(telefono == null){
