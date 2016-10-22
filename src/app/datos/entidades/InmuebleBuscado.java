@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +21,12 @@ public class InmuebleBuscado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id; //ID
+
+	@Id
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idcliente", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_buscado_idcliente_fk"), nullable = false)
 	private Cliente idCliente;
 
 	@Column(name = "precio_max")
@@ -112,8 +120,16 @@ public class InmuebleBuscado {
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
 	}
 
-	public Cliente getId() {
+	public Integer getId() {
+		return id;
+	}
+
+	public Cliente getCliente() {
 		return idCliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.idCliente = cliente;
 	}
 
 	public Double getPrecioMax() {
@@ -273,6 +289,7 @@ public class InmuebleBuscado {
 		result = prime * result + ((dormitoriosMin == null) ? 0 : dormitoriosMin.hashCode());
 		result = prime * result + ((garaje == null) ? 0 : garaje.hashCode());
 		result = prime * result + ((gasNatural == null) ? 0 : gasNatural.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((idCliente == null) ? 0 : idCliente.hashCode());
 		result = prime * result + ((lavadero == null) ? 0 : lavadero.hashCode());
 		result = prime * result + ((localidades == null) ? 0 : localidades.hashCode());
@@ -298,6 +315,25 @@ public class InmuebleBuscado {
 			return false;
 		}
 		InmuebleBuscado other = (InmuebleBuscado) obj;
+		if(id == null){
+			if(other.id != null){
+				return false;
+			}
+		}
+		else if(!id.equals(other.id)){
+			return false;
+		}
+		if(idCliente == null){
+			if(other.idCliente != null){
+				return false;
+			}
+		}
+		else if(!idCliente.equals(other.idCliente)){
+			return false;
+		}
+		else{
+			return true;
+		}
 		if(aguaCaliente == null){
 			if(other.aguaCaliente != null){
 				return false;
@@ -368,14 +404,6 @@ public class InmuebleBuscado {
 			}
 		}
 		else if(!gasNatural.equals(other.gasNatural)){
-			return false;
-		}
-		if(idCliente == null){
-			if(other.idCliente != null){
-				return false;
-			}
-		}
-		else if(!idCliente.equals(other.idCliente)){
 			return false;
 		}
 		if(lavadero == null){
