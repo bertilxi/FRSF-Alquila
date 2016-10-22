@@ -1,7 +1,14 @@
 package app.logica.resultados;
 
-/**
- * Created by fer on 19/10/16.
- */
-public class ResultadoAutenticacion {
+import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
+
+public class ResultadoAutenticacion extends Resultado<ErrorAutenticacion> {
+
+	public ResultadoAutenticacion(ErrorAutenticacion... errores) {
+		super(errores);
+	}
+
+	public enum ErrorAutenticacion {
+		Datos_Incorrectos
+	}
 }

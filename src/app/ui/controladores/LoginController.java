@@ -4,10 +4,10 @@ import app.datos.clases.DatosLogin;
 import app.excepciones.ManejadorExcepciones;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
-import app.logica.resultados.ResultadoLogin;
-import app.logica.resultados.ResultadoLogin.ErrorResultadoLogin;
+import app.logica.resultados.ResultadoAutenticacion;
+import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 import app.ui.componentes.VentanaError;
-import app.ui.controladores.Resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -40,7 +40,7 @@ public class LoginController extends WindowTitleController{
         CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
         //borrar
 
-        ResultadoLogin resultado = null;
+        ResultadoAutenticacion resultado = null;
         Boolean hayErrores;
         DatosLogin datos;
         String errores = "";
@@ -68,7 +68,7 @@ public class LoginController extends WindowTitleController{
         //Tratamiento de errores
         hayErrores = resultado.hayErrores();
         if (hayErrores) {
-            for (ErrorResultadoLogin r : resultado.getErrores()) {
+            for (ErrorAutenticacion r : resultado.getErrores()) {
                 switch (r) {
                     case Datos_Incorrectos:
                         errores += "Datos inválidos al iniciar sesión.\n";

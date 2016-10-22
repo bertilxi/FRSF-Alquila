@@ -73,7 +73,7 @@ public class InmuebleBuscado {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_barrio", joinColumns = @JoinColumn(name = "idbarrio"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"))
-	private ArrayList<Barrio> barrios; //Relacion muchos a muchos 
+	private ArrayList<Barrio> barrios; //Relacion muchos a muchos
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_tipo_inmueble", joinColumns = @JoinColumn(name = "idtipoinmueble"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"))
@@ -391,7 +391,7 @@ public class InmuebleBuscado {
 		else if(!lavadero.equals(other.lavadero)){
 			return false;
 		}
-		if(localidad == null){
+		if(localidades == null){
 			if(other.localidades != null){
 				return false;
 			}

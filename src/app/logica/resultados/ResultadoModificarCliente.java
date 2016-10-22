@@ -1,14 +1,14 @@
 package app.logica.resultados;
 
-import app.logica.resultados.ResultadoModificarCliente.ErrorResultadoModificarCliente;
+import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 
-public class ResultadoModificarCliente extends Resultado<ErrorResultadoModificarCliente>{
+public class ResultadoModificarCliente extends Resultado<ErrorModificarCliente>{
 
-	public ResultadoModificarCliente(ErrorResultadoModificarCliente... errores) {
+	public ResultadoModificarCliente(ErrorModificarCliente... errores) {
 		super(errores);
 	}
 
-	public enum ErrorResultadoModificarCliente {
+	public enum ErrorModificarCliente {
 
 		Formato_Nombre_Incorrecto,
 		Formato_Apellido_Incorrecto,

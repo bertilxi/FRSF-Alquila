@@ -1,6 +1,6 @@
-package app.ui.controladores.Resultado;
+package app.ui.controladores.resultado;
 
-import app.ui.controladores.Resultado.ResultadoControlador.ErrorResultadoLogin;
+import app.ui.controladores.resultado.ResultadoControlador.ErrorResultadoLogin;
 
 
 public class ResultadoControlador extends Resultado<ErrorResultadoLogin> {

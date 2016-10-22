@@ -1,20 +1,21 @@
 package app.logica;
 
-import app.datos.clases.DatosLogin;
-import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorLogin;
-import app.logica.resultados.ResultadoLogin;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import app.datos.clases.DatosLogin;
+import app.excepciones.PersistenciaException;
+import app.logica.gestores.GestorVendedor;
+import app.logica.resultados.ResultadoAutenticacion;
 
 @Service
 public class CoordinadorJavaFX {
 
-    @Resource
-    GestorLogin gestorLogin;
+	@Resource
+	GestorVendedor gestorVendedor;
 
-    public ResultadoLogin loguearVendedor(DatosLogin login) throws PersistenciaException {
-        return gestorLogin.loguearVendedor(login);
-    }
+	public ResultadoAutenticacion loguearVendedor(DatosLogin login) throws PersistenciaException {
+		return gestorVendedor.autenticarVendedor(login);
+	}
 }

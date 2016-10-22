@@ -1,13 +1,14 @@
 package app.logica.resultados;
-import app.logica.resultados.ResultadoModificarPropietario.ErrorResultadoModificarPropietario;
 
-public class ResultadoModificarPropietario extends Resultado<ErrorResultadoModificarPropietario>{
+import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
 
-	public ResultadoModificarPropietario(ErrorResultadoModificarPropietario... errores) {
+public class ResultadoModificarPropietario extends Resultado<ErrorModificarPropietario> {
+
+	public ResultadoModificarPropietario(ErrorModificarPropietario... errores) {
 		super(errores);
 	}
 
-	public enum ErrorResultadoModificarPropietario {
+	public enum ErrorModificarPropietario {
 
 		Formato_Nombre_Incorrecto,
 		Formato_Apellido_Incorrecto,

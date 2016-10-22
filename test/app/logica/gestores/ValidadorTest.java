@@ -1,4 +1,4 @@
-package test.app.logica.gestores;
+package app.logica.gestores;
 
 public class ValidadorTest {
 

@@ -15,12 +15,12 @@ import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
 @Repository
-public class VendedorServiceJPA implements VendedorService {
+public class VendedorServiceImpl implements VendedorService {
 
 	private SessionFactory sessionFactory;
 
 	@Autowired
-	public VendedorServiceJPA(SessionFactory sessionFactory) {
+	public VendedorServiceImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
