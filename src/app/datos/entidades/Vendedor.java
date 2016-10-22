@@ -1,7 +1,10 @@
 package app.datos.entidades;
 
+import app.datos.clases.Estado;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.function.BooleanSupplier;
 
 @NamedQuery(name="obtenerVendedor", query="SELECT v FROM Vendedor v WHERE numeroDocumento = :documento AND tipoDocumento.tipo = :tipoDocumento")
 @Entity
@@ -35,6 +38,9 @@ public class Vendedor {
     @Transient
     private ArrayList<Venta> ventas;
 
+    // baja
+    private Estado estado;
+
     public Vendedor() {
 		super();
 		this.ventas = new ArrayList<Venta>();
@@ -56,64 +62,72 @@ public class Vendedor {
         return id;
     }
 
-    public void setId(Integer id) {
+    public Vendedor setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public Vendedor setNombre(String nombre) {
         this.nombre = nombre;
+        return this;
     }
 
     public String getApellido() {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
+    public Vendedor setApellido(String apellido) {
         this.apellido = apellido;
+        return this;
     }
 
     public String getNumeroDocumento() {
         return numeroDocumento;
     }
 
-    public void setNumeroDocumento(String numeroDocumento) {
+    public Vendedor setNumeroDocumento(String numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public Vendedor setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public Vendedor setSalt(String salt) {
         this.salt = salt;
+        return this;
     }
 
     public TipoDocumento getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+    public Vendedor setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+        return this;
     }
 
     public ArrayList<Venta> getVentas() {
         return ventas;
     }
 
-    public void setVentas(ArrayList<Venta> ventas) {
+    public Vendedor setVentas(ArrayList<Venta> ventas) {
         this.ventas = ventas;
+        return this;
     }
 
     @Override
