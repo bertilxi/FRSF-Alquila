@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import app.datos.entidades.Cliente;
 import app.datos.servicios.ClienteService;
 import app.excepciones.PersistenciaException;
+import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
-import app.logica.validadores.ValidadorFormato;
 
 @Service
 public class GestorCliente {
@@ -21,25 +21,22 @@ public class GestorCliente {
 	@Resource
 	private ClienteService persistidorCliente;
 
-	@Resource
-	private ValidadorFormato validador;
-
 	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorCrearCliente> errores = new ArrayList<>();
 
-		if(!validador.validarNombre(cliente.getNombre())){
+		if(!ValidadorFormato.validarNombre(cliente.getNombre())){
 			errores.add(ErrorCrearCliente.Formato_Nombre_Incorrecto);
 		}
 
-		if(!validador.validarApellido(cliente.getApellido())){
+		if(!ValidadorFormato.validarApellido(cliente.getApellido())){
 			errores.add(ErrorCrearCliente.Formato_Apellido_Incorrecto);
 		}
 
-		if(!validador.validarTelefono(cliente.getTelefono())){
+		if(!ValidadorFormato.validarTelefono(cliente.getTelefono())){
 			errores.add(ErrorCrearCliente.Formato_Telefono_Incorrecto);
 		}
 
-		if(!validador.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
+		if(!ValidadorFormato.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
 			errores.add(ErrorCrearCliente.Formato_Documento_Incorrecto);
 		}
 
@@ -57,19 +54,19 @@ public class GestorCliente {
 	public ResultadoModificarCliente modificarCliente(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorModificarCliente> errores = new ArrayList<>();
 
-		if(!validador.validarNombre(cliente.getNombre())){
+		if(!ValidadorFormato.validarNombre(cliente.getNombre())){
 			errores.add(ErrorModificarCliente.Formato_Nombre_Incorrecto);
 		}
 
-		if(!validador.validarApellido(cliente.getApellido())){
+		if(!ValidadorFormato.validarApellido(cliente.getApellido())){
 			errores.add(ErrorModificarCliente.Formato_Apellido_Incorrecto);
 		}
 
-		if(!validador.validarTelefono(cliente.getTelefono())){
+		if(!ValidadorFormato.validarTelefono(cliente.getTelefono())){
 			errores.add(ErrorModificarCliente.Formato_Telefono_Incorrecto);
 		}
 
-		if(!validador.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
+		if(!ValidadorFormato.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
 			errores.add(ErrorModificarCliente.Formato_Documento_Incorrecto);
 		}
 

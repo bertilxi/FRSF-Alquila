@@ -12,12 +12,12 @@ import app.datos.entidades.Propietario;
 import app.datos.servicios.ClienteService;
 import app.datos.servicios.PropietarioService;
 import app.excepciones.PersistenciaException;
+import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
-import app.logica.validadores.ValidadorFormato;
 
 @Service
 public class GestorPropietario {
@@ -28,33 +28,30 @@ public class GestorPropietario {
 	@Resource
 	private ClienteService persistidorCliente;
 
-	@Resource
-	private ValidadorFormato validador;
-
 	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
 
-		if(!validador.validarNombre(propietario.getNombre())){
+		if(!ValidadorFormato.validarNombre(propietario.getNombre())){
 			errores.add(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
 		}
 
-		if(!validador.validarApellido(propietario.getApellido())){
+		if(!ValidadorFormato.validarApellido(propietario.getApellido())){
 			errores.add(ErrorCrearPropietario.Formato_Apellido_Incorrecto);
 		}
 
-		if(!validador.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
+		if(!ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
 			errores.add(ErrorCrearPropietario.Formato_Documento_Incorrecto);
 		}
 
-		if(!validador.validarTelefono(propietario.getTelefono())){
+		if(!ValidadorFormato.validarTelefono(propietario.getTelefono())){
 			errores.add(ErrorCrearPropietario.Formato_Telefono_Incorrecto);
 		}
 
-		if(!validador.validarEmail(propietario.getEmail())){
+		if(!ValidadorFormato.validarEmail(propietario.getEmail())){
 			errores.add(ErrorCrearPropietario.Formato_Email_Incorrecto);
 		}
 
-		if(!validador.validarDireccion(propietario.getDireccion())){
+		if(!ValidadorFormato.validarDireccion(propietario.getDireccion())){
 			errores.add(ErrorCrearPropietario.Formato_Direccion_Incorrecto);
 		}
 

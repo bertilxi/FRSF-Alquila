@@ -1,4 +1,4 @@
-package app.logica.validadores;
+package app.logica;
 
 import java.util.regex.Pattern;
 
@@ -10,13 +10,8 @@ import app.datos.entidades.TipoDocumento;
 @Service
 public class ValidadorFormato {
 
-	private Pattern pat;
-
-	public ValidadorFormato() {
-		super();
-	}
-
-	public Boolean validarDocumento(TipoDocumento tipo, String numeroDocumento) {
+	public static Boolean validarDocumento(TipoDocumento tipo, String numeroDocumento) {
+		Pattern pat;
 
 		switch(tipo.getTipo()) {
 		case DNI:
@@ -41,30 +36,29 @@ public class ValidadorFormato {
 		return pat.matcher(numeroDocumento).matches();
 	}
 
-	public Boolean validarNombre(String nombre) {
-		pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,30}");
-
+	public static Boolean validarNombre(String nombre) {
+		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,30}");
 		return pat.matcher(nombre).matches();
 	}
 
-	public Boolean validarApellido(String apellido) {
-
+	public static Boolean validarApellido(String apellido) {
 		return validarNombre(apellido);
 	}
 
-	public Boolean validarEmail(String email) {
-		pat = Pattern.compile("([0-9a-zA-Z]+(.[0-9a-zA-Z]+)*@[0-9a-zA-Z]+(.[0-9a-zA-Z]+)*(.[a-z]{2,4})){0,30}");
+	public static Boolean validarEmail(String email) {
+		Pattern pat = Pattern.compile("([0-9a-zA-Z]+(.[0-9a-zA-Z]+)*@[0-9a-zA-Z]+(.[0-9a-zA-Z]+)*(.[a-z]{2,4})){0,30}");
 
 		return pat.matcher(email).matches();
 	}
 
-	public Boolean validarTelefono(String telefono) {
-		pat = Pattern.compile("[0-9\\-]{0,20}");
+	public static Boolean validarTelefono(String telefono) {
+		Pattern pat = Pattern.compile("[0-9\\-]{0,20}");
 
 		return pat.matcher(telefono).matches();
 	}
 
-	public Boolean validarDireccion(Direccion direccion) {
+	public static Boolean validarDireccion(Direccion direccion) {
+		Pattern pat;
 
 		if(direccion == null){
 			return false;
