@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import app.datos.entidades.Cliente;
 import app.datos.servicios.ClienteService;
+import app.datos.servicios.FiltroCliente;
 import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearCliente;
@@ -40,7 +41,7 @@ public class GestorCliente {
 			errores.add(ErrorCrearCliente.Formato_Documento_Incorrecto);
 		}
 
-		if(null != persistidorCliente.obtenerCliente(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
+		if(null != persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()))){
 			errores.add(ErrorCrearCliente.Ya_Existe_Cliente);
 		}
 
@@ -70,7 +71,7 @@ public class GestorCliente {
 			errores.add(ErrorModificarCliente.Formato_Documento_Incorrecto);
 		}
 
-		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(cliente.getTipoDocumento(), cliente.getNumeroDocumento());
+		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
 		if(null != clienteAuxiliar && !cliente.getId().equals(clienteAuxiliar.getId())){
 			errores.add(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 		}

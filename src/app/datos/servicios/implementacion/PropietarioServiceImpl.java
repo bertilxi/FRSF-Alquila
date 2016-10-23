@@ -9,14 +9,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import app.datos.entidades.Propietario;
-import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
+import app.datos.servicios.FiltroPropietario;
+import app.datos.servicios.FiltroVendedor;
 import app.datos.servicios.PropietarioService;
+import app.datos.servicios.VendedorService;
 import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
 @Repository
-public class PropietarioServiceImpl implements PropietarioService {
+public class PropietarioServiceImpl implements PropietarioService, VendedorService {
 
 	private SessionFactory sessionFactory;
 
@@ -54,11 +56,11 @@ public class PropietarioServiceImpl implements PropietarioService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Vendedor obtenerVendedor(TipoDocumento tipoDocumento, Integer documento) throws PersistenciaException {
+	public Vendedor obtenerVendedor(FiltroVendedor filtro) throws PersistenciaException {
 		Vendedor vendedor = null;
 		Session session = getSessionFactory().getCurrentSession();
 		try{
-			vendedor = (Vendedor) session.getNamedQuery("obtenerVendedor").setParameter("tipoDocumento", tipoDocumento.getTipo()).setParameter("documento", documento).uniqueResult();
+			vendedor = (Vendedor) session.getNamedQuery("obtenerVendedor").setParameter("tipoDocumento", filtro.getTipoDocumento()).setParameter("documento", filtro.getDocumento()).uniqueResult();
 		} catch(NoResultException e){
 			return null;
 		} catch(Exception e){
@@ -80,7 +82,7 @@ public class PropietarioServiceImpl implements PropietarioService {
 	}
 
 	@Override
-	public Propietario obtenerPropietario(TipoDocumento tipoDocumento, String documento) throws PersistenciaException {
+	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.ClienteService;
+import app.datos.servicios.FiltroCliente;
+import app.datos.servicios.FiltroPropietario;
 import app.datos.servicios.PropietarioService;
 import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
@@ -55,7 +57,7 @@ public class GestorPropietario {
 			errores.add(ErrorCrearPropietario.Formato_Direccion_Incorrecto);
 		}
 
-		if(persistidorPropietario.obtenerPropietario(propietario.getTipoDocumento(), propietario.getNumeroDocumento()) != null){
+		if(persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento())) != null){
 			errores.add(ErrorCrearPropietario.Ya_Existe_Propietario);
 		}
 
@@ -104,7 +106,7 @@ public class GestorPropietario {
 			errores.add(ErrorModificarCliente.Formato_Documento_Incorrecto);
 		}
 
-		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(cliente.getTipoDocumento(), cliente.getNumeroDocumento());
+		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
 		if(null != clienteAuxiliar && !cliente.getId().equals(clienteAuxiliar.getId())){
 			errores.add(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 		}
