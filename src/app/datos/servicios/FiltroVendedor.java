@@ -9,6 +9,9 @@ public class FiltroVendedor {
 
 	public FiltroVendedor(TipoDocumentoStr tipoDocumento, String documento) {
 		super();
+		if(tipoDocumento == null || documento == null){
+			throw new NullPointerException();
+		}
 		this.tipoDocumento = tipoDocumento;
 		this.documento = documento;
 	}
