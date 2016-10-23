@@ -8,24 +8,34 @@ import org.mockito.Mockito;
 
 import app.datos.entidades.Cliente;
 import app.logica.resultados.ResultadoCrearCliente;
-import app.logica.resultados.ResultadoCrearCliente.ErrorResultadoCrearCliente;
+import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 import app.logica.resultados.ResultadoModificarCliente;
-import app.logica.resultados.ResultadoModificarCliente.ErrorResultadoModificarCliente;
+import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 
 public class GestorClienteTest {
 
 	// Para crearCliente
-	private static final ResultadoCrearCliente resultadoCrearNombreIncorrecto = new ResultadoCrearCliente(ErrorResultadoCrearCliente.Formato_Nombre_Incorrecto);
-	private static final ResultadoCrearCliente resultadoCrearApellidoIncorrecto = new ResultadoCrearCliente(ErrorResultadoCrearCliente.Formato_Apellido_Incorrecto);
-	private static final ResultadoCrearCliente resultadoCrearDocumentoIncorrecto = new ResultadoCrearCliente(ErrorResultadoCrearCliente.Formato_Documento_Incorrecto);
-	private static final ResultadoCrearCliente resultadoCrearTelefonoIncorrecto = new ResultadoCrearCliente(ErrorResultadoCrearCliente.Formato_Telefono_Incorrecto);
-	private static final ResultadoCrearCliente resultadoCrearYaExiste = new ResultadoCrearCliente(ErrorResultadoCrearCliente.Ya_Existe_Cliente);
+	private static final ResultadoCrearCliente resultadoCrearNombreIncorrecto =
+            new ResultadoCrearCliente(ErrorCrearCliente.Formato_Nombre_Incorrecto);
+	private static final ResultadoCrearCliente resultadoCrearApellidoIncorrecto =
+            new ResultadoCrearCliente(ErrorCrearCliente.Formato_Apellido_Incorrecto);
+	private static final ResultadoCrearCliente resultadoCrearDocumentoIncorrecto =
+            new ResultadoCrearCliente(ErrorCrearCliente.Formato_Documento_Incorrecto);
+	private static final ResultadoCrearCliente resultadoCrearTelefonoIncorrecto =
+            new ResultadoCrearCliente(ErrorCrearCliente.Formato_Telefono_Incorrecto);
+	private static final ResultadoCrearCliente resultadoCrearYaExiste =
+            new ResultadoCrearCliente(ErrorCrearCliente.Ya_Existe_Cliente);
 	// Para modificarCliente
-	private static final ResultadoModificarCliente resultadoModificarApellidoIncorrecto = new ResultadoModificarCliente(ErrorResultadoModificarCliente.Formato_Apellido_Incorrecto);
-	private static final ResultadoModificarCliente resultadoModificarDocumentoIncorrecto = new ResultadoModificarCliente(ErrorResultadoModificarCliente.Formato_Documento_Incorrecto);
-	private static final ResultadoModificarCliente resultadoModificarNombreIncorrecto = new ResultadoModificarCliente(ErrorResultadoModificarCliente.Formato_Nombre_Incorrecto);
-	private static final ResultadoModificarCliente resultadoModificarTelefonoIncorrecto = new ResultadoModificarCliente(ErrorResultadoModificarCliente.Formato_Telefono_Incorrecto);
-	private static final ResultadoModificarCliente resultadoModificarYaSePoseeMismoDocumento = new ResultadoModificarCliente(ErrorResultadoModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
+	private static final ResultadoModificarCliente resultadoModificarApellidoIncorrecto =
+            new ResultadoModificarCliente(ErrorModificarCliente.Formato_Apellido_Incorrecto);
+	private static final ResultadoModificarCliente resultadoModificarDocumentoIncorrecto =
+            new ResultadoModificarCliente(ErrorModificarCliente.Formato_Documento_Incorrecto);
+	private static final ResultadoModificarCliente resultadoModificarNombreIncorrecto =
+            new ResultadoModificarCliente(ErrorModificarCliente.Formato_Nombre_Incorrecto);
+	private static final ResultadoModificarCliente resultadoModificarTelefonoIncorrecto =
+            new ResultadoModificarCliente(ErrorModificarCliente.Formato_Telefono_Incorrecto);
+	private static final ResultadoModificarCliente resultadoModificarYaSePoseeMismoDocumento =
+            new ResultadoModificarCliente(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 
 	@Mock
 	private static GestorCliente gestorClienteMock;

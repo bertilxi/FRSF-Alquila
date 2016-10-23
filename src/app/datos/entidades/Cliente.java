@@ -66,6 +66,11 @@ public class Cliente implements Serializable {
 		return id;
 	}
 
+	public Cliente setId(Integer id){
+        this.id = id;
+        return this;
+    }
+
 	public String getNombre() {
 		return nombre;
 	}
