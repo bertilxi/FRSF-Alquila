@@ -10,23 +10,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "calle")
+@Table(name = "calle", uniqueConstraints = @UniqueConstraint(name = "calle_nombre_idlocalidad_uk", columnNames = { "nombre", "idlocalidad" }))
 public class Calle {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //ID
-	
-	@Column(name = "nombre", length = 30)
-    private String nombre;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id; //ID
+
+	@Column(name = "nombre", length = 30, nullable = false)
+	private String nombre;
 
 	//Relaciones
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idlocalidad", referencedColumnName = "id", foreignKey = @ForeignKey(name = "calle_idlocalidad_fk"))
+	@JoinColumn(name = "idlocalidad", referencedColumnName = "id", foreignKey = @ForeignKey(name = "calle_idlocalidad_fk"), nullable = false)
 	private Localidad localidad;
-	
-    public Calle() {
+
+	public Calle() {
 		super();
 	}
 
@@ -73,28 +74,43 @@ public class Calle {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Calle other = (Calle) obj;
-		if (id == null) {
-			if (other.id != null)
+		if(id == null){
+			if(other.id != null){
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		}
+		else if(!id.equals(other.id)){
 			return false;
-		if (localidad == null) {
-			if (other.localidad != null)
+		}
+		else{
+			return true;
+		}
+		if(localidad == null){
+			if(other.localidad != null){
 				return false;
-		} else if (!localidad.equals(other.localidad))
+			}
+		}
+		else if(!localidad.equals(other.localidad)){
 			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
+		}
+		if(nombre == null){
+			if(other.nombre != null){
 				return false;
-		} else if (!nombre.equals(other.nombre))
+			}
+		}
+		else if(!nombre.equals(other.nombre)){
 			return false;
+		}
 		return true;
 	}
 }

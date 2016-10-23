@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +21,13 @@ public class InmuebleBuscado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(name = "id")
+	private Integer id; //ID
+
+	@Id
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idcliente", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_buscado_idcliente_fk"), nullable = false)
+	private Cliente idCliente;
 
 	@Column(name = "precio_max")
 	private Double precioMax;
@@ -73,7 +81,7 @@ public class InmuebleBuscado {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_barrio", joinColumns = @JoinColumn(name = "idbarrio"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"))
-	private ArrayList<Barrio> barrios; //Relacion muchos a muchos 
+	private ArrayList<Barrio> barrios; //Relacion muchos a muchos
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_tipo_inmueble", joinColumns = @JoinColumn(name = "idtipoinmueble"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"))
@@ -86,13 +94,12 @@ public class InmuebleBuscado {
 		this.tiposInmueblesBuscados = new ArrayList<>();
 	}
 
-	public InmuebleBuscado(Integer id, Double precioMax, Double superficieMin, Integer antiguedadMax,
+	public InmuebleBuscado(Double precioMax, Double superficieMin, Integer antiguedadMax,
 			Integer dormitoriosMin, Integer bañosMin, Boolean garaje, Boolean patio, Boolean piscina,
 			Boolean propiedadHorizontal, Boolean aguaCorriente, Boolean cloacas, Boolean gasNatural,
 			Boolean aguaCaliente, Boolean lavadero, Boolean pavimento, ArrayList<Localidad> localidades,
 			ArrayList<Barrio> barrios, ArrayList<TipoInmueble> tiposInmueblesBuscados) {
 		super();
-		this.id = id;
 		this.precioMax = precioMax;
 		this.superficieMin = superficieMin;
 		this.antiguedadMax = antiguedadMax;
@@ -117,8 +124,12 @@ public class InmuebleBuscado {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public Cliente getCliente() {
+		return idCliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.idCliente = cliente;
 	}
 
 	public Double getPrecioMax() {
@@ -279,6 +290,7 @@ public class InmuebleBuscado {
 		result = prime * result + ((garaje == null) ? 0 : garaje.hashCode());
 		result = prime * result + ((gasNatural == null) ? 0 : gasNatural.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idCliente == null) ? 0 : idCliente.hashCode());
 		result = prime * result + ((lavadero == null) ? 0 : lavadero.hashCode());
 		result = prime * result + ((localidades == null) ? 0 : localidades.hashCode());
 		result = prime * result + ((patio == null) ? 0 : patio.hashCode());
@@ -303,6 +315,25 @@ public class InmuebleBuscado {
 			return false;
 		}
 		InmuebleBuscado other = (InmuebleBuscado) obj;
+		if(id == null){
+			if(other.id != null){
+				return false;
+			}
+		}
+		else if(!id.equals(other.id)){
+			return false;
+		}
+		if(idCliente == null){
+			if(other.idCliente != null){
+				return false;
+			}
+		}
+		else if(!idCliente.equals(other.idCliente)){
+			return false;
+		}
+		else{
+			return true;
+		}
 		if(aguaCaliente == null){
 			if(other.aguaCaliente != null){
 				return false;
@@ -375,14 +406,6 @@ public class InmuebleBuscado {
 		else if(!gasNatural.equals(other.gasNatural)){
 			return false;
 		}
-		if(id == null){
-			if(other.id != null){
-				return false;
-			}
-		}
-		else if(!id.equals(other.id)){
-			return false;
-		}
 		if(lavadero == null){
 			if(other.lavadero != null){
 				return false;
@@ -391,7 +414,7 @@ public class InmuebleBuscado {
 		else if(!lavadero.equals(other.lavadero)){
 			return false;
 		}
-		if(localidad == null){
+		if(localidades == null){
 			if(other.localidades != null){
 				return false;
 			}

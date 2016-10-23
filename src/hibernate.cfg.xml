@@ -8,8 +8,8 @@
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.url">jdbc:postgresql://localhost:5432/AgilesDB</property>
         <property name="connection.default_schema">schema</property>
-        <property name="connection.username">usuario</property>
-        <property name="connection.password">contrasenia</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password"></property>
         <property name="hibernate.show_sql">false</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
@@ -23,14 +23,23 @@
         <property name="hibernate.c3p0.max_statements">50</property>
         <property name="hibernate.c3p0.idle_test_period">3000</property>
 
-        <mapping class="app.datos.entidades.CaracteristicasInmuebles"/>
+        <mapping class="app.datos.entidades.Archivo"/>
+        <mapping class="app.datos.entidades.Barrio"/>
+        <mapping class="app.datos.entidades.Calle"/>
         <mapping class="app.datos.entidades.Catalogo"/>
         <mapping class="app.datos.entidades.Cliente"/>
         <mapping class="app.datos.entidades.DatosEdificio"/>
+        <mapping class="app.datos.entidades.Direccion"/>
+        <mapping class="app.datos.entidades.Estado"/>
+        <mapping class="app.datos.entidades.Imagen"/>
         <mapping class="app.datos.entidades.Inmueble"/>
         <mapping class="app.datos.entidades.InmuebleBuscado"/>
-        <mapping class="app.datos.entidades.Medidas"/>
+        <mapping class="app.datos.entidades.Localidad"/>
+        <mapping class="app.datos.entidades.Orientacion"/>
+        <mapping class="app.datos.entidades.Pais"/>
+        <mapping class="app.datos.entidades.PDF"/>
         <mapping class="app.datos.entidades.Propietario"/>
+        <mapping class="app.datos.entidades.Provincia"/>
         <mapping class="app.datos.entidades.Reserva"/>
         <mapping class="app.datos.entidades.TipoDocumento"/>
         <mapping class="app.datos.entidades.TipoInmueble"/>

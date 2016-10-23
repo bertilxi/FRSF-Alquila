@@ -72,15 +72,14 @@ public class GestorClienteTest {
 	@Test
     public void crearCliente() throws Exception {
 
-        // lo que deberia ser
-        Mockito.when(gestorClienteMock.crearCliente(clienteMock)).thenReturn(resultadoCrearClienteMock);
+		// lo que deberia ser
+		Mockito.when(gestorClienteMock.crearCliente(clienteMock)).thenReturn(resultadoCrearClienteMock);
 
-        // lo que devuelve el metodo
-        ResultadoCrearCliente resultadoCrearCliente = gestorClienteMock.crearCliente(clienteMock)
+		// lo que devuelve el metodo
+		ResultadoCrearCliente resultadoCrearCliente = gestorClienteMock.crearCliente(clienteMock);
 
-        Assert.assertEquals(resultadoCrearCliente,resultadoCrearClienteMock);
+		Assert.assertEquals(resultadoCrearCliente, resultadoCrearClienteMock);
 
-
-    }
+	}
 
 }

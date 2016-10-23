@@ -1,4 +1,4 @@
-package app.ui.controladores.Resultado;
+package app.ui.controladores.resultado;
 
 import java.util.ArrayList;
 import java.util.Arrays;

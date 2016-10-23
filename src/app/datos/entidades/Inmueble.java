@@ -1,10 +1,12 @@
 package app.datos.entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -14,27 +16,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-public class Inmueble {
+@Entity
+@Table(name = "inmueble")
+public class Inmueble implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id; //ID
 
-	@Column(name = "codigo", length = 100)
-	private String codigo;
-
 	@Column(name = "observaciones", length = 300)
 	private String observaciones;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "fecha_carga")
+	@Column(name = "fecha_carga", nullable = false)
 	private Date fechaCarga;
 
-	@Column(name = "precio")
+	@Column(name = "precio", nullable = false)
 	private Double precio;
 
 	@Column(name = "frente")
@@ -49,7 +53,7 @@ public class Inmueble {
 	//Relaciones
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idtipo_fk"))
+	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idtipo_fk"), nullable = false)
 	private TipoInmueble tipo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -57,11 +61,11 @@ public class Inmueble {
 	private Orientacion orientacion;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_iddireccion_fk"))
+	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_iddireccion_fk"), nullable = false, unique = true)
 	private Direccion direccion;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idpropietario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idpropietario_fk"))
+	@JoinColumn(name = "idpropietario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idpropietario_fk"), nullable = false)
 	private Propietario propietario;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "tarea")
@@ -76,135 +80,134 @@ public class Inmueble {
 		fotos = new ArrayList<>();
 	}
 
-	public Inmueble(Integer id, String codigo, String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie) {
+	public Inmueble(String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie, TipoInmueble tipo, Direccion direccion, Propietario propietario) {
 		this();
-		this.id = id;
-		this.codigo = codigo;
 		this.observaciones = observaciones;
 		this.fechaCarga = fechaCarga;
 		this.precio = precio;
 		this.frente = frente;
 		this.fondo = fondo;
 		this.superficie = superficie;
+		this.tipo = tipo;
+		this.direccion = direccion;
+		this.propietario = propietario;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-
 	public String getObservaciones() {
 		return observaciones;
 	}
 
-	public void setObservaciones(String observaciones) {
+	public Inmueble setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+		return this;
 	}
 
 	public Date getFechaCarga() {
 		return fechaCarga;
 	}
 
-	public void setFechaCarga(Date fechaCarga) {
+	public Inmueble setFechaCarga(Date fechaCarga) {
 		this.fechaCarga = fechaCarga;
+		return this;
 	}
 
 	public Double getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(Double precio) {
+	public Inmueble setPrecio(Double precio) {
 		this.precio = precio;
+		return this;
 	}
 
 	public Double getFrente() {
 		return frente;
 	}
 
-	public void setFrente(Double frente) {
+	public Inmueble setFrente(Double frente) {
 		this.frente = frente;
+		return this;
 	}
 
 	public Double getFondo() {
 		return fondo;
 	}
 
-	public void setFondo(Double fondo) {
+	public Inmueble setFondo(Double fondo) {
 		this.fondo = fondo;
+		return this;
 	}
 
 	public Double getSuperficie() {
 		return superficie;
 	}
 
-	public void setSuperficie(Double superficie) {
+	public Inmueble setSuperficie(Double superficie) {
 		this.superficie = superficie;
+		return this;
 	}
 
 	public TipoInmueble getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoInmueble tipo) {
+	public Inmueble setTipo(TipoInmueble tipo) {
 		this.tipo = tipo;
+		return this;
 	}
 
 	public Orientacion getOrientacion() {
 		return orientacion;
 	}
 
-	public void setOrientacion(Orientacion orientacion) {
+	public Inmueble setOrientacion(Orientacion orientacion) {
 		this.orientacion = orientacion;
+		return this;
 	}
 
 	public Direccion getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(Direccion direccion) {
+	public Inmueble setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+		return this;
 	}
 
 	public Propietario getPropietario() {
 		return propietario;
 	}
 
-	public void setPropietario(Propietario propietario) {
+	public Inmueble setPropietario(Propietario propietario) {
 		this.propietario = propietario;
+		return this;
 	}
 
 	public ArrayList<Imagen> getFotos() {
 		return fotos;
 	}
 
-	public void setFotos(ArrayList<Imagen> fotos) {
+	public Inmueble setFotos(ArrayList<Imagen> fotos) {
 		this.fotos = fotos;
+		return this;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + ((fechaCarga == null) ? 0 : fechaCarga.hashCode());
 		result = prime * result + ((fondo == null) ? 0 : fondo.hashCode());
-		result = prime * result + ((fotos == null) ? 0 : fotos.hashCode());
 		result = prime * result + ((frente == null) ? 0 : frente.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((observaciones == null) ? 0 : observaciones.hashCode());
-		result = prime * result + ((orientacion == null) ? 0 : orientacion.hashCode());
 		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
-		result = prime * result + ((propietario == null) ? 0 : propietario.hashCode());
 		result = prime * result + ((superficie == null) ? 0 : superficie.hashCode());
-		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
 	}
 
@@ -220,21 +223,16 @@ public class Inmueble {
 			return false;
 		}
 		Inmueble other = (Inmueble) obj;
-		if(codigo == null){
-			if(other.codigo != null){
+		if(id == null){
+			if(other.id != null){
 				return false;
 			}
 		}
-		else if(!codigo.equals(other.codigo)){
+		else if(!id.equals(other.id)){
 			return false;
 		}
-		if(direccion == null){
-			if(other.direccion != null){
-				return false;
-			}
-		}
-		else if(!direccion.equals(other.direccion)){
-			return false;
+		else{
+			return true;
 		}
 		if(fechaCarga == null){
 			if(other.fechaCarga != null){
@@ -252,28 +250,12 @@ public class Inmueble {
 		else if(!fondo.equals(other.fondo)){
 			return false;
 		}
-		if(fotos == null){
-			if(other.fotos != null){
-				return false;
-			}
-		}
-		else if(!fotos.equals(other.fotos)){
-			return false;
-		}
 		if(frente == null){
 			if(other.frente != null){
 				return false;
 			}
 		}
 		else if(!frente.equals(other.frente)){
-			return false;
-		}
-		if(id == null){
-			if(other.id != null){
-				return false;
-			}
-		}
-		else if(!id.equals(other.id)){
 			return false;
 		}
 		if(observaciones == null){
@@ -284,28 +266,12 @@ public class Inmueble {
 		else if(!observaciones.equals(other.observaciones)){
 			return false;
 		}
-		if(orientacion == null){
-			if(other.orientacion != null){
-				return false;
-			}
-		}
-		else if(!orientacion.equals(other.orientacion)){
-			return false;
-		}
 		if(precio == null){
 			if(other.precio != null){
 				return false;
 			}
 		}
 		else if(!precio.equals(other.precio)){
-			return false;
-		}
-		if(propietario == null){
-			if(other.propietario != null){
-				return false;
-			}
-		}
-		else if(!propietario.equals(other.propietario)){
 			return false;
 		}
 		if(superficie == null){
@@ -316,15 +282,14 @@ public class Inmueble {
 		else if(!superficie.equals(other.superficie)){
 			return false;
 		}
-		if(tipo == null){
-			if(other.tipo != null){
+		if(direccion == null){
+			if(other.direccion != null){
 				return false;
 			}
 		}
-		else if(!tipo.equals(other.tipo)){
+		else if(!direccion.equals(other.direccion)){
 			return false;
 		}
 		return true;
 	}
-
 }
