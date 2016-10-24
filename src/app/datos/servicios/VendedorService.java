@@ -1,5 +1,6 @@
 package app.datos.servicios;
 
+import app.datos.clases.FiltroVendedor;
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 

@@ -1,13 +1,11 @@
-package app.datos.servicios;
+package app.datos.clases;
 
-import app.datos.clases.TipoDocumentoStr;
-
-public class FiltroVendedor {
+public class FiltroCliente {
 
 	private TipoDocumentoStr tipoDocumento;
 	private String documento;
 
-	public FiltroVendedor(TipoDocumentoStr tipoDocumento, String documento) {
+	public FiltroCliente(TipoDocumentoStr tipoDocumento, String documento) {
 		super();
 		if(tipoDocumento == null || documento == null){
 			throw new NullPointerException();

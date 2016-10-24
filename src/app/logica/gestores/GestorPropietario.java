@@ -7,11 +7,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.FiltroCliente;
+import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.ClienteService;
-import app.datos.servicios.FiltroCliente;
-import app.datos.servicios.FiltroPropietario;
 import app.datos.servicios.PropietarioService;
 import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
@@ -107,7 +107,7 @@ public class GestorPropietario {
 		}
 
 		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
-		if(null != clienteAuxiliar && !cliente.getId().equals(clienteAuxiliar.getId())){
+		if(null != clienteAuxiliar && !cliente.equals(clienteAuxiliar)){
 			errores.add(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 		}
 

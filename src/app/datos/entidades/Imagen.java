@@ -7,9 +7,13 @@ import javax.persistence.ManyToOne;
 
 public class Imagen extends Archivo {
 
-    //Relaciones
+	//Relaciones
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "codinmueble", foreignKey = @ForeignKey(name = "imagen_codinmueble_fk"))
-    private Inmueble inmueble;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "codinmueble", foreignKey = @ForeignKey(name = "imagen_codinmueble_fk"))
+	private Inmueble inmueble;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "codinmueble", foreignKey = @ForeignKey(name = "imagen_codhistorialinmueble_fk"))
+	private HistorialInmueble historialInmueble;
 }

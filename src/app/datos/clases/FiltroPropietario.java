@@ -1,6 +1,4 @@
-package app.datos.servicios;
-
-import app.datos.clases.TipoDocumentoStr;
+package app.datos.clases;
 
 public class FiltroPropietario {
 

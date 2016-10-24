@@ -21,15 +21,19 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "inmueble")
-public class Inmueble implements Serializable {
+@Table(name = "historial_inmueble")
+public class HistorialInmueble implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer id; //ID
+	private Long id; //ID
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fecha_hora_cambio", nullable = false)
+	private Date fechaYHoraCambio;
 
 	@Column(name = "observaciones", length = 300)
 	private String observaciones;
@@ -53,39 +57,44 @@ public class Inmueble implements Serializable {
 	//Relaciones
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idtipo_fk"), nullable = false)
+	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idtipo_fk"), nullable = false)
 	private TipoInmueble tipo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idorientacion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idorientacion_fk"))
+	@JoinColumn(name = "idorientacion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idorientacion_fk"))
 	private Orientacion orientacion;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_iddireccion_fk"), nullable = false, unique = true)
+	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_iddireccion_fk"), nullable = false)
 	private Direccion direccion;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idpropietario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idpropietario_fk"), nullable = false)
+	@JoinColumn(name = "idpropietario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idpropietario_fk"), nullable = false)
 	private Propietario propietario;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "inmueble")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "historialInmueble")
 	private ArrayList<Imagen> fotos;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idestado_fk"), nullable = false)
+	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idestado_fk"), nullable = false)
 	private Estado estado;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idinmueble_fk"), nullable = false)
+	private Inmueble inmueble;
 
 	//Opcionales
 	// private DatosEdificio datosEdificio;
 	// private ArrayList<Reserva> reservas;
 
-	public Inmueble() {
+	public HistorialInmueble() {
 		super();
 		fotos = new ArrayList<>();
 	}
 
-	public Inmueble(String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie, TipoInmueble tipo, Direccion direccion, Propietario propietario, Estado estado) {
+	public HistorialInmueble(Date fechaYHoraCambio, String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie, TipoInmueble tipo, Direccion direccion, Propietario propietario, Estado estado, Inmueble inmueble) {
 		this();
+		this.fechaYHoraCambio = fechaYHoraCambio;
 		this.observaciones = observaciones;
 		this.fechaCarga = fechaCarga;
 		this.precio = precio;
@@ -96,17 +105,27 @@ public class Inmueble implements Serializable {
 		this.direccion = direccion;
 		this.propietario = propietario;
 		this.estado = estado;
+		this.inmueble = inmueble;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
+	}
+
+	public Date getFechaYHoraCambio() {
+		return fechaYHoraCambio;
+	}
+
+	public HistorialInmueble setFechaYHoraCambio(Date fechaYHoraCambio) {
+		this.fechaYHoraCambio = fechaYHoraCambio;
+		return this;
 	}
 
 	public String getObservaciones() {
 		return observaciones;
 	}
 
-	public Inmueble setObservaciones(String observaciones) {
+	public HistorialInmueble setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 		return this;
 	}
@@ -115,7 +134,7 @@ public class Inmueble implements Serializable {
 		return fechaCarga;
 	}
 
-	public Inmueble setFechaCarga(Date fechaCarga) {
+	public HistorialInmueble setFechaCarga(Date fechaCarga) {
 		this.fechaCarga = fechaCarga;
 		return this;
 	}
@@ -124,7 +143,7 @@ public class Inmueble implements Serializable {
 		return precio;
 	}
 
-	public Inmueble setPrecio(Double precio) {
+	public HistorialInmueble setPrecio(Double precio) {
 		this.precio = precio;
 		return this;
 	}
@@ -133,7 +152,7 @@ public class Inmueble implements Serializable {
 		return frente;
 	}
 
-	public Inmueble setFrente(Double frente) {
+	public HistorialInmueble setFrente(Double frente) {
 		this.frente = frente;
 		return this;
 	}
@@ -142,7 +161,7 @@ public class Inmueble implements Serializable {
 		return fondo;
 	}
 
-	public Inmueble setFondo(Double fondo) {
+	public HistorialInmueble setFondo(Double fondo) {
 		this.fondo = fondo;
 		return this;
 	}
@@ -151,7 +170,7 @@ public class Inmueble implements Serializable {
 		return superficie;
 	}
 
-	public Inmueble setSuperficie(Double superficie) {
+	public HistorialInmueble setSuperficie(Double superficie) {
 		this.superficie = superficie;
 		return this;
 	}
@@ -160,7 +179,7 @@ public class Inmueble implements Serializable {
 		return tipo;
 	}
 
-	public Inmueble setTipo(TipoInmueble tipo) {
+	public HistorialInmueble setTipo(TipoInmueble tipo) {
 		this.tipo = tipo;
 		return this;
 	}
@@ -169,7 +188,7 @@ public class Inmueble implements Serializable {
 		return orientacion;
 	}
 
-	public Inmueble setOrientacion(Orientacion orientacion) {
+	public HistorialInmueble setOrientacion(Orientacion orientacion) {
 		this.orientacion = orientacion;
 		return this;
 	}
@@ -178,7 +197,7 @@ public class Inmueble implements Serializable {
 		return direccion;
 	}
 
-	public Inmueble setDireccion(Direccion direccion) {
+	public HistorialInmueble setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 		return this;
 	}
@@ -187,7 +206,7 @@ public class Inmueble implements Serializable {
 		return propietario;
 	}
 
-	public Inmueble setPropietario(Propietario propietario) {
+	public HistorialInmueble setPropietario(Propietario propietario) {
 		this.propietario = propietario;
 		return this;
 	}
@@ -200,8 +219,17 @@ public class Inmueble implements Serializable {
 		return estado;
 	}
 
-	public Inmueble setEstado(Estado estado) {
+	public HistorialInmueble setEstado(Estado estado) {
 		this.estado = estado;
+		return this;
+	}
+
+	public Inmueble getInmueble() {
+		return inmueble;
+	}
+
+	public HistorialInmueble setInmueble(Inmueble inmueble) {
+		this.inmueble = inmueble;
 		return this;
 	}
 
@@ -211,13 +239,13 @@ public class Inmueble implements Serializable {
 		int result = 1;
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + ((fechaCarga == null) ? 0 : fechaCarga.hashCode());
+		result = prime * result + ((fechaYHoraCambio == null) ? 0 : fechaYHoraCambio.hashCode());
 		result = prime * result + ((fondo == null) ? 0 : fondo.hashCode());
 		result = prime * result + ((frente == null) ? 0 : frente.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((observaciones == null) ? 0 : observaciones.hashCode());
 		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
 		result = prime * result + ((superficie == null) ? 0 : superficie.hashCode());
-		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		return result;
 	}
 
@@ -232,7 +260,7 @@ public class Inmueble implements Serializable {
 		if(getClass() != obj.getClass()){
 			return false;
 		}
-		Inmueble other = (Inmueble) obj;
+		HistorialInmueble other = (HistorialInmueble) obj;
 		if(id == null){
 			if(other.id != null){
 				return false;
@@ -243,6 +271,14 @@ public class Inmueble implements Serializable {
 		}
 		else{
 			return true;
+		}
+		if(fechaYHoraCambio == null){
+			if(other.fechaCarga != null){
+				return false;
+			}
+		}
+		else if(!fechaYHoraCambio.equals(other.fechaYHoraCambio)){
+			return false;
 		}
 		if(fechaCarga == null){
 			if(other.fechaCarga != null){
@@ -298,6 +334,14 @@ public class Inmueble implements Serializable {
 			}
 		}
 		else if(!direccion.equals(other.direccion)){
+			return false;
+		}
+		if(inmueble == null){
+			if(other.inmueble != null){
+				return false;
+			}
+		}
+		else if(!inmueble.equals(other.inmueble)){
 			return false;
 		}
 		return true;

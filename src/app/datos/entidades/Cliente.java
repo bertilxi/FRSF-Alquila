@@ -43,6 +43,10 @@ public class Cliente implements Serializable {
 	@JoinColumn(name = "idtipodocumento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "cliente_idtipodocumento_fk"), nullable = true)
 	private TipoDocumento tipoDocumento;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "cliente_idestado_fk"), nullable = false)
+	private Estado estado;
+
 	//Opcionales
 	// private InmuebleBuscado buscado;
 	// private ArrayList<Venta> compras;
@@ -53,23 +57,24 @@ public class Cliente implements Serializable {
 		super();
 	}
 
-	public Cliente(Integer id, String nombre, String apellido, String numeroDocumento, String telefono) {
+	public Cliente(Integer id, String nombre, String apellido, String numeroDocumento, String telefono, Estado estado) {
 		this();
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.numeroDocumento = numeroDocumento;
 		this.telefono = telefono;
+		this.estado = estado;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public Cliente setId(Integer id){
-        this.id = id;
-        return this;
-    }
+	public Cliente setId(Integer id) {
+		this.id = id;
+		return this;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -116,6 +121,15 @@ public class Cliente implements Serializable {
 		return this;
 	}
 
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public Cliente setEstado(Estado estado) {
+		this.estado = estado;
+		return this;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,6 +140,7 @@ public class Cliente implements Serializable {
 		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
 		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
 		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
+		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		return result;
 	}
 

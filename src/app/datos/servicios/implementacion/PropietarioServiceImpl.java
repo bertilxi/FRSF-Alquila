@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import app.datos.clases.FiltroPropietario;
+import app.datos.clases.FiltroVendedor;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Vendedor;
-import app.datos.servicios.FiltroPropietario;
-import app.datos.servicios.FiltroVendedor;
 import app.datos.servicios.PropietarioService;
 import app.datos.servicios.VendedorService;
 import app.excepciones.PersistenciaException;

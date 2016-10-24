@@ -1,5 +1,6 @@
 package app.datos.servicios;
 
+import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Propietario;
 import app.excepciones.PersistenciaException;
 
