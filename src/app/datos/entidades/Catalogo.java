@@ -2,10 +2,15 @@ package app.datos.entidades;
 
 import java.util.Date;
 
-public class Catalogo {
-    private Cliente cliente; //ID
-    private Date fechaEmision;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-    //Relaciones
-    private PDF catalogo;
+@Entity
+@Table(name = "catalogo")
+public class Catalogo {
+	private Cliente cliente; //ID
+	private Date fechaEmision;
+
+	//Relaciones
+	private PDF catalogo;
 }
