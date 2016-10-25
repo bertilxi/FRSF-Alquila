@@ -39,7 +39,11 @@ public class GestorPropietarioTest {
 		ArrayList<Inmueble> inmuebles = new ArrayList<>();
 		propietario = new Propietario(1, "Juan", "Perez", "38377777", "3424686868", "d.a@hotmail.com", doc, dir, inmuebles);
 
-		gestorPropietario = new GestorPropietario(propietarioService);
+		gestorPropietario = new GestorPropietario() {
+			{
+				this.persistidorPropietario = propietarioService;
+			}
+		};
 		propietarioService = Mockito.mock(PropietarioService.class);
 	}
 

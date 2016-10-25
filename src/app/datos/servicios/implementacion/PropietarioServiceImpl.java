@@ -87,4 +87,9 @@ public class PropietarioServiceImpl implements PropietarioService, VendedorServi
 		return null;
 	}
 
+	@Override
+	public void eliminarPropietario(Propietario propietario) throws PersistenciaException {
+
+	}
+
 }
