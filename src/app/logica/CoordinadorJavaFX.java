@@ -15,7 +15,7 @@ public class CoordinadorJavaFX {
 	@Resource
 	GestorVendedor gestorVendedor;
 
-	public ResultadoAutenticacion loguearVendedor(DatosLogin login) throws PersistenciaException {
+	public ResultadoAutenticacion autenticarVendedor(DatosLogin login) throws PersistenciaException {
 		return gestorVendedor.autenticarVendedor(login);
 	}
 }
