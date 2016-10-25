@@ -51,18 +51,21 @@
         <postgresql.version>9.4.1208.jre7</postgresql.version>
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>
-            <version>4.0.1-alpha</version>
+            <version>4.0.4-alpha</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-junit</artifactId>
-            <version>4.0.1-alpha</version>
+            <version>4.0.4-alpha</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -123,17 +126,11 @@
             <version>${postgresql.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+		<dependency>
+    		<groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+    		<version>4.12</version>
+		</dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>

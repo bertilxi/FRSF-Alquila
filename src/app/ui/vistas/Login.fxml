@@ -40,14 +40,14 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" percentHeight="50.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TextField fx:id="tfNombre" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="DNI" styleClass="textfield" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="tfDNI" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="DNI" styleClass="textfield" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <PasswordField fx:id="pfContra" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Contraseña" styleClass="textfield" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
         </GridPane>
         <HBox alignment="CENTER" maxHeight="100.0" minHeight="50.0" prefHeight="100.0" styleClass="buttonbar-login">
             <children>
                 <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#registrar" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Registrarse" HBox.hgrow="ALWAYS" />
-                <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#ingresar" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Ingresar" HBox.hgrow="ALWAYS" />
+                <Button fx:id="botonIngresar" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#ingresar" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Ingresar" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
     </children>

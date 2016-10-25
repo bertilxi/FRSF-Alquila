@@ -15,17 +15,20 @@ import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class LoginController extends WindowTitleController {
 
 	public static final String URLVista = "/app/ui/vistas/Login.fxml";
 
+	protected CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
+
 	@FXML
-	protected TextField tfNombre;
+	protected TextField tfDNI;
 
 	@FXML
 	protected PasswordField pfContra;
+
+	protected Boolean desatendido = false;
 
 	@FXML
 	public void registrar() {
@@ -34,15 +37,6 @@ public class LoginController extends WindowTitleController {
 
 	@FXML
 	public ResultadoControlador ingresar() {
-		//TODO borrar para activar login
-		//Ir siguiente pantalla
-		if(true){
-			return new ResultadoControlador();
-		}
-		@SuppressWarnings("unused")
-		CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
-		//borrar
-
 		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoAutenticacion resultado = null;
 		Boolean hayErrores;
@@ -50,22 +44,28 @@ public class LoginController extends WindowTitleController {
 		String errores = "";
 
 		//Toma de datos de la vista
-		String user = tfNombre.getText().trim();
+		String dni = tfDNI.getText().trim();
 		char[] pass = pfContra.getText().toCharArray();
-		if(user.isEmpty() || pass.length < 1){
-			new VentanaError("No se ha podido iniciar sesión", "Campos vacíos.", new Stage()); //apilador.getStage()
+		if(dni.isEmpty() || pass.length < 1){
+			if(!desatendido){
+				new VentanaError("No se ha podido iniciar sesión", "Campos vacíos.", null); //apilador.getStage()
+			}
 			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
-		datos = new DatosLogin(user, pass);
+		datos = new DatosLogin(dni, pass);
 
 		//Inicio transacción al gestor
 		try{
-			resultado = coordinador.loguearVendedor(datos);
+			resultado = coordinador.autenticarVendedor(datos);
 		} catch(PersistenciaException e){
-			ManejadorExcepciones.presentarExcepcion(e, new Stage()); //apilador.getStage()
+			if(!desatendido){
+				ManejadorExcepciones.presentarExcepcion(e, null); //apilador.getStage()
+			}
 			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
 		} catch(Exception e){
-			ManejadorExcepciones.presentarExcepcionInesperada(e, new Stage()); //apilador.getStage()
+			if(!desatendido){
+				ManejadorExcepciones.presentarExcepcionInesperada(e, null); //apilador.getStage()
+			}
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 
@@ -82,16 +82,17 @@ public class LoginController extends WindowTitleController {
 			}
 
 			if(!errores.isEmpty()){
-				new VentanaError("No se ha podido iniciar sesión", errores, new Stage()); //apilador.getStage()
+				if(!desatendido){
+					new VentanaError("No se ha podido iniciar sesión", errores, null); //apilador.getStage()
+				}
 			}
-			return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 		}
 		else{
 			//Operacion exitosa
 			// Ir otra pantalla
 			// ControladorRomano.cambiarScene(MenuAdministracionController.URLVista, apilador, coordinador);
-			return new ResultadoControlador();
 		}
+		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 	}
 
 }
