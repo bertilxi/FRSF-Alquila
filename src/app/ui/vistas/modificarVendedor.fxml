@@ -71,7 +71,7 @@
             <children>
                 <HBox fx:id="titlebar" alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
                     <children>
-                        <Label styleClass="label-large" text="Alta Vendedor">
+                        <Label styleClass="label-large" text="Modificar Vendedor">
                             <padding>
                                 <Insets left="30.0" right="10.0" top="30.0" />
                             </padding>
@@ -112,8 +112,8 @@
                 </GridPane>
                 <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
                     <children>
-                        <Button fx:id="acceptButton" onAction="#acceptAction" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="cancelButton" onAction="#cancelAction" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="acceptButton" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="cancelButton" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
             </children>

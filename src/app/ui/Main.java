@@ -1,7 +1,4 @@
 package app.ui;
-/**
- * Created by fer on 13/09/16.
- */
 
 import java.net.URL;
 import java.nio.charset.Charset;
