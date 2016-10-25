@@ -46,9 +46,9 @@ public class ValidadorFormato {
 	}
 
 	public static Boolean validarEmail(String email) {
-		Pattern pat = Pattern.compile("([0-9a-zA-Z]+(.[0-9a-zA-Z]+)*@[0-9a-zA-Z]+(.[0-9a-zA-Z]+)*(.[a-z]{2,4})){0,30}");
+		Pattern pat = Pattern.compile("([0-9a-zA-Z]+(.[0-9a-zA-Z]+)*@[0-9a-zA-Z]+(.[0-9a-zA-Z]+)*(.([a-z]){2,4}))");
 
-		return pat.matcher(email).matches();
+		return pat.matcher(email).matches() && email.length() <= 30;
 	}
 
 	public static Boolean validarTelefono(String telefono) {
@@ -90,11 +90,15 @@ public class ValidadorFormato {
 		}
 
 		pat = Pattern.compile("[a-zA-Z0-9]{1,30}");
-		if(direccion.getLocalidad() == null || pat.matcher(direccion.getLocalidad().getNombre()).matches()){
+		if(direccion.getLocalidad() == null || !pat.matcher(direccion.getLocalidad().getNombre()).matches()){
 			return false;
 		}
 
 		return true;
+	}
+
+	public static Boolean validarLocalidad(String localidad) {
+		return validarNombre(localidad);
 	}
 
 }

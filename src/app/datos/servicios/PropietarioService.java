@@ -12,4 +12,6 @@ public interface PropietarioService {
 
 	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException;
 
+	public void eliminarPropietario(Propietario propietario) throws PersistenciaException;
+
 }

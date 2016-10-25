@@ -1,23 +1,20 @@
 package app.logica.gestores;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import app.datos.clases.FiltroCliente;
 import app.datos.clases.FiltroPropietario;
-import app.datos.entidades.Cliente;
 import app.datos.entidades.Propietario;
-import app.datos.servicios.ClienteService;
 import app.datos.servicios.PropietarioService;
 import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
-import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
+import app.logica.resultados.ResultadoEliminarPropietario;
+import app.logica.resultados.ResultadoEliminarPropietario.ErrorEliminarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
 
@@ -27,8 +24,10 @@ public class GestorPropietario {
 	@Resource
 	private PropietarioService persistidorPropietario;
 
-	@Resource
-	private ClienteService persistidorCliente;
+	public GestorPropietario(PropietarioService persistidorPropietario) {
+		super();
+		this.persistidorPropietario = persistidorPropietario;
+	}
 
 	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
@@ -49,7 +48,7 @@ public class GestorPropietario {
 			errores.add(ErrorCrearPropietario.Formato_Telefono_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarEmail(propietario.getEmail())){
+		if(propietario.getEmail() != null && !ValidadorFormato.validarEmail(propietario.getEmail())){
 			errores.add(ErrorCrearPropietario.Formato_Email_Incorrecto);
 		}
 
@@ -57,65 +56,103 @@ public class GestorPropietario {
 			errores.add(ErrorCrearPropietario.Formato_Direccion_Incorrecto);
 		}
 
-		if(persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento())) != null){
+		Propietario propietarioAuxiliar;
+		try{
+			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
+		} catch(PersistenciaException e){
+			throw e;
+		}
+
+		if(propietarioAuxiliar != null){
 			errores.add(ErrorCrearPropietario.Ya_Existe_Propietario);
 		}
 
 		if(errores.isEmpty()){
-			persistidorPropietario.guardarPropietario(propietario);
+			try{
+				persistidorPropietario.guardarPropietario(propietario);
+			} catch(PersistenciaException e){
+				throw e;
+			}
 		}
 
 		return new ResultadoCrearPropietario(errores.toArray(new ErrorCrearPropietario[0]));
 	}
 
-	public ResultadoModificarPropietario modificarPropietario(Cliente cliente) throws PersistenciaException {
-		ArrayList<ErrorModificarCliente> errores = new ArrayList<>();
+	public ResultadoModificarPropietario modificarPropietario(Propietario propietario) throws PersistenciaException {
+		ArrayList<ErrorModificarPropietario> errores = new ArrayList<>();
 
-		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,100}");
-		if(!pat.matcher(cliente.getNombre()).matches()){
-			errores.add(ErrorModificarCliente.Formato_Nombre_Incorrecto);
+		if(!ValidadorFormato.validarNombre(propietario.getNombre())){
+			errores.add(ErrorModificarPropietario.Formato_Nombre_Incorrecto);
 		}
 
-		if(!pat.matcher(cliente.getApellido()).matches()){
-			errores.add(ErrorModificarCliente.Formato_Apellido_Incorrecto);
+		if(!ValidadorFormato.validarApellido(propietario.getApellido())){
+			errores.add(ErrorModificarPropietario.Formato_Apellido_Incorrecto);
 		}
 
-		pat = Pattern.compile("[0-9\\-]{0,20}");
-		if(!pat.matcher(cliente.getTelefono()).matches()){
-			errores.add(ErrorModificarCliente.Formato_Telefono_Incorrecto);
+		if(!ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
+			errores.add(ErrorModificarPropietario.Formato_Documento_Incorrecto);
 		}
 
-		switch(cliente.getTipoDocumento().getTipo()) {
-		case DNI:
-			pat = Pattern.compile("[0-9]{7,8}");
-			break;
-		case LC:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case LE:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case Pasaporte:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		case CedulaExtranjera:
-			pat = Pattern.compile("[0-9\\-]{0,20}");
-			break;
-		}
-		if(!pat.matcher(cliente.getNumeroDocumento()).matches()){
-			errores.add(ErrorModificarCliente.Formato_Documento_Incorrecto);
+		if(!ValidadorFormato.validarTelefono(propietario.getTelefono())){
+			errores.add(ErrorModificarPropietario.Formato_Telefono_Incorrecto);
 		}
 
-		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
-		if(null != clienteAuxiliar && !cliente.equals(clienteAuxiliar)){
-			errores.add(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
+		if(!ValidadorFormato.validarEmail(propietario.getEmail())){
+			errores.add(ErrorModificarPropietario.Formato_Email_Incorrecto);
+		}
+
+		if(!ValidadorFormato.validarDireccion(propietario.getDireccion())){
+			errores.add(ErrorModificarPropietario.Formato_Direccion_Incorrecto);
+		}
+
+		Propietario propietarioAuxiliar;
+		try{
+			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
+		} catch(PersistenciaException e){
+			throw e;
+		}
+		if(null != propietarioAuxiliar && !propietario.equals(propietarioAuxiliar)){
+			errores.add(ErrorModificarPropietario.Ya_Existe_Propietario);
 		}
 
 		if(errores.isEmpty()){
-			persistidorCliente.modificarCliente(cliente);
+			try{
+				persistidorPropietario.modificarPropietario(propietario);
+			} catch(PersistenciaException e){
+				throw e;
+			}
 		}
 
 		return new ResultadoModificarPropietario(errores.toArray(new ErrorModificarPropietario[0]));
+	}
+
+	public ResultadoEliminarPropietario eliminarPropietario(Propietario propietario) throws PersistenciaException {
+		ArrayList<ErrorEliminarPropietario> errores = new ArrayList<>();
+
+		if(!ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
+			errores.add(ErrorEliminarPropietario.Formato_Documento_Incorrecto);
+		}
+
+		Propietario propietarioAuxiliar;
+		try{
+			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
+		} catch(PersistenciaException e){
+			throw e;
+		}
+
+		if(null == propietarioAuxiliar){
+			errores.add(ErrorEliminarPropietario.No_Existe_Propietario);
+		}
+
+		if(errores.isEmpty()){
+			try{
+				persistidorPropietario.eliminarPropietario(propietario);
+			} catch(PersistenciaException e){
+				throw e;
+			}
+		}
+
+		return new ResultadoEliminarPropietario(errores.toArray(new ErrorEliminarPropietario[0]));
 	}
 
 }

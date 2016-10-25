@@ -2,10 +2,15 @@ package app.logica.resultados;
 
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 
-public class ResultadoCrearPropietario extends Resultado<ErrorCrearPropietario>{
+public class ResultadoCrearPropietario extends Resultado<ErrorCrearPropietario> {
 
 	public ResultadoCrearPropietario(ErrorCrearPropietario... errores) {
 		super(errores);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
 	}
 
 	public enum ErrorCrearPropietario {
