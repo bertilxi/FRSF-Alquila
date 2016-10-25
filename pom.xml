@@ -149,11 +149,6 @@
   			<version>${JUnitParams.version}</version>
   			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>pl.pragmatists</groupId>
-            <artifactId>JUnitParams</artifactId>
-            <version>RELEASE</version>
-        </dependency>
 
    		<dependency>
 			<groupId>org.powermock</groupId>
