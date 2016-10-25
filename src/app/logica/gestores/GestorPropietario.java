@@ -22,12 +22,7 @@ import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropiet
 public class GestorPropietario {
 
 	@Resource
-	private PropietarioService persistidorPropietario;
-
-	public GestorPropietario(PropietarioService persistidorPropietario) {
-		super();
-		this.persistidorPropietario = persistidorPropietario;
-	}
+	protected PropietarioService persistidorPropietario;
 
 	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
