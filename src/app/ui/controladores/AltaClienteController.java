@@ -69,6 +69,11 @@ public class AltaClienteController extends BaseController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
+        listaLocalidades = new ArrayList<Localidad>();
+        listaProvincias = new ArrayList<Provincia>();
+        listaPaises = new ArrayList<Pais>();
+        listaTiposDeDocumento = new ArrayList<TipoDocumento>();
+        listaTiposInmueble = new ArrayList<TipoInmueble>();
         try {
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 		} catch (PersistenciaException e) {

@@ -98,6 +98,8 @@ public class AltaVendedorController extends BaseController {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
+		listaTiposDeDocumento = new ArrayList<TipoDocumento>();
+
 		try {
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 		} catch (PersistenciaException e) {
