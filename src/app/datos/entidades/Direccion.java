@@ -61,56 +61,63 @@ public class Direccion {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public Direccion setId(Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(String numero) {
+	public Direccion setNumero(String numero) {
 		this.numero = numero;
+		return this;
 	}
 
 	public String getPiso() {
 		return piso;
 	}
 
-	public void setPiso(String piso) {
+	public Direccion setPiso(String piso) {
 		this.piso = piso;
+		return this;
 	}
 
 	public String getDepartamento() {
 		return departamento;
 	}
 
-	public void setDepartamento(String departamento) {
+	public Direccion setDepartamento(String departamento) {
 		this.departamento = departamento;
+		return this;
 	}
 
 	public Calle getCalle() {
 		return calle;
 	}
 
-	public void setCalle(Calle calle) {
+	public Direccion setCalle(Calle calle) {
 		this.calle = calle;
+		return this;
 	}
 
 	public Barrio getBarrio() {
 		return barrio;
 	}
 
-	public void setBarrio(Barrio barrio) {
+	public Direccion setBarrio(Barrio barrio) {
 		this.barrio = barrio;
+		return this;
 	}
 
 	public Localidad getLocalidad() {
 		return localidad;
 	}
 
-	public void setLocalidad(Localidad localidad) {
+	public Direccion setLocalidad(Localidad localidad) {
 		this.localidad = localidad;
+		return this;
 	}
 
 	@Override

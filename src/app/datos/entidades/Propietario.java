@@ -21,38 +21,38 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "propietario", uniqueConstraints = @UniqueConstraint(name = "propietario_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 public class Propietario {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //ID
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id; //ID
+
 	@Column(name = "nombre", length = 30)
-    private String nombre;
-	
+	private String nombre;
+
 	@Column(name = "apellido", length = 30)
-    private String apellido;
-	
+	private String apellido;
+
 	@Column(name = "numerodocumento", length = 30)
 	private String numeroDocumento;
-	
+
 	@Column(name = "telefono", length = 30)
 	private String telefono;
-	
+
 	@Column(name = "email", length = 30)
-    private String email;
+	private String email;
 
-    //Reclaciones
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_idtipo_fk"))
-    private TipoDocumento tipoDocumento;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_iddireccion_fk"))
-    private Direccion direccion;
+	//Reclaciones
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_idtipo_fk"))
+	private TipoDocumento tipoDocumento;
 
-    //Opcionales
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "propietario")
-    @Transient
-    private ArrayList<Inmueble> inmuebles;
-    
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_iddireccion_fk"))
+	private Direccion direccion;
+
+	//Opcionales
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "propietario")
+	@Transient
+	private ArrayList<Inmueble> inmuebles;
+
 	public Propietario() {
 		super();
 		this.inmuebles = new ArrayList<Inmueble>();
@@ -76,74 +76,83 @@ public class Propietario {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public Propietario setId(Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	public String getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public Propietario setNombre(String nombre) {
 		this.nombre = nombre;
+		return this;
 	}
 
 	public String getApellido() {
 		return apellido;
 	}
 
-	public void setApellido(String apellido) {
+	public Propietario setApellido(String apellido) {
 		this.apellido = apellido;
+		return this;
 	}
 
 	public String getNumeroDocumento() {
 		return numeroDocumento;
 	}
 
-	public void setNumeroDocumento(String numeroDocumento) {
+	public Propietario setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
+		return this;
 	}
 
 	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(String telefono) {
+	public Propietario setTelefono(String telefono) {
 		this.telefono = telefono;
+		return this;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public Propietario setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	public TipoDocumento getTipoDocumento() {
 		return tipoDocumento;
 	}
 
-	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+	public Propietario setTipoDocumento(TipoDocumento tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+		return this;
 	}
 
 	public Direccion getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(Direccion direccion) {
+	public Propietario setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+		return this;
 	}
 
 	public ArrayList<Inmueble> getInmuebles() {
 		return inmuebles;
 	}
 
-	public void setInmuebles(ArrayList<Inmueble> inmuebles) {
+	public Propietario setInmuebles(ArrayList<Inmueble> inmuebles) {
 		this.inmuebles = inmuebles;
+		return this;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -160,60 +169,68 @@ public class Propietario {
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj)
 			return true;
-		if (obj == null)
+		if(obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if(getClass() != obj.getClass())
 			return false;
 		Propietario other = (Propietario) obj;
-		if (apellido == null) {
-			if (other.apellido != null)
+		if(apellido == null){
+			if(other.apellido != null)
 				return false;
-		} else if (!apellido.equals(other.apellido))
+		}
+		else if(!apellido.equals(other.apellido))
 			return false;
-		if (direccion == null) {
-			if (other.direccion != null)
+		if(direccion == null){
+			if(other.direccion != null)
 				return false;
-		} else if (!direccion.equals(other.direccion))
+		}
+		else if(!direccion.equals(other.direccion))
 			return false;
-		if (email == null) {
-			if (other.email != null)
+		if(email == null){
+			if(other.email != null)
 				return false;
-		} else if (!email.equals(other.email))
+		}
+		else if(!email.equals(other.email))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if(id == null){
+			if(other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		}
+		else if(!id.equals(other.id))
 			return false;
-		if (inmuebles == null) {
-			if (other.inmuebles != null)
+		if(inmuebles == null){
+			if(other.inmuebles != null)
 				return false;
-		} else if (!inmuebles.equals(other.inmuebles))
+		}
+		else if(!inmuebles.equals(other.inmuebles))
 			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
+		if(nombre == null){
+			if(other.nombre != null)
 				return false;
-		} else if (!nombre.equals(other.nombre))
+		}
+		else if(!nombre.equals(other.nombre))
 			return false;
-		if (numeroDocumento == null) {
-			if (other.numeroDocumento != null)
+		if(numeroDocumento == null){
+			if(other.numeroDocumento != null)
 				return false;
-		} else if (!numeroDocumento.equals(other.numeroDocumento))
+		}
+		else if(!numeroDocumento.equals(other.numeroDocumento))
 			return false;
-		if (telefono == null) {
-			if (other.telefono != null)
+		if(telefono == null){
+			if(other.telefono != null)
 				return false;
-		} else if (!telefono.equals(other.telefono))
+		}
+		else if(!telefono.equals(other.telefono))
 			return false;
-		if (tipoDocumento == null) {
-			if (other.tipoDocumento != null)
+		if(tipoDocumento == null){
+			if(other.tipoDocumento != null)
 				return false;
-		} else if (!tipoDocumento.equals(other.tipoDocumento))
+		}
+		else if(!tipoDocumento.equals(other.tipoDocumento))
 			return false;
 		return true;
 	}
