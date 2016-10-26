@@ -2,6 +2,9 @@ package app.ui.controladores;
 
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
+import app.excepciones.PersistenciaException;
+import app.logica.gestores.GestorDatos;
+import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.ui.componentes.VentanaError;
 import javafx.fxml.FXML;
@@ -9,22 +12,29 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AltaVendedorController extends BaseController {
 
 	@FXML
-	TextField textFieldNombre;
+	private TextField textFieldNombre;
 	@FXML
-	TextField textFieldApellido;
+	private TextField textFieldApellido;
 	@FXML
-	TextField textFieldNumeroDocumento;
+	private TextField textFieldNumeroDocumento;
 	@FXML
-	TextField textFieldContraseña;
+	private TextField textFieldContraseña;
 	@FXML
-	TextField textFieldRepiteContraseña;
+	private TextField textFieldRepiteContraseña;
 	@FXML
-	ComboBox<TipoDocumento> comboBoxTipoDocumento;
+	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
+
+	private ArrayList<TipoDocumento> listaTiposDeDocumento;
+
+	private GestorDatos gestorDatos;
+
+	private GestorVendedor gestorVendedor;
 
 	public ResultadoCrearVendedor acceptAction() {
 
@@ -71,7 +81,8 @@ public class AltaVendedorController extends BaseController {
 			vendedor.setId(null).setNombre(nombre).setApellido(apellido).setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc).setPassword(password1);
 
-			// mandan objeto al persistidor
+			//No está implementado. faltarían parámetros y el catch de excepciones
+			//gestorVendedor.crearVendedor();
 		}
 
 		return null
@@ -87,5 +98,11 @@ public class AltaVendedorController extends BaseController {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
+		try {
+			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+		} catch (PersistenciaException e) {
+			// TODO mostrar error inesperado
+		}
+        comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 	}
 }
