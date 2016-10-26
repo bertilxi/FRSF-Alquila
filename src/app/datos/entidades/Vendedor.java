@@ -25,23 +25,23 @@ public class Vendedor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
 
-	@Column(name = "nombre", length = 30)
+	@Column(name = "nombre", length = 30, nullable = false)
 	private String nombre;
 
-	@Column(name = "apellido", length = 30)
+	@Column(name = "apellido", length = 30, nullable = false)
 	private String apellido;
 
-	@Column(name = "numerodocumento", length = 30)
+	@Column(name = "numerodocumento", length = 30, nullable = false)
 	private String numeroDocumento;
 
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "salt")
+	@Column(name = "salt", nullable = false)
 	private String salt;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"))
+	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"), nullable = false)
 	private TipoDocumento tipoDocumento;
 
 	//@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "vendedor")

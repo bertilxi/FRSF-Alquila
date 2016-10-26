@@ -1,6 +1,7 @@
 package app.datos.servicios.implementacion;
 
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -60,6 +61,8 @@ public class VendedorServiceImpl implements VendedorService {
 		try{
 			vendedor = (Vendedor) session.getNamedQuery("obtenerVendedor").setParameter("tipoDocumento", filtro.getTipoDocumento()).setParameter("documento", filtro.getDocumento()).uniqueResult();
 		} catch(NoResultException e){
+			return null;
+		} catch(NonUniqueResultException e){
 			return null;
 		} catch(Exception e){
 			throw new ConsultaException();

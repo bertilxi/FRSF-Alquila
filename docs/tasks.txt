@@ -28,7 +28,6 @@
 13 Vista alta, modificar y baja inmueble          3
 15 Entidad cliente                                3
 18 Persistidor cliente                            4
-Lógica alta, modificación y baja inmueble
 
 ### total : 15
 
