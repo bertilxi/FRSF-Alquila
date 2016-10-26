@@ -10,13 +10,11 @@ import app.datos.entidades.*;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoCrearCliente;
-import app.logica.resultados.ResultadoCrearVendedor;
 import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -64,10 +62,10 @@ public class AltaClienteController extends BaseController {
 	@FXML
 	private TextField textFieldMonto;
 
-    @FXML
-    private Button buttonCargatInmueble;
+	@FXML
+	private Button buttonCargatInmueble;
 
-    // todo: falta un comboBox barrios
+	// todo: falta un comboBox barrios
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
@@ -81,150 +79,145 @@ public class AltaClienteController extends BaseController {
 
 	private GestorDatos gestorDatos;
 
-    public ResultadoCrearCliente acceptAction() {
+	public ResultadoCrearCliente acceptAction() {
 
-        StringBuilder error = new StringBuilder("");
+		StringBuilder error = new StringBuilder("");
 
-        String nombre = textFieldNombre.getText().trim();
-        String apellido = textFieldApellido.getText().trim();
-        String numeroDocumento = textFieldNumeroDocumento.getText().trim();
-        String telefono = textFieldTelefono.getText().trim();
-        String correo = textFieldCorreo.getText().trim();
-        String barrio = textFieldBarrio.getText().trim();
-        String monto = textFieldMonto.getText().trim();
-        TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
-        TipoInmueble tipoInmueble = comboBoxTipoInmueble.getValue();
-        Pais pais = comboBoxPais.getValue();
-        Provincia provincia = comboBoxProvincia.getValue();
-        Localidad localidad = comboBoxLocalidad.getValue();
+		String nombre = textFieldNombre.getText().trim();
+		String apellido = textFieldApellido.getText().trim();
+		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
+		String telefono = textFieldTelefono.getText().trim();
+		String correo = textFieldCorreo.getText().trim();
+		String barrio = textFieldBarrio.getText().trim();
+		String monto = textFieldMonto.getText().trim();
+		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
+		TipoInmueble tipoInmueble = comboBoxTipoInmueble.getValue();
+		Pais pais = comboBoxPais.getValue();
+		Provincia provincia = comboBoxProvincia.getValue();
+		Localidad localidad = comboBoxLocalidad.getValue();
 
-
-
-
-        if(nombre.isEmpty()){
-            error.append("Inserte un nombre").append("\r\n ");
-        }
-        if(apellido.isEmpty()){
-            error.append("Inserte un apellido").append("\r\n ");
-        }
-        if (tipoDoc == null){
-            error.append("Elija un tipo de documento").append("\r\n ");
-        }
-        if(numeroDocumento.isEmpty()){
-            error.append("Inserte un numero de documento").append("\r\n ");
-        }
-        if (telefono.isEmpty()){
-            error.append("Inserte un telefono").append("\r\n ");
-        }
-        if (correo.isEmpty()){
-            error.append("Inserte un correo").append("\r\n ");
-        }
-        if (barrio.isEmpty()){
-            error.append("Inserte un barrio").append("\r\n ");
-        }
-
-        if(!error.toString().isEmpty()){
-            VentanaError ventanaError = new VentanaError("Revise sus campos", error.toString());
-        }
-        else{
-            Vendedor vendedor = new Vendedor();
-            vendedor.setId(null)
-                    .setNombre(nombre)
-                    .setApellido(apellido)
-                    .setNumeroDocumento(numeroDocumento)
-                    .setTipoDocumento(tipoDoc);
-
-            // mandar objeto al persistidor
-        }
-
-        return null;
-
-    }
-
-    public void cargarInmueble(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        URL location = getClass().getResource("/app/ui/vistas/inmuebleBuscado.fxml");
-        FXMLLoader loader = createFXMLLoader(location);
-        Parent root = loader.load(location.openStream());
-        stage.setScene(new Scene(root));
-        stage.setTitle("My modal window");
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.showAndWait();
-
-
-    }
-
-    public FXMLLoader createFXMLLoader(URL location) {
-        return new FXMLLoader(location, null, new JavaFXBuilderFactory(), null, Charset.forName(FXMLLoader.DEFAULT_CHARSET_NAME));
-    }
-
-    public void cancelAction() {
-
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        super.initialize(location, resources);
-    }
-/*
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        super.initialize(location, resources);
-
-        listaLocalidades = new ArrayList<Localidad>();
-        listaProvincias = new ArrayList<Provincia>();
-        listaPaises = new ArrayList<Pais>();
-        listaTiposDeDocumento = new ArrayList<TipoDocumento>();
-        listaTiposInmueble = new ArrayList<TipoInmueble>();
-
-        try {
-			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
-		} catch (PersistenciaException e) {
-			// TODO mostrar error inesperado
+		if(nombre.isEmpty()){
+			error.append("Inserte un nombre").append("\r\n ");
 		}
-        comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
-
-        try {
-			listaTiposInmueble = gestorDatos.obtenerTiposInmueble();
-		} catch (PersistenciaException e) {
-			// TODO mostrar error inesperado
+		if(apellido.isEmpty()){
+			error.append("Inserte un apellido").append("\r\n ");
 		}
-        comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
-
-        try {
-			listaPaises = gestorDatos.obtenerPaises();
-		} catch (PersistenciaException e) {
-			// TODO mostrar error inesperado
+		if(tipoDoc == null){
+			error.append("Elija un tipo de documento").append("\r\n ");
 		}
-        comboBoxPais.getItems().addAll(listaPaises);
+		if(numeroDocumento.isEmpty()){
+			error.append("Inserte un numero de documento").append("\r\n ");
+		}
+		if(telefono.isEmpty()){
+			error.append("Inserte un telefono").append("\r\n ");
+		}
+		if(correo.isEmpty()){
+			error.append("Inserte un correo").append("\r\n ");
+		}
+		if(barrio.isEmpty()){
+			error.append("Inserte un barrio").append("\r\n ");
+		}
 
-        comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> actualizarProvincias(newValue));
+		if(!error.toString().isEmpty()){
+			VentanaError ventanaError = new VentanaError("Revise sus campos", error.toString());
+		}
+		else{
+			Vendedor vendedor = new Vendedor();
+			vendedor.setId(null)
+					.setNombre(nombre)
+					.setApellido(apellido)
+					.setNumeroDocumento(numeroDocumento)
+					.setTipoDocumento(tipoDoc);
 
-        comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> actualizarLocalidades(newValue));
-    }
-*/
+			// mandar objeto al persistidor
+		}
+
+		return null;
+
+	}
+
+	public void cargarInmueble(ActionEvent event) throws IOException {
+		Stage stage = new Stage();
+		URL location = getClass().getResource("/app/ui/vistas/inmuebleBuscado.fxml");
+		FXMLLoader loader = createFXMLLoader(location);
+		Parent root = loader.load(location.openStream());
+		stage.setScene(new Scene(root));
+		stage.setTitle("My modal window");
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initStyle(StageStyle.UNDECORATED);
+		stage.showAndWait();
+
+	}
+
+	public FXMLLoader createFXMLLoader(URL location) {
+		return new FXMLLoader(location, null, new JavaFXBuilderFactory(), null, Charset.forName(FXMLLoader.DEFAULT_CHARSET_NAME));
+	}
+
+	public void cancelAction() {
+
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		super.initialize(location, resources);
+	}
+
+	/*
+	 * @Override
+	 * public void initialize(URL location, ResourceBundle resources) {
+	 * super.initialize(location, resources);
+	 * 
+	 * listaLocalidades = new ArrayList<Localidad>();
+	 * listaProvincias = new ArrayList<Provincia>();
+	 * listaPaises = new ArrayList<Pais>();
+	 * listaTiposDeDocumento = new ArrayList<TipoDocumento>();
+	 * listaTiposInmueble = new ArrayList<TipoInmueble>();
+	 * 
+	 * try {
+	 * listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+	 * } catch (PersistenciaException e) {
+	 * // TODO mostrar error inesperado
+	 * }
+	 * comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
+	 * 
+	 * try {
+	 * listaTiposInmueble = gestorDatos.obtenerTiposInmueble();
+	 * } catch (PersistenciaException e) {
+	 * // TODO mostrar error inesperado
+	 * }
+	 * comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
+	 * 
+	 * try {
+	 * listaPaises = gestorDatos.obtenerPaises();
+	 * } catch (PersistenciaException e) {
+	 * // TODO mostrar error inesperado
+	 * }
+	 * comboBoxPais.getItems().addAll(listaPaises);
+	 * 
+	 * comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
+	 * (observable, oldValue, newValue) -> actualizarProvincias(newValue));
+	 * 
+	 * comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
+	 * (observable, oldValue, newValue) -> actualizarLocalidades(newValue));
+	 * }
+	 */
+
 	private void actualizarLocalidades(Provincia provincia) {
-		try {
+		try{
 			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
-		} catch (PersistenciaException e) {
+		} catch(PersistenciaException e){
 			// TODO mostrar error inesperado
 		}
-        comboBoxLocalidad.getItems().addAll(listaLocalidades);
+		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
 
 	private void actualizarProvincias(Pais pais) {
-		try {
+		try{
 			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
-		} catch (PersistenciaException e) {
+		} catch(PersistenciaException e){
 			// TODO mostrar error inesperado
 		}
-        comboBoxProvincia.getItems().addAll(listaProvincias);
+		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}
-
-
-
 
 }

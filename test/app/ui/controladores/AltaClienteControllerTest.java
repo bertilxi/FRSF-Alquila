@@ -5,9 +5,9 @@ import org.junit.Test;
 
 public class AltaClienteControllerTest {
 
-    @Test
-    public void testUI() throws Exception {
-        ViewLauncher.launchView("/app/ui/vistas/altaCliente.fxml");
-    }
+	@Test
+	public void testUI() throws Exception {
+		ViewLauncher.launchView("/app/ui/vistas/altaCliente.fxml");
+	}
 
 }

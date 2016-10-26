@@ -71,11 +71,11 @@ public class InmuebleBuscado {
 	@Column(name = "lavadero")
 	private Boolean lavadero;
 
-    @Column(name = "pavimento")
-    private Boolean pavimento;
+	@Column(name = "pavimento")
+	private Boolean pavimento;
 
-    @Column(name = "telefono")
-    private Boolean telefono;
+	@Column(name = "telefono")
+	private Boolean telefono;
 
 	//Relaciones
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -120,13 +120,14 @@ public class InmuebleBuscado {
 		this.pavimento = pavimento;
 		this.localidades = localidades;
 		this.barrios = barrios;
-        this.telefono = telefono;
+		this.telefono = telefono;
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
 	}
-	public InmuebleBuscado setId(Integer id){
-        this.id = id;
-        return this;
-    }
+
+	public InmuebleBuscado setId(Integer id) {
+		this.id = id;
+		return this;
+	}
 
 	public Integer getId() {
 		return id;
@@ -138,7 +139,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setCliente(Cliente cliente) {
 		this.idCliente = cliente;
-        return this;
+		return this;
 	}
 
 	public Double getPrecioMax() {
@@ -147,7 +148,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setPrecioMax(Double precioMax) {
 		this.precioMax = precioMax;
-        return this;
+		return this;
 	}
 
 	public Double getSuperficieMin() {
@@ -156,7 +157,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setSuperficieMin(Double superficieMin) {
 		this.superficieMin = superficieMin;
-        return this;
+		return this;
 	}
 
 	public Integer getAntiguedadMax() {
@@ -165,7 +166,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setAntiguedadMax(Integer antiguedadMax) {
 		this.antiguedadMax = antiguedadMax;
-        return this;
+		return this;
 	}
 
 	public Integer getDormitoriosMin() {
@@ -174,7 +175,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setDormitoriosMin(Integer dormitoriosMin) {
 		this.dormitoriosMin = dormitoriosMin;
-        return this;
+		return this;
 	}
 
 	public Integer getBañosMin() {
@@ -183,7 +184,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setBañosMin(Integer bañosMin) {
 		this.bañosMin = bañosMin;
-        return this;
+		return this;
 	}
 
 	public Boolean getGaraje() {
@@ -192,7 +193,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setGaraje(Boolean garaje) {
 		this.garaje = garaje;
-        return this;
+		return this;
 	}
 
 	public Boolean getPatio() {
@@ -201,7 +202,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setPatio(Boolean patio) {
 		this.patio = patio;
-        return this;
+		return this;
 	}
 
 	public Boolean getPiscina() {
@@ -210,7 +211,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setPiscina(Boolean piscina) {
 		this.piscina = piscina;
-        return this;
+		return this;
 	}
 
 	public Boolean getPropiedadHorizontal() {
@@ -220,7 +221,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setPropiedadHorizontal(Boolean propiedadHorizontal) {
 		this.propiedadHorizontal = propiedadHorizontal;
-        return this;
+		return this;
 	}
 
 	public Boolean getAguaCorriente() {
@@ -229,7 +230,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setAguaCorriente(Boolean aguaCorriente) {
 		this.aguaCorriente = aguaCorriente;
-        return this;
+		return this;
 	}
 
 	public Boolean getCloacas() {
@@ -238,7 +239,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setCloacas(Boolean cloacas) {
 		this.cloacas = cloacas;
-        return this;
+		return this;
 	}
 
 	public Boolean getGasNatural() {
@@ -247,7 +248,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setGasNatural(Boolean gasNatural) {
 		this.gasNatural = gasNatural;
-        return this;
+		return this;
 	}
 
 	public Boolean getAguaCaliente() {
@@ -256,7 +257,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setAguaCaliente(Boolean aguaCaliente) {
 		this.aguaCaliente = aguaCaliente;
-        return this;
+		return this;
 	}
 
 	public Boolean getLavadero() {
@@ -265,26 +266,26 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setLavadero(Boolean lavadero) {
 		this.lavadero = lavadero;
-        return this;
+		return this;
 	}
 
-    public Boolean getPavimento() {
-        return pavimento;
-    }
+	public Boolean getPavimento() {
+		return pavimento;
+	}
 
-    public InmuebleBuscado setPavimento(Boolean pavimento) {
-        this.pavimento = pavimento;
-        return this;
-    }
+	public InmuebleBuscado setPavimento(Boolean pavimento) {
+		this.pavimento = pavimento;
+		return this;
+	}
 
-    public Boolean getTelefono() {
-        return telefono;
-    }
+	public Boolean getTelefono() {
+		return telefono;
+	}
 
-    public InmuebleBuscado setTelefono(Boolean telefono) {
-        this.telefono = telefono;
-        return this;
-    }
+	public InmuebleBuscado setTelefono(Boolean telefono) {
+		this.telefono = telefono;
+		return this;
+	}
 
 	public ArrayList<Localidad> getLocalidades() {
 		return localidades;
@@ -292,7 +293,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setLocalidades(ArrayList<Localidad> localidades) {
 		this.localidades = localidades;
-        return this;
+		return this;
 	}
 
 	public ArrayList<Barrio> getBarrios() {
@@ -301,7 +302,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setBarrios(ArrayList<Barrio> barrios) {
 		this.barrios = barrios;
-        return this;
+		return this;
 	}
 
 	public ArrayList<TipoInmueble> getTiposInmueblesBuscados() {
@@ -310,7 +311,7 @@ public class InmuebleBuscado {
 
 	public InmuebleBuscado setTiposInmueblesBuscados(ArrayList<TipoInmueble> tiposInmueblesBuscados) {
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
-        return this;
+		return this;
 	}
 
 	@Override

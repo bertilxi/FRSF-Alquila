@@ -5,11 +5,11 @@ import org.junit.Test;
 
 public class InmuebleBuscadoControllerTest {
 
-    @Test
-    public void testUI() throws Exception {
+	@Test
+	public void testUI() throws Exception {
 
-        ViewLauncher.launchView("/app/ui/vistas/inmuebleBuscado.fxml");
+		ViewLauncher.launchView("/app/ui/vistas/inmuebleBuscado.fxml");
 
-    }
+	}
 
 }
