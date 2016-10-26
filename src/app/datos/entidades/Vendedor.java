@@ -49,6 +49,8 @@ public class Vendedor {
 	private ArrayList<Venta> ventas;
 
 	// baja
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idestado_fk"), nullable = false)
 	private Estado estado;
 
 	public Vendedor() {
@@ -56,7 +58,7 @@ public class Vendedor {
 		this.ventas = new ArrayList<>();
 	}
 
-	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, ArrayList<Venta> ventas) {
+	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, ArrayList<Venta> ventas, Estado estado) {
 		this();
 		this.id = id;
 		this.nombre = nombre;
@@ -66,6 +68,7 @@ public class Vendedor {
 		this.salt = salt;
 		this.tipoDocumento = tipoDocumento;
 		this.ventas = ventas;
+		this.estado = estado;
 	}
 
 	public Integer getId() {
