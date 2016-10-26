@@ -53,11 +53,9 @@ public class AltaVendedorController extends BaseController {
 		if(apellido.isEmpty()){
 			error.append("Inserte un apellido").append("\r\n ");
 		}
-		/*
-		 * if (tipoDoc.equals(new TipoDocumento())){
-		 * error.append("Elija un tipo de documento").append("\r\n ");
-		 * }
-		 */
+		if (tipoDoc == null){
+		error.append("Elija un tipo de documento").append("\r\n ");
+		}
 		if(numeroDocumento.isEmpty()){
 			error.append("Inserte un numero de documento").append("\r\n ");
 		}
