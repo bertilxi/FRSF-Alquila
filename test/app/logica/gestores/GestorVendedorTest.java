@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
 
 import app.datos.clases.DatosLogin;
@@ -15,25 +16,25 @@ import app.datos.servicios.VendedorService;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
-import app.ui.controladores.resultado.ResultadoControlador;
-import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
+import app.ui.Contra;
+import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
+@RunWith(JUnitParamsRunner.class)
 public class GestorVendedorTest {
 
 	@Test
 	@Parameters
-	public void testIngresar(TipoDocumento tipoDocumento, String dni, String contra, ResultadoAutenticacion resultadoLogica, Vendedor vendedor, Throwable excepcion) throws Exception {
+	public void testAutenticarVendedor(TipoDocumento tipoDocumento, String numDoc, String contra, ResultadoAutenticacion resultadoLogica, Throwable excepcion) throws Exception {
+		String sal = Contra.generarSal();
+		Vendedor vendedor = new Vendedor().setTipoDocumento(tipoDocumento).setNumeroDocumento(numDoc).setPassword(Contra.encriptarMD5(contra.toCharArray(), sal)).setSalt(sal);
 		VendedorService vendedorServiceMock = new VendedorService() {
 			@Override
 			public void guardarVendedor(Vendedor vendedor) throws PersistenciaException {
-
 			}
 
 			@Override
 			public void modificarVendedor(Vendedor vendedor) throws PersistenciaException {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -55,12 +56,13 @@ public class GestorVendedorTest {
 			}
 		};
 
-		DatosLogin datos = new DatosLogin(tipoDocumento, dni, contra.toCharArray());
+		DatosLogin datos = new DatosLogin(tipoDocumento, numDoc, contra.toCharArray());
 
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
-				if(excepcion != null){
+				System.out.println(excepcion);
+				if(resultadoLogica != null){
 					assertEquals(resultadoLogica, gestorVendedor.autenticarVendedor(datos));
 				}
 				else{
@@ -85,16 +87,16 @@ public class GestorVendedorTest {
 		}
 	}
 
-	protected Object[] parametersForTestIngresar() {
+	protected Object[] parametersForTestAutenticarVendedor() {
 		return new Object[] {
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "pepe", new ResultadoControlador(), new ResultadoAutenticacion(), null }, //prueba ingreso correcto
-				new Object[] { null, "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba TipoDocumento vacio
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba numero de documento vacio
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LE), "12345678", "", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba Contraseña vacia
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.CedulaExtranjera), "12345678", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.Pasaporte), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto con caracteres UTF8
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Persistencia), null, new PersistenciaException("Error de persistencia. Test.") }, //Prueba una excepcion de persistencia
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Desconocido), null, new Exception() } //Prueba una excepcion desconocida
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "pepe", new ResultadoAutenticacion(), null }, //prueba ingreso correcto
+				new Object[] { null, "", "pepe", new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba TipoDocumento vacio, ingreso incorrecto
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "", "pepe", new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba numero de documento vacio, ingreso incorrecto
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LE), "12345678", "", new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba Contraseña vacia, ingreso incorrecto
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.CedulaExtranjera), "12345678", "pepe", new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.Pasaporte), "ñú", "pepe", new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto con caracteres UTF8
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "ñú", "pepe", null, new PersistenciaException("Error de persistencia. Test.") }, //Prueba una excepcion de persistencia
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "ñú", "pepe", null, new Exception() } //Prueba una excepcion desconocida
 		};
 	}
 }
