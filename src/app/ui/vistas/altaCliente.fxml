@@ -98,6 +98,8 @@
                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
@@ -109,10 +111,11 @@
                         <TextField fx:id="textFieldBarrio" maxHeight="1000.0" maxWidth="1000.0" promptText="Barrio" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                         <TextField fx:id="textFieldMonto" maxHeight="1000.0" maxWidth="1000.0" promptText="Monto disponible" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                         <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de documento" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ComboBox fx:id="comboBoxTipoInmueble" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de inmueble" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <ComboBox fx:id="comboBoxProvincia" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  <ComboBox fx:id="comboBoxLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="comboBoxTipoInmueble" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de inmueble" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="comboBoxProvincia" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="comboBoxLocalidad" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <ComboBox fx:id="comboBoxPais" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Pais" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Button fx:id="buttonCargatInmueble" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#cargarInmueble" styleClass="button-action" text="Cargar inmueble buscado" GridPane.columnIndex="3" GridPane.rowIndex="8" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />

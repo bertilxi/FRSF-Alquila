@@ -119,6 +119,10 @@ public class InmuebleBuscado {
 		this.barrios = barrios;
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
 	}
+	public InmuebleBuscado setId(Integer id){
+        this.id = id;
+        return this;
+    }
 
 	public Integer getId() {
 		return id;
@@ -128,152 +132,172 @@ public class InmuebleBuscado {
 		return idCliente;
 	}
 
-	public void setCliente(Cliente cliente) {
+	public InmuebleBuscado setCliente(Cliente cliente) {
 		this.idCliente = cliente;
+        return this;
 	}
 
 	public Double getPrecioMax() {
 		return precioMax;
 	}
 
-	public void setPrecioMax(Double precioMax) {
+	public InmuebleBuscado setPrecioMax(Double precioMax) {
 		this.precioMax = precioMax;
+        return this;
 	}
 
 	public Double getSuperficieMin() {
 		return superficieMin;
 	}
 
-	public void setSuperficieMin(Double superficieMin) {
+	public InmuebleBuscado setSuperficieMin(Double superficieMin) {
 		this.superficieMin = superficieMin;
+        return this;
 	}
 
 	public Integer getAntiguedadMax() {
 		return antiguedadMax;
 	}
 
-	public void setAntiguedadMax(Integer antiguedadMax) {
+	public InmuebleBuscado setAntiguedadMax(Integer antiguedadMax) {
 		this.antiguedadMax = antiguedadMax;
+        return this;
 	}
 
 	public Integer getDormitoriosMin() {
 		return dormitoriosMin;
 	}
 
-	public void setDormitoriosMin(Integer dormitoriosMin) {
+	public InmuebleBuscado setDormitoriosMin(Integer dormitoriosMin) {
 		this.dormitoriosMin = dormitoriosMin;
+        return this;
 	}
 
 	public Integer getBañosMin() {
 		return bañosMin;
 	}
 
-	public void setBañosMin(Integer bañosMin) {
+	public InmuebleBuscado setBañosMin(Integer bañosMin) {
 		this.bañosMin = bañosMin;
+        return this;
 	}
 
 	public Boolean getGaraje() {
 		return garaje;
 	}
 
-	public void setGaraje(Boolean garaje) {
+	public InmuebleBuscado setGaraje(Boolean garaje) {
 		this.garaje = garaje;
+        return this;
 	}
 
 	public Boolean getPatio() {
 		return patio;
 	}
 
-	public void setPatio(Boolean patio) {
+	public InmuebleBuscado setPatio(Boolean patio) {
 		this.patio = patio;
+        return this;
 	}
 
 	public Boolean getPiscina() {
 		return piscina;
 	}
 
-	public void setPiscina(Boolean piscina) {
+	public InmuebleBuscado setPiscina(Boolean piscina) {
 		this.piscina = piscina;
+        return this;
 	}
 
 	public Boolean getPropiedadHorizontal() {
 		return propiedadHorizontal;
+
 	}
 
-	public void setPropiedadHorizontal(Boolean propiedadHorizontal) {
+	public InmuebleBuscado setPropiedadHorizontal(Boolean propiedadHorizontal) {
 		this.propiedadHorizontal = propiedadHorizontal;
+        return this;
 	}
 
 	public Boolean getAguaCorriente() {
 		return aguaCorriente;
 	}
 
-	public void setAguaCorriente(Boolean aguaCorriente) {
+	public InmuebleBuscado setAguaCorriente(Boolean aguaCorriente) {
 		this.aguaCorriente = aguaCorriente;
+        return this;
 	}
 
 	public Boolean getCloacas() {
 		return cloacas;
 	}
 
-	public void setCloacas(Boolean cloacas) {
+	public InmuebleBuscado setCloacas(Boolean cloacas) {
 		this.cloacas = cloacas;
+        return this;
 	}
 
 	public Boolean getGasNatural() {
 		return gasNatural;
 	}
 
-	public void setGasNatural(Boolean gasNatural) {
+	public InmuebleBuscado setGasNatural(Boolean gasNatural) {
 		this.gasNatural = gasNatural;
+        return this;
 	}
 
 	public Boolean getAguaCaliente() {
 		return aguaCaliente;
 	}
 
-	public void setAguaCaliente(Boolean aguaCaliente) {
+	public InmuebleBuscado setAguaCaliente(Boolean aguaCaliente) {
 		this.aguaCaliente = aguaCaliente;
+        return this;
 	}
 
 	public Boolean getLavadero() {
 		return lavadero;
 	}
 
-	public void setLavadero(Boolean lavadero) {
+	public InmuebleBuscado setLavadero(Boolean lavadero) {
 		this.lavadero = lavadero;
+        return this;
 	}
 
 	public Boolean getPavimento() {
 		return pavimento;
 	}
 
-	public void setPavimento(Boolean pavimento) {
+	public InmuebleBuscado setPavimento(Boolean pavimento) {
 		this.pavimento = pavimento;
+        return this;
 	}
 
 	public ArrayList<Localidad> getLocalidades() {
 		return localidades;
 	}
 
-	public void setLocalidades(ArrayList<Localidad> localidades) {
+	public InmuebleBuscado setLocalidades(ArrayList<Localidad> localidades) {
 		this.localidades = localidades;
+        return this;
 	}
 
 	public ArrayList<Barrio> getBarrios() {
 		return barrios;
 	}
 
-	public void setBarrios(ArrayList<Barrio> barrios) {
+	public InmuebleBuscado setBarrios(ArrayList<Barrio> barrios) {
 		this.barrios = barrios;
+        return this;
 	}
 
 	public ArrayList<TipoInmueble> getTiposInmueblesBuscados() {
 		return tiposInmueblesBuscados;
 	}
 
-	public void setTiposInmueblesBuscados(ArrayList<TipoInmueble> tiposInmueblesBuscados) {
+	public InmuebleBuscado setTiposInmueblesBuscados(ArrayList<TipoInmueble> tiposInmueblesBuscados) {
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
+        return this;
 	}
 
 	@Override

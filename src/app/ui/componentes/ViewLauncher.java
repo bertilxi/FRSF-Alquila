@@ -1,8 +1,9 @@
-package app.ui.controladores;
+package app.ui.componentes;
 
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import app.ui.controladores.WindowTitleController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;

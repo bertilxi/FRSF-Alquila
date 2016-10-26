@@ -38,7 +38,7 @@ public class AltaVendedorController extends BaseController {
 
 	public ResultadoCrearVendedor acceptAction() {
 
-		StringBuffer error = new StringBuffer("");
+		StringBuilder error = new StringBuilder("");
 
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
@@ -76,8 +76,12 @@ public class AltaVendedorController extends BaseController {
 		}
 		else{
 			Vendedor vendedor = new Vendedor();
-			vendedor.setId(null).setNombre(nombre).setApellido(apellido).setNumeroDocumento(numeroDocumento)
-					.setTipoDocumento(tipoDoc).setPassword(password1);
+			vendedor.setId(null)
+                    .setNombre(nombre)
+                    .setApellido(apellido)
+                    .setNumeroDocumento(numeroDocumento)
+					.setTipoDocumento(tipoDoc)
+                    .setPassword(password1);
 
 			// mandan objeto al persistidor
 		}

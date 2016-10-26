@@ -27,7 +27,7 @@ public class BaseController extends WindowTitleController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+        super.initialize(location, resources);
 		toggleButtonAyuda.setToggleGroup(toggleGroupSidebar);
 		toggleButtonClientes.setToggleGroup(toggleGroupSidebar);
 		toggleButtonInmuebles.setToggleGroup(toggleGroupSidebar);
