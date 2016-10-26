@@ -1,0 +1,19 @@
+## Grupo Beta Romeo
+
+2 Entidad vendedor                                1
+19/10/16 => 21/10/16
+6 Persistidor vendedor                            3
+18/10/16 => 19/10/16
+5 Lógica alta, modificación y baja vendedor       4
+20/10/16 => 21/10/16
+8 Vista alta, modificar y baja propietario        3
+20/10/16 => ...
+16 Vista alta, modificar y baja cliente           1
+25/10/16 => ...
+17 Lógica alta, modificación y baja cliente       3
+20/10/16 => 21/10/16
+
+Preguntar:
+
+- que es publicar en Vista principal para la administración
+- checkear persistidor vendedor, no aparece esteban
