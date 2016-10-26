@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import app.datos.entidades.Direccion;
 import app.datos.entidades.TipoDocumento;
+import org.apache.commons.validator.routines.EmailValidator;
 
 @Service
 public class ValidadorFormato {
@@ -46,9 +47,7 @@ public class ValidadorFormato {
 	}
 
 	public static Boolean validarEmail(String email) {
-		Pattern pat = Pattern.compile("([0-9a-zA-Z]+(.[0-9a-zA-Z]+)*@[0-9a-zA-Z]+(.[0-9a-zA-Z]+)*(.([a-z]){2,4}))");
-
-		return pat.matcher(email).matches() && email.length() <= 30;
+        return EmailValidator.getInstance().isValid(email);
 	}
 
 	public static Boolean validarTelefono(String telefono) {
