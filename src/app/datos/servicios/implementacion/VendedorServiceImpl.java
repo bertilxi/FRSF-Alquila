@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import app.datos.clases.FiltroVendedor;
 import app.datos.entidades.Vendedor;
 import app.datos.servicios.VendedorService;
+import app.excepciones.ConsultaException;
 import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
@@ -61,7 +62,7 @@ public class VendedorServiceImpl implements VendedorService {
 		} catch(NoResultException e){
 			return null;
 		} catch(Exception e){
-			//hacer algo
+			throw new ConsultaException();
 		}
 		return vendedor;
 	}

@@ -13,6 +13,7 @@ import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
 import app.datos.servicios.DatosService;
+import app.excepciones.ConsultaException;
 import app.excepciones.PersistenciaException;
 
 public class DatosServiceImpl implements DatosService {
@@ -37,7 +38,7 @@ public class DatosServiceImpl implements DatosService {
 		try{
 			localidades = (ArrayList<Localidad>) session.getNamedQuery("obtenerLocalidadesDe").setParameter("prov", provincia).list();
 		} catch(Exception e){
-			//hacer algo
+			throw new ConsultaException();
 		}
 		return localidades;
 	}
@@ -51,7 +52,7 @@ public class DatosServiceImpl implements DatosService {
 		try{
 			provincias = (ArrayList<Provincia>) session.getNamedQuery("obtenerProvinciasDe").setParameter("pa", pais).list();
 		} catch(Exception e){
-			//hacer algo
+			throw new ConsultaException();
 		}
 		return provincias;
 	}
@@ -65,7 +66,7 @@ public class DatosServiceImpl implements DatosService {
 		try{
 			paises = (ArrayList<Pais>) session.getNamedQuery("obtenerPaises").list();
 		} catch(Exception e){
-			//hacer algo
+			throw new ConsultaException();
 		}
 		return paises;
 	}
@@ -79,7 +80,7 @@ public class DatosServiceImpl implements DatosService {
 		try{
 			tipos = (ArrayList<TipoDocumento>) session.getNamedQuery("obtenerTiposDeDocumento").list();
 		} catch(Exception e){
-			//hacer algo
+			throw new ConsultaException();
 		}
 		return tipos;
 	}
@@ -93,7 +94,7 @@ public class DatosServiceImpl implements DatosService {
 		try{
 			tipos = (ArrayList<TipoInmueble>) session.getNamedQuery("obtenerTiposDeInmueble").list();
 		} catch(Exception e){
-			//hacer algo
+			throw new ConsultaException();
 		}
 		return tipos;
 	}
