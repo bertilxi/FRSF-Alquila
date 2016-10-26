@@ -64,11 +64,25 @@ public class InmuebleBuscadoController{
         Boolean lavadero = checkboxLavadero.isSelected();
         Boolean pavimento = checkboxPavimento.isSelected();
 
+        // TODO: falta precio y barrios
+
         InmuebleBuscado inmuebleBuscado = new InmuebleBuscado();
         inmuebleBuscado.setId(null)
                 .setSuperficieMin(supeficie)
                 .setAntiguedadMax(antiguedad)
-                .
+                .setDormitoriosMin(dormitorios)
+                .setBañosMin(baños)
+                .setPropiedadHorizontal(propiedadHorizontal)
+                .setGaraje(garage)
+                .setPatio(patio)
+                .setPiscina(piscina)
+                .setAguaCaliente(aguaCaliente)
+                .setAguaCorriente(aguaCorriente)
+                .setCloacas(cloaca)
+                .setGasNatural(gasNatural)
+                .setTelefono(telefono)
+                .setLavadero(lavadero)
+                .setPavimento(pavimento);
 
     }
     public void cancelAction(ActionEvent event){

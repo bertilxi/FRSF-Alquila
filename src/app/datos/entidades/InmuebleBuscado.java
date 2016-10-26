@@ -71,8 +71,11 @@ public class InmuebleBuscado {
 	@Column(name = "lavadero")
 	private Boolean lavadero;
 
-	@Column(name = "pavimento")
-	private Boolean pavimento;
+    @Column(name = "pavimento")
+    private Boolean pavimento;
+
+    @Column(name = "telefono")
+    private Boolean telefono;
 
 	//Relaciones
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -97,7 +100,7 @@ public class InmuebleBuscado {
 	public InmuebleBuscado(Double precioMax, Double superficieMin, Integer antiguedadMax,
 			Integer dormitoriosMin, Integer bañosMin, Boolean garaje, Boolean patio, Boolean piscina,
 			Boolean propiedadHorizontal, Boolean aguaCorriente, Boolean cloacas, Boolean gasNatural,
-			Boolean aguaCaliente, Boolean lavadero, Boolean pavimento, ArrayList<Localidad> localidades,
+			Boolean aguaCaliente, Boolean lavadero, Boolean pavimento, Boolean telefono, ArrayList<Localidad> localidades,
 			ArrayList<Barrio> barrios, ArrayList<TipoInmueble> tiposInmueblesBuscados) {
 		super();
 		this.precioMax = precioMax;
@@ -117,6 +120,7 @@ public class InmuebleBuscado {
 		this.pavimento = pavimento;
 		this.localidades = localidades;
 		this.barrios = barrios;
+        this.telefono = telefono;
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
 	}
 	public InmuebleBuscado setId(Integer id){
@@ -264,14 +268,23 @@ public class InmuebleBuscado {
         return this;
 	}
 
-	public Boolean getPavimento() {
-		return pavimento;
-	}
+    public Boolean getPavimento() {
+        return pavimento;
+    }
 
-	public InmuebleBuscado setPavimento(Boolean pavimento) {
-		this.pavimento = pavimento;
+    public InmuebleBuscado setPavimento(Boolean pavimento) {
+        this.pavimento = pavimento;
         return this;
-	}
+    }
+
+    public Boolean getTelefono() {
+        return telefono;
+    }
+
+    public InmuebleBuscado setTelefono(Boolean telefono) {
+        this.telefono = telefono;
+        return this;
+    }
 
 	public ArrayList<Localidad> getLocalidades() {
 		return localidades;
