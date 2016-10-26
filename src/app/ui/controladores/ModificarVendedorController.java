@@ -21,17 +21,17 @@ public class ModificarVendedorController extends BaseController {
 
 
     @FXML
-    TextField textFieldNombre;
+    private TextField textFieldNombre;
     @FXML
-    TextField textFieldApellido;
+    private TextField textFieldApellido;
     @FXML
-    TextField textFieldNumeroDocumento;
+    private TextField textFieldNumeroDocumento;
     @FXML
-    TextField textFieldContraseña;
+    private TextField textFieldContraseña;
     @FXML
-    TextField textFieldRepiteContraseña;
+    private TextField textFieldRepiteContraseña;
     @FXML
-    ComboBox<TipoDocumento> comboBoxTipoDocumento;
+    private ComboBox<TipoDocumento> comboBoxTipoDocumento;
 
     private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
