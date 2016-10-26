@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Localidad;
+import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
@@ -35,6 +36,9 @@ public class AltaClienteController extends BaseController {
 	private TextField textFieldCorreo;
 
 	@FXML
+	private ComboBox<Pais> comboBoxPais;
+
+	@FXML
 	private ComboBox<Provincia> comboBoxProvincia;
 
 	@FXML
@@ -57,6 +61,8 @@ public class AltaClienteController extends BaseController {
 
 	private ArrayList<Provincia> listaProvincias;
 
+	private ArrayList<Pais> listaPaises;
+
 	private GestorDatos gestorDatos;
 
     @Override
@@ -78,11 +84,14 @@ public class AltaClienteController extends BaseController {
         comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
 
         try {
-			listaProvincias = gestorDatos.obtenerProvincias();
+			listaPaises = gestorDatos.obtenerPaises();
 		} catch (PersistenciaException e) {
 			// TODO mostrar error inesperado
 		}
-        comboBoxProvincia.getItems().addAll(listaProvincias);
+        comboBoxPais.getItems().addAll(listaPaises);
+
+        comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> actualizarProvincias(newValue));
 
         comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> actualizarLocalidades(newValue));
@@ -95,6 +104,15 @@ public class AltaClienteController extends BaseController {
 			// TODO mostrar error inesperado
 		}
         comboBoxLocalidad.getItems().addAll(listaLocalidades);
+	}
+
+	private void actualizarProvincias(Pais pais) {
+		try {
+			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
+		} catch (PersistenciaException e) {
+			// TODO mostrar error inesperado
+		}
+        comboBoxProvincia.getItems().addAll(listaProvincias);
 	}
 
 }
