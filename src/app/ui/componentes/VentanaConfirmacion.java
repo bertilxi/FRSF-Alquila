@@ -34,6 +34,7 @@ public class VentanaConfirmacion extends Alert {
         this.setContentText(mensaje);
         this.setHeaderText(null);
         this.setTitle(titulo);
+        this.showAndWait();
     }
 
     public Boolean acepta() {

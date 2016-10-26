@@ -10,11 +10,13 @@ import app.datos.entidades.*;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoCrearCliente;
+import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -79,6 +81,7 @@ public class AltaClienteController extends BaseController {
 
 	private GestorDatos gestorDatos;
 
+	@FXML
 	public ResultadoCrearCliente acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
@@ -97,25 +100,25 @@ public class AltaClienteController extends BaseController {
 		Localidad localidad = comboBoxLocalidad.getValue();
 
 		if(nombre.isEmpty()){
-			error.append("Inserte un nombre").append("\r\n ");
+			error.append("Inserte un nombre").append("\r\n");
 		}
 		if(apellido.isEmpty()){
-			error.append("Inserte un apellido").append("\r\n ");
+			error.append("Inserte un apellido").append("\r\n");
 		}
 		if(tipoDoc == null){
-			error.append("Elija un tipo de documento").append("\r\n ");
+			error.append("Elija un tipo de documento").append("\r\n");
 		}
 		if(numeroDocumento.isEmpty()){
-			error.append("Inserte un numero de documento").append("\r\n ");
+			error.append("Inserte un numero de documento").append("\r\n");
 		}
 		if(telefono.isEmpty()){
-			error.append("Inserte un telefono").append("\r\n ");
+			error.append("Inserte un telefono").append("\r\n");
 		}
 		if(correo.isEmpty()){
-			error.append("Inserte un correo").append("\r\n ");
+			error.append("Inserte un correo").append("\r\n");
 		}
 		if(barrio.isEmpty()){
-			error.append("Inserte un barrio").append("\r\n ");
+			error.append("Inserte un barrio").append("\r\n");
 		}
 
 		if(!error.toString().isEmpty()){
@@ -130,6 +133,7 @@ public class AltaClienteController extends BaseController {
 					.setTipoDocumento(tipoDoc);
 
 			// mandar objeto al persistidor
+            VentanaConfirmacion ventanaConfirmacion = new VentanaConfirmacion("Hey", "Esto no anda");
 		}
 
 		return null;
@@ -153,8 +157,9 @@ public class AltaClienteController extends BaseController {
 		return new FXMLLoader(location, null, new JavaFXBuilderFactory(), null, Charset.forName(FXMLLoader.DEFAULT_CHARSET_NAME));
 	}
 
-	public void cancelAction() {
-
+	@FXML
+	public void cancelAction(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 
 	@Override
