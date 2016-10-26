@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import app.datos.clases.DatosLogin;
+import app.datos.entidades.TipoDocumento;
 import app.excepciones.ManejadorExcepciones;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
@@ -13,6 +14,7 @@ import app.ui.componentes.VentanaError;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -23,10 +25,13 @@ public class LoginController extends WindowTitleController {
 	protected CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
 
 	@FXML
-	protected TextField tfDNI;
+	protected TextField tfNumeroDocumento;
 
 	@FXML
 	protected PasswordField pfContra;
+
+	@FXML
+	protected ComboBox<TipoDocumento> cbTipoDocumento;
 
 	protected Boolean desatendido = false;
 
@@ -44,15 +49,17 @@ public class LoginController extends WindowTitleController {
 		String errores = "";
 
 		//Toma de datos de la vista
-		String dni = tfDNI.getText().trim();
+		TipoDocumento tipoDocumento = cbTipoDocumento.getValue();
+		String dni = tfNumeroDocumento.getText().trim();
 		char[] pass = pfContra.getText().toCharArray();
-		if(dni.isEmpty() || pass.length < 1){
+
+		if(tipoDocumento == null || dni.isEmpty() || pass.length < 1){
 			if(!desatendido){
 				new VentanaError("No se ha podido iniciar sesión", "Campos vacíos.", null); //apilador.getStage()
 			}
 			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
-		datos = new DatosLogin(dni, pass);
+		datos = new DatosLogin(tipoDocumento, dni, pass);
 
 		//Inicio transacción al gestor
 		try{

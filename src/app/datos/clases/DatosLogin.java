@@ -1,22 +1,30 @@
 package app.datos.clases;
 
+import app.datos.entidades.TipoDocumento;
+
 public class DatosLogin {
 
-    private String dni;
+	private TipoDocumento tipoDocumento;
 
-    private char[] contrasenia;
+	private String dni;
 
-    public DatosLogin(String dni, char[] contrasenia) {
-        this.dni = dni;
-        this.contrasenia = contrasenia;
-    }
+	private char[] contrasenia;
 
-    public String getDNI() {
-        return dni;
-    }
+	public DatosLogin(TipoDocumento tipoDocumento, String dni, char[] contrasenia) {
+		this.tipoDocumento = tipoDocumento;
+		this.dni = dni;
+		this.contrasenia = contrasenia;
+	}
 
-    public char[] getContrasenia() {
-        return contrasenia;
-    }
+	public String getDNI() {
+		return dni;
+	}
 
+	public char[] getContrasenia() {
+		return contrasenia;
+	}
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
 }

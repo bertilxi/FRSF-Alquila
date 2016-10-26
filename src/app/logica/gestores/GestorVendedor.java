@@ -16,7 +16,7 @@ import app.logica.resultados.ResultadoEliminarVendedor;
 public class GestorVendedor {
 
 	@Resource
-	private VendedorService persistidorVendedor;
+	protected VendedorService persistidorVendedor;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
 		throw new NotYetImplementedException();

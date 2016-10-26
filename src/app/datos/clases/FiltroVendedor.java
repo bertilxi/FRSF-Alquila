@@ -4,8 +4,9 @@ public class FiltroVendedor {
 
 	private TipoDocumentoStr tipoDocumento;
 	private String documento;
+	private String contra;
 
-	public FiltroVendedor(TipoDocumentoStr tipoDocumento, String documento) {
+	public FiltroVendedor(TipoDocumentoStr tipoDocumento, String documento, String contra) {
 		super();
 		if(tipoDocumento == null || documento == null){
 			throw new NullPointerException();
@@ -20,6 +21,10 @@ public class FiltroVendedor {
 
 	public String getDocumento() {
 		return documento;
+	}
+
+	public String getContra() {
+		return contra;
 	}
 
 }

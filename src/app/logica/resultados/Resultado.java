@@ -18,7 +18,7 @@ public abstract class Resultado<T> {
 	}
 
 	public List<T> getErrores() {
-		return new ArrayList<T>(errores);
+		return new ArrayList<>(errores);
 	}
 
 	@Override
@@ -31,29 +31,23 @@ public abstract class Resultado<T> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj)
+		if(this == obj){
 			return true;
-		if(obj == null)
-			return false;
-		if(getClass() != obj.getClass())
-			return false;
-		Resultado other = (Resultado) obj;
-		ArrayList<T> o;
-		if(errores == null){
-			if(other.errores != null)
-				return false;
-
 		}
-		else{
-			o = new ArrayList<T>(other.errores);
-			if(errores.size() != o.size()){
+		if(obj == null){
+			return false;
+		}
+		if(getClass() != obj.getClass()){
+			return false;
+		}
+		Resultado<?> other = (Resultado<?>) obj;
+		if(errores == null){
+			if(other.errores != null){
 				return false;
 			}
-			for(int i = 0; i < o.size(); i++){
-				if(!errores.get(i).equals(o.get(i))){
-					return false;
-				}
-			}
+		}
+		else if(!errores.equals(other.errores)){
+			return false;
 		}
 		return true;
 	}
