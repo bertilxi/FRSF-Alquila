@@ -143,6 +143,15 @@ public class Vendedor {
 		return this;
 	}
 
+	public Vendedor setEstado(Estado estado) {
+		this.estado = estado;
+		return this;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if(this == o){
