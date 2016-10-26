@@ -87,6 +87,7 @@ public class ModificarVendedorController extends BaseController {
             // mandan objeto al persistidor
         }
 
+        return null;
     }
 
     public void cancelAction() {
