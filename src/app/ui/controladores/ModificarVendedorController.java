@@ -2,6 +2,9 @@ package app.ui.controladores;
 
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
+import app.excepciones.PersistenciaException;
+import app.logica.gestores.GestorDatos;
+import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarVendedor;
@@ -11,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ModificarVendedorController extends BaseController {
@@ -29,6 +33,12 @@ public class ModificarVendedorController extends BaseController {
     @FXML
     ComboBox<TipoDocumento> comboBoxTipoDocumento;
 
+    private ArrayList<TipoDocumento> listaTiposDeDocumento;
+
+	private GestorDatos gestorDatos;
+
+	private GestorVendedor gestorVendedor;
+
     public ResultadoModificarVendedor acceptAction() {
 
         StringBuffer error = new StringBuffer("");
@@ -46,11 +56,11 @@ public class ModificarVendedorController extends BaseController {
         if(apellido.isEmpty()){
             error.append("Inserte un apellido").append("\r\n ");
         }
-		/*
-		 * if (tipoDoc.equals(new TipoDocumento())){
-		 * error.append("Elija un tipo de documento").append("\r\n ");
-		 * }
-		 */
+
+	 	if (tipoDoc == null){
+		error.append("Elija un tipo de documento").append("\r\n ");
+		}
+
         if(numeroDocumento.isEmpty()){
             error.append("Inserte un numero de documento").append("\r\n ");
         }
@@ -88,6 +98,14 @@ public class ModificarVendedorController extends BaseController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
+        listaTiposDeDocumento = new ArrayList<TipoDocumento>();
+
+		try {
+			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+		} catch (PersistenciaException e) {
+			// TODO mostrar error inesperado
+		}
+        comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
     }
 
 }

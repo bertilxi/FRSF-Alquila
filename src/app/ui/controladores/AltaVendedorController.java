@@ -79,11 +79,10 @@ public class AltaVendedorController extends BaseController {
 			vendedor.setId(null).setNombre(nombre).setApellido(apellido).setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc).setPassword(password1);
 
-			//No está implementado. faltarían parámetros y el catch de excepciones
-			//gestorVendedor.crearVendedor();
+			// mandan objeto al persistidor
 		}
 
-		return null
+		return null;
 
 	}
 
