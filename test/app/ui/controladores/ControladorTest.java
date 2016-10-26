@@ -12,7 +12,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
-public class ContoladorTest implements TestRule {
+public class ControladorTest implements TestRule {
 
 	private static Thread javaFXThread = new Thread("Hilo de inicio de JavaFX") {
 		@Override
@@ -33,7 +33,7 @@ public class ContoladorTest implements TestRule {
 	private static Semaphore s = new Semaphore(0);
 
 	//Inicia el hilo de JavaFX e inyecta la vista en el cotrolador
-	public <T> ContoladorTest(String direccionURLVista, T controladorAProbar) {
+	public <T> ControladorTest(String direccionURLVista, T controladorAProbar) {
 		try{
 			//Iniciar el hilo de JavaFX
 			if(!javaFXThread.isAlive()){
