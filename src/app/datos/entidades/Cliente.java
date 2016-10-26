@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "cliente", uniqueConstraints = @UniqueConstraint(name = "cliente_numerodocumento_idtipodocumento_uk", columnNames = { "numerodocumento", "idtipodocumento" }))
 public class Cliente implements Serializable {
 
-	//TODO agregar atributos faltantes (correo,barrio) y seters
+	//TODO agregar por favor los atributos faltantes y seters
 	private static final long serialVersionUID = 1L;
 
 	@Id

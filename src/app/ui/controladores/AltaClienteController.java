@@ -6,6 +6,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import org.hibernate.cfg.NotYetImplementedException;
+
 import app.datos.entidades.*;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
@@ -133,33 +135,39 @@ public class AltaClienteController extends BaseController {
 			Cliente cliente = new Cliente();
 			cliente.setId(null)
 			// TODO completar esto
-					//.setEstado(      alta     )
+					//.setEstado(         alta           )
 					.setNombre(nombre)
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)
 					.setTelefono(telefono)
+					//.setMonto(monto)
+					//.setTipoInmueble(tipoInmueble)
+					//.setLocalidad(localidad)
+					//.setProvincia(provincia)
+					//.setPais(pais)
 					//.setCorreo(correo)
 					//.setBarrio(barrio)
 					;
 
 			try {
-				gestorCliente.crearCliente(cliente);
+				ResultadoCrearCliente resultado = gestorCliente.crearCliente(cliente);
+				mostrarErrores(resultado);
 			} catch (GestionException e) {
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)) {
 					VentanaConfirmacion ventana = new VentanaConfirmacion("El cliente ya existe", "El cliente ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
 					if (ventana.acepta()) {
-						try {
-							gestorCliente.modificarCliente(cliente);
-						} catch (PersistenciaException e1) {
-							// TODO Mostrar error inesperado
-						}
+						//TODO mandar a la vista modificar cliente
 					}
 				}
 			} catch (PersistenciaException e) {
 				// TODO Mostrar error inesperado
 			}
 		}
+	}
+
+	private void mostrarErrores(ResultadoCrearCliente resultado) {
+		throw new NotYetImplementedException();
 	}
 
 	public void cargarInmueble(ActionEvent event) throws IOException {
