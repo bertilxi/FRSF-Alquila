@@ -31,7 +31,7 @@ public class GestorDatos {
 		return persistidorDatos.obtenerProvincias();
 	}
 
-	public ArrayList<Localidad> obtenerLocalidadesDe(Provincia provincia) throws PersistenciaException {
-		return persistidorDatos.obtenerLocalidadesDe(provincia);
+	public ArrayList<Localidad> obtenerLocalidadesDe(Provincia prov) throws PersistenciaException {
+		return persistidorDatos.obtenerLocalidadesDe(prov);
 	}
 }

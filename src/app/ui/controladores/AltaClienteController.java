@@ -88,9 +88,9 @@ public class AltaClienteController extends BaseController {
                 (observable, oldValue, newValue) -> actualizarLocalidades(newValue));
     }
 
-	private void actualizarLocalidades(Provincia newValue) {
+	private void actualizarLocalidades(Provincia provincia) {
 		try {
-			listaLocalidades = gestorDatos.obtenerLocalidadesDe(newValue);
+			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
 		} catch (PersistenciaException e) {
 			// TODO mostrar error inesperado
 		}
