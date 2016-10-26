@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.*;
+import app.excepciones.EntidadExistenteConEstadoBajaException;
+import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
+import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.ui.componentes.VentanaConfirmacion;
@@ -81,8 +84,10 @@ public class AltaClienteController extends BaseController {
 
 	private GestorDatos gestorDatos;
 
+	private GestorCliente gestorCliente;
+
 	@FXML
-	public ResultadoCrearCliente acceptAction() {
+	public void acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -125,19 +130,36 @@ public class AltaClienteController extends BaseController {
 			VentanaError ventanaError = new VentanaError("Revise sus campos", error.toString());
 		}
 		else{
-			Vendedor vendedor = new Vendedor();
-			vendedor.setId(null)
+			Cliente cliente = new Cliente();
+			cliente.setId(null)
+			// TODO completar esto
+					//.setEstado(      alta     )
 					.setNombre(nombre)
 					.setApellido(apellido)
+					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)
-					.setTipoDocumento(tipoDoc);
+					.setTelefono(telefono)
+					//.setCorreo(correo)
+					//.setBarrio(barrio)
+					;
 
-			// mandar objeto al persistidor
-            VentanaConfirmacion ventanaConfirmacion = new VentanaConfirmacion("Hey", "Esto no anda");
+			try {
+				gestorCliente.crearCliente(cliente);
+			} catch (GestionException e) {
+				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)) {
+					VentanaConfirmacion ventana = new VentanaConfirmacion("El cliente ya existe", "El cliente ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
+					if (ventana.acepta()) {
+						try {
+							gestorCliente.modificarCliente(cliente);
+						} catch (PersistenciaException e1) {
+							// TODO Mostrar error inesperado
+						}
+					}
+				}
+			} catch (PersistenciaException e) {
+				// TODO Mostrar error inesperado
+			}
 		}
-
-		return null;
-
 	}
 
 	public void cargarInmueble(ActionEvent event) throws IOException {
@@ -171,37 +193,37 @@ public class AltaClienteController extends BaseController {
 	 * @Override
 	 * public void initialize(URL location, ResourceBundle resources) {
 	 * super.initialize(location, resources);
-	 * 
+	 *
 	 * listaLocalidades = new ArrayList<Localidad>();
 	 * listaProvincias = new ArrayList<Provincia>();
 	 * listaPaises = new ArrayList<Pais>();
 	 * listaTiposDeDocumento = new ArrayList<TipoDocumento>();
 	 * listaTiposInmueble = new ArrayList<TipoInmueble>();
-	 * 
+	 *
 	 * try {
 	 * listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 	 * } catch (PersistenciaException e) {
 	 * // TODO mostrar error inesperado
 	 * }
 	 * comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
-	 * 
+	 *
 	 * try {
 	 * listaTiposInmueble = gestorDatos.obtenerTiposInmueble();
 	 * } catch (PersistenciaException e) {
 	 * // TODO mostrar error inesperado
 	 * }
 	 * comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
-	 * 
+	 *
 	 * try {
 	 * listaPaises = gestorDatos.obtenerPaises();
 	 * } catch (PersistenciaException e) {
 	 * // TODO mostrar error inesperado
 	 * }
 	 * comboBoxPais.getItems().addAll(listaPaises);
-	 * 
+	 *
 	 * comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
 	 * (observable, oldValue, newValue) -> actualizarProvincias(newValue));
-	 * 
+	 *
 	 * comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
 	 * (observable, oldValue, newValue) -> actualizarLocalidades(newValue));
 	 * }
