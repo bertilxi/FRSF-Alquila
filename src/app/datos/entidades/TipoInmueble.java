@@ -5,10 +5,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import app.datos.clases.TipoInmuebleStr;
 
+@NamedQuery(name = "obtenerTiposDeInmueble", query = "SELECT t FROM TipoInmueble t")
 @Entity
 @Table(name = "tipo_inmueble")
 public class TipoInmueble {

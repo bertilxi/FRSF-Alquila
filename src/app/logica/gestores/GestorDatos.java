@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import app.datos.entidades.Localidad;
+import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
@@ -27,8 +28,8 @@ public class GestorDatos {
 		return persistidorDatos.obtenerTiposDeInmueble();
 	}
 
-	public ArrayList<Provincia> obtenerProvincias() throws PersistenciaException {
-		return persistidorDatos.obtenerProvincias();
+	public ArrayList<Provincia> obtenerProvinciasDe(Pais pais) throws PersistenciaException {
+		return persistidorDatos.obtenerProvinciasDe(pais);
 	}
 
 	public ArrayList<Localidad> obtenerLocalidadesDe(Provincia prov) throws PersistenciaException {

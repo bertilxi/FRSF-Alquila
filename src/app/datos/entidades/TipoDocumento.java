@@ -7,10 +7,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import app.datos.clases.TipoDocumentoStr;
 
+@NamedQuery(name = "obtenerTiposDeDocumento", query = "SELECT t FROM TipoDocumento t")
 @Entity
 @Table(name="tipo_documento")
 public class TipoDocumento {
@@ -33,7 +35,7 @@ public class TipoDocumento {
 		this.id = id;
 		this.tipo = tipo;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
