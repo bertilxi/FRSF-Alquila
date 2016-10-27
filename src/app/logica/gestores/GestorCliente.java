@@ -6,9 +6,12 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroCliente;
 import app.datos.entidades.Cliente;
 import app.datos.servicios.ClienteService;
+import app.excepciones.EntidadExistenteConEstadoBajaException;
+import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearCliente;
@@ -22,7 +25,7 @@ public class GestorCliente {
 	@Resource
 	private ClienteService persistidorCliente;
 
-	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException {
+	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearCliente> errores = new ArrayList<>();
 
 		if(!ValidadorFormato.validarNombre(cliente.getNombre())){
@@ -41,8 +44,13 @@ public class GestorCliente {
 			errores.add(ErrorCrearCliente.Formato_Documento_Incorrecto);
 		}
 
-		if(null != persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()))){
-			errores.add(ErrorCrearCliente.Ya_Existe_Cliente);
+		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
+		if(null != clienteAuxiliar){
+			if(clienteAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)) {
+				errores.add(ErrorCrearCliente.Ya_Existe_Cliente);
+			} else {
+				throw new EntidadExistenteConEstadoBajaException();
+			}
 		}
 
 		if(errores.isEmpty()){
