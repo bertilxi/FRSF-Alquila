@@ -11,7 +11,7 @@ import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
 public class ValidadorTest {
-
+	
 	@Test
 	@Parameters({ "Juan, true",
 			"Juan Pablo, true",
@@ -39,7 +39,7 @@ public class ValidadorTest {
 	@Test
 	@Parameters({ "juan@juan.com, true",
 	})
-	public void validarEmailTest(String email, boolean esperado) {
+	public void validarDomiciliolTest(String email, boolean esperado) {
 		assertEquals(esperado, ValidadorFormato.validarEmail(email));
 	}
 }
