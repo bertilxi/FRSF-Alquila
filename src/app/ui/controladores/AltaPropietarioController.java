@@ -3,17 +3,24 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 import app.datos.entidades.*;
+import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.input.KeyEvent;
 
 public class AltaPropietarioController extends BaseController {
 
@@ -48,6 +55,24 @@ public class AltaPropietarioController extends BaseController {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
+		textFieldNombre.addEventFilter(KeyEvent.KEY_TYPED, validation());
+
+	}
+
+	public EventHandler<KeyEvent> validation() {
+		return e -> {
+
+            String text = textFieldNombre.getText().trim();
+            Boolean match = ValidadorFormato.validarNombre(text);
+
+            if(text.length() >= 30){
+				e.consume();
+			}
+
+            if (!match){
+                e.consume();
+            }
+        };
 	}
 
 	@FXML

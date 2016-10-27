@@ -17,3 +17,4 @@ Preguntar:
 
 - que es publicar en Vista principal para la administración
 - checkear persistidor vendedor, no aparece esteban
+- Ver barrio clase Direccion en codigo y documentacion
