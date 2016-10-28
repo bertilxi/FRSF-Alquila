@@ -11,10 +11,12 @@ import org.hibernate.cfg.NotYetImplementedException;
 import app.datos.entidades.*;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
+import app.excepciones.ManejadorExcepciones;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoCrearCliente;
+import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
@@ -72,7 +74,7 @@ public class AltaClienteController extends BaseController {
 	@FXML
 	private Button buttonCargatInmueble;
 
-	// todo: falta un comboBox barrios
+	// TODO: falta un comboBox barrios
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
@@ -152,7 +154,19 @@ public class AltaClienteController extends BaseController {
 
 			try {
 				ResultadoCrearCliente resultado = gestorCliente.crearCliente(cliente);
-				mostrarErrores(resultado);
+				if (resultado.hayErrores()) {
+					StringBuilder stringErrores = new StringBuilder();
+					for(ErrorCrearCliente err: resultado.getErrores()) {
+						switch(err) {
+						case Formato_Nombre_Incorrecto: stringErrores.append("Formato de nombre incorrecto.\n"); break;
+						case Formato_Apellido_Incorrecto: stringErrores.append("Formato de apellido incorrecto.\n");break;
+						case Formato_Telefono_Incorrecto: stringErrores.append("Formato de teléfono incorrecto.\n");break;
+						case Formato_Documento_Incorrecto: stringErrores.append("Tipo y formato de documento incorrecto.\n"); break;
+						case Ya_Existe_Cliente: stringErrores.append("Ya existe un cliente con ese tipo y número de documento.\n"); break;
+						}
+					}
+					new VentanaError("No se pudo crear el cliente", stringErrores.toString(), null); //falta el stage
+				}
 			} catch (GestionException e) {
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)) {
 					VentanaConfirmacion ventana = new VentanaConfirmacion("El cliente ya existe", "El cliente ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
@@ -161,11 +175,12 @@ public class AltaClienteController extends BaseController {
 					}
 				}
 			} catch (PersistenciaException e) {
-				// TODO Mostrar error inesperado
+				ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
 			}
 		}
 	}
 
+	public void cargarInmueble(ActionEvent event) throws IOException {
 	private void mostrarErrores(ResultadoCrearCliente resultado) {
 		throw new NotYetImplementedException();
 	}
@@ -212,21 +227,21 @@ public class AltaClienteController extends BaseController {
 	 * try {
 	 * listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 	 * } catch (PersistenciaException e) {
-	 * // TODO mostrar error inesperado
+	 * 	ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
 	 * }
 	 * comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 	 *
 	 * try {
 	 * listaTiposInmueble = gestorDatos.obtenerTiposInmueble();
 	 * } catch (PersistenciaException e) {
-	 * // TODO mostrar error inesperado
+	 * 	ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
 	 * }
 	 * comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
 	 *
 	 * try {
 	 * listaPaises = gestorDatos.obtenerPaises();
 	 * } catch (PersistenciaException e) {
-	 * // TODO mostrar error inesperado
+	 * 	ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
 	 * }
 	 * comboBoxPais.getItems().addAll(listaPaises);
 	 *
@@ -242,7 +257,7 @@ public class AltaClienteController extends BaseController {
 		try{
 			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
 		} catch(PersistenciaException e){
-			// TODO mostrar error inesperado
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
@@ -251,7 +266,7 @@ public class AltaClienteController extends BaseController {
 		try{
 			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
 		} catch(PersistenciaException e){
-			// TODO mostrar error inesperado
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}
