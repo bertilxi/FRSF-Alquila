@@ -39,7 +39,7 @@ public class ValidadorTest {
 	@Test
 	@Parameters({ "juan@juan.com, true",
 	})
-	public void validarDomiciliolTest(String email, boolean esperado) {
+	public void validarDomicilioTest(String email, boolean esperado) {
 		assertEquals(esperado, ValidadorFormato.validarEmail(email));
 	}
 }

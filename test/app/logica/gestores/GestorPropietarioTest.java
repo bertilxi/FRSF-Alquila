@@ -2,7 +2,6 @@ package app.logica.gestores;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,18 +20,16 @@ import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.datos.servicios.PropietarioService;
-import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
-import app.logica.resultados.ResultadoAutenticacion;
-import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 import app.logica.resultados.ResultadoCrearPropietario;
-import app.ui.controladores.resultado.ResultadoControlador;
-import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
+import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
+import app.logica.resultados.ResultadoModificarPropietario;
+import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-@PrepareForTest({ ValidadorFormato.class, Localidad.class, Provincia.class, Calle.class, Barrio.class, Direccion.class })
+@PrepareForTest({ ValidadorFormato.class, TipoDocumento.class, Localidad.class, Provincia.class, Calle.class, Barrio.class, Direccion.class })
 public class GestorPropietarioTest {
 
 	@Rule
@@ -42,15 +39,7 @@ public class GestorPropietarioTest {
 	private static PropietarioService propietarioService;
 	private static FiltroPropietario filtro;
 
-	@Test
-	@Parameters
-	public void testCrearPropietario_correcto(TipoDocumento tipoDocumento, String numDoc, String contra, ResultadoControlador resultadoVista, ResultadoAutenticacion resultadoLogica, Throwable excepcion) throws Exception {
-		PowerMockito.mockStatic(ValidadorFormato.class);
-		PowerMockito.when(ValidadorFormato.validarDocumento(tipoDocumento, numDoc)).thenReturn(true).thenReturn(false);
-
-		Assert.assertTrue(ValidadorFormato.validarDocumento(tipoDocumento, numDoc));
-		Assert.assertFalse(ValidadorFormato.validarDocumento(tipoDocumento, numDoc));
-
+	protected Object[] parametersForTestCrearPropietario_correcto() {
 		//Se carga propietario con datos básicos solo para evitar punteros nulos
 		//Las validaciones se hacen en el validador, por lo que se setean luego en los mocks los valores esperados
 		TipoDocumento doc = new TipoDocumento(1, TipoDocumentoStr.DNI);
@@ -59,6 +48,23 @@ public class GestorPropietarioTest {
 		propietario = new Propietario(1, "Juan", "Perez", "38377777", "3424686868", "d.a@hotmail.com", doc, dir, null);
 		filtro = new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento());
 
+		//Parámetros de JUnitParams
+		return new Object[] {
+				new Object[] { true, true, true, true, true, true, null, 1, resultadoCorrecto },
+				new Object[] { false, true, true, true, true, true, null, 0, resultadoCrearNombreIncorrecto },
+				new Object[] { true, false, true, true, true, true, null, 0, resultadoCrearApellidoIncorrecto },
+				new Object[] { true, true, false, true, true, true, null, 0, resultadoCrearDocumentoIncorrecto },
+				new Object[] { true, true, true, false, true, true, null, 0, resultadoCrearTelefonoIncorrecto },
+				new Object[] { true, true, true, true, false, true, null, 0, resultadoCrearEmailIncorrecto },
+				new Object[] { true, true, true, true, true, false, null, 0, resultadoCrearDireccionIncorrecto },
+				new Object[] { false, false, true, true, true, true, null, 0, new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto, ErrorCrearPropietario.Formato_Apellido_Incorrecto) },
+				new Object[] { true, true, true, true, true, true, propietario, 0, resultadoCrearYaExiste }
+		};
+	}
+
+	@Test
+	@Parameters
+	public void testCrearPropietario_correcto(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValEmail, Boolean resValDireccion, Propietario resObtenerPropietario, Integer guardar, ResultadoCrearPropietario resultadoCrearPropietarioEsperado) throws Exception {
 		//Inicialización de los mocks
 		propietarioService = PowerMockito.mock(PropietarioService.class);
 		PowerMockito.mockStatic(ValidadorFormato.class);
@@ -71,126 +77,61 @@ public class GestorPropietarioTest {
 		};
 
 		//Setear valores esperados a los mocks
-		PowerMockito.when(ValidadorFormato.validarNombre(propietario.getNombre())).thenReturn(true);
-		PowerMockito.when(ValidadorFormato.validarApellido(propietario.getApellido())).thenReturn(true);
-		PowerMockito.when(ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())).thenReturn(true);
-		PowerMockito.when(ValidadorFormato.validarTelefono(propietario.getTelefono())).thenReturn(true);
-		PowerMockito.when(ValidadorFormato.validarEmail(propietario.getEmail())).thenReturn(true);
-		PowerMockito.when(ValidadorFormato.validarDireccion(propietario.getDireccion())).thenReturn(true);
-		PowerMockito.when(propietarioService.obtenerPropietario(filtro)).thenReturn(null);
+		PowerMockito.when(ValidadorFormato.validarNombre(propietario.getNombre())).thenReturn(resValNombre);
+		PowerMockito.when(ValidadorFormato.validarApellido(propietario.getApellido())).thenReturn(resValApellido);
+		PowerMockito.when(ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())).thenReturn(resValDocumento);
+		PowerMockito.when(ValidadorFormato.validarTelefono(propietario.getTelefono())).thenReturn(resValTelefono);
+		PowerMockito.when(ValidadorFormato.validarEmail(propietario.getEmail())).thenReturn(resValEmail);
+		PowerMockito.when(ValidadorFormato.validarDireccion(propietario.getDireccion())).thenReturn(resValDireccion);
+		PowerMockito.when(propietarioService.obtenerPropietario(filtro)).thenReturn(resObtenerPropietario);
 		PowerMockito.doNothing().when(propietarioService).guardarPropietario(propietario); //Para métodos void la sintaxis es distinta
-		ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario();
 
 		//Llamar al método a testear
 		ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
 
-		//System.out.println(resultadoCrearPropietario.getErrores().toString() + " - " + resultadoCrearPropietarioEsperado.getErrores().toString());
-
 		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
-		assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
+		assertEquals(resultadoCrearPropietarioEsperado.getErrores(), resultadoCrearPropietario.getErrores());
 		PowerMockito.verifyStatic(); //ejecutar siempre verifyStatic antes del método estático a comprobar que se llama
 		ValidadorFormato.validarNombre(propietario.getNombre());
+		PowerMockito.verifyStatic();
 		ValidadorFormato.validarApellido(propietario.getApellido());
+		PowerMockito.verifyStatic();
 		ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento());
+		PowerMockito.verifyStatic();
 		ValidadorFormato.validarTelefono(propietario.getTelefono());
+		PowerMockito.verifyStatic();
 		ValidadorFormato.validarEmail(propietario.getEmail());
+		PowerMockito.verifyStatic();
 		ValidadorFormato.validarDireccion(propietario.getDireccion());
 		Mockito.verify(propietarioService).obtenerPropietario(filtro);
-		Mockito.verify(propietarioService).guardarPropietario(propietario);
-		PowerMockito.verifyStatic();
+		Mockito.verify(propietarioService, Mockito.times(guardar)).guardarPropietario(propietario);
 	}
-	/*
-	 * @Test
-	 * public void crearPropietarioTestNombreIncorrecto() throws Exception {
-	 * propietario.setNombre("Nombre Incorrecto por mas de treinta caracteres");
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 *
-	 * @Test
-	 * public void crearPropietarioTestNombreIncorrecto2() throws Exception {
-	 * propietario.setNombre("Nombre Incorrect0 por numer0s");
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 *
-	 * @Test
-	 * public void crearPropietarioTestNombreNulo() throws Exception {
-	 * propietario.setNombre(null);
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 *
-	 * @Test
-	 * public void crearPropietarioTestNombreVacio() throws Exception {
-	 * propietario.setNombre("");
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 *
-	 * @Test
-	 * public void crearPropietarioTestApellidoIncorrecto() throws Exception {
-	 * propietario.setApellido("Apellido Incorrecto por mas de treinta caracteres");
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Apellido_Incorrecto);
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 *
-	 * @Test
-	 * public void crearPropietarioTestDNIIncorrectoLongitud() throws Exception {
-	 * String documentoInvalido = "123456789";
-	 * propietario.setNumeroDocumento(documentoInvalido);
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Documento_Incorrecto);
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 *
-	 * @Test
-	 * public void crearPropietarioTestDNIIncorrectoExistente() throws Exception {
-	 * String documentoExistente = "11111111";
-	 * propietario.setNumeroDocumento(documentoExistente);
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario(ErrorCrearPropietario.Ya_Existe_Propietario);
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 *
-	 * //No coincide el tipo de documento con el numero
-	 *
-	 * @Test
-	 * public void crearPropietarioTestDNIInexistentePorTipo() throws Exception {
-	 * String documentoExistente = "11111111";
-	 * propietario.setTipoDocumento(new TipoDocumento(null, TipoDocumentoStr.LC));
-	 * propietario.setNumeroDocumento(documentoExistente);
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario();
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 *
-	 * @Test
-	 * public void crearPropietarioTestLCincorrecto() throws Exception {
-	 * String documentoInvalido = "G1111111";
-	 * propietario.setTipoDocumento(new TipoDocumento(null, TipoDocumentoStr.LC));
-	 * propietario.setNumeroDocumento(documentoInvalido);
-	 * ResultadoCrearPropietario resultadoCrearPropietarioEsperado = new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Documento_Incorrecto);
-	 * ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
-	 * assertEquals(resultadoCrearPropietarioEsperado, resultadoCrearPropietario);
-	 * }
-	 */
 
-	protected Object[] parametersForTestCrearPropietario_correcto() {
-		return new Object[] {
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "pepe", new ResultadoControlador(), new ResultadoAutenticacion(), null }, //prueba ingreso correcto
-				new Object[] { null, "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba TipoDocumento vacio
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba numero de documento vacio
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LE), "12345678", "", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba Contraseña vacia
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.CedulaExtranjera), "12345678", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.Pasaporte), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto con caracteres UTF8
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Persistencia), null, new PersistenciaException("Error de persistencia. Test.") }, //Prueba una excepcion de persistencia
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Desconocido), null, new Exception() } //Prueba una excepcion desconocida
-		};
-	}
+	//Para crearPropietario
+	private static final ResultadoCrearPropietario resultadoCorrecto = new ResultadoCrearPropietario();
+	private static final ResultadoCrearPropietario resultadoCrearNombreIncorrecto =
+			new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
+	private static final ResultadoCrearPropietario resultadoCrearApellidoIncorrecto =
+			new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Apellido_Incorrecto);
+	private static final ResultadoCrearPropietario resultadoCrearDocumentoIncorrecto =
+			new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Documento_Incorrecto);
+	private static final ResultadoCrearPropietario resultadoCrearTelefonoIncorrecto =
+			new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Telefono_Incorrecto);
+	private static final ResultadoCrearPropietario resultadoCrearEmailIncorrecto =
+			new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Email_Incorrecto);
+	private static final ResultadoCrearPropietario resultadoCrearDireccionIncorrecto =
+			new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Direccion_Incorrecto);
+	private static final ResultadoCrearPropietario resultadoCrearYaExiste =
+			new ResultadoCrearPropietario(ErrorCrearPropietario.Ya_Existe_Propietario);
+	//Para modificarPropietario
+	private static final ResultadoModificarPropietario resultadoModificarApellidoIncorrecto =
+			new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Apellido_Incorrecto);
+	private static final ResultadoModificarPropietario resultadoModificarDocumentoIncorrecto =
+			new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Documento_Incorrecto);
+	private static final ResultadoModificarPropietario resultadoModificarNombreIncorrecto =
+			new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Nombre_Incorrecto);
+	private static final ResultadoModificarPropietario resultadoModificarTelefonoIncorrecto =
+			new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Telefono_Incorrecto);
+	private static final ResultadoModificarPropietario resultadoModificarYaSePoseeMismoDocumento =
+			new ResultadoModificarPropietario(ErrorModificarPropietario.Ya_Existe_Propietario);
 }
