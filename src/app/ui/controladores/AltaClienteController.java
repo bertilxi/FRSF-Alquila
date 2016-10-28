@@ -74,7 +74,7 @@ public class AltaClienteController extends BaseController {
 	@FXML
 	private Button buttonCargatInmueble;
 
-	// todo: falta un comboBox barrios
+	// TODO: falta un comboBox barrios
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
