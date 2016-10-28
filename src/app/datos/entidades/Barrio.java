@@ -32,19 +32,14 @@ public class Barrio {
 		super();
 	}
 
-	public Barrio(Integer id, String nombre, Localidad localidad) {
+	public Barrio(String nombre, Localidad localidad) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.localidad = localidad;
 	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNombre() {

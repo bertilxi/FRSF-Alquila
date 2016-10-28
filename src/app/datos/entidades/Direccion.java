@@ -45,10 +45,9 @@ public class Direccion {
 		super();
 	}
 
-	public Direccion(Integer id, String numero, String piso, String departamento, Calle calle, Barrio barrio,
+	public Direccion(String numero, String piso, String departamento, Calle calle, Barrio barrio,
 			Localidad localidad) {
 		super();
-		this.id = id;
 		this.numero = numero;
 		this.piso = piso;
 		this.departamento = departamento;
@@ -59,11 +58,6 @@ public class Direccion {
 
 	public Integer getId() {
 		return id;
-	}
-
-	public Direccion setId(Integer id) {
-		this.id = id;
-		return this;
 	}
 
 	public String getNumero() {

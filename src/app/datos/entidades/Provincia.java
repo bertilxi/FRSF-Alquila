@@ -34,9 +34,8 @@ public class Provincia {
 		super();
 	}
 
-	public Provincia(Integer id, String nombre, Pais pais) {
+	public Provincia(String nombre, Pais pais) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.pais = pais;
 	}
@@ -92,6 +91,9 @@ public class Provincia {
 		}
 		else if(!id.equals(other.id)){
 			return false;
+		}
+		else{
+			return true;
 		}
 		if(nombre == null){
 			if(other.nombre != null){

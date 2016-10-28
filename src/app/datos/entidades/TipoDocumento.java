@@ -21,7 +21,7 @@ public class TipoDocumento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
 
-	@Column(name = "tipo_documento")
+	@Column(name = "tipo_documento", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoDocumentoStr tipo;
 
@@ -29,9 +29,8 @@ public class TipoDocumento {
 		super();
 	}
 
-	public TipoDocumento(Integer id, TipoDocumentoStr tipo) {
+	public TipoDocumento(TipoDocumentoStr tipo) {
 		super();
-		this.id = id;
 		this.tipo = tipo;
 	}
 
@@ -76,6 +75,9 @@ public class TipoDocumento {
 		}
 		else if(!id.equals(other.id)){
 			return false;
+		}
+		else{
+			return true;
 		}
 		if(tipo != other.tipo){
 			return false;

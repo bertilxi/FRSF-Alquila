@@ -50,6 +50,7 @@ public class ControladorTest implements TestRule {
 				}
 				return controladorAProbar;
 			});
+
 			loader.load();
 		} catch(Exception e){
 			throw new RuntimeException(e);

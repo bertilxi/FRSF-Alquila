@@ -33,9 +33,8 @@ public class Localidad {
 		super();
 	}
 
-	public Localidad(Integer id, String nombre, Provincia provincia) {
+	public Localidad(String nombre, Provincia provincia) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.provincia = provincia;
 	}

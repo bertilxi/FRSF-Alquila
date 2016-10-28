@@ -6,9 +6,12 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.PropietarioService;
+import app.excepciones.EntidadExistenteConEstadoBajaException;
+import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearPropietario;
@@ -24,7 +27,7 @@ public class GestorPropietario {
 	@Resource
 	protected PropietarioService persistidorPropietario;
 
-	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException {
+	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
 
 		if(!ValidadorFormato.validarNombre(propietario.getNombre())){
@@ -58,8 +61,13 @@ public class GestorPropietario {
 			throw e;
 		}
 
-		if(propietarioAuxiliar != null){
-			errores.add(ErrorCrearPropietario.Ya_Existe_Propietario);
+		if(null != propietarioAuxiliar){
+			if(propietarioAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
+				errores.add(ErrorCrearPropietario.Ya_Existe_Propietario);
+			}
+			else{
+				throw new EntidadExistenteConEstadoBajaException();
+			}
 		}
 
 		if(errores.isEmpty()){

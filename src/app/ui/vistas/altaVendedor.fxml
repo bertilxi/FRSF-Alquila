@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.PasswordField?>
 
 <HBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaVendedorController">
     <children>
@@ -103,8 +104,8 @@
                         <TextField fx:id="textFieldApellido" maxHeight="1000.0" maxWidth="1000.0" promptText="Apellido" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de documento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="textFieldNumeroDocumento" maxHeight="1000.0" maxWidth="1000.0" promptText="Numero de Documento" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField fx:id="textFieldContraseña" maxHeight="1000.0" maxWidth="1000.0" promptText="Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="textFieldRepiteContraseña" maxHeight="1000.0" maxWidth="1000.0" promptText="Repita su Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <PasswordField fx:id="passwordFieldContraseña" accessibleRole="PASSWORD_FIELD" maxHeight="1000.0" maxWidth="1000.0" promptText="Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <PasswordField fx:id="passwordFieldRepiteContraseña" accessibleRole="PASSWORD_FIELD" maxHeight="1000.0" maxWidth="1000.0" promptText="Repita su Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />
@@ -112,8 +113,8 @@
                 </GridPane>
                 <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
                     <children>
-                        <Button fx:id="acceptButton" onAction="#acceptAction" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="cancelButton" onAction="#cancelAction" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="acceptButton" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="cancelButton" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
             </children>

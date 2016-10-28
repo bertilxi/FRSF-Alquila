@@ -27,9 +27,8 @@ public class Estado {
 		super();
 	}
 
-	public Estado(Integer id, EstadoStr estado) {
+	public Estado(EstadoStr estado) {
 		super();
-		this.id = id;
 		this.estado = estado;
 	}
 
@@ -74,6 +73,9 @@ public class Estado {
 		}
 		else if(!id.equals(other.id)){
 			return false;
+		}
+		else{
+			return true;
 		}
 		if(estado != other.estado){
 			return false;
