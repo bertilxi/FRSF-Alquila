@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +21,13 @@ public class InmuebleBuscado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(name = "id")
+	private Integer id; //ID
+
+	@Id
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idcliente", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_buscado_idcliente_fk"), nullable = false)
+	private Cliente idCliente;
 
 	@Column(name = "precio_max")
 	private Double precioMax;
@@ -67,6 +74,9 @@ public class InmuebleBuscado {
 	@Column(name = "pavimento")
 	private Boolean pavimento;
 
+	@Column(name = "telefono")
+	private Boolean telefono;
+
 	//Relaciones
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_localidad", joinColumns = @JoinColumn(name = "idlocalidad"), foreignKey = @ForeignKey(name = "inmueble_buscado_localidad_idlocalidadfk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_inmueble_idinmueblefk"))
@@ -87,13 +97,12 @@ public class InmuebleBuscado {
 		this.tiposInmueblesBuscados = new ArrayList<>();
 	}
 
-	public InmuebleBuscado(Integer id, Double precioMax, Double superficieMin, Integer antiguedadMax,
+	public InmuebleBuscado(Double precioMax, Double superficieMin, Integer antiguedadMax,
 			Integer dormitoriosMin, Integer bañosMin, Boolean garaje, Boolean patio, Boolean piscina,
 			Boolean propiedadHorizontal, Boolean aguaCorriente, Boolean cloacas, Boolean gasNatural,
-			Boolean aguaCaliente, Boolean lavadero, Boolean pavimento, ArrayList<Localidad> localidades,
+			Boolean aguaCaliente, Boolean lavadero, Boolean pavimento, Boolean telefono, ArrayList<Localidad> localidades,
 			ArrayList<Barrio> barrios, ArrayList<TipoInmueble> tiposInmueblesBuscados) {
 		super();
-		this.id = id;
 		this.precioMax = precioMax;
 		this.superficieMin = superficieMin;
 		this.antiguedadMax = antiguedadMax;
@@ -111,159 +120,198 @@ public class InmuebleBuscado {
 		this.pavimento = pavimento;
 		this.localidades = localidades;
 		this.barrios = barrios;
+		this.telefono = telefono;
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
+	}
+
+	public InmuebleBuscado setId(Integer id) {
+		this.id = id;
+		return this;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public Cliente getCliente() {
+		return idCliente;
+	}
+
+	public InmuebleBuscado setCliente(Cliente cliente) {
+		this.idCliente = cliente;
+		return this;
 	}
 
 	public Double getPrecioMax() {
 		return precioMax;
 	}
 
-	public void setPrecioMax(Double precioMax) {
+	public InmuebleBuscado setPrecioMax(Double precioMax) {
 		this.precioMax = precioMax;
+		return this;
 	}
 
 	public Double getSuperficieMin() {
 		return superficieMin;
 	}
 
-	public void setSuperficieMin(Double superficieMin) {
+	public InmuebleBuscado setSuperficieMin(Double superficieMin) {
 		this.superficieMin = superficieMin;
+		return this;
 	}
 
 	public Integer getAntiguedadMax() {
 		return antiguedadMax;
 	}
 
-	public void setAntiguedadMax(Integer antiguedadMax) {
+	public InmuebleBuscado setAntiguedadMax(Integer antiguedadMax) {
 		this.antiguedadMax = antiguedadMax;
+		return this;
 	}
 
 	public Integer getDormitoriosMin() {
 		return dormitoriosMin;
 	}
 
-	public void setDormitoriosMin(Integer dormitoriosMin) {
+	public InmuebleBuscado setDormitoriosMin(Integer dormitoriosMin) {
 		this.dormitoriosMin = dormitoriosMin;
+		return this;
 	}
 
 	public Integer getBañosMin() {
 		return bañosMin;
 	}
 
-	public void setBañosMin(Integer bañosMin) {
+	public InmuebleBuscado setBañosMin(Integer bañosMin) {
 		this.bañosMin = bañosMin;
+		return this;
 	}
 
 	public Boolean getGaraje() {
 		return garaje;
 	}
 
-	public void setGaraje(Boolean garaje) {
+	public InmuebleBuscado setGaraje(Boolean garaje) {
 		this.garaje = garaje;
+		return this;
 	}
 
 	public Boolean getPatio() {
 		return patio;
 	}
 
-	public void setPatio(Boolean patio) {
+	public InmuebleBuscado setPatio(Boolean patio) {
 		this.patio = patio;
+		return this;
 	}
 
 	public Boolean getPiscina() {
 		return piscina;
 	}
 
-	public void setPiscina(Boolean piscina) {
+	public InmuebleBuscado setPiscina(Boolean piscina) {
 		this.piscina = piscina;
+		return this;
 	}
 
 	public Boolean getPropiedadHorizontal() {
 		return propiedadHorizontal;
+
 	}
 
-	public void setPropiedadHorizontal(Boolean propiedadHorizontal) {
+	public InmuebleBuscado setPropiedadHorizontal(Boolean propiedadHorizontal) {
 		this.propiedadHorizontal = propiedadHorizontal;
+		return this;
 	}
 
 	public Boolean getAguaCorriente() {
 		return aguaCorriente;
 	}
 
-	public void setAguaCorriente(Boolean aguaCorriente) {
+	public InmuebleBuscado setAguaCorriente(Boolean aguaCorriente) {
 		this.aguaCorriente = aguaCorriente;
+		return this;
 	}
 
 	public Boolean getCloacas() {
 		return cloacas;
 	}
 
-	public void setCloacas(Boolean cloacas) {
+	public InmuebleBuscado setCloacas(Boolean cloacas) {
 		this.cloacas = cloacas;
+		return this;
 	}
 
 	public Boolean getGasNatural() {
 		return gasNatural;
 	}
 
-	public void setGasNatural(Boolean gasNatural) {
+	public InmuebleBuscado setGasNatural(Boolean gasNatural) {
 		this.gasNatural = gasNatural;
+		return this;
 	}
 
 	public Boolean getAguaCaliente() {
 		return aguaCaliente;
 	}
 
-	public void setAguaCaliente(Boolean aguaCaliente) {
+	public InmuebleBuscado setAguaCaliente(Boolean aguaCaliente) {
 		this.aguaCaliente = aguaCaliente;
+		return this;
 	}
 
 	public Boolean getLavadero() {
 		return lavadero;
 	}
 
-	public void setLavadero(Boolean lavadero) {
+	public InmuebleBuscado setLavadero(Boolean lavadero) {
 		this.lavadero = lavadero;
+		return this;
 	}
 
 	public Boolean getPavimento() {
 		return pavimento;
 	}
 
-	public void setPavimento(Boolean pavimento) {
+	public InmuebleBuscado setPavimento(Boolean pavimento) {
 		this.pavimento = pavimento;
+		return this;
+	}
+
+	public Boolean getTelefono() {
+		return telefono;
+	}
+
+	public InmuebleBuscado setTelefono(Boolean telefono) {
+		this.telefono = telefono;
+		return this;
 	}
 
 	public ArrayList<Localidad> getLocalidades() {
 		return localidades;
 	}
 
-	public void setLocalidades(ArrayList<Localidad> localidades) {
+	public InmuebleBuscado setLocalidades(ArrayList<Localidad> localidades) {
 		this.localidades = localidades;
+		return this;
 	}
 
 	public ArrayList<Barrio> getBarrios() {
 		return barrios;
 	}
 
-	public void setBarrios(ArrayList<Barrio> barrios) {
+	public InmuebleBuscado setBarrios(ArrayList<Barrio> barrios) {
 		this.barrios = barrios;
+		return this;
 	}
 
 	public ArrayList<TipoInmueble> getTiposInmueblesBuscados() {
 		return tiposInmueblesBuscados;
 	}
 
-	public void setTiposInmueblesBuscados(ArrayList<TipoInmueble> tiposInmueblesBuscados) {
+	public InmuebleBuscado setTiposInmueblesBuscados(ArrayList<TipoInmueble> tiposInmueblesBuscados) {
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
+		return this;
 	}
 
 	@Override
@@ -280,6 +328,7 @@ public class InmuebleBuscado {
 		result = prime * result + ((garaje == null) ? 0 : garaje.hashCode());
 		result = prime * result + ((gasNatural == null) ? 0 : gasNatural.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idCliente == null) ? 0 : idCliente.hashCode());
 		result = prime * result + ((lavadero == null) ? 0 : lavadero.hashCode());
 		result = prime * result + ((localidades == null) ? 0 : localidades.hashCode());
 		result = prime * result + ((patio == null) ? 0 : patio.hashCode());
@@ -304,6 +353,25 @@ public class InmuebleBuscado {
 			return false;
 		}
 		InmuebleBuscado other = (InmuebleBuscado) obj;
+		if(id == null){
+			if(other.id != null){
+				return false;
+			}
+		}
+		else if(!id.equals(other.id)){
+			return false;
+		}
+		if(idCliente == null){
+			if(other.idCliente != null){
+				return false;
+			}
+		}
+		else if(!idCliente.equals(other.idCliente)){
+			return false;
+		}
+		else{
+			return true;
+		}
 		if(aguaCaliente == null){
 			if(other.aguaCaliente != null){
 				return false;
@@ -376,14 +444,6 @@ public class InmuebleBuscado {
 		else if(!gasNatural.equals(other.gasNatural)){
 			return false;
 		}
-		if(id == null){
-			if(other.id != null){
-				return false;
-			}
-		}
-		else if(!id.equals(other.id)){
-			return false;
-		}
 		if(lavadero == null){
 			if(other.lavadero != null){
 				return false;
@@ -392,7 +452,7 @@ public class InmuebleBuscado {
 		else if(!lavadero.equals(other.lavadero)){
 			return false;
 		}
-		if(localidad == null){
+		if(localidades == null){
 			if(other.localidades != null){
 				return false;
 			}

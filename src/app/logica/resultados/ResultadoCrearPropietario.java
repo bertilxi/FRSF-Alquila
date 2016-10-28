@@ -1,14 +1,19 @@
 package app.logica.resultados;
 
-import app.logica.resultados.ResultadoCrearPropietario.ErrorResultadoCrearPropietario;
+import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 
-public class ResultadoCrearPropietario extends Resultado<ErrorResultadoCrearPropietario>{
+public class ResultadoCrearPropietario extends Resultado<ErrorCrearPropietario> {
 
-	public ResultadoCrearPropietario(ErrorResultadoCrearPropietario... errores) {
+	public ResultadoCrearPropietario(ErrorCrearPropietario... errores) {
 		super(errores);
 	}
 
-	public enum ErrorResultadoCrearPropietario {
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	public enum ErrorCrearPropietario {
 
 		Formato_Nombre_Incorrecto,
 		Formato_Apellido_Incorrecto,

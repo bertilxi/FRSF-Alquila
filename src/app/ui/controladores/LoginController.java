@@ -1,89 +1,105 @@
 package app.ui.controladores;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import app.datos.clases.DatosLogin;
+import app.datos.entidades.TipoDocumento;
 import app.excepciones.ManejadorExcepciones;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
-import app.logica.resultados.ResultadoLogin;
-import app.logica.resultados.ResultadoLogin.ErrorResultadoLogin;
+import app.logica.resultados.ResultadoAutenticacion;
+import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 import app.ui.componentes.VentanaError;
-import app.ui.controladores.Resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
-public class LoginController extends WindowTitleController{
+public class LoginController extends WindowTitleController {
 
-    @FXML
-    protected TextField tfNombre;
+	public static final String URLVista = "/app/ui/vistas/Login.fxml";
 
-    @FXML
-    protected PasswordField pfContra;
+	protected CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
 
+	@FXML
+	protected TextField tfNumeroDocumento;
 
-    @FXML
-    public ResultadoControlador registrar() {
-        ResultadoControlador salida = new ResultadoControlador();
-        return salida;
-    }
+	@FXML
+	protected PasswordField pfContra;
 
-    @FXML
-    public ResultadoControlador ingresar() {
-        //TODO borrar para activar login
-        //Ir siguiente pantalla
-        ResultadoControlador salida = new ResultadoControlador();
-        if (true) {
-            return salida;
-        }
-        @SuppressWarnings("unused")
-        CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
-        //borrar
+	@FXML
+	protected ComboBox<TipoDocumento> cbTipoDocumento;
 
-        ResultadoLogin resultado = null;
-        Boolean hayErrores;
-        DatosLogin datos;
-        String errores = "";
+	protected Boolean desatendido = false;
 
-        //Toma de datos de la vista
-        String user = tfNombre.getText().trim();
-        char[] pass = pfContra.getText().toCharArray();
-        if (user.isEmpty() || pass.length < 1) {
-            new VentanaError("No se ha podido iniciar sesión", "Campos vacíos.", new Stage()); //apilador.getStage()
-            return salida;
-        }
-        datos = new DatosLogin(user, pass);
+	@FXML
+	public void registrar() {
 
-        //Inicio transacción al gestor
-        try {
-            resultado = coordinador.loguearVendedor(datos);
-        } catch (PersistenciaException e) {
-            ManejadorExcepciones.presentarExcepcion(e, new Stage()); //apilador.getStage()
-            return salida;
-        } catch (Exception e) {
-            ManejadorExcepciones.presentarExcepcionInesperada(e, new Stage()); //apilador.getStage()
-            return salida;
-        }
+	}
 
-        //Tratamiento de errores
-        hayErrores = resultado.hayErrores();
-        if (hayErrores) {
-            for (ErrorResultadoLogin r : resultado.getErrores()) {
-                switch (r) {
-                    case Datos_Incorrectos:
-                        errores += "Datos inválidos al iniciar sesión.\n";
-                        break;
-                }
-            }
-            if (!errores.isEmpty()) {
-                new VentanaError("No se ha podido iniciar sesión", errores, new Stage()); //apilador.getStage()
-            }
-        } else {
-            //Operacion exitosa
-            // Ir otra pantalla
-            // ControladorRomano.cambiarScene(MenuAdministracionController.URLVista, apilador, coordinador);
-        }
-        return salida;
-    }
+	@FXML
+	public ResultadoControlador ingresar() {
+		Set<ErrorControlador> erroresControlador = new HashSet<>();
+		ResultadoAutenticacion resultado = null;
+		Boolean hayErrores;
+		DatosLogin datos;
+		String errores = "";
+
+		//Toma de datos de la vista
+		TipoDocumento tipoDocumento = cbTipoDocumento.getValue();
+		String dni = tfNumeroDocumento.getText().trim();
+		char[] pass = pfContra.getText().toCharArray();
+
+		if(tipoDocumento == null || dni.isEmpty() || pass.length < 1){
+			if(!desatendido){
+				new VentanaError("No se ha podido iniciar sesión", "Campos vacíos.", null); //apilador.getStage()
+			}
+			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
+		}
+		datos = new DatosLogin(tipoDocumento, dni, pass);
+
+		//Inicio transacción al gestor
+		try{
+			resultado = coordinador.autenticarVendedor(datos);
+		} catch(PersistenciaException e){
+			if(!desatendido){
+				ManejadorExcepciones.presentarExcepcion(e, null); //apilador.getStage()
+			}
+			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
+		} catch(Exception e){
+			if(!desatendido){
+				ManejadorExcepciones.presentarExcepcionInesperada(e, null); //apilador.getStage()
+			}
+			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+		}
+
+		//Tratamiento de errores
+		hayErrores = resultado.hayErrores();
+		if(hayErrores){
+			for(ErrorAutenticacion r: resultado.getErrores()){
+				switch(r) {
+				case Datos_Incorrectos:
+					errores += "Datos inválidos al iniciar sesión.\n";
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
+					break;
+				}
+			}
+
+			if(!errores.isEmpty()){
+				if(!desatendido){
+					new VentanaError("No se ha podido iniciar sesión", errores, null); //apilador.getStage()
+				}
+			}
+		}
+		else{
+			//Operacion exitosa
+			// Ir otra pantalla
+			// ControladorRomano.cambiarScene(MenuAdministracionController.URLVista, apilador, coordinador);
+		}
+		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
+	}
 
 }

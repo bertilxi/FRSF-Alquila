@@ -1,5 +1,5 @@
 package app.datos.clases;
 
-public enum Estado {
+public enum EstadoStr {
     ALTA, BAJA
 }

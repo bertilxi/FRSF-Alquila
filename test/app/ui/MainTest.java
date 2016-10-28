@@ -1,4 +1,4 @@
-package test.app.ui;
+package app.ui;
 
 /**
  * Created by fer on 20/09/16.

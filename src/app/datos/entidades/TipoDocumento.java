@@ -7,10 +7,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import app.datos.clases.TipoDocumentoStr;
 
+@NamedQuery(name = "obtenerTiposDeDocumento", query = "SELECT t FROM TipoDocumento t")
 @Entity
 @Table(name = "tipo_documento")
 public class TipoDocumento {
@@ -38,16 +40,13 @@ public class TipoDocumento {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public TipoDocumentoStr getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoDocumentoStr tipo) {
+	public TipoDocumento setTipo(TipoDocumentoStr tipo) {
 		this.tipo = tipo;
+		return this;
 	}
 
 	@Override

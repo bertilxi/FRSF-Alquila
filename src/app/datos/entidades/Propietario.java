@@ -55,7 +55,7 @@ public class Propietario {
 
 	public Propietario() {
 		super();
-		this.inmuebles = new ArrayList<>();
+		this.inmuebles = new ArrayList<Inmueble>();
 	}
 
 	public Propietario(Integer id, String nombre, String apellido, String numeroDocumento, String telefono,
@@ -76,78 +76,90 @@ public class Propietario {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public Propietario setId(Integer id) {
 		this.id = id;
+		return this;
 	}
 
 	public String getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public Propietario setNombre(String nombre) {
 		this.nombre = nombre;
+		return this;
 	}
 
 	public String getApellido() {
 		return apellido;
 	}
 
-	public void setApellido(String apellido) {
+	public Propietario setApellido(String apellido) {
 		this.apellido = apellido;
+		return this;
 	}
 
 	public String getNumeroDocumento() {
 		return numeroDocumento;
 	}
 
-	public void setNumeroDocumento(String numeroDocumento) {
+	public Propietario setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
+		return this;
 	}
 
 	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(String telefono) {
+	public Propietario setTelefono(String telefono) {
 		this.telefono = telefono;
+		return this;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public Propietario setEmail(String email) {
 		this.email = email;
+		return this;
 	}
 
 	public TipoDocumento getTipoDocumento() {
 		return tipoDocumento;
 	}
 
-	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+	public Propietario setTipoDocumento(TipoDocumento tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+		return this;
 	}
 
 	public Direccion getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(Direccion direccion) {
+	public Propietario setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+		return this;
 	}
 
 	public ArrayList<Inmueble> getInmuebles() {
 		return inmuebles;
 	}
 
-	public void setInmuebles(ArrayList<Inmueble> inmuebles) {
+	public Propietario setInmuebles(ArrayList<Inmueble> inmuebles) {
 		this.inmuebles = inmuebles;
+		return this;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
+		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
 		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());

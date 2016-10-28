@@ -1,149 +1,188 @@
 package app.datos.entidades;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 
-@NamedQuery(name="obtenerVendedor", query="SELECT v FROM Vendedor v WHERE numeroDocumento = :documento AND tipoDocumento.tipo = :tipoDocumento")
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
+
+@NamedQuery(name = "obtenerVendedor", query = "SELECT v FROM Vendedor v WHERE numeroDocumento = :documento AND tipoDocumento.tipo = :tipoDocumento")
 @Entity
 @Table(name = "vendedor", uniqueConstraints = @UniqueConstraint(name = "vendedor_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 public class Vendedor {
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //ID
 
-    @Column(name = "nombre", length = 30)
-    private String nombre;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id; //ID
 
-    @Column(name = "apellido", length = 30)
-    private String apellido;
+	@Column(name = "nombre", length = 30, nullable = false)
+	private String nombre;
 
-    @Column(name = "numerodocumento", length = 30)
-    private String numeroDocumento;
+	@Column(name = "apellido", length = 30, nullable = false)
+	private String apellido;
 
-    @Column(name = "password")
-    private String password;
+	@Column(name = "numerodocumento", length = 30, nullable = false)
+	private String numeroDocumento;
 
-    @Column(name = "salt")
-    private String salt;
+	@Column(name = "password", nullable = false)
+	private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"))
-    private TipoDocumento tipoDocumento;
+	@Column(name = "salt", nullable = false)
+	private String salt;
 
-    //@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "vendedor")
-    @Transient
-    private ArrayList<Venta> ventas;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"), nullable = false)
+	private TipoDocumento tipoDocumento;
 
-    public Vendedor() {
+	//@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "vendedor")
+	@Transient
+	private ArrayList<Venta> ventas;
+
+	// baja
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idestado_fk"), nullable = false)
+	private Estado estado;
+
+	public Vendedor() {
 		super();
-		this.ventas = new ArrayList<Venta>();
+		this.ventas = new ArrayList<>();
 	}
 
-	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, ArrayList<Venta> ventas) {
-        this();
+	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, ArrayList<Venta> ventas, Estado estado) {
+		this();
 		this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.numeroDocumento = numeroDocumento;
-        this.password = password;
-        this.salt = salt;
-        this.tipoDocumento = tipoDocumento;
-        this.ventas = ventas;
-    }
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.numeroDocumento = numeroDocumento;
+		this.password = password;
+		this.salt = salt;
+		this.tipoDocumento = tipoDocumento;
+		this.ventas = ventas;
+		this.estado = estado;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Vendedor setId(Integer id) {
+		this.id = id;
+		return this;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public Vendedor setNombre(String nombre) {
+		this.nombre = nombre;
+		return this;
+	}
 
-    public String getApellido() {
-        return apellido;
-    }
+	public String getApellido() {
+		return apellido;
+	}
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+	public Vendedor setApellido(String apellido) {
+		this.apellido = apellido;
+		return this;
+	}
 
-    public String getNumeroDocumento() {
-        return numeroDocumento;
-    }
+	public String getNumeroDocumento() {
+		return numeroDocumento;
+	}
 
-    public void setNumeroDocumento(String numeroDocumento) {
-        this.numeroDocumento = numeroDocumento;
-    }
+	public Vendedor setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
+		return this;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public Vendedor setPassword(String password) {
+		this.password = password;
+		return this;
+	}
 
-    public String getSalt() {
-        return salt;
-    }
+	public String getSalt() {
+		return salt;
+	}
 
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
+	public Vendedor setSalt(String salt) {
+		this.salt = salt;
+		return this;
+	}
 
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
-    }
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
 
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
+	public Vendedor setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+		return this;
+	}
 
-    public ArrayList<Venta> getVentas() {
-        return ventas;
-    }
+	public ArrayList<Venta> getVentas() {
+		return ventas;
+	}
 
-    public void setVentas(ArrayList<Venta> ventas) {
-        this.ventas = ventas;
-    }
+	public Vendedor setVentas(ArrayList<Venta> ventas) {
+		this.ventas = ventas;
+		return this;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Vendedor)) return false;
+	public Vendedor setEstado(Estado estado) {
+		this.estado = estado;
+		return this;
+	}
 
-        Vendedor vendedor = (Vendedor) o;
+	public Estado getEstado() {
+		return estado;
+	}
 
-        if (!getId().equals(vendedor.getId())) return false;
-        if (!getNombre().equals(vendedor.getNombre())) return false;
-        if (!getApellido().equals(vendedor.getApellido())) return false;
-        if (!getNumeroDocumento().equals(vendedor.getNumeroDocumento())) return false;
-        if (!getPassword().equals(vendedor.getPassword())) return false;
-        if (!getSalt().equals(vendedor.getSalt())) return false;
-        if (!getTipoDocumento().equals(vendedor.getTipoDocumento())) return false;
-        return getVentas() != null ? getVentas().equals(vendedor.getVentas()) : vendedor.getVentas() == null;
+	@Override
+	public boolean equals(Object o) {
+		if(this == o){
+			return true;
+		}
+		if(!(o instanceof Vendedor)){
+			return false;
+		}
 
-    }
+		Vendedor vendedor = (Vendedor) o;
 
-    @Override
-    public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getNombre().hashCode();
-        result = 31 * result + getApellido().hashCode();
-        result = 31 * result + getNumeroDocumento().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + getSalt().hashCode();
-        result = 31 * result + getTipoDocumento().hashCode();
-        result = 31 * result + (getVentas() != null ? getVentas().hashCode() : 0);
-        return result;
-    }
+		if(!getNumeroDocumento().equals(vendedor.getNumeroDocumento())){
+			return false;
+		}
+		if(!getTipoDocumento().equals(vendedor.getTipoDocumento())){
+			return false;
+		}
+		return getVentas() != null ? getVentas().equals(vendedor.getVentas()) : vendedor.getVentas() == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getId().hashCode();
+		result = 31 * result + getNombre().hashCode();
+		result = 31 * result + getApellido().hashCode();
+		result = 31 * result + getNumeroDocumento().hashCode();
+		result = 31 * result + getPassword().hashCode();
+		result = 31 * result + getSalt().hashCode();
+		result = 31 * result + getTipoDocumento().hashCode();
+		result = 31 * result + (getVentas() != null ? getVentas().hashCode() : 0);
+		return result;
+	}
 }

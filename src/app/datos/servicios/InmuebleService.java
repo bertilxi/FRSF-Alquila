@@ -5,7 +5,8 @@ import app.excepciones.PersistenciaException;
 
 public interface InmuebleService {
 
-    public void guardarInmueble(Inmueble inmueble) throws PersistenciaException;
+	public void guardarInmueble(Inmueble inmueble) throws PersistenciaException;
 
-    public void modificarInmueble(Inmueble inmueble) throws PersistenciaException;
+	public void modificarInmueble(Inmueble inmueble) throws PersistenciaException;
+
 }

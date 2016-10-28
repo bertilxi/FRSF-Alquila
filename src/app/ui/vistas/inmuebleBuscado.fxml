@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="app.ui.controladores.InmuebleBuscadoController">
+    <children>
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                  prefHeight="400.0" prefWidth="600.0" styleClass="grid-pane">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="200.0" prefWidth="250.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="200.0" prefWidth="250.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <TextField fx:id="textFieldSuperficie" maxHeight="1000.0" maxWidth="1000.0" promptText="Superficie"
+                           GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <TextField fx:id="textFieldAntiguedad" maxHeight="1000.0" maxWidth="1000.0" promptText="Antiguedad"
+                           GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                <TextField fx:id="textFieldDormitorios" maxHeight="1000.0" maxWidth="1000.0"
+                           promptText="Mínimo de dormitorios" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <TextField fx:id="textFieldBaños" maxHeight="1000.0" maxWidth="1000.0" promptText="Mínimo de baños"
+                           GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                <CheckBox fx:id="checkboxPropiedadHorizontal" maxHeight="1000.0" maxWidth="1000.0"
+                          mnemonicParsing="false" text="propiedad horizontal ?" GridPane.columnIndex="1"
+                          GridPane.rowIndex="4"/>
+                <CheckBox fx:id="checkboxGarage" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con garage ?" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+                <CheckBox fx:id="checkboxPatio" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con patio ?" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                <CheckBox fx:id="checkboxPiscina" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con piscina ?" GridPane.columnIndex="3" GridPane.rowIndex="5"/>
+                <CheckBox fx:id="checkboxAguaCorriente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con agua corriente ?" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                <CheckBox fx:id="checkboxCloaca" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con cloaca ?" GridPane.columnIndex="3" GridPane.rowIndex="6"/>
+                <CheckBox fx:id="checkboxGasNatural" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con gas natural ?" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                <CheckBox fx:id="checkboxAguaCaliente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con agua caliente ?" GridPane.columnIndex="3" GridPane.rowIndex="7"/>
+                <CheckBox fx:id="checkboxTelefono" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con telefono ?" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                <CheckBox fx:id="checkboxLavadero" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con lavadero ?" GridPane.columnIndex="3" GridPane.rowIndex="8"/>
+                <CheckBox fx:id="checkboxPavimento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false"
+                          text="Con pavimento ?" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+            </children>
+        </GridPane>
+        <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
+            <children>
+                <Button onAction="#acceptAction" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0"
+                        mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm"
+                        text="Aceptar" HBox.hgrow="ALWAYS"/>
+                <Button onAction="#cancelAction" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0"
+                        mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel"
+                        text="Cancelar" HBox.hgrow="ALWAYS"/>
+            </children>
+        </HBox>
+    </children>
+</VBox>
