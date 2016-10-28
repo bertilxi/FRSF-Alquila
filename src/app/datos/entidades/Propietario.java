@@ -53,6 +53,10 @@ public class Propietario {
 	@Transient
 	private ArrayList<Inmueble> inmuebles;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_idestado_fk"), nullable = false)
+	private Estado estado;
+
 	public Propietario() {
 		super();
 		this.inmuebles = new ArrayList<Inmueble>();
@@ -151,6 +155,14 @@ public class Propietario {
 	public Propietario setInmuebles(ArrayList<Inmueble> inmuebles) {
 		this.inmuebles = inmuebles;
 		return this;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	@Override
