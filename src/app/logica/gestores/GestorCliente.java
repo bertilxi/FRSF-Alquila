@@ -106,4 +106,13 @@ public class GestorCliente {
 
 		return new ResultadoModificarCliente(errores.toArray(new ErrorModificarCliente[0]));
 	}
+
+	public void darDeAlta(Cliente cliente) throws PersistenciaException{
+		ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+		for(Estado e: estados) {
+			if(e.getEstado().equals(EstadoStr.ALTA)) {
+				cliente.setEstado(e);
+			}
+		}
+	}
 }

@@ -105,4 +105,13 @@ public class GestorVendedor {
 	public ResultadoEliminarVendedor eliminarVendedor() throws PersistenciaException {
 		throw new NotYetImplementedException();
 	}
+
+	public void darDeAlta(Vendedor vendedor) throws PersistenciaException {
+		ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+		for(Estado e: estados) {
+			if(e.getEstado().equals(EstadoStr.ALTA)) {
+				vendedor.setEstado(e);
+			}
+		}
+	}
 }
