@@ -21,10 +21,6 @@ public class TipoInmueble {
 	@Enumerated
 	private TipoInmuebleStr tipo;
 
-	//TODO Borrar si no se usa
-	//Relaciones
-	//private ArrayList<InmuebleBuscado> inmueblesBuscados; //Relacion muchos a muchos
-
 	public TipoInmueble() {
 		super();
 	}

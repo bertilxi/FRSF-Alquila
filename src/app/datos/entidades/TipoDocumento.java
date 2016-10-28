@@ -21,7 +21,6 @@ public class TipoDocumento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
 
-	//TODO ver enum
 	@Column(name = "tipo_documento")
 	@Enumerated(EnumType.STRING)
 	private TipoDocumentoStr tipo;
