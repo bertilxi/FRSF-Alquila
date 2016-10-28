@@ -69,6 +69,7 @@ public class Inmueble implements Serializable {
 	private Propietario propietario;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "inmueble")
+	@JoinColumn(name = "archivo", referencedColumnName = "inmuebleid_archivo") //TODO ver como queda en la bd
 	private ArrayList<Imagen> fotos;
 
 	@ManyToOne(fetch = FetchType.EAGER)

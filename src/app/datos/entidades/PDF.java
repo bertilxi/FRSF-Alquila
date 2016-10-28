@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pdf")
-@PrimaryKeyJoinColumn(name = "pdf")
+@PrimaryKeyJoinColumn(name = "archivoid")
 public class PDF extends Archivo {
 
 }
