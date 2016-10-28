@@ -74,8 +74,6 @@ public class AltaClienteController extends BaseController {
 	@FXML
 	private Button buttonCargatInmueble;
 
-	// TODO: falta un comboBox barrios
-
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
 	private ArrayList<TipoInmueble> listaTiposInmueble;
@@ -100,13 +98,7 @@ public class AltaClienteController extends BaseController {
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
 		String telefono = textFieldTelefono.getText().trim();
 		String correo = textFieldCorreo.getText().trim();
-		String barrio = textFieldBarrio.getText().trim();
-		String monto = textFieldMonto.getText().trim();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
-		TipoInmueble tipoInmueble = comboBoxTipoInmueble.getValue();
-		Pais pais = comboBoxPais.getValue();
-		Provincia provincia = comboBoxProvincia.getValue();
-		Localidad localidad = comboBoxLocalidad.getValue();
 
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\r\n");
@@ -126,30 +118,17 @@ public class AltaClienteController extends BaseController {
 		if(correo.isEmpty()){
 			error.append("Inserte un correo").append("\r\n");
 		}
-		if(barrio.isEmpty()){
-			error.append("Inserte un barrio").append("\r\n");
-		}
 
 		if(!error.toString().isEmpty()){
 			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
 		}
 		else{
 			Cliente cliente = new Cliente();
-			cliente.setId(null)
-			// TODO completar esto
-					//.setEstado(         alta           )
-					.setNombre(nombre)
+			cliente.setNombre(nombre)
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)
 					.setTelefono(telefono)
-					//.setMonto(monto)
-					//.setTipoInmueble(tipoInmueble)
-					//.setLocalidad(localidad)
-					//.setProvincia(provincia)
-					//.setPais(pais)
-					//.setCorreo(correo)
-					//.setBarrio(barrio)
 					;
 
 			try {
