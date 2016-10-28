@@ -44,11 +44,14 @@ public class GestorCliente {
 			errores.add(ErrorCrearCliente.Formato_Documento_Incorrecto);
 		}
 
-		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
+		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
+                cliente.getNumeroDocumento()));
+
 		if(null != clienteAuxiliar){
-			if(clienteAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)) {
+			if(clienteAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
 				errores.add(ErrorCrearCliente.Ya_Existe_Cliente);
-			} else {
+			}
+			else{
 				throw new EntidadExistenteConEstadoBajaException();
 			}
 		}
@@ -79,7 +82,9 @@ public class GestorCliente {
 			errores.add(ErrorModificarCliente.Formato_Documento_Incorrecto);
 		}
 
-		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
+		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
+                cliente.getNumeroDocumento()));
+
 		if(null != clienteAuxiliar && !cliente.equals(clienteAuxiliar)){
 			errores.add(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 		}
