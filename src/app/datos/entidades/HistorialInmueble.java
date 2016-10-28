@@ -84,6 +84,7 @@ public class HistorialInmueble implements Serializable {
 	private Inmueble inmueble;
 
 	//Opcionales
+	//TODO historial datos edificio
 	// private DatosEdificio datosEdificio;
 	// private ArrayList<Reserva> reservas;
 
