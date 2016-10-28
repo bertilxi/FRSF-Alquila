@@ -29,18 +29,13 @@ public class TipoInmueble {
 		super();
 	}
 
-	public TipoInmueble(Integer id, TipoInmuebleStr tipo) {
+	public TipoInmueble(TipoInmuebleStr tipo) {
 		super();
-		this.id = id;
 		this.tipo = tipo;
 	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public TipoInmuebleStr getTipo() {
@@ -79,6 +74,9 @@ public class TipoInmueble {
 		}
 		else if(!id.equals(other.id)){
 			return false;
+		}
+		else{
+			return true;
 		}
 		if(tipo != other.tipo){
 			return false;

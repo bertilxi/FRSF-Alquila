@@ -272,6 +272,9 @@ public class DatosEdificio {
 		else if(!id.equals(other.id)){
 			return false;
 		}
+		else{
+			return true;
+		}
 		if(idInmueble == null){
 			if(other.idInmueble != null){
 				return false;
