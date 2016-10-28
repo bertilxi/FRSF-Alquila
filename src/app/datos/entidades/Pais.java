@@ -24,18 +24,13 @@ public class Pais {
 		super();
 	}
 
-	public Pais(Integer id, String nombre) {
+	public Pais(String nombre) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNombre() {

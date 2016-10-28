@@ -124,11 +124,6 @@ public class InmuebleBuscado {
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
 	}
 
-	public InmuebleBuscado setId(Integer id) {
-		this.id = id;
-		return this;
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -360,6 +355,9 @@ public class InmuebleBuscado {
 		}
 		else if(!id.equals(other.id)){
 			return false;
+		}
+		else{
+			return true;
 		}
 		if(idCliente == null){
 			if(other.idCliente != null){

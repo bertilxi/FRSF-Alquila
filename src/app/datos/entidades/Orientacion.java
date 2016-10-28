@@ -14,12 +14,12 @@ import app.datos.clases.OrientacionStr;
 @Entity
 @Table(name = "orientacion")
 public class Orientacion {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //ID
-    
-	@Column(name="orientacion_enum")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id; //ID
+
+	@Column(name = "orientacion_enum")
 	@Enumerated(EnumType.STRING)
 	private OrientacionStr orientacion;
 
@@ -27,18 +27,13 @@ public class Orientacion {
 		super();
 	}
 
-	public Orientacion(Integer id, OrientacionStr orientacion) {
+	public Orientacion(OrientacionStr orientacion) {
 		super();
-		this.id = id;
 		this.orientacion = orientacion;
 	}
-	
+
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public OrientacionStr getOrientacion() {
@@ -60,20 +55,30 @@ public class Orientacion {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if(this == obj){
 			return true;
-		if (obj == null)
+		}
+		if(obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Orientacion other = (Orientacion) obj;
-		if (id == null) {
-			if (other.id != null)
+		if(id == null){
+			if(other.id != null){
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		}
+		else if(!id.equals(other.id)){
 			return false;
-		if (orientacion != other.orientacion)
+		}
+		else{
+			return true;
+		}
+		if(orientacion != other.orientacion){
 			return false;
+		}
 		return true;
 	}
 }
