@@ -181,6 +181,12 @@ public class AltaClienteController extends BaseController {
 	}
 
 	public void cargarInmueble(ActionEvent event) throws IOException {
+	private void mostrarErrores(ResultadoCrearCliente resultado) {
+		throw new NotYetImplementedException();
+	}
+
+	@FXML
+	public void cargarInmueble() throws IOException {
 		Stage stage = new Stage();
 		URL location = getClass().getResource("/app/ui/vistas/inmuebleBuscado.fxml");
 		FXMLLoader loader = createFXMLLoader(location);
