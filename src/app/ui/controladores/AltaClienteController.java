@@ -131,7 +131,7 @@ public class AltaClienteController extends BaseController {
 		}
 
 		if(!error.toString().isEmpty()){
-			VentanaError ventanaError = new VentanaError("Revise sus campos", error.toString());
+			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
 		}
 		else{
 			Cliente cliente = new Cliente();
@@ -181,7 +181,6 @@ public class AltaClienteController extends BaseController {
 	}
 
 	public void cargarInmueble(ActionEvent event) throws IOException {
-	private void mostrarErrores(ResultadoCrearCliente resultado) {
 		throw new NotYetImplementedException();
 	}
 
@@ -211,47 +210,40 @@ public class AltaClienteController extends BaseController {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
-	}
 
-	/*
-	 * @Override
-	 * public void initialize(URL location, ResourceBundle resources) {
-	 * super.initialize(location, resources);
-	 *
-	 * listaLocalidades = new ArrayList<Localidad>();
-	 * listaProvincias = new ArrayList<Provincia>();
-	 * listaPaises = new ArrayList<Pais>();
-	 * listaTiposDeDocumento = new ArrayList<TipoDocumento>();
-	 * listaTiposInmueble = new ArrayList<TipoInmueble>();
-	 *
-	 * try {
-	 * listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
-	 * } catch (PersistenciaException e) {
-	 * 	ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
-	 * }
-	 * comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
-	 *
-	 * try {
-	 * listaTiposInmueble = gestorDatos.obtenerTiposInmueble();
-	 * } catch (PersistenciaException e) {
-	 * 	ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
-	 * }
-	 * comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
-	 *
-	 * try {
-	 * listaPaises = gestorDatos.obtenerPaises();
-	 * } catch (PersistenciaException e) {
-	 * 	ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
-	 * }
-	 * comboBoxPais.getItems().addAll(listaPaises);
-	 *
-	 * comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
-	 * (observable, oldValue, newValue) -> actualizarProvincias(newValue));
-	 *
-	 * comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
-	 * (observable, oldValue, newValue) -> actualizarLocalidades(newValue));
-	 * }
-	 */
+		listaLocalidades = new ArrayList<Localidad>();
+		listaProvincias = new ArrayList<Provincia>();
+		listaPaises = new ArrayList<Pais>();
+		listaTiposDeDocumento = new ArrayList<TipoDocumento>();
+		listaTiposInmueble = new ArrayList<TipoInmueble>();
+
+		try {
+			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+		} catch (PersistenciaException e) {
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
+
+		try {
+			listaTiposInmueble = gestorDatos.obtenerTiposInmueble();
+		} catch (PersistenciaException e) {
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
+
+		try {
+			listaPaises = gestorDatos.obtenerPaises();
+		} catch (PersistenciaException e) {
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxPais.getItems().addAll(listaPaises);
+
+		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
+
+		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
+	}
 
 	private void actualizarLocalidades(Provincia provincia) {
 		try{
