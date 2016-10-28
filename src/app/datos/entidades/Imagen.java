@@ -5,10 +5,12 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "imagen")
+@PrimaryKeyJoinColumn(name = "archivo")
 public class Imagen extends Archivo {
 
 	//Relaciones
