@@ -9,12 +9,14 @@ import javax.annotation.Resource;
 
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
+import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
+import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -120,9 +122,16 @@ public class AltaVendedorController extends BaseController {
 				}
 
 			} catch(PersistenciaException e){
-
+				new VentanaError("Ha ocurrido un error en la base de datos.", "Intente nuevamente");
+			} catch(GestionException e){
+				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
+					VentanaConfirmacion ventana = new VentanaConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
+					if(ventana.acepta()){
+						//TODO mandar a la vista modificar cliente
+					}
+				}
 			} catch(Exception e){
-				// TODO Auto-generated catch block
+				new VentanaError("Ha ocurrido un error inesperado", "Intente nuevamente");
 				e.printStackTrace();
 			}
 			return resultadoCrearVendedor;
