@@ -7,10 +7,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import app.datos.clases.EstadoStr;
 
+@NamedQuery(name = "obtenerEstados", query = "SELECT e FROM Estado e")
 @Entity
 @Table(name = "estado")
 public class Estado {

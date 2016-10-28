@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroCliente;
 import app.datos.entidades.Cliente;
+import app.datos.entidades.Estado;
 import app.datos.servicios.ClienteService;
+import app.datos.servicios.DatosService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
@@ -24,6 +26,9 @@ public class GestorCliente {
 
 	@Resource
 	protected ClienteService persistidorCliente;
+
+	@Resource
+	protected DatosService persistidorDatos;
 
 	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearCliente> errores = new ArrayList<>();
@@ -57,6 +62,12 @@ public class GestorCliente {
 		}
 
 		if(errores.isEmpty()){
+			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+			for(Estado e: estados) {
+				if(e.getEstado().equals(EstadoStr.ALTA)) {
+					cliente.setEstado(e);
+				}
+			}
 			persistidorCliente.guardarCliente(cliente);
 		}
 
