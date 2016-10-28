@@ -22,7 +22,7 @@ public class TipoDocumento {
 	private Integer id; //ID
 
 	//TODO ver enum
-	@Column(name = "tipo_documento_enum")
+	@Column(name = "tipo_documento")
 	@Enumerated(EnumType.STRING)
 	private TipoDocumentoStr tipo;
 

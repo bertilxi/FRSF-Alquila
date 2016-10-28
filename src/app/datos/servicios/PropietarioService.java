@@ -1,3 +1,4 @@
+
 package app.datos.servicios;
 
 import app.datos.clases.FiltroPropietario;
@@ -10,8 +11,7 @@ public interface PropietarioService {
 
 	public void modificarPropietario(Propietario propietario) throws PersistenciaException;
 
-	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException;
-
 	public void eliminarPropietario(Propietario propietario) throws PersistenciaException;
 
+	Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException;
 }

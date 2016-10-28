@@ -161,78 +161,50 @@ public class Propietario {
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((inmuebles == null) ? 0 : inmuebles.hashCode());
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
-		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
 		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj)
+		if(this == obj){
 			return true;
-		if(obj == null)
+		}
+		if(obj == null){
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Propietario other = (Propietario) obj;
-		if(apellido == null){
-			if(other.apellido != null)
-				return false;
-		}
-		else if(!apellido.equals(other.apellido))
-			return false;
-		if(direccion == null){
-			if(other.direccion != null)
-				return false;
-		}
-		else if(!direccion.equals(other.direccion))
-			return false;
-		if(email == null){
-			if(other.email != null)
-				return false;
-		}
-		else if(!email.equals(other.email))
-			return false;
 		if(id == null){
-			if(other.id != null)
+			if(other.id != null){
 				return false;
+			}
 		}
-		else if(!id.equals(other.id))
+		else if(!id.equals(other.id)){
 			return false;
-		if(inmuebles == null){
-			if(other.inmuebles != null)
-				return false;
 		}
-		else if(!inmuebles.equals(other.inmuebles))
-			return false;
-		if(nombre == null){
-			if(other.nombre != null)
-				return false;
+		else{
+			return true;
 		}
-		else if(!nombre.equals(other.nombre))
-			return false;
 		if(numeroDocumento == null){
-			if(other.numeroDocumento != null)
+			if(other.numeroDocumento != null){
 				return false;
+			}
 		}
-		else if(!numeroDocumento.equals(other.numeroDocumento))
+		else if(!numeroDocumento.equals(other.numeroDocumento)){
 			return false;
-		if(telefono == null){
-			if(other.telefono != null)
-				return false;
 		}
-		else if(!telefono.equals(other.telefono))
-			return false;
 		if(tipoDocumento == null){
-			if(other.tipoDocumento != null)
+			if(other.tipoDocumento != null){
 				return false;
+			}
 		}
-		else if(!tipoDocumento.equals(other.tipoDocumento))
+		else if(!tipoDocumento.equals(other.tipoDocumento)){
 			return false;
+		}
 		return true;
 	}
-
 }

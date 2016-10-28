@@ -45,24 +45,22 @@ public class Provincia {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public Provincia setNombre(String nombre) {
 		this.nombre = nombre;
+		return this;
 	}
 
 	public Pais getPais() {
 		return pais;
 	}
 
-	public void setPais(Pais pais) {
+	public Provincia setPais(Pais pais) {
 		this.pais = pais;
+		return this;
 	}
 
 	@Override
@@ -94,9 +92,6 @@ public class Provincia {
 		}
 		else if(!id.equals(other.id)){
 			return false;
-		}
-		else{
-			return true;
 		}
 		if(nombre == null){
 			if(other.nombre != null){

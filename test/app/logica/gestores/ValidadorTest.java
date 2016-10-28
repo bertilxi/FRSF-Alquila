@@ -30,8 +30,8 @@ public class ValidadorTest {
 			"email_a_a@juan.com, true",
 			"emailmayoramuchoscaracteres@juan.com, false",
 			"sinarroba, false",
-			"caracte^r~@juan.com, false",
-			"ácéntós@juan.com, false" })
+			"caracte^r~@juan.com, true",
+			"ácéntós@juan.com, true" })
 	public void validarEmailTest(String email, boolean esperado) {
 		assertEquals(esperado, ValidadorFormato.validarEmail(email));
 	}
@@ -39,7 +39,7 @@ public class ValidadorTest {
 	@Test
 	@Parameters({ "juan@juan.com, true",
 	})
-	public void validarEmailTest(String email, boolean esperado) {
+	public void validarDomicilioTest(String email, boolean esperado) {
 		assertEquals(esperado, ValidadorFormato.validarEmail(email));
 	}
 }

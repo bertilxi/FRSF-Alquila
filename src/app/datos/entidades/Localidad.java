@@ -44,24 +44,22 @@ public class Localidad {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public Localidad setNombre(String nombre) {
 		this.nombre = nombre;
+		return this;
 	}
 
 	public Provincia getProvincia() {
 		return provincia;
 	}
 
-	public void setProvincia(Provincia provincia) {
+	public Localidad setProvincia(Provincia provincia) {
 		this.provincia = provincia;
+		return this;
 	}
 
 	@Override

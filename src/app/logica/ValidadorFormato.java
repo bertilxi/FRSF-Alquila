@@ -2,11 +2,11 @@ package app.logica;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
 import app.datos.entidades.Direccion;
 import app.datos.entidades.TipoDocumento;
-import org.apache.commons.validator.routines.EmailValidator;
 
 @Service
 public class ValidadorFormato {
@@ -47,7 +47,7 @@ public class ValidadorFormato {
 	}
 
 	public static Boolean validarEmail(String email) {
-        return EmailValidator.getInstance().isValid(email);
+		return EmailValidator.getInstance().isValid(email) && email.length() <= 30;
 	}
 
 	public static Boolean validarTelefono(String telefono) {
