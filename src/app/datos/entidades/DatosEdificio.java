@@ -4,8 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -14,11 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "datos_edificio")
 public class DatosEdificio {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id; //ID
 
 	@Id
 	@OneToOne(fetch = FetchType.EAGER)
@@ -94,10 +87,6 @@ public class DatosEdificio {
 		this.aguaCaliente = aguaCaliente;
 		this.lavadero = lavadero;
 		this.pavimento = pavimento;
-	}
-
-	public Integer getId() {
-		return id;
 	}
 
 	public Inmueble getInmueble() {
@@ -240,7 +229,6 @@ public class DatosEdificio {
 		result = prime * result + ((dormitorios == null) ? 0 : dormitorios.hashCode());
 		result = prime * result + ((garaje == null) ? 0 : garaje.hashCode());
 		result = prime * result + ((gasNatural == null) ? 0 : gasNatural.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((idInmueble == null) ? 0 : idInmueble.hashCode());
 		result = prime * result + ((lavadero == null) ? 0 : lavadero.hashCode());
 		result = prime * result + ((patio == null) ? 0 : patio.hashCode());
@@ -264,17 +252,6 @@ public class DatosEdificio {
 			return false;
 		}
 		DatosEdificio other = (DatosEdificio) obj;
-		if(id == null){
-			if(other.id != null){
-				return false;
-			}
-		}
-		else if(!id.equals(other.id)){
-			return false;
-		}
-		else{
-			return true;
-		}
 		if(idInmueble == null){
 			if(other.idInmueble != null){
 				return false;
