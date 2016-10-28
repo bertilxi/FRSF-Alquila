@@ -23,7 +23,7 @@ import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 public class GestorCliente {
 
 	@Resource
-	private ClienteService persistidorCliente;
+	protected ClienteService persistidorCliente;
 
 	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearCliente> errores = new ArrayList<>();
