@@ -50,9 +50,10 @@ public class GestorVendedor {
 
 		Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento()));
 		if(null != vendedorAuxiliar){
-			if(vendedorAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)) {
+			if(vendedorAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
 				errores.add(ErrorCrearVendedor.Ya_Existe_Vendedor);
-			} else {
+			}
+			else{
 				throw new EntidadExistenteConEstadoBajaException();
 			}
 		}
@@ -79,7 +80,7 @@ public class GestorVendedor {
 			errores.add(ErrorModificarVendedor.Formato_Documento_Incorrecto);
 		}
 
-		Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(),vendedor.getNumeroDocumento()));
+		Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento()));
 		if(null != vendedorAuxiliar && !vendedor.equals(vendedorAuxiliar)){
 			errores.add(ErrorModificarVendedor.Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo);
 		}
@@ -90,6 +91,7 @@ public class GestorVendedor {
 
 		return new ResultadoModificarVendedor(errores.toArray(new ErrorModificarVendedor[0]));
 	}
+
 	public ResultadoEliminarVendedor eliminarVendedor() throws PersistenciaException {
 		throw new NotYetImplementedException();
 	}

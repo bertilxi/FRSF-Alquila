@@ -176,13 +176,8 @@ public class Vendedor {
 	@Override
 	public int hashCode() {
 		int result = getId().hashCode();
-		result = 31 * result + getNombre().hashCode();
-		result = 31 * result + getApellido().hashCode();
 		result = 31 * result + getNumeroDocumento().hashCode();
-		result = 31 * result + getPassword().hashCode();
-		result = 31 * result + getSalt().hashCode();
 		result = 31 * result + getTipoDocumento().hashCode();
-		result = 31 * result + (getVentas() != null ? getVentas().hashCode() : 0);
 		return result;
 	}
 }

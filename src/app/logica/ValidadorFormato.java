@@ -14,6 +14,9 @@ public class ValidadorFormato {
 	public static Boolean validarDocumento(TipoDocumento tipo, String numeroDocumento) {
 		Pattern pat;
 
+		if(tipo == null)
+			return false;
+
 		switch(tipo.getTipo()) {
 		case DNI:
 			pat = Pattern.compile("[0-9]{7,8}");

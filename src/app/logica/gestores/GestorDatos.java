@@ -20,7 +20,7 @@ public class GestorDatos {
 	@Resource
 	private DatosService persistidorDatos;
 
-	public ArrayList<TipoDocumento> obtenerTiposDeDocumento() throws PersistenciaException{
+	public ArrayList<TipoDocumento> obtenerTiposDeDocumento() throws PersistenciaException {
 		return persistidorDatos.obtenerTiposDeDocumento();
 	}
 
