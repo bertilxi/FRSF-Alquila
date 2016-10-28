@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
@@ -97,6 +98,20 @@ public class DatosServiceImpl implements DatosService {
 			throw new ConsultaException();
 		}
 		return tipos;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
+		ArrayList<Estado> estados = new ArrayList<Estado>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			estados = (ArrayList<Estado>) session.getNamedQuery("obtenerEstados").list();
+		} catch(Exception e){
+			throw new ConsultaException();
+		}
+		return estados;
 	}
 
 }
