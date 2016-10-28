@@ -6,8 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,14 +18,9 @@ import javax.persistence.Table;
 public class InmuebleBuscado {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id; //ID
-
-	@Id
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idcliente", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_buscado_idcliente_fk"), nullable = false)
-	private Cliente idCliente;
+	private Cliente cliente;
 
 	@Column(name = "precio_max")
 	private Double precioMax;
@@ -84,11 +77,11 @@ public class InmuebleBuscado {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_barrio", joinColumns = @JoinColumn(name = "idbarrio"), foreignKey = @ForeignKey(name = "inmueble_buscado_barrio_idbarriofk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_barrio_idinmueblefk"))
-	private ArrayList<Barrio> barrios; //Relacion muchos a muchos
+	private ArrayList<Barrio> barrios;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_tipo_inmueble", joinColumns = @JoinColumn(name = "idtipoinmueble"), foreignKey = @ForeignKey(name = "inmueble_buscado_tipo_idtipofk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_inmueble_idinmueblefk"))
-	private ArrayList<TipoInmueble> tiposInmueblesBuscados; //Relacion muchos a muchos
+	private ArrayList<TipoInmueble> tiposInmueblesBuscados;
 
 	public InmuebleBuscado() {
 		super();
@@ -124,17 +117,8 @@ public class InmuebleBuscado {
 		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
 	public Cliente getCliente() {
-		return idCliente;
-	}
-
-	public InmuebleBuscado setCliente(Cliente cliente) {
-		this.idCliente = cliente;
-		return this;
+		return cliente;
 	}
 
 	public Double getPrecioMax() {
@@ -322,8 +306,7 @@ public class InmuebleBuscado {
 		result = prime * result + ((dormitoriosMin == null) ? 0 : dormitoriosMin.hashCode());
 		result = prime * result + ((garaje == null) ? 0 : garaje.hashCode());
 		result = prime * result + ((gasNatural == null) ? 0 : gasNatural.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((idCliente == null) ? 0 : idCliente.hashCode());
+		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		result = prime * result + ((lavadero == null) ? 0 : lavadero.hashCode());
 		result = prime * result + ((localidades == null) ? 0 : localidades.hashCode());
 		result = prime * result + ((patio == null) ? 0 : patio.hashCode());
@@ -348,23 +331,12 @@ public class InmuebleBuscado {
 			return false;
 		}
 		InmuebleBuscado other = (InmuebleBuscado) obj;
-		if(id == null){
-			if(other.id != null){
+		if(cliente == null){
+			if(other.cliente != null){
 				return false;
 			}
 		}
-		else if(!id.equals(other.id)){
-			return false;
-		}
-		else{
-			return true;
-		}
-		if(idCliente == null){
-			if(other.idCliente != null){
-				return false;
-			}
-		}
-		else if(!idCliente.equals(other.idCliente)){
+		else if(!cliente.equals(other.cliente)){
 			return false;
 		}
 		else{

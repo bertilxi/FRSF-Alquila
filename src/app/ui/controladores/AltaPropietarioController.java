@@ -104,7 +104,6 @@ public class AltaPropietarioController extends BaseController {
 		String telefono = textFieldTelefono.getText().trim();
 		String correoElectronico = textFieldCorreoElectronico.getText().trim();
 
-		Provincia provincia = comboBoxProvincia.getValue();
 		Localidad localidad = comboBoxLocalidad.getValue();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 		Barrio barrio = comboBoxBarrio.getValue();
@@ -132,8 +131,7 @@ public class AltaPropietarioController extends BaseController {
 		else{
 
 			Direccion direccion = new Direccion();
-			direccion.setId(null)
-					.setNumero(alturaCalle)
+			direccion.setNumero(alturaCalle)
 					.setCalle(calle)
 					.setBarrio(barrio)
 					.setPiso(piso)

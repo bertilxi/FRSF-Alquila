@@ -18,7 +18,6 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "cliente", uniqueConstraints = @UniqueConstraint(name = "cliente_numerodocumento_idtipodocumento_uk", columnNames = { "numerodocumento", "idtipodocumento" }))
 public class Cliente implements Serializable {
 
-	//TODO agregar por favor los atributos faltantes y seters
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -48,33 +47,22 @@ public class Cliente implements Serializable {
 	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "cliente_idestado_fk"), nullable = false)
 	private Estado estado;
 
-	//Opcionales
-	// private InmuebleBuscado buscado;
-	// private ArrayList<Venta> compras;
-	// private ArrayList<Reserva> reservas;
-	// private ArrayList<Catalogo> catalogos;
-
 	public Cliente() {
 		super();
 	}
 
-	public Cliente(Integer id, String nombre, String apellido, String numeroDocumento, String telefono, Estado estado) {
+	public Cliente(String nombre, String apellido, String numeroDocumento, String telefono, Estado estado, TipoDocumento tipoDocumento) {
 		this();
-		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.numeroDocumento = numeroDocumento;
 		this.telefono = telefono;
 		this.estado = estado;
+		this.tipoDocumento = tipoDocumento;
 	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public Cliente setId(Integer id) {
-		this.id = id;
-		return this;
 	}
 
 	public String getNombre() {
