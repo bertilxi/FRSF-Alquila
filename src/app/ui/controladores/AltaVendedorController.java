@@ -53,8 +53,8 @@ public class AltaVendedorController extends BaseController {
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
-		char[] password1 = passwordFieldContraseña.getText().toCharArray();
-		char[] password2 = passwordFieldRepiteContraseña.getText().toCharArray();
+		String password1 = passwordFieldContraseña.getText();
+		String password2 = passwordFieldRepiteContraseña.getText();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
 		if(nombre.isEmpty()){
@@ -72,15 +72,15 @@ public class AltaVendedorController extends BaseController {
 			error.append("Inserte un numero de documento").append("\r\n");
 		}
 
-		if(password1.length == 0 && password2.length == 0){
+		if(password1.isEmpty() && password2.isEmpty()){
 			error.append("Inserte su contraseña").append("\r\n");
 		}
 
-		if(password1.length != 0 && password2.length == 0){
+		if(!password1.isEmpty() && password2.isEmpty()){
 			error.append("Inserte su contraseña nuevamente").append("\r\n");
 		}
 
-		if(!password1.equals(password2.toString())){
+		if(!password1.equals(password2)){
 			error.append("Sus contraseñas no coinciden, Ingreselas nuevamente").append("\r\n ");
 		}
 

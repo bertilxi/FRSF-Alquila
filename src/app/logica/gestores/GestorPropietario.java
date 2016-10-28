@@ -11,6 +11,7 @@ import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.PropietarioService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
+import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearPropietario;
@@ -26,7 +27,7 @@ public class GestorPropietario {
 	@Resource
 	protected PropietarioService persistidorPropietario;
 
-	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException, EntidadExistenteConEstadoBajaException {
+	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
 
 		if(!ValidadorFormato.validarNombre(propietario.getNombre())){
