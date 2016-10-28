@@ -39,10 +39,6 @@ public class Localidad {
 		this.provincia = provincia;
 	}
 
-	public Localidad(Integer id) {
-		this.id = id;
-	}
-
 	public Integer getId() {
 		return id;
 	}
