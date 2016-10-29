@@ -51,9 +51,6 @@ public class AltaClienteController extends BaseController {
 	private TextField textFieldTelefono;
 
 	@FXML
-	private TextField textFieldCorreo;
-
-	@FXML
 	private ComboBox<Pais> comboBoxPais;
 
 	@FXML
@@ -63,20 +60,12 @@ public class AltaClienteController extends BaseController {
 	private ComboBox<Localidad> comboBoxLocalidad;
 
 	@FXML
-	private TextField textFieldBarrio;
-
-	@FXML
-	private ComboBox<TipoInmueble> comboBoxTipoInmueble;
-
-	@FXML
 	private TextField textFieldMonto;
 
 	@FXML
 	private Button buttonCargatInmueble;
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
-
-	private ArrayList<TipoInmueble> listaTiposInmueble;
 
 	private ArrayList<Localidad> listaLocalidades;
 
@@ -97,7 +86,6 @@ public class AltaClienteController extends BaseController {
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
 		String telefono = textFieldTelefono.getText().trim();
-		String correo = textFieldCorreo.getText().trim();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
 		if(nombre.isEmpty()){
@@ -115,9 +103,6 @@ public class AltaClienteController extends BaseController {
 		if(telefono.isEmpty()){
 			error.append("Inserte un telefono").append("\r\n");
 		}
-		if(correo.isEmpty()){
-			error.append("Inserte un correo").append("\r\n");
-		}
 
 		if(!error.toString().isEmpty()){
 			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
@@ -128,8 +113,7 @@ public class AltaClienteController extends BaseController {
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)
-					.setTelefono(telefono)
-					;
+					.setTelefono(telefono);
 
 			try {
 				ResultadoCrearCliente resultado = gestorCliente.crearCliente(cliente);
@@ -194,7 +178,6 @@ public class AltaClienteController extends BaseController {
 		listaProvincias = new ArrayList<Provincia>();
 		listaPaises = new ArrayList<Pais>();
 		listaTiposDeDocumento = new ArrayList<TipoDocumento>();
-		listaTiposInmueble = new ArrayList<TipoInmueble>();
 
 		try {
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
@@ -202,13 +185,6 @@ public class AltaClienteController extends BaseController {
 			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
-
-		try {
-			listaTiposInmueble = gestorDatos.obtenerTiposInmueble();
-		} catch (PersistenciaException e) {
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
-		}
-		comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
 
 		try {
 			listaPaises = gestorDatos.obtenerPaises();
