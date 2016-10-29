@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import org.hibernate.cfg.NotYetImplementedException;
+import app.logica.ValidadorFormato;
 
 import app.datos.entidades.*;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
@@ -115,39 +115,50 @@ public class AltaClienteController extends BaseController {
 					.setNumeroDocumento(numeroDocumento)
 					.setTelefono(telefono);
 
-			try {
+			try{
 				ResultadoCrearCliente resultado = gestorCliente.crearCliente(cliente);
-				if (resultado.hayErrores()) {
+				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
-					for(ErrorCrearCliente err: resultado.getErrores()) {
+					for(ErrorCrearCliente err: resultado.getErrores()){
 						switch(err) {
-						case Formato_Nombre_Incorrecto: stringErrores.append("Formato de nombre incorrecto.\n"); break;
-						case Formato_Apellido_Incorrecto: stringErrores.append("Formato de apellido incorrecto.\n");break;
-						case Formato_Telefono_Incorrecto: stringErrores.append("Formato de teléfono incorrecto.\n");break;
-						case Formato_Documento_Incorrecto: stringErrores.append("Tipo y formato de documento incorrecto.\n"); break;
-						case Ya_Existe_Cliente: stringErrores.append("Ya existe un cliente con ese tipo y número de documento.\n"); break;
+						case Formato_Nombre_Incorrecto:
+							stringErrores.append("Formato de nombre incorrecto.\n");
+							break;
+						case Formato_Apellido_Incorrecto:
+							stringErrores.append("Formato de apellido incorrecto.\n");
+							break;
+						case Formato_Telefono_Incorrecto:
+							stringErrores.append("Formato de teléfono incorrecto.\n");
+							break;
+						case Formato_Documento_Incorrecto:
+							stringErrores.append("Tipo y formato de documento incorrecto.\n");
+							break;
+						case Ya_Existe_Cliente:
+							stringErrores.append("Ya existe un cliente con ese tipo y número de documento.\n");
+							break;
 						}
 					}
 					new VentanaError("No se pudo crear el cliente", stringErrores.toString(), null); //falta el stage
 				}
-			} catch (GestionException e) {
-				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)) {
+			} catch(GestionException e){
+				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
 					VentanaConfirmacion ventana = new VentanaConfirmacion("El cliente ya existe", "El cliente ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
-					if (ventana.acepta()) {
+					if(ventana.acepta()){
 						//TODO mandar a la vista modificar cliente
 					}
 				}
-			} catch (PersistenciaException e) {
+			} catch(PersistenciaException e){
 				ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
 			}
 		}
 	}
+/*
+	public void cargarInmueble(ActionEvent event) throws IOException {
 
 	public void cargarInmueble(ActionEvent event) throws IOException {
 		throw new NotYetImplementedException();
 	}
-
-	@FXML
+*/
 	public void cargarInmueble() throws IOException {
 		Stage stage = new Stage();
 		URL location = getClass().getResource("/app/ui/vistas/inmuebleBuscado.fxml");
