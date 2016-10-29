@@ -1,7 +1,5 @@
 package app.datos.entidades;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,9 +14,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "cliente", uniqueConstraints = @UniqueConstraint(name = "cliente_numerodocumento_idtipodocumento_uk", columnNames = { "numerodocumento", "idtipodocumento" }))
-public class Cliente implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Cliente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

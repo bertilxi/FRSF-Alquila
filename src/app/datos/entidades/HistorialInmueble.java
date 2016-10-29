@@ -1,8 +1,8 @@
 package app.datos.entidades;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,8 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,9 +23,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "historial_inmueble")
-public class HistorialInmueble implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class HistorialInmueble {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,9 +71,9 @@ public class HistorialInmueble implements Serializable {
 	@JoinColumn(name = "idpropietario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idpropietario_fk"), nullable = false)
 	private Propietario propietario;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "historialInmueble")
-	@JoinColumn(name = "archivo", referencedColumnName = "historial_inmuebleid_archivo") //TODO ver como queda en la bd
-	private ArrayList<Imagen> fotos;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "historial_inmueble_imagen", joinColumns = @JoinColumn(name = "idhistorial_inmueble"), foreignKey = @ForeignKey(name = "historial_inmueble_imagen_idinmueble_fk"), inverseJoinColumns = @JoinColumn(name = "idimagen"), inverseForeignKey = @ForeignKey(name = "historial_inmueble_imagen_idimagen_fk"))
+	private Set<Imagen> fotos;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idestado_fk"), nullable = false)
@@ -91,7 +90,7 @@ public class HistorialInmueble implements Serializable {
 
 	public HistorialInmueble() {
 		super();
-		fotos = new ArrayList<>();
+		fotos = new HashSet<>();
 	}
 
 	public HistorialInmueble(Date fechaYHoraCambio, String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie, TipoInmueble tipo, Direccion direccion, Propietario propietario, Estado estado, Inmueble inmueble) {
@@ -213,7 +212,7 @@ public class HistorialInmueble implements Serializable {
 		return this;
 	}
 
-	public ArrayList<Imagen> getFotos() {
+	public Set<Imagen> getFotos() {
 		return fotos;
 	}
 

@@ -14,6 +14,7 @@ import app.datos.clases.TipoInmuebleStr;
 @Entity
 @Table(name = "tipo_inmueble")
 public class TipoInmueble {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID

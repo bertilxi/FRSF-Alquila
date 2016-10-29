@@ -1,6 +1,7 @@
 package app.datos.entidades;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "propietario", uniqueConstraints = @UniqueConstraint(name = "propietario_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 public class Propietario {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
@@ -51,7 +53,7 @@ public class Propietario {
 	//Opcionales
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "propietario")
 	@Transient
-	private ArrayList<Inmueble> inmuebles;
+	private Set<Inmueble> inmuebles;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_idestado_fk"), nullable = false)
@@ -59,11 +61,10 @@ public class Propietario {
 
 	public Propietario() {
 		super();
-		this.inmuebles = new ArrayList<Inmueble>();
+		this.inmuebles = new HashSet<>();
 	}
 
-	public Propietario(Integer id, String nombre, String apellido, String numeroDocumento, String telefono,
-			String email, TipoDocumento tipoDocumento, Direccion direccion, ArrayList<Inmueble> inmuebles) {
+	public Propietario(Integer id, String nombre, String apellido, String numeroDocumento, String telefono, String email, TipoDocumento tipoDocumento, Direccion direccion) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -73,16 +74,10 @@ public class Propietario {
 		this.email = email;
 		this.tipoDocumento = tipoDocumento;
 		this.direccion = direccion;
-		this.inmuebles = inmuebles;
 	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public Propietario setId(Integer id) {
-		this.id = id;
-		return this;
 	}
 
 	public String getNombre() {
@@ -148,13 +143,8 @@ public class Propietario {
 		return this;
 	}
 
-	public ArrayList<Inmueble> getInmuebles() {
+	public Set<Inmueble> getInmuebles() {
 		return inmuebles;
-	}
-
-	public Propietario setInmuebles(ArrayList<Inmueble> inmuebles) {
-		this.inmuebles = inmuebles;
-		return this;
 	}
 
 	public Estado getEstado() {

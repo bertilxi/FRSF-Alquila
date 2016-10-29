@@ -9,4 +9,11 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "archivoid")
 public class PDF extends Archivo {
 
+	public PDF() {
+		super();
+	}
+
+	public PDF(byte[] archivo) {
+		super(archivo);
+	}
 }

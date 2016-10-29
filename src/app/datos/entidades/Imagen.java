@@ -9,8 +9,11 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "archivoid")
 public class Imagen extends Archivo {
 
-	//Relaciones
-	//Opcionales
-	// private Inmueble inmueble;
-	// private HistorialInmueble historialInmueble;
+	public Imagen() {
+		super();
+	}
+
+	public Imagen(byte[] archivo) {
+		super(archivo);
+	}
 }

@@ -1,6 +1,8 @@
 package app.datos.entidades;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +17,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "inmueble_buscado")
-public class InmuebleBuscado {
+public class InmuebleBuscado implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@OneToOne(fetch = FetchType.EAGER)
@@ -73,29 +77,29 @@ public class InmuebleBuscado {
 	//Relaciones
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_localidad", joinColumns = @JoinColumn(name = "idlocalidad"), foreignKey = @ForeignKey(name = "inmueble_buscado_localidad_idlocalidadfk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_inmueble_idinmueblefk"))
-	private ArrayList<Localidad> localidades;
+	private Set<Localidad> localidades;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_barrio", joinColumns = @JoinColumn(name = "idbarrio"), foreignKey = @ForeignKey(name = "inmueble_buscado_barrio_idbarriofk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_barrio_idinmueblefk"))
-	private ArrayList<Barrio> barrios;
+	private Set<Barrio> barrios;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_tipo_inmueble", joinColumns = @JoinColumn(name = "idtipoinmueble"), foreignKey = @ForeignKey(name = "inmueble_buscado_tipo_idtipofk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_inmueble_idinmueblefk"))
-	private ArrayList<TipoInmueble> tiposInmueblesBuscados;
+	private Set<TipoInmueble> tiposInmueblesBuscados;
 
 	public InmuebleBuscado() {
 		super();
-		this.localidades = new ArrayList<>();
-		this.barrios = new ArrayList<>();
-		this.tiposInmueblesBuscados = new ArrayList<>();
+		this.localidades = new HashSet<>();
+		this.barrios = new HashSet<>();
+		this.tiposInmueblesBuscados = new HashSet<>();
 	}
 
-	public InmuebleBuscado(Double precioMax, Double superficieMin, Integer antiguedadMax,
+	public InmuebleBuscado(Cliente cliente, Double precioMax, Double superficieMin, Integer antiguedadMax,
 			Integer dormitoriosMin, Integer bañosMin, Boolean garaje, Boolean patio, Boolean piscina,
 			Boolean propiedadHorizontal, Boolean aguaCorriente, Boolean cloacas, Boolean gasNatural,
-			Boolean aguaCaliente, Boolean lavadero, Boolean pavimento, Boolean telefono, ArrayList<Localidad> localidades,
-			ArrayList<Barrio> barrios, ArrayList<TipoInmueble> tiposInmueblesBuscados) {
+			Boolean aguaCaliente, Boolean lavadero, Boolean pavimento, Boolean telefono) {
 		super();
+		this.cliente = cliente;
 		this.precioMax = precioMax;
 		this.superficieMin = superficieMin;
 		this.antiguedadMax = antiguedadMax;
@@ -111,14 +115,16 @@ public class InmuebleBuscado {
 		this.aguaCaliente = aguaCaliente;
 		this.lavadero = lavadero;
 		this.pavimento = pavimento;
-		this.localidades = localidades;
-		this.barrios = barrios;
 		this.telefono = telefono;
-		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
 	}
 
 	public Cliente getCliente() {
 		return cliente;
+	}
+
+	public InmuebleBuscado setCliente(Cliente cliente) {
+		this.cliente = cliente;
+		return this;
 	}
 
 	public Double getPrecioMax() {
@@ -266,31 +272,16 @@ public class InmuebleBuscado {
 		return this;
 	}
 
-	public ArrayList<Localidad> getLocalidades() {
+	public Set<Localidad> getLocalidades() {
 		return localidades;
 	}
 
-	public InmuebleBuscado setLocalidades(ArrayList<Localidad> localidades) {
-		this.localidades = localidades;
-		return this;
-	}
-
-	public ArrayList<Barrio> getBarrios() {
+	public Set<Barrio> getBarrios() {
 		return barrios;
 	}
 
-	public InmuebleBuscado setBarrios(ArrayList<Barrio> barrios) {
-		this.barrios = barrios;
-		return this;
-	}
-
-	public ArrayList<TipoInmueble> getTiposInmueblesBuscados() {
+	public Set<TipoInmueble> getTiposInmueblesBuscados() {
 		return tiposInmueblesBuscados;
-	}
-
-	public InmuebleBuscado setTiposInmueblesBuscados(ArrayList<TipoInmueble> tiposInmueblesBuscados) {
-		this.tiposInmueblesBuscados = tiposInmueblesBuscados;
-		return this;
 	}
 
 	@Override
