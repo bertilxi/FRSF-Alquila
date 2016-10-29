@@ -2,7 +2,9 @@ package app.ui.controladores;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +28,7 @@ public class AltaVendedorControllerTest {
 
 	@Test
 	@Parameters
-	public void testCrearVendedor(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String contraseña, String contraseña2, ResultadoCrearVendedor resultadoCrearVendedorEsperado, Throwable excepcion) throws Exception {
+	public void testCrearVendedor(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String contraseña, String contraseña2, ResultadoCrearVendedor resultadoCrearVendedorEsperado, Integer llamaACrearVendedor, Throwable excepcion) throws Exception {
 
 		GestorVendedor gestorVendedorMock = Mockito.mock(GestorVendedor.class);
 		GestorDatos gestorDatosMock = Mockito.mock(GestorDatos.class);
@@ -39,20 +41,23 @@ public class AltaVendedorControllerTest {
 				.setPassword(contraseña);
 
 		ArrayList<TipoDocumento> tipos = new ArrayList<TipoDocumento>();
-		tipos.add(0, tipoDocumento);
+		tipos.add(tipoDocumento);
 
 		Mockito.when(gestorVendedorMock.crearVendedor(vendedor)).thenReturn(resultadoCrearVendedorEsperado);
 		Mockito.when(gestorDatosMock.obtenerTiposDeDocumento()).thenReturn(tipos);
 
 		AltaVendedorController altaVendedorController = new AltaVendedorController() {
 			@Override
-			public ResultadoCrearVendedor acceptAction() throws PersistenciaException, GestionException {
-				this.gestorVendedor = gestorVendedorMock;
+			public void initialize(URL location, ResourceBundle resources) {
 				this.gestorDatos = gestorDatosMock;
+				this.gestorVendedor = gestorVendedorMock;
+				super.initialize(location, resources);
+			}
+
+			@Override
+			public ResultadoCrearVendedor acceptAction() throws PersistenciaException, GestionException {
 				this.textFieldNombre.setText(nombre);
 				this.textFieldApellido.setText(apellido);
-				this.comboBoxTipoDocumento.getItems().clear();
-				this.comboBoxTipoDocumento.getItems().add(tipoDocumento);
 				this.comboBoxTipoDocumento.getSelectionModel().select(tipoDocumento);
 				this.textFieldNumeroDocumento.setText(numeroDocumento);
 				this.passwordFieldContraseña.setText(contraseña);
@@ -66,8 +71,10 @@ public class AltaVendedorControllerTest {
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
-				//Mockito.verify(gestorVendedorMock).crearVendedor(vendedor);
-				assertEquals(resultadoCrearVendedorEsperado, altaVendedorController.acceptAction());
+				Mockito.verify(gestorDatosMock).obtenerTiposDeDocumento();
+				ResultadoCrearVendedor resultadoCrearVendedor = altaVendedorController.acceptAction();
+				assertEquals(resultadoCrearVendedorEsperado, resultadoCrearVendedor);
+				Mockito.verify(gestorVendedorMock, Mockito.times(llamaACrearVendedor)).crearVendedor(Mockito.any());
 			}
 		};
 
@@ -80,12 +87,13 @@ public class AltaVendedorControllerTest {
 
 	protected Object[] parametersForTestCrearVendedor() {
 		return new Object[] {
-				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCorrecto, null }, //prueba correcta
-				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCrearNombreIncorrecto, null }, //prueba nombre incorrecto
-				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCrearApellidoIncorrecto, null }, //prueba apellido incorrecto
-				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCrearDocumentoIncorrecto, null }, //prueba documento incorrecto
-				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCrearYaExiste, null }, //prueba ya existe vendedor
-				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Nombre_Incorrecto, ErrorCrearVendedor.Formato_Apellido_Incorrecto), null } //prueba ya existe vendedor
+				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCorrecto, 1, null }, //prueba correcta
+				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCrearNombreIncorrecto, 1, null }, //prueba nombre incorrecto
+				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCrearApellidoIncorrecto, 1, null }, //prueba apellido incorrecto
+				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCrearDocumentoIncorrecto, 1, null }, //prueba documento incorrecto
+				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", resultadoCrearYaExiste, 1, null }, //prueba ya existe vendedor
+				new Object[] { "Juan", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Nombre_Incorrecto, ErrorCrearVendedor.Formato_Apellido_Incorrecto), 1, null }, //prueba ya existe vendedor
+				new Object[] { "", "Perez", (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "abc", "abc", null, 0, null } //prueba nombre vacio
 		};
 	}
 

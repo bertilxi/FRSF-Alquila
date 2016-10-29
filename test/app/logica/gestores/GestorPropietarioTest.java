@@ -10,11 +10,13 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
+import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Direccion;
+import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
@@ -29,7 +31,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-@PrepareForTest({ ValidadorFormato.class, TipoDocumento.class, Localidad.class, Provincia.class, Calle.class, Barrio.class, Direccion.class })
+@PrepareForTest({ ValidadorFormato.class, TipoDocumento.class, Localidad.class, Provincia.class, Calle.class, Barrio.class, Direccion.class, Estado.class })
 public class GestorPropietarioTest {
 
 	@Rule
@@ -39,13 +41,14 @@ public class GestorPropietarioTest {
 	private static PropietarioService propietarioService;
 	private static FiltroPropietario filtro;
 
-	protected Object[] parametersForTestCrearPropietario_correcto() {
+	protected Object[] parametersForTestCrearPropietario() {
 		//Se carga propietario con datos básicos solo para evitar punteros nulos
 		//Las validaciones se hacen en el validador, por lo que se setean luego en los mocks los valores esperados
-		TipoDocumento doc = new TipoDocumento(1, TipoDocumentoStr.DNI);
-		Localidad localidad = new Localidad(1, "sadadfa", null);
-		Direccion dir = new Direccion(1, "1234", "1234", "a", new Calle(1, "hilka", localidad), new Barrio(1, "asdas", localidad), localidad);
-		propietario = new Propietario(1, "Juan", "Perez", "38377777", "3424686868", "d.a@hotmail.com", doc, dir, null);
+		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
+		Localidad localidad = new Localidad("sadadfa", null);
+		Direccion dir = new Direccion("1234", "1234", "a", new Calle("hilka", localidad), new Barrio("asdas", localidad), localidad);
+		propietario = new Propietario(1, "Juan", "Perez", "38377777", "3424686868", "d.a@hotmail.com", doc, dir);
+		propietario.setEstado(new Estado(EstadoStr.ALTA));
 		filtro = new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento());
 
 		//Parámetros de JUnitParams
