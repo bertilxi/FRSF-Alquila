@@ -2,6 +2,7 @@ package app.datos.servicios;
 
 import java.util.ArrayList;
 
+import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
@@ -20,5 +21,7 @@ public interface DatosService {
 	public ArrayList<TipoDocumento> obtenerTiposDeDocumento() throws PersistenciaException;
 
 	public ArrayList<TipoInmueble> obtenerTiposDeInmueble() throws PersistenciaException;
+
+	public ArrayList<Estado> obtenerEstados() throws PersistenciaException;
 
 }

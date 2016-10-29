@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
@@ -16,6 +18,7 @@ import app.datos.servicios.DatosService;
 import app.excepciones.ConsultaException;
 import app.excepciones.PersistenciaException;
 
+@Repository
 public class DatosServiceImpl implements DatosService {
 
 	private SessionFactory sessionFactory;
@@ -33,7 +36,7 @@ public class DatosServiceImpl implements DatosService {
 	@Override
 	@Transactional(readOnly = true)
 	public ArrayList<Localidad> obtenerLocalidadesDe(Provincia provincia) throws PersistenciaException {
-		ArrayList<Localidad> localidades = new ArrayList<Localidad>();
+		ArrayList<Localidad> localidades = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
 			localidades = (ArrayList<Localidad>) session.getNamedQuery("obtenerLocalidadesDe").setParameter("prov", provincia).list();
@@ -47,7 +50,7 @@ public class DatosServiceImpl implements DatosService {
 	@Override
 	@Transactional(readOnly = true)
 	public ArrayList<Provincia> obtenerProvinciasDe(Pais pais) throws PersistenciaException {
-		ArrayList<Provincia> provincias = new ArrayList<Provincia>();
+		ArrayList<Provincia> provincias = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
 			provincias = (ArrayList<Provincia>) session.getNamedQuery("obtenerProvinciasDe").setParameter("pa", pais).list();
@@ -61,7 +64,7 @@ public class DatosServiceImpl implements DatosService {
 	@Override
 	@Transactional(readOnly = true)
 	public ArrayList<Pais> obtenerPaises() throws PersistenciaException {
-		ArrayList<Pais> paises = new ArrayList<Pais>();
+		ArrayList<Pais> paises = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
 			paises = (ArrayList<Pais>) session.getNamedQuery("obtenerPaises").list();
@@ -75,7 +78,7 @@ public class DatosServiceImpl implements DatosService {
 	@Override
 	@Transactional(readOnly = true)
 	public ArrayList<TipoDocumento> obtenerTiposDeDocumento() throws PersistenciaException {
-		ArrayList<TipoDocumento> tipos = new ArrayList<TipoDocumento>();
+		ArrayList<TipoDocumento> tipos = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
 			tipos = (ArrayList<TipoDocumento>) session.getNamedQuery("obtenerTiposDeDocumento").list();
@@ -89,7 +92,7 @@ public class DatosServiceImpl implements DatosService {
 	@Override
 	@Transactional(readOnly = true)
 	public ArrayList<TipoInmueble> obtenerTiposDeInmueble() throws PersistenciaException {
-		ArrayList<TipoInmueble> tipos = new ArrayList<TipoInmueble>();
+		ArrayList<TipoInmueble> tipos = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
 			tipos = (ArrayList<TipoInmueble>) session.getNamedQuery("obtenerTiposDeInmueble").list();
@@ -97,6 +100,20 @@ public class DatosServiceImpl implements DatosService {
 			throw new ConsultaException();
 		}
 		return tipos;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
+		ArrayList<Estado> estados = new ArrayList<>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			estados = (ArrayList<Estado>) session.getNamedQuery("obtenerEstados").list();
+		} catch(Exception e){
+			throw new ConsultaException();
+		}
+		return estados;
 	}
 
 }

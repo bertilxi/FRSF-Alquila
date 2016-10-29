@@ -12,15 +12,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "datos_edificio")
-public class DatosEdificio implements Serializable {
+@Table(name = "historial_datos_edificio")
+public class HistorialDatosEdificio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "datos_edificio_idinmueble_fk"), nullable = false)
-	private Inmueble inmueble;
+	@JoinColumn(name = "idhistorial_inmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_datos_edificio_idhistorial_inmueble_fk"), nullable = false)
+	private HistorialInmueble historialInmueble;
 
 	@Column(name = "superficie")
 	private Double superficie; // en metros cuadrados
@@ -67,16 +67,16 @@ public class DatosEdificio implements Serializable {
 	@Column(name = "pavimento")
 	private Boolean pavimento;
 
-	public DatosEdificio() {
+	public HistorialDatosEdificio() {
 		super();
 	}
 
-	public DatosEdificio(Inmueble inmueble, Double superficie, Integer antiguedad, Integer dormitorios, Integer baños,
+	public HistorialDatosEdificio(HistorialInmueble historialInmueble, Double superficie, Integer antiguedad, Integer dormitorios, Integer baños,
 			Integer garaje, Integer patio, Integer piscina, Boolean telefono, Boolean propiedadHorizontal,
 			Boolean aguaCorriente, Boolean cloacas, Boolean gasNatural, Boolean aguaCaliente, Boolean lavadero,
 			Boolean pavimento) {
 		super();
-		this.inmueble = inmueble;
+		this.historialInmueble = historialInmueble;
 		this.superficie = superficie;
 		this.antiguedad = antiguedad;
 		this.dormitorios = dormitorios;
@@ -94,12 +94,12 @@ public class DatosEdificio implements Serializable {
 		this.pavimento = pavimento;
 	}
 
-	public Inmueble getInmueble() {
-		return inmueble;
+	public HistorialInmueble getHistorialInmueble() {
+		return historialInmueble;
 	}
 
-	public DatosEdificio setInmueble(Inmueble inmueble) {
-		this.inmueble = inmueble;
+	public HistorialDatosEdificio setHistorialInmueble(HistorialInmueble historialInmueble) {
+		this.historialInmueble = historialInmueble;
 		return this;
 	}
 
@@ -107,7 +107,7 @@ public class DatosEdificio implements Serializable {
 		return superficie;
 	}
 
-	public DatosEdificio setSuperficie(Double superficie) {
+	public HistorialDatosEdificio setSuperficie(Double superficie) {
 		this.superficie = superficie;
 		return this;
 	}
@@ -116,7 +116,7 @@ public class DatosEdificio implements Serializable {
 		return antiguedad;
 	}
 
-	public DatosEdificio setAntiguedad(Integer antiguedad) {
+	public HistorialDatosEdificio setAntiguedad(Integer antiguedad) {
 		this.antiguedad = antiguedad;
 		return this;
 	}
@@ -125,7 +125,7 @@ public class DatosEdificio implements Serializable {
 		return dormitorios;
 	}
 
-	public DatosEdificio setDormitorios(Integer dormitorios) {
+	public HistorialDatosEdificio setDormitorios(Integer dormitorios) {
 		this.dormitorios = dormitorios;
 		return this;
 	}
@@ -134,7 +134,7 @@ public class DatosEdificio implements Serializable {
 		return baños;
 	}
 
-	public DatosEdificio setBaños(Integer baños) {
+	public HistorialDatosEdificio setBaños(Integer baños) {
 		this.baños = baños;
 		return this;
 	}
@@ -143,7 +143,7 @@ public class DatosEdificio implements Serializable {
 		return garaje;
 	}
 
-	public DatosEdificio setGaraje(Integer garaje) {
+	public HistorialDatosEdificio setGaraje(Integer garaje) {
 		this.garaje = garaje;
 		return this;
 	}
@@ -152,7 +152,7 @@ public class DatosEdificio implements Serializable {
 		return patio;
 	}
 
-	public DatosEdificio setPatio(Integer patio) {
+	public HistorialDatosEdificio setPatio(Integer patio) {
 		this.patio = patio;
 		return this;
 	}
@@ -161,7 +161,7 @@ public class DatosEdificio implements Serializable {
 		return piscina;
 	}
 
-	public DatosEdificio setPiscina(Integer piscina) {
+	public HistorialDatosEdificio setPiscina(Integer piscina) {
 		this.piscina = piscina;
 		return this;
 	}
@@ -170,7 +170,7 @@ public class DatosEdificio implements Serializable {
 		return telefono;
 	}
 
-	public DatosEdificio setTelefono(Boolean telefono) {
+	public HistorialDatosEdificio setTelefono(Boolean telefono) {
 		this.telefono = telefono;
 		return this;
 	}
@@ -179,7 +179,7 @@ public class DatosEdificio implements Serializable {
 		return propiedadHorizontal;
 	}
 
-	public DatosEdificio setPropiedadHorizontal(Boolean propiedadHorizontal) {
+	public HistorialDatosEdificio setPropiedadHorizontal(Boolean propiedadHorizontal) {
 		this.propiedadHorizontal = propiedadHorizontal;
 		return this;
 	}
@@ -188,7 +188,7 @@ public class DatosEdificio implements Serializable {
 		return aguaCorriente;
 	}
 
-	public DatosEdificio setAguaCorriente(Boolean aguaCorriente) {
+	public HistorialDatosEdificio setAguaCorriente(Boolean aguaCorriente) {
 		this.aguaCorriente = aguaCorriente;
 		return this;
 	}
@@ -197,7 +197,7 @@ public class DatosEdificio implements Serializable {
 		return cloacas;
 	}
 
-	public DatosEdificio setCloacas(Boolean cloacas) {
+	public HistorialDatosEdificio setCloacas(Boolean cloacas) {
 		this.cloacas = cloacas;
 		return this;
 	}
@@ -206,7 +206,7 @@ public class DatosEdificio implements Serializable {
 		return gasNatural;
 	}
 
-	public DatosEdificio setGasNatural(Boolean gasNatural) {
+	public HistorialDatosEdificio setGasNatural(Boolean gasNatural) {
 		this.gasNatural = gasNatural;
 		return this;
 	}
@@ -215,7 +215,7 @@ public class DatosEdificio implements Serializable {
 		return aguaCaliente;
 	}
 
-	public DatosEdificio setAguaCaliente(Boolean aguaCaliente) {
+	public HistorialDatosEdificio setAguaCaliente(Boolean aguaCaliente) {
 		this.aguaCaliente = aguaCaliente;
 		return this;
 	}
@@ -224,7 +224,7 @@ public class DatosEdificio implements Serializable {
 		return lavadero;
 	}
 
-	public DatosEdificio setLavadero(Boolean lavadero) {
+	public HistorialDatosEdificio setLavadero(Boolean lavadero) {
 		this.lavadero = lavadero;
 		return this;
 	}
@@ -233,7 +233,7 @@ public class DatosEdificio implements Serializable {
 		return pavimento;
 	}
 
-	public DatosEdificio setPavimento(Boolean pavimento) {
+	public HistorialDatosEdificio setPavimento(Boolean pavimento) {
 		this.pavimento = pavimento;
 		return this;
 	}
@@ -250,7 +250,7 @@ public class DatosEdificio implements Serializable {
 		result = prime * result + ((dormitorios == null) ? 0 : dormitorios.hashCode());
 		result = prime * result + ((garaje == null) ? 0 : garaje.hashCode());
 		result = prime * result + ((gasNatural == null) ? 0 : gasNatural.hashCode());
-		result = prime * result + ((inmueble == null) ? 0 : inmueble.hashCode());
+		result = prime * result + ((historialInmueble == null) ? 0 : historialInmueble.hashCode());
 		result = prime * result + ((lavadero == null) ? 0 : lavadero.hashCode());
 		result = prime * result + ((patio == null) ? 0 : patio.hashCode());
 		result = prime * result + ((pavimento == null) ? 0 : pavimento.hashCode());
@@ -272,13 +272,13 @@ public class DatosEdificio implements Serializable {
 		if(getClass() != obj.getClass()){
 			return false;
 		}
-		DatosEdificio other = (DatosEdificio) obj;
-		if(inmueble == null){
-			if(other.inmueble != null){
+		HistorialDatosEdificio other = (HistorialDatosEdificio) obj;
+		if(historialInmueble == null){
+			if(other.historialInmueble != null){
 				return false;
 			}
 		}
-		else if(!inmueble.equals(other.inmueble)){
+		else if(!historialInmueble.equals(other.historialInmueble)){
 			return false;
 		}
 		else{

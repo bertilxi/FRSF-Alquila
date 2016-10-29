@@ -2,7 +2,6 @@ package app.ui.controladores;
 
 import app.datos.entidades.InmuebleBuscado;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -63,8 +62,7 @@ public class InmuebleBuscadoController {
 		// TODO: falta precio y barrios
 
 		InmuebleBuscado inmuebleBuscado = new InmuebleBuscado();
-		inmuebleBuscado.setId(null)
-				.setSuperficieMin(supeficie)
+		inmuebleBuscado.setSuperficieMin(supeficie)
 				.setAntiguedadMax(antiguedad)
 				.setDormitoriosMin(dormitorios)
 				.setBañosMin(baños)

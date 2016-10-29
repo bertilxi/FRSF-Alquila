@@ -7,10 +7,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import app.datos.clases.EstadoStr;
 
+@NamedQuery(name = "obtenerEstados", query = "SELECT e FROM Estado e")
 @Entity
 @Table(name = "estado")
 public class Estado {
@@ -27,9 +29,8 @@ public class Estado {
 		super();
 	}
 
-	public Estado(Integer id, EstadoStr estado) {
+	public Estado(EstadoStr estado) {
 		super();
-		this.id = id;
 		this.estado = estado;
 	}
 
@@ -74,6 +75,9 @@ public class Estado {
 		}
 		else if(!id.equals(other.id)){
 			return false;
+		}
+		else{
+			return true;
 		}
 		if(estado != other.estado){
 			return false;

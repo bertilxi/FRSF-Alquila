@@ -6,9 +6,12 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.PropietarioService;
+import app.excepciones.EntidadExistenteConEstadoBajaException;
+import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearPropietario;
@@ -24,9 +27,39 @@ public class GestorPropietario {
 	@Resource
 	protected PropietarioService persistidorPropietario;
 
-	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException {
+	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
 
+		validarDatosCrearPropietario(propietario, errores);
+
+		Propietario propietarioAuxiliar;
+		try{
+			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
+		} catch(PersistenciaException e){
+			throw e;
+		}
+
+		if(null != propietarioAuxiliar){
+			if(propietarioAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
+				errores.add(ErrorCrearPropietario.Ya_Existe_Propietario);
+			}
+			else{
+				throw new EntidadExistenteConEstadoBajaException();
+			}
+		}
+
+		if(errores.isEmpty()){
+			try{
+				persistidorPropietario.guardarPropietario(propietario);
+			} catch(PersistenciaException e){
+				throw e;
+			}
+		}
+
+		return new ResultadoCrearPropietario(errores.toArray(new ErrorCrearPropietario[0]));
+	}
+
+	private void validarDatosCrearPropietario(Propietario propietario, ArrayList<ErrorCrearPropietario> errores) {
 		if(!ValidadorFormato.validarNombre(propietario.getNombre())){
 			errores.add(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
 		}
@@ -50,6 +83,12 @@ public class GestorPropietario {
 		if(!ValidadorFormato.validarDireccion(propietario.getDireccion())){
 			errores.add(ErrorCrearPropietario.Formato_Direccion_Incorrecto);
 		}
+	}
+
+	public ResultadoModificarPropietario modificarPropietario(Propietario propietario) throws PersistenciaException {
+		ArrayList<ErrorModificarPropietario> errores = new ArrayList<>();
+
+		validarDatosModificarPropietario(propietario, errores);
 
 		Propietario propietarioAuxiliar;
 		try{
@@ -57,25 +96,22 @@ public class GestorPropietario {
 		} catch(PersistenciaException e){
 			throw e;
 		}
-
-		if(propietarioAuxiliar != null){
-			errores.add(ErrorCrearPropietario.Ya_Existe_Propietario);
+		if(null != propietarioAuxiliar && !propietario.equals(propietarioAuxiliar)){
+			errores.add(ErrorModificarPropietario.Ya_Existe_Propietario);
 		}
 
 		if(errores.isEmpty()){
 			try{
-				persistidorPropietario.guardarPropietario(propietario);
+				persistidorPropietario.modificarPropietario(propietario);
 			} catch(PersistenciaException e){
 				throw e;
 			}
 		}
 
-		return new ResultadoCrearPropietario(errores.toArray(new ErrorCrearPropietario[0]));
+		return new ResultadoModificarPropietario(errores.toArray(new ErrorModificarPropietario[0]));
 	}
 
-	public ResultadoModificarPropietario modificarPropietario(Propietario propietario) throws PersistenciaException {
-		ArrayList<ErrorModificarPropietario> errores = new ArrayList<>();
-
+	private void validarDatosModificarPropietario(Propietario propietario, ArrayList<ErrorModificarPropietario> errores) {
 		if(!ValidadorFormato.validarNombre(propietario.getNombre())){
 			errores.add(ErrorModificarPropietario.Formato_Nombre_Incorrecto);
 		}
@@ -99,26 +135,6 @@ public class GestorPropietario {
 		if(!ValidadorFormato.validarDireccion(propietario.getDireccion())){
 			errores.add(ErrorModificarPropietario.Formato_Direccion_Incorrecto);
 		}
-
-		Propietario propietarioAuxiliar;
-		try{
-			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
-		} catch(PersistenciaException e){
-			throw e;
-		}
-		if(null != propietarioAuxiliar && !propietario.equals(propietarioAuxiliar)){
-			errores.add(ErrorModificarPropietario.Ya_Existe_Propietario);
-		}
-
-		if(errores.isEmpty()){
-			try{
-				persistidorPropietario.modificarPropietario(propietario);
-			} catch(PersistenciaException e){
-				throw e;
-			}
-		}
-
-		return new ResultadoModificarPropietario(errores.toArray(new ErrorModificarPropietario[0]));
 	}
 
 	public ResultadoEliminarPropietario eliminarPropietario(Propietario propietario) throws PersistenciaException {

@@ -1,25 +1,34 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.Locale;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 
-import app.datos.entidades.*;
+import app.datos.entidades.Barrio;
+import app.datos.entidades.Calle;
+import app.datos.entidades.Direccion;
+import app.datos.entidades.Localidad;
+import app.datos.entidades.Pais;
+import app.datos.entidades.Propietario;
+import app.datos.entidades.Provincia;
+import app.datos.entidades.TipoDocumento;
+import app.excepciones.EntidadExistenteConEstadoBajaException;
+import app.excepciones.GestionException;
+import app.excepciones.ManejadorExcepciones;
+import app.excepciones.PersistenciaException;
 import app.logica.ValidadorFormato;
+import app.logica.gestores.GestorDatos;
+import app.logica.gestores.GestorPropietario;
 import app.logica.resultados.ResultadoCrearPropietario;
+import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyEvent;
 
 public class AltaPropietarioController extends BaseController {
@@ -43,6 +52,8 @@ public class AltaPropietarioController extends BaseController {
 	@FXML
 	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
 	@FXML
+	private ComboBox<Pais> comboBoxPais;
+	@FXML
 	private ComboBox<Provincia> comboBoxProvincia;
 	@FXML
 	private ComboBox<Localidad> comboBoxLocalidad;
@@ -51,32 +62,36 @@ public class AltaPropietarioController extends BaseController {
 	@FXML
 	private ComboBox<Barrio> comboBoxBarrio;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
+	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
-		textFieldNombre.addEventFilter(KeyEvent.KEY_TYPED, validation());
+	private ArrayList<Localidad> listaLocalidades;
 
-	}
+	private ArrayList<Provincia> listaProvincias;
+
+	private ArrayList<Pais> listaPaises;
+
+	private GestorDatos gestorDatos;
+
+	private GestorPropietario gestorPropietario;
 
 	public EventHandler<KeyEvent> validation() {
 		return e -> {
 
-            String text = textFieldNombre.getText().trim();
-            Boolean match = ValidadorFormato.validarNombre(text);
+			String text = textFieldNombre.getText().trim();
+			Boolean match = ValidadorFormato.validarNombre(text);
 
-            if(text.length() >= 30){
+			if(text.length() >= 30){
 				e.consume();
 			}
 
-            if (!match){
-                e.consume();
-            }
-        };
+			if(!match){
+				e.consume();
+			}
+		};
 	}
 
 	@FXML
-	public ResultadoCrearPropietario acceptAction() {
+	public void acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -89,7 +104,6 @@ public class AltaPropietarioController extends BaseController {
 		String telefono = textFieldTelefono.getText().trim();
 		String correoElectronico = textFieldCorreoElectronico.getText().trim();
 
-		Provincia provincia = comboBoxProvincia.getValue();
 		Localidad localidad = comboBoxLocalidad.getValue();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 		Barrio barrio = comboBoxBarrio.getValue();
@@ -112,13 +126,12 @@ public class AltaPropietarioController extends BaseController {
 		}
 
 		if(!error.toString().isEmpty()){
-			VentanaError ventanaError = new VentanaError("Revise sus campos", error.toString());
+			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
 		}
 		else{
 
 			Direccion direccion = new Direccion();
-			direccion.setId(null)
-					.setNumero(alturaCalle)
+			direccion.setNumero(alturaCalle)
 					.setCalle(calle)
 					.setBarrio(barrio)
 					.setPiso(piso)
@@ -126,23 +139,103 @@ public class AltaPropietarioController extends BaseController {
 					.setLocalidad(localidad);
 
 			Propietario propietario = new Propietario();
-			propietario.setId(null)
-					.setNombre(nombre)
+			propietario.setNombre(nombre)
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)
 					.setTelefono(telefono)
 					.setEmail(correoElectronico)
-					.setDireccion(direccion)
-					.setInmuebles(null);
+					.setDireccion(direccion);
 
-			VentanaConfirmacion ventanaConfirmacion = new VentanaConfirmacion("Hey", "Esto no anda");
+			try{
+				ResultadoCrearPropietario resultado = gestorPropietario.crearPropietario(propietario);
+				if(resultado.hayErrores()){
+					StringBuilder stringErrores = new StringBuilder();
+					for(ErrorCrearPropietario err: resultado.getErrores()){
+						switch(err) {
+						case Formato_Nombre_Incorrecto:
+							stringErrores.append("Formato de nombre incorrecto.\n");
+							break;
+						case Formato_Apellido_Incorrecto:
+							stringErrores.append("Formato de apellido incorrecto.\n");
+							break;
+						case Formato_Telefono_Incorrecto:
+							stringErrores.append("Formato de teléfono incorrecto.\n");
+							break;
+						case Formato_Documento_Incorrecto:
+							stringErrores.append("Tipo y formato de documento incorrecto.\n");
+							break;
+						case Formato_Email_Incorrecto:
+							stringErrores.append("Formato de email incorrecto.\n");
+							break;
+						case Formato_Direccion_Incorrecto:
+							stringErrores.append("Formato de dirección incorrecto.\n");
+							break;
+						case Ya_Existe_Propietario:
+							stringErrores.append("Ya existe un cliente con ese tipo y número de documento.\n");
+							break;
+						}
+					}
+					new VentanaError("No se pudo crear el propietario", stringErrores.toString(), null); //falta el stage
+				}
+			} catch(GestionException e){
+				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
+					VentanaConfirmacion ventana = new VentanaConfirmacion("El propietario ya existe", "El propietario ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
+					if(ventana.acepta()){
+						//TODO mandar a la vista modificar propietario
+					}
+				}
+			} catch(PersistenciaException e){
+				ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			}
 		}
-		return null;
 	}
 
 	@FXML
 	public void cancelAction(ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide();
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		super.initialize(location, resources);
+		listaLocalidades = new ArrayList<>();
+		listaProvincias = new ArrayList<>();
+		listaPaises = new ArrayList<>();
+		listaTiposDeDocumento = new ArrayList<>();
+		try{
+			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+		} catch(PersistenciaException e){
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
+		try{
+			listaPaises = gestorDatos.obtenerPaises();
+		} catch(PersistenciaException e){
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxPais.getItems().addAll(listaPaises);
+		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
+		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
+	}
+
+	private void actualizarLocalidades(Provincia provincia) {
+		try{
+			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
+		} catch(PersistenciaException e){
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxLocalidad.getItems().addAll(listaLocalidades);
+	}
+
+	private void actualizarProvincias(Pais pais) {
+		try{
+			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
+		} catch(PersistenciaException e){
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}
 }

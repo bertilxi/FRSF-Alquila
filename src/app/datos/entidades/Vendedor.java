@@ -1,6 +1,7 @@
 package app.datos.entidades;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,7 +47,7 @@ public class Vendedor {
 
 	//@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "vendedor")
 	@Transient
-	private ArrayList<Venta> ventas;
+	private Set<Venta> ventas;
 
 	// baja
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -55,10 +56,10 @@ public class Vendedor {
 
 	public Vendedor() {
 		super();
-		this.ventas = new ArrayList<>();
+		this.ventas = new HashSet<>();
 	}
 
-	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, ArrayList<Venta> ventas, Estado estado) {
+	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, Estado estado) {
 		this();
 		this.id = id;
 		this.nombre = nombre;
@@ -67,17 +68,11 @@ public class Vendedor {
 		this.password = password;
 		this.salt = salt;
 		this.tipoDocumento = tipoDocumento;
-		this.ventas = ventas;
 		this.estado = estado;
 	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public Vendedor setId(Integer id) {
-		this.id = id;
-		return this;
 	}
 
 	public String getNombre() {
@@ -134,13 +129,8 @@ public class Vendedor {
 		return this;
 	}
 
-	public ArrayList<Venta> getVentas() {
+	public Set<Venta> getVentas() {
 		return ventas;
-	}
-
-	public Vendedor setVentas(ArrayList<Venta> ventas) {
-		this.ventas = ventas;
-		return this;
 	}
 
 	public Vendedor setEstado(Estado estado) {

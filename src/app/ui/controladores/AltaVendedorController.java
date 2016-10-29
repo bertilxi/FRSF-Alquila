@@ -9,12 +9,14 @@ import javax.annotation.Resource;
 
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
+import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
+import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -53,45 +55,43 @@ public class AltaVendedorController extends BaseController {
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
-		char[] password1 = passwordFieldContraseña.getText().toCharArray();
-		char[] password2 = passwordFieldRepiteContraseña.getText().toCharArray();
+		String password1 = passwordFieldContraseña.getText();
+		String password2 = passwordFieldRepiteContraseña.getText();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
 		if(nombre.isEmpty()){
-			error.append("Inserte un nombre").append("\r\n ");
+			error.append("Inserte un nombre").append("\r\n");
 		}
 		if(apellido.isEmpty()){
-			error.append("Inserte un apellido").append("\r\n ");
+			error.append("Inserte un apellido").append("\r\n");
 		}
 
 		if(tipoDoc == null){
-			error.append("Elija un tipo de documento").append("\r\n ");
+			error.append("Elija un tipo de documento").append("\r\n");
 		}
 
 		if(numeroDocumento.isEmpty()){
-			error.append("Inserte un numero de documento").append("\r\n ");
+			error.append("Inserte un numero de documento").append("\r\n");
 		}
-		if(password1.length == 0 && password2.length == 0){
-			error.append("Inserte su contraseña").append("\r\n ");
+
+		if(password1.isEmpty() && password2.isEmpty()){
+			error.append("Inserte su contraseña").append("\r\n");
 		}
-		if(password1.length != 0 && password2.length == 0){
-			error.append("Inserte su contraseña nuevamente").append("\r\n ");
+
+		if(!password1.isEmpty() && password2.isEmpty()){
+			error.append("Inserte su contraseña nuevamente").append("\r\n");
 		}
-		/*
-		 * if(!password1.equals(password2)){
-		 * error.append("Sus contraseñas no coinciden, Ingreselas nuevamente").append("\r\n ");
-		 * passwordFieldContraseña.setText("");
-		 * passwordFieldRepiteContraseña.setText("");
-		 * }
-		 */
+
+		if(!password1.equals(password2)){
+			error.append("Sus contraseñas no coinciden, Ingreselas nuevamente").append("\r\n ");
+		}
 
 		if(!error.toString().isEmpty()){
 			new VentanaError("Revise sus campos", error.toString());
 		}
 		else{
 			Vendedor vendedor = new Vendedor();
-			vendedor.setId(null)
-					.setNombre(nombre)
+			vendedor.setNombre(nombre)
 					.setApellido(apellido)
 					.setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc)
@@ -104,16 +104,16 @@ public class AltaVendedorController extends BaseController {
 				error.delete(0, error.length());
 				List<ErrorCrearVendedor> listaErrores = resultadoCrearVendedor.getErrores();
 				if(listaErrores.contains(ErrorCrearVendedor.Formato_Nombre_Incorrecto)){
-					error.append("Nombre Incorrecto").append("\n ");
+					error.append("Nombre Incorrecto").append("\r\n");
 				}
 				if(listaErrores.contains(ErrorCrearVendedor.Formato_Apellido_Incorrecto)){
-					error.append("Apellido Incorrecto").append("\r\n ");
+					error.append("Apellido Incorrecto").append("\r\n");
 				}
 				if(listaErrores.contains(ErrorCrearVendedor.Formato_Documento_Incorrecto)){
-					error.append("Documento Incorrecto").append("\r\n ");
+					error.append("Documento Incorrecto").append("\r\n");
 				}
 				if(listaErrores.contains(ErrorCrearVendedor.Ya_Existe_Vendedor)){
-					error.append("Ya existe un vendedor registrado con ese documento").append("\r\n ");
+					error.append("Ya existe un vendedor registrado con ese documento").append("\r\n");
 				}
 
 				if(!error.toString().isEmpty()){
@@ -121,9 +121,16 @@ public class AltaVendedorController extends BaseController {
 				}
 
 			} catch(PersistenciaException e){
-
+				new VentanaError("Ha ocurrido un error en la base de datos.", "Intente nuevamente");
+			} catch(GestionException e){
+				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
+					VentanaConfirmacion ventana = new VentanaConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
+					if(ventana.acepta()){
+						//TODO mandar a la vista modificar cliente
+					}
+				}
 			} catch(Exception e){
-				// TODO Auto-generated catch block
+				new VentanaError("Ha ocurrido un error inesperado", "Intente nuevamente");
 				e.printStackTrace();
 			}
 			return resultadoCrearVendedor;

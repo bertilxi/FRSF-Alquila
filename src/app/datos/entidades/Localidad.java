@@ -17,6 +17,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "localidad", uniqueConstraints = @UniqueConstraint(name = "localidad_nombre_idprovincia_uk", columnNames = { "nombre", "idprovincia" }))
 public class Localidad {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
@@ -33,9 +34,8 @@ public class Localidad {
 		super();
 	}
 
-	public Localidad(Integer id, String nombre, Provincia provincia) {
+	public Localidad(String nombre, Provincia provincia) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.provincia = provincia;
 	}

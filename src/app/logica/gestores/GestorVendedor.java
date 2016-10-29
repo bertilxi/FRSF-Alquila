@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import app.datos.clases.DatosLogin;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroVendedor;
+import app.datos.entidades.Estado;
 import app.datos.entidades.Vendedor;
+import app.datos.servicios.DatosService;
 import app.datos.servicios.VendedorService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
@@ -28,6 +30,8 @@ public class GestorVendedor {
 
 	@Resource
 	protected VendedorService persistidorVendedor;
+
+	@Resource DatosService persistidorDatos;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
 		throw new NotYetImplementedException();
@@ -59,6 +63,12 @@ public class GestorVendedor {
 		}
 
 		if(errores.isEmpty()){
+			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+			for(Estado e: estados) {
+				if(e.getEstado().equals(EstadoStr.ALTA)) {
+					vendedor.setEstado(e);
+				}
+			}
 			persistidorVendedor.guardarVendedor(vendedor);
 		}
 
@@ -94,5 +104,14 @@ public class GestorVendedor {
 
 	public ResultadoEliminarVendedor eliminarVendedor() throws PersistenciaException {
 		throw new NotYetImplementedException();
+	}
+
+	public void darDeAlta(Vendedor vendedor) throws PersistenciaException {
+		ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+		for(Estado e: estados) {
+			if(e.getEstado().equals(EstadoStr.ALTA)) {
+				vendedor.setEstado(e);
+			}
+		}
 	}
 }

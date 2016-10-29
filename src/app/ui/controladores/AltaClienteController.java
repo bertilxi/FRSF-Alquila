@@ -51,9 +51,6 @@ public class AltaClienteController extends BaseController {
 	private TextField textFieldTelefono;
 
 	@FXML
-	private TextField textFieldEmail;
-
-	@FXML
 	private ComboBox<Pais> comboBoxPais;
 
 	@FXML
@@ -63,22 +60,12 @@ public class AltaClienteController extends BaseController {
 	private ComboBox<Localidad> comboBoxLocalidad;
 
 	@FXML
-	private TextField textFieldBarrio;
-
-	@FXML
-	private ComboBox<TipoInmueble> comboBoxTipoInmueble;
-
-	@FXML
 	private TextField textFieldMonto;
 
 	@FXML
 	private Button buttonCargatInmueble;
 
-	// TODO: falta un comboBox barrios
-
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
-
-	private ArrayList<TipoInmueble> listaTiposInmueble;
 
 	private ArrayList<Localidad> listaLocalidades;
 
@@ -99,14 +86,7 @@ public class AltaClienteController extends BaseController {
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
 		String telefono = textFieldTelefono.getText().trim();
-		String correo = textFieldEmail.getText().trim();
-		String barrio = textFieldBarrio.getText().trim();
-		String monto = textFieldMonto.getText().trim();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
-		TipoInmueble tipoInmueble = comboBoxTipoInmueble.getValue();
-		Pais pais = comboBoxPais.getValue();
-		Provincia provincia = comboBoxProvincia.getValue();
-		Localidad localidad = comboBoxLocalidad.getValue();
 
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\r\n");
@@ -123,34 +103,17 @@ public class AltaClienteController extends BaseController {
 		if(telefono.isEmpty()){
 			error.append("Inserte un telefono").append("\r\n");
 		}
-		if(correo.isEmpty()){
-			error.append("Inserte un correo").append("\r\n");
-		}
-		if(barrio.isEmpty()){
-			error.append("Inserte un barrio").append("\r\n");
-		}
 
 		if(!error.toString().isEmpty()){
-			VentanaError ventanaError = new VentanaError("Revise sus campos", error.toString());
+			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
 		}
 		else{
 			Cliente cliente = new Cliente();
-			cliente.setId(null)
-					// TODO completar esto
-					//.setEstado(         alta           )
-					.setNombre(nombre)
+			cliente.setNombre(nombre)
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)
-					.setTelefono(telefono)
-			//.setMonto(monto)
-			//.setTipoInmueble(tipoInmueble)
-			//.setLocalidad(localidad)
-			//.setProvincia(provincia)
-			//.setPais(pais)
-			//.setCorreo(correo)
-			//.setBarrio(barrio)
-			;
+					.setTelefono(telefono);
 
 			try{
 				ResultadoCrearCliente resultado = gestorCliente.crearCliente(cliente);
@@ -192,7 +155,7 @@ public class AltaClienteController extends BaseController {
 /*
 	public void cargarInmueble(ActionEvent event) throws IOException {
 
-	private void mostrarErrores(ResultadoCrearCliente resultado) {
+	public void cargarInmueble(ActionEvent event) throws IOException {
 		throw new NotYetImplementedException();
 	}
 */
@@ -222,57 +185,31 @@ public class AltaClienteController extends BaseController {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
-        ValidadorFormato.setValidadorNombre(textFieldNombre);
-        ValidadorFormato.setValidadorNumeroDocumento(textFieldNumeroDocumento);
-        textFieldEmail.textProperty().addListener((observable, oldValue, newValue) -> {
+		listaLocalidades = new ArrayList<Localidad>();
+		listaProvincias = new ArrayList<Provincia>();
+		listaPaises = new ArrayList<Pais>();
+		listaTiposDeDocumento = new ArrayList<TipoDocumento>();
 
-            if(!ValidadorFormato.validarEmailVista(newValue)){
-                textFieldEmail.setText(oldValue);
-            }
+		try {
+			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+		} catch (PersistenciaException e) {
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 
-        });
+		try {
+			listaPaises = gestorDatos.obtenerPaises();
+		} catch (PersistenciaException e) {
+			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		}
+		comboBoxPais.getItems().addAll(listaPaises);
 
+		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
+
+		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
 	}
-
-	/*
-	 * @Override
-	 * public void initialize(URL location, ResourceBundle resources) {
-	 * super.initialize(location, resources);
-	 *
-	 * listaLocalidades = new ArrayList<Localidad>();
-	 * listaProvincias = new ArrayList<Provincia>();
-	 * listaPaises = new ArrayList<Pais>();
-	 * listaTiposDeDocumento = new ArrayList<TipoDocumento>();
-	 * listaTiposInmueble = new ArrayList<TipoInmueble>();
-	 *
-	 * try {
-	 * listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
-	 * } catch (PersistenciaException e) {
-	 * ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
-	 * }
-	 * comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
-	 *
-	 * try {
-	 * listaTiposInmueble = gestorDatos.obtenerTiposInmueble();
-	 * } catch (PersistenciaException e) {
-	 * ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
-	 * }
-	 * comboBoxTipoInmueble.getItems().addAll(listaTiposInmueble);
-	 *
-	 * try {
-	 * listaPaises = gestorDatos.obtenerPaises();
-	 * } catch (PersistenciaException e) {
-	 * ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
-	 * }
-	 * comboBoxPais.getItems().addAll(listaPaises);
-	 *
-	 * comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
-	 * (observable, oldValue, newValue) -> actualizarProvincias(newValue));
-	 *
-	 * comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
-	 * (observable, oldValue, newValue) -> actualizarLocalidades(newValue));
-	 * }
-	 */
 
 	private void actualizarLocalidades(Provincia provincia) {
 		try{
