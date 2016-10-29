@@ -139,8 +139,7 @@ public class AltaPropietarioController extends BaseController {
 					.setLocalidad(localidad);
 
 			Propietario propietario = new Propietario();
-			propietario.setId(null)
-					.setNombre(nombre)
+			propietario.setNombre(nombre)
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)

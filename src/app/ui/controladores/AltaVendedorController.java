@@ -91,8 +91,7 @@ public class AltaVendedorController extends BaseController {
 		}
 		else{
 			Vendedor vendedor = new Vendedor();
-			vendedor.setId(null)
-					.setNombre(nombre)
+			vendedor.setNombre(nombre)
 					.setApellido(apellido)
 					.setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc)
