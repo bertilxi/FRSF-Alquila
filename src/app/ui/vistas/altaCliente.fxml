@@ -100,7 +100,7 @@
                        promptText="Número de Documento" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
             <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Teléfono"
                        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-            <TextField fx:id="textFieldCorreo" maxHeight="1000.0" maxWidth="1000.0"
+            <TextField fx:id="textFieldEmail" maxHeight="1000.0" maxWidth="1000.0"
                        promptText="Correo electrónico" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
             <TextField fx:id="textFieldBarrio" maxHeight="1000.0" maxWidth="1000.0" promptText="Barrio"
                        GridPane.columnIndex="3" GridPane.rowIndex="5"/>

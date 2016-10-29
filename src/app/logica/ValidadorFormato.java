@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import app.datos.entidades.Direccion;
 import app.datos.entidades.TipoDocumento;
+import javafx.scene.control.TextField;
 
 @Service
 public class ValidadorFormato {
@@ -102,5 +103,73 @@ public class ValidadorFormato {
 	public static Boolean validarLocalidad(String localidad) {
 		return validarNombre(localidad);
 	}
+
+	public static Boolean validarNombreVista(String nombre) {
+		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{0,30}");
+		return pat.matcher(nombre).matches();
+	}
+
+    public static Boolean validarNumeroDocumentoVista(String nombre) {
+        Pattern pat = Pattern.compile("[0-9]{0,8}");
+        return pat.matcher(nombre).matches();
+    }
+    public static Boolean validarNumeroVista(String nombre) {
+        Pattern pat = Pattern.compile("[0-9]{0,30}");
+        return pat.matcher(nombre).matches();
+    }
+
+	public static Boolean validarEmailVista(String correo) {
+		Pattern pat = Pattern.compile("[([A-Za-z]{0,30})([\\\\@]{0,1})([A-Za-z]{0,30})([\\\\.]{0,1})([A-Za-z]{0,30})([\\\\.]{0,1})([A-Za-z]{0,30})]{0,30}");
+		return pat.matcher(correo).matches();
+	}
+
+	public static void setValidadorNombre(TextField textField) {
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+			if(!validarNombreVista(newValue)){
+				textField.setText(oldValue);
+			}
+
+		});
+	}
+
+	public static void setValidadorNumeroDocumento(TextField textField) {
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+			if(!validarNumeroDocumentoVista(newValue)){
+				textField.setText(oldValue);
+			}
+
+		});
+	}
+
+	public static void setValidadorEmail(TextField textField) {
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+			if(!validarEmailVista(newValue)){
+				textField.setText(oldValue);
+			}
+
+		});
+	}
+
+    public static void setValidadorApellido(TextField textField){
+        setValidadorNombre(textField);
+    }
+    public static void setValidadorTelefono(TextField textField){
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if(!validarNumeroVista(newValue)){
+                textField.setText(oldValue);
+            }
+
+        });
+    }
+    public static void setValidadorDireccion(TextField textField){
+        setValidadorNombre(textField);
+    }
+    public static void setValidadorLocalidad(TextField textField){
+        setValidadorNombre(textField);
+    }
 
 }
