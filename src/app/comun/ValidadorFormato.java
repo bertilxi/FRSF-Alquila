@@ -1,4 +1,4 @@
-package app.logica;
+package app.comun;
 
 import java.util.regex.Pattern;
 

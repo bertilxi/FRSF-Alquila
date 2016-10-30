@@ -6,17 +6,19 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import app.logica.ValidadorFormato;
-
-import app.datos.entidades.*;
+import app.datos.entidades.Cliente;
+import app.datos.entidades.Localidad;
+import app.datos.entidades.Pais;
+import app.datos.entidades.Provincia;
+import app.datos.entidades.TipoDocumento;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
-import app.excepciones.ManejadorExcepciones;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
+import app.ui.PresentadorExcepciones;
 import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
@@ -148,17 +150,18 @@ public class AltaClienteController extends BaseController {
 					}
 				}
 			} catch(PersistenciaException e){
-				ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 			}
 		}
 	}
-/*
-	public void cargarInmueble(ActionEvent event) throws IOException {
 
-	public void cargarInmueble(ActionEvent event) throws IOException {
-		throw new NotYetImplementedException();
-	}
-*/
+	/*
+	 * public void cargarInmueble(ActionEvent event) throws IOException {
+	 * 
+	 * public void cargarInmueble(ActionEvent event) throws IOException {
+	 * throw new NotYetImplementedException();
+	 * }
+	 */
 	public void cargarInmueble() throws IOException {
 		Stage stage = new Stage();
 		URL location = getClass().getResource("/app/ui/vistas/inmuebleBuscado.fxml");
@@ -185,22 +188,22 @@ public class AltaClienteController extends BaseController {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
-		listaLocalidades = new ArrayList<Localidad>();
-		listaProvincias = new ArrayList<Provincia>();
-		listaPaises = new ArrayList<Pais>();
-		listaTiposDeDocumento = new ArrayList<TipoDocumento>();
+		listaLocalidades = new ArrayList<>();
+		listaProvincias = new ArrayList<>();
+		listaPaises = new ArrayList<>();
+		listaTiposDeDocumento = new ArrayList<>();
 
-		try {
+		try{
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
-		} catch (PersistenciaException e) {
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		} catch(PersistenciaException e){
+			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 
-		try {
+		try{
 			listaPaises = gestorDatos.obtenerPaises();
-		} catch (PersistenciaException e) {
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+		} catch(PersistenciaException e){
+			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxPais.getItems().addAll(listaPaises);
 
@@ -215,7 +218,7 @@ public class AltaClienteController extends BaseController {
 		try{
 			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
 		} catch(PersistenciaException e){
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
@@ -224,7 +227,7 @@ public class AltaClienteController extends BaseController {
 		try{
 			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
 		} catch(PersistenciaException e){
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}

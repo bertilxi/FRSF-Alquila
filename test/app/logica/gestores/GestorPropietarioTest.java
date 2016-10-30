@@ -10,6 +10,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
+import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
 import app.datos.clases.TipoDocumentoStr;
@@ -22,7 +23,6 @@ import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.datos.servicios.PropietarioService;
-import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.logica.resultados.ResultadoModificarPropietario;

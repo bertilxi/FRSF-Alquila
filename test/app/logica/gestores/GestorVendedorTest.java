@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
 
+import app.comun.EncriptadorPassword;
 import app.datos.clases.DatosLogin;
 import app.datos.clases.FiltroVendedor;
 import app.datos.clases.TipoDocumentoStr;
@@ -16,7 +17,6 @@ import app.datos.servicios.VendedorService;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
-import app.ui.Contra;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -26,8 +26,8 @@ public class GestorVendedorTest {
 	@Test
 	@Parameters
 	public void testAutenticarVendedor(TipoDocumento tipoDocumento, String numDoc, String contra, ResultadoAutenticacion resultadoLogica, Throwable excepcion) throws Exception {
-		String sal = Contra.generarSal();
-		Vendedor vendedor = new Vendedor().setTipoDocumento(tipoDocumento).setNumeroDocumento(numDoc).setPassword(Contra.encriptarMD5(contra.toCharArray(), sal)).setSalt(sal);
+		String sal = EncriptadorPassword.generarSal();
+		Vendedor vendedor = new Vendedor().setTipoDocumento(tipoDocumento).setNumeroDocumento(numDoc).setPassword(EncriptadorPassword.encriptarMD5(contra.toCharArray(), sal)).setSalt(sal);
 		VendedorService vendedorServiceMock = new VendedorService() {
 			@Override
 			public void guardarVendedor(Vendedor vendedor) throws PersistenciaException {

@@ -1,5 +1,6 @@
 package app.logica.gestores;
 
+import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Estado;
@@ -15,7 +16,6 @@ import org.powermock.modules.junit4.rule.PowerMockRule;
 import app.datos.clases.FiltroCliente;
 import app.datos.entidades.Cliente;
 import app.datos.servicios.ClienteService;
-import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 import app.logica.resultados.ResultadoModificarCliente;

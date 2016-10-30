@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import app.comun.ValidadorFormato;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Direccion;
@@ -14,13 +15,12 @@ import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
-import app.excepciones.ManejadorExcepciones;
 import app.excepciones.PersistenciaException;
-import app.logica.ValidadorFormato;
 import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorPropietario;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
+import app.ui.PresentadorExcepciones;
 import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
@@ -186,7 +186,7 @@ public class AltaPropietarioController extends BaseController {
 					}
 				}
 			} catch(PersistenciaException e){
-				ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 			}
 		}
 	}
@@ -206,13 +206,13 @@ public class AltaPropietarioController extends BaseController {
 		try{
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 		try{
 			listaPaises = gestorDatos.obtenerPaises();
 		} catch(PersistenciaException e){
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxPais.getItems().addAll(listaPaises);
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
@@ -225,7 +225,7 @@ public class AltaPropietarioController extends BaseController {
 		try{
 			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
 		} catch(PersistenciaException e){
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
@@ -234,7 +234,7 @@ public class AltaPropietarioController extends BaseController {
 		try{
 			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
 		} catch(PersistenciaException e){
-			ManejadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}

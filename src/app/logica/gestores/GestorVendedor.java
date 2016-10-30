@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
+import app.comun.ValidadorFormato;
 import app.datos.clases.DatosLogin;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroVendedor;
@@ -17,7 +18,6 @@ import app.datos.servicios.VendedorService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
-import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;

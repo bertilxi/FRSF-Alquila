@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Propietario;
@@ -13,7 +14,6 @@ import app.datos.servicios.PropietarioService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
-import app.logica.ValidadorFormato;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.logica.resultados.ResultadoEliminarPropietario;

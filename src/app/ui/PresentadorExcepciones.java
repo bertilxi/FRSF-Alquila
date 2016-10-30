@@ -1,10 +1,10 @@
-package app.excepciones;
+package app.ui;
 
 import app.ui.componentes.VentanaErrorExcepcion;
 import app.ui.componentes.VentanaErrorExcepcionInesperada;
 import javafx.stage.Window;
 
-public abstract class ManejadorExcepciones {
+public abstract class PresentadorExcepciones {
     public static void presentarExcepcion(Exception e, Window w) {
         e.printStackTrace();
         new VentanaErrorExcepcion(e.getMessage(), w);

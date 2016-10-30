@@ -3,8 +3,14 @@ package app.ui;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import app.logica.CoordinadorJavaFX;
 import app.ui.controladores.WindowTitleController;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
@@ -14,7 +20,16 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
+	private CoordinadorJavaFX coordinador;
+	private ApplicationContext appContext;
+
 	public static void main(String[] args) {
+		//Ocultar logs
+		java.util.Enumeration<String> loggers = java.util.logging.LogManager.getLogManager().getLoggerNames();
+		while(loggers.hasMoreElements()){
+			String log = loggers.nextElement();
+			java.util.logging.Logger.getLogger(log).setLevel(java.util.logging.Level.WARNING);
+		}
 		launch(args);
 	}
 
@@ -36,7 +51,7 @@ public class Main extends Application {
 			controller.controlerPassing(primaryStage);
 
 			primaryStage.show();
-
+			iniciarHibernate();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -44,5 +59,37 @@ public class Main extends Application {
 
 	public FXMLLoader createFXMLLoader(URL location) {
 		return new FXMLLoader(location, null, new JavaFXBuilderFactory(), null, Charset.forName(FXMLLoader.DEFAULT_CHARSET_NAME));
+	}
+
+	private void iniciarHibernate() {
+		//Crear tarea para iniciar hibernate y el coordinador de la aplicacion
+		Task<Boolean> task = new Task<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+				coordinador = appContext.getBean(CoordinadorJavaFX.class);
+				return true;
+			}
+		};
+
+		//Si falla, informa al usuario del error y cierra la aplicacion
+		task.setOnFailed(
+				(event) -> {
+					try{
+						throw task.getException();
+					} catch(Throwable e){
+						e.printStackTrace();
+						if(appContext != null){
+							SessionFactory sessionFact = (SessionFactory) appContext.getBean("sessionFactory");
+							sessionFact.close();
+						}
+						System.exit(1);
+					}
+				});
+
+		//Iniciar tarea
+		Thread hiloHibernate = new Thread(task);
+		hiloHibernate.setDaemon(false);
+		hiloHibernate.start();
 	}
 }

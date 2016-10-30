@@ -1,11 +1,11 @@
-package app.logica.gestores;
+package app.comun;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import app.logica.ValidadorFormato;
+import app.comun.ValidadorFormato;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 

@@ -5,11 +5,11 @@ import java.util.Set;
 
 import app.datos.clases.DatosLogin;
 import app.datos.entidades.TipoDocumento;
-import app.excepciones.ManejadorExcepciones;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
+import app.ui.PresentadorExcepciones;
 import app.ui.componentes.VentanaError;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
@@ -66,12 +66,12 @@ public class LoginController extends WindowTitleController {
 			resultado = coordinador.autenticarVendedor(datos);
 		} catch(PersistenciaException e){
 			if(!desatendido){
-				ManejadorExcepciones.presentarExcepcion(e, null); //apilador.getStage()
+				PresentadorExcepciones.presentarExcepcion(e, null); //apilador.getStage()
 			}
 			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
 		} catch(Exception e){
 			if(!desatendido){
-				ManejadorExcepciones.presentarExcepcionInesperada(e, null); //apilador.getStage()
+				PresentadorExcepciones.presentarExcepcionInesperada(e, null); //apilador.getStage()
 			}
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
