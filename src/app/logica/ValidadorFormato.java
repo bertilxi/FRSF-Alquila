@@ -28,10 +28,10 @@ public class ValidadorFormato {
 		case LE:
 			pat = Pattern.compile("[0-9\\-]{0,20}");
 			break;
-		case Pasaporte:
+		case PASAPORTE:
 			pat = Pattern.compile("[0-9\\-]{0,20}");
 			break;
-		case CedulaExtranjera:
+		case CEDULA_EXTRANJERA:
 			pat = Pattern.compile("[0-9\\-]{0,20}");
 			break;
 		default:

@@ -1,5 +1,5 @@
 package app.datos.clases;
 
 public enum TipoDocumentoStr {
-    DNI, LC, LE, Pasaporte, CedulaExtranjera
+    DNI, LC, LE, PASAPORTE, CEDULA_EXTRANJERA
 }
