@@ -96,6 +96,14 @@ public class GestorVendedor {
 		}
 
 		if(errores.isEmpty()){
+			if(vendedor.getEstado().getEstado().equals(EstadoStr.BAJA)) {
+				ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+				for(Estado e: estados) {
+					if(e.getEstado().equals(EstadoStr.ALTA)) {
+						vendedor.setEstado(e);
+					}
+				}
+			}
 			persistidorVendedor.modificarVendedor(vendedor);
 		}
 
@@ -104,14 +112,5 @@ public class GestorVendedor {
 
 	public ResultadoEliminarVendedor eliminarVendedor() throws PersistenciaException {
 		throw new NotYetImplementedException();
-	}
-
-	public void darDeAlta(Vendedor vendedor) throws PersistenciaException {
-		ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
-		for(Estado e: estados) {
-			if(e.getEstado().equals(EstadoStr.ALTA)) {
-				vendedor.setEstado(e);
-			}
-		}
 	}
 }

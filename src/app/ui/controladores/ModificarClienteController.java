@@ -104,7 +104,6 @@ public class ModificarClienteController extends BaseController{
 								.setTelefono(telefono);
 
 			try{
-				gestorCliente.darDeAlta(clienteEnModificacion);
 				ResultadoModificarCliente resultado = gestorCliente.modificarCliente(clienteEnModificacion);
 				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();

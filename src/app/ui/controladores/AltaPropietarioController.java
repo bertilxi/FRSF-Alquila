@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import app.comun.ValidadorFormato;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Direccion;
@@ -24,12 +23,10 @@ import app.ui.PresentadorExcepciones;
 import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 
 public class AltaPropietarioController extends BaseController {
 
@@ -73,22 +70,6 @@ public class AltaPropietarioController extends BaseController {
 	private GestorDatos gestorDatos;
 
 	private GestorPropietario gestorPropietario;
-
-	public EventHandler<KeyEvent> validation() {
-		return e -> {
-
-			String text = textFieldNombre.getText().trim();
-			Boolean match = ValidadorFormato.validarNombre(text);
-
-			if(text.length() >= 30){
-				e.consume();
-			}
-
-			if(!match){
-				e.consume();
-			}
-		};
-	}
 
 	@FXML
 	public void acceptAction() {

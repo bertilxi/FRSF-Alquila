@@ -68,7 +68,6 @@ public class GestorCliente {
 					cliente.setEstado(e);
 				}
 			}
-			darDeAlta(cliente);
 			persistidorCliente.guardarCliente(cliente);
 		}
 
@@ -102,18 +101,17 @@ public class GestorCliente {
 		}
 
 		if(errores.isEmpty()){
+			if (cliente.getEstado().getEstado().equals(EstadoStr.BAJA)) {
+				ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+				for(Estado e: estados) {
+					if(e.getEstado().equals(EstadoStr.ALTA)) {
+						cliente.setEstado(e);
+					}
+				}
+			}
 			persistidorCliente.modificarCliente(cliente);
 		}
 
 		return new ResultadoModificarCliente(errores.toArray(new ErrorModificarCliente[0]));
-	}
-
-	public void darDeAlta(Cliente cliente) throws PersistenciaException{
-		ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
-		for(Estado e: estados) {
-			if(e.getEstado().equals(EstadoStr.ALTA)) {
-				cliente.setEstado(e);
-			}
-		}
 	}
 }
