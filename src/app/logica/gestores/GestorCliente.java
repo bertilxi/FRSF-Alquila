@@ -138,4 +138,8 @@ public class GestorCliente {
 
 		return new ResultadoEliminarCliente(errores.toArray(new ErrorEliminarCliente[0]));
 	}
+
+	public ArrayList<Cliente> obtenerClientes() throws PersistenciaException {
+		return persistidorCliente.listarClientes();
+	}
 }

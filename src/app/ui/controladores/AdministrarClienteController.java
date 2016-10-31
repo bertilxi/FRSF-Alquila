@@ -1,0 +1,75 @@
+package app.ui.controladores;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import app.datos.entidades.Cliente;
+import app.excepciones.PersistenciaException;
+import app.logica.gestores.GestorCliente;
+import app.ui.componentes.VentanaError;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
+public class AdministrarClienteController extends BaseController{
+
+	@FXML
+	private TableView<Cliente> tablaClientes;
+
+	@FXML
+	private TableColumn<Cliente, String> columnaNumeroDocumento;
+	@FXML
+	private TableColumn<Cliente, String> columnaNombre;
+	@FXML
+	private TableColumn<Cliente, String> columnaApellido;
+	@FXML
+	private TableColumn<Cliente, String> columnaTelefono;
+
+	@FXML
+	private Button botonAgregar;
+	@FXML
+	private Button botonModificar;
+	@FXML
+	private Button botonEliminar;
+
+	private GestorCliente gestorCliente;
+
+	private ArrayList<Cliente> listaClientes;
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		super.initialize(location, resources);
+
+		try {
+			listaClientes = gestorCliente.obtenerClientes();
+		} catch (PersistenciaException e) {
+			new VentanaError("Error", "No se pudieron listar los clientes", null); //falta el stage
+		}
+
+		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));
+		columnaNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+		columnaApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
+		columnaTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
+
+		tablaClientes.getItems().addAll(listaClientes);
+
+		habilitarBotones(null);
+
+		tablaClientes.getSelectionModel().selectedItemProperty().addListener(
+	                (observable, oldValue, newValue) -> habilitarBotones(newValue));
+	}
+
+	private void habilitarBotones(Cliente cliente) {
+		if(cliente==null) {
+    		botonModificar.setDisable(true);
+    		botonEliminar.setDisable(true);
+    	}
+    	else {
+    		botonModificar.setDisable(false);
+    		botonEliminar.setDisable(false);
+    	}
+	}
+}
