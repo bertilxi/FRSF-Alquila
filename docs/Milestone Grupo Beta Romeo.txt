@@ -14,6 +14,35 @@
 20/10/16 => 27/10/16
 
 Responsabilidades:
+Java
+- vendedor
+- vendedor service
+- gestor vendedor
+- gestor cliente
+- altacliente controller
+- modLciente controller
+- admCLiente controller
+- altapropietario controller
+- modPropietario controller
+- adm propietario controller
+- resultadocrear cliente
+- resultadomodificar cliente
+- resultadoEliminar cliente
+- resultadocrear vendedor
+- resultadomodificar vendedor
+- resultadoEliminar vendedor
+
+
+FXML
+- altaCliente
+- ModificarCliente
+- administrarCliente
+- altaPropietario
+- modificarPropietario
+- administrarPropietario
+
+Test
+
 
 
 
