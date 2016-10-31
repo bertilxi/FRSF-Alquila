@@ -140,10 +140,6 @@ public class GestorPropietario {
 	public ResultadoEliminarPropietario eliminarPropietario(Propietario propietario) throws PersistenciaException {
 		ArrayList<ErrorEliminarPropietario> errores = new ArrayList<>();
 
-		if(!ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
-			errores.add(ErrorEliminarPropietario.Formato_Documento_Incorrecto);
-		}
-
 		Propietario propietarioAuxiliar;
 		try{
 			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));

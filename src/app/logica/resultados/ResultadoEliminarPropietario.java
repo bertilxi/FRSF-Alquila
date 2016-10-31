@@ -10,7 +10,6 @@ public class ResultadoEliminarPropietario extends Resultado<ErrorEliminarPropiet
 
 	public enum ErrorEliminarPropietario {
 
-		Formato_Documento_Incorrecto,
 		No_Existe_Propietario
 	}
 
