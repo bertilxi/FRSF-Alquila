@@ -9,15 +9,21 @@ import org.springframework.stereotype.Service;
 import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroCliente;
+import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Estado;
+import app.datos.entidades.Propietario;
 import app.datos.servicios.ClienteService;
 import app.datos.servicios.DatosService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCliente;
+import app.logica.resultados.ResultadoEliminarCliente;
+import app.logica.resultados.ResultadoEliminarPropietario;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
+import app.logica.resultados.ResultadoEliminarCliente.ErrorEliminarCliente;
+import app.logica.resultados.ResultadoEliminarPropietario.ErrorEliminarPropietario;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 
@@ -113,5 +119,27 @@ public class GestorCliente {
 		}
 
 		return new ResultadoModificarCliente(errores.toArray(new ErrorModificarCliente[0]));
+	}
+
+	public ResultadoEliminarCliente eliminarCliente(Cliente cliente) throws PersistenciaException {
+		ArrayList<ErrorEliminarCliente> errores = new ArrayList<>();
+
+		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
+
+		if(null == clienteAuxiliar){
+			errores.add(ErrorEliminarCliente.No_Existe_Cliente);
+		}
+
+		if(errores.isEmpty()){
+			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+			for(Estado e: estados) {
+				if(e.getEstado().equals(EstadoStr.BAJA)) {
+					cliente.setEstado(e);
+				}
+			}
+			persistidorCliente.modificarCliente(cliente);
+		}
+
+		return new ResultadoEliminarCliente(errores.toArray(new ErrorEliminarCliente[0]));
 	}
 }
