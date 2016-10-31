@@ -68,6 +68,7 @@ public class GestorCliente {
 					cliente.setEstado(e);
 				}
 			}
+			darDeAlta(cliente);
 			persistidorCliente.guardarCliente(cliente);
 		}
 
