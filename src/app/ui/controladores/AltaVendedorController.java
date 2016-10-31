@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javax.annotation.Resource;
 
+import app.comun.EncriptadorPassword;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
@@ -16,9 +17,12 @@ import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
+import app.ui.PresentadorExcepciones;
 import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -95,7 +99,8 @@ public class AltaVendedorController extends BaseController {
 					.setApellido(apellido)
 					.setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc)
-					.setPassword(" "); //TODO ver manejo contraseña
+					.setSalt(EncriptadorPassword.generarSal())
+					.setPassword(EncriptadorPassword.encriptarMD5(password1.toCharArray(), vendedor.getSalt()));
 
 			ResultadoCrearVendedor resultadoCrearVendedor = null;
 
@@ -126,12 +131,11 @@ public class AltaVendedorController extends BaseController {
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
 					VentanaConfirmacion ventana = new VentanaConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
 					if(ventana.acepta()){
-						//TODO mandar a la vista modificar cliente
+						//TODO obtener vendedor y mandarlo a la vista modificar cliente
 					}
 				}
 			} catch(Exception e){
-				new VentanaError("Ha ocurrido un error inesperado", "Intente nuevamente");
-				e.printStackTrace();
+				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 			}
 			return resultadoCrearVendedor;
 		}
@@ -140,8 +144,8 @@ public class AltaVendedorController extends BaseController {
 
 	}
 
-	public void cancelAction() {
-
+	public void cancelAction(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide();
 	}
 
 	@Override
