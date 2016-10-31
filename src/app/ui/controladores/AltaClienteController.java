@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
-import app.datos.entidades.Localidad;
-import app.datos.entidades.Pais;
-import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
@@ -53,27 +50,9 @@ public class AltaClienteController extends BaseController {
 	private TextField textFieldTelefono;
 
 	@FXML
-	private ComboBox<Pais> comboBoxPais;
-
-	@FXML
-	private ComboBox<Provincia> comboBoxProvincia;
-
-	@FXML
-	private ComboBox<Localidad> comboBoxLocalidad;
-
-	@FXML
-	private TextField textFieldMonto;
-
-	@FXML
-	private Button buttonCargatInmueble;
+	private Button buttonCargarInmueble;
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
-
-	private ArrayList<Localidad> listaLocalidades;
-
-	private ArrayList<Provincia> listaProvincias;
-
-	private ArrayList<Pais> listaPaises;
 
 	private GestorDatos gestorDatos;
 
@@ -155,13 +134,6 @@ public class AltaClienteController extends BaseController {
 		}
 	}
 
-	/*
-	 * public void cargarInmueble(ActionEvent event) throws IOException {
-	 * 
-	 * public void cargarInmueble(ActionEvent event) throws IOException {
-	 * throw new NotYetImplementedException();
-	 * }
-	 */
 	public void cargarInmueble() throws IOException {
 		Stage stage = new Stage();
 		URL location = getClass().getResource("/app/ui/vistas/inmuebleBuscado.fxml");
@@ -188,9 +160,6 @@ public class AltaClienteController extends BaseController {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
-		listaLocalidades = new ArrayList<>();
-		listaProvincias = new ArrayList<>();
-		listaPaises = new ArrayList<>();
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{
@@ -199,37 +168,5 @@ public class AltaClienteController extends BaseController {
 			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
-
-		try{
-			listaPaises = gestorDatos.obtenerPaises();
-		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
-		}
-		comboBoxPais.getItems().addAll(listaPaises);
-
-		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
-				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
-
-		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
-				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
 	}
-
-	private void actualizarLocalidades(Provincia provincia) {
-		try{
-			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
-		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
-		}
-		comboBoxLocalidad.getItems().addAll(listaLocalidades);
-	}
-
-	private void actualizarProvincias(Pais pais) {
-		try{
-			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
-		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
-		}
-		comboBoxProvincia.getItems().addAll(listaProvincias);
-	}
-
 }
