@@ -31,7 +31,8 @@ public class GestorVendedor {
 	@Resource
 	protected VendedorService persistidorVendedor;
 
-	@Resource DatosService persistidorDatos;
+	@Resource
+	protected DatosService persistidorDatos;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
 		throw new NotYetImplementedException();
