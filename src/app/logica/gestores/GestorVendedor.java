@@ -22,6 +22,7 @@ import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
 import app.logica.resultados.ResultadoEliminarVendedor;
+import app.logica.resultados.ResultadoEliminarVendedor.ErrorEliminarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
 
@@ -111,7 +112,25 @@ public class GestorVendedor {
 		return new ResultadoModificarVendedor(errores.toArray(new ErrorModificarVendedor[0]));
 	}
 
-	public ResultadoEliminarVendedor eliminarVendedor() throws PersistenciaException {
-		throw new NotYetImplementedException();
+	public ResultadoEliminarVendedor eliminarVendedor(Vendedor vendedor) throws PersistenciaException {
+		ArrayList<ErrorEliminarVendedor> errores = new ArrayList<>();
+
+		Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento()));
+
+		if(null == vendedorAuxiliar){
+			errores.add(ErrorEliminarVendedor.No_Existe_Vendedor);
+		}
+
+		if(errores.isEmpty()){
+			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+			for(Estado e: estados) {
+				if(e.getEstado().equals(EstadoStr.BAJA)) {
+					vendedor.setEstado(e);
+				}
+			}
+			persistidorVendedor.modificarVendedor(vendedor);
+		}
+
+		return new ResultadoEliminarVendedor(errores.toArray(new ErrorEliminarVendedor[0]));
 	}
 }
