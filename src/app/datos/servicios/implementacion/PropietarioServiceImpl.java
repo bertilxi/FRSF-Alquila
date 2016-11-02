@@ -68,4 +68,10 @@ public class PropietarioServiceImpl implements PropietarioService {
 		return propietario;
 	}
 
+	@Override
+	public void eliminarPropietario(Propietario propietario) throws PersistenciaException {
+		// TODO Auto-generated method stub
+
+	}
+
 }

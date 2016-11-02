@@ -1,5 +1,7 @@
 package app.datos.servicios.implementacion;
 
+import java.util.ArrayList;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,6 +39,12 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public Cliente obtenerCliente(FiltroCliente filtro) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Cliente> listarClientes() throws PersistenciaException {
 		// TODO Auto-generated method stub
 		return null;
 	}
