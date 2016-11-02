@@ -101,7 +101,7 @@ public class ModificarVendedorController extends BaseController {
 					.setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc);
 			if(checkBoxCambiarContraseña.isSelected()){
-				vendedor.setPassword(EncriptadorPassword.encriptarMD5(textFieldContraseña.getText().toCharArray(), vendedor.getSalt()));
+				vendedor.setPassword(EncriptadorPassword.encriptar(textFieldContraseña.getText().toCharArray(), vendedor.getSalt()));
 			}
 
 			ResultadoModificarVendedor resultadoModificarVendedor = null;

@@ -35,7 +35,7 @@ public class Vendedor {
 	@Column(name = "numerodocumento", length = 30, nullable = false)
 	private String numeroDocumento;
 
-	@Column(name = "password", nullable = false)
+	@Column(name = "password", length = 100, nullable = false)
 	private String password;
 
 	@Column(name = "salt", nullable = false)

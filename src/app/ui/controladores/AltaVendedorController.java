@@ -100,7 +100,7 @@ public class AltaVendedorController extends BaseController {
 					.setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc)
 					.setSalt(EncriptadorPassword.generarSal())
-					.setPassword(EncriptadorPassword.encriptarMD5(password1.toCharArray(), vendedor.getSalt()));
+					.setPassword(EncriptadorPassword.encriptar(password1.toCharArray(), vendedor.getSalt()));
 
 			ResultadoCrearVendedor resultadoCrearVendedor = null;
 

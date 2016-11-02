@@ -37,14 +37,22 @@ public class GestorVendedor {
 	protected DatosService persistidorDatos;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
-		ArrayList<ErrorAutenticacion> errores = new ArrayList<ErrorAutenticacion>();
+		ArrayList<ErrorAutenticacion> errores = new ArrayList<>();
 
-		Vendedor vendedorAuxiliar =	persistidorVendedor.obtenerVendedor(new FiltroVendedor(datos.getTipoDocumento().getTipo(), datos.getDNI()));
-
-		if(vendedorAuxiliar == null || !(EncriptadorPassword.encriptarMD5(datos.getContrasenia(), vendedorAuxiliar.getSalt())).equals(vendedorAuxiliar.getPassword())) {
+		//Compruebo que los datos no sean nulos ni vacios
+		if(datos.getContrasenia() == null || datos.getContrasenia().length < 1 || datos.getDNI() == null || datos.getDNI().length() < 1 || datos.getTipoDocumento() == null){
 			errores.add(ErrorAutenticacion.Datos_Incorrectos);
 		}
+		else{
+			Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(datos.getTipoDocumento().getTipo(), datos.getDNI()));
 
+			//Si lo encuentra comprueba que la contraseña ingresada coincida con la de la base de datos
+			if(vendedorAuxiliar == null ||
+					!(EncriptadorPassword.encriptar(datos.getContrasenia(), vendedorAuxiliar.getSalt())).equals(vendedorAuxiliar.getPassword())){
+				//Si no coincide falla
+				errores.add(ErrorAutenticacion.Datos_Incorrectos);
+			}
+		}
 		return new ResultadoAutenticacion(errores.toArray(new ErrorAutenticacion[0]));
 	}
 
@@ -75,8 +83,8 @@ public class GestorVendedor {
 
 		if(errores.isEmpty()){
 			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
-			for(Estado e: estados) {
-				if(e.getEstado().equals(EstadoStr.ALTA)) {
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.ALTA)){
 					vendedor.setEstado(e);
 				}
 			}
@@ -107,10 +115,10 @@ public class GestorVendedor {
 		}
 
 		if(errores.isEmpty()){
-			if(vendedor.getEstado().getEstado().equals(EstadoStr.BAJA)) {
+			if(vendedor.getEstado().getEstado().equals(EstadoStr.BAJA)){
 				ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
-				for(Estado e: estados) {
-					if(e.getEstado().equals(EstadoStr.ALTA)) {
+				for(Estado e: estados){
+					if(e.getEstado().equals(EstadoStr.ALTA)){
 						vendedor.setEstado(e);
 					}
 				}
@@ -132,8 +140,8 @@ public class GestorVendedor {
 
 		if(errores.isEmpty()){
 			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
-			for(Estado e: estados) {
-				if(e.getEstado().equals(EstadoStr.BAJA)) {
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.BAJA)){
 					vendedor.setEstado(e);
 				}
 			}
