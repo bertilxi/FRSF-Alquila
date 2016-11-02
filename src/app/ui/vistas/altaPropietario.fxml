@@ -88,16 +88,16 @@
             <TextField fx:id="textFieldApellido" maxHeight="1000.0" maxWidth="1000.0" promptText="Apellido" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de Documento" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="textFieldNumeroDocumento" maxHeight="1000.0" maxWidth="1000.0" promptText="Número de Documento" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <ComboBox fx:id="comboBoxCalle" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Calle" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ComboBox fx:id="comboBoxCalle" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Calle" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="textFieldAlturaCalle" maxHeight="1000.0" maxWidth="1000.0" promptText="Altura" GridPane.columnIndex="3" GridPane.rowIndex="6" />
             <TextField fx:id="textFieldPiso" maxHeight="1000.0" maxWidth="1000.0" promptText="Piso" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <TextField fx:id="textFieldDepartamento" maxHeight="1000.0" maxWidth="1000.0" promptText="Departamento" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-            <ComboBox fx:id="comboBoxProvincia" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <ComboBox fx:id="comboBoxProvincia" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <TextField fx:id="textFieldCorreoElectronico" maxHeight="1000.0" maxWidth="1000.0" promptText="Correo electrónico" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <ComboBox fx:id="comboBoxLocalidad" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="comboBoxLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Telefono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="comboBoxBarrio" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-         <ComboBox fx:id="comboBoxPais" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Pais" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="comboBoxBarrio" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+         <ComboBox fx:id="comboBoxPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Pais" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         </GridPane>
         <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
             <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />
