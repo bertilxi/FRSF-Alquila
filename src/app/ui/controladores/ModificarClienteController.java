@@ -49,10 +49,6 @@ public class ModificarClienteController extends BaseController {
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
-	private GestorDatos gestorDatos;
-
-	private GestorCliente gestorCliente;
-
 	private Cliente clienteEnModificacion;
 
 	public void setClienteEnModificacion(Cliente clienteEnModificacion) {
@@ -102,7 +98,7 @@ public class ModificarClienteController extends BaseController {
 					.setTelefono(telefono);
 
 			try{
-				ResultadoModificarCliente resultado = gestorCliente.modificarCliente(clienteEnModificacion);
+				ResultadoModificarCliente resultado = coordinador.modificarCliente(clienteEnModificacion);
 				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorModificarCliente err: resultado.getErrores()){
@@ -161,7 +157,7 @@ public class ModificarClienteController extends BaseController {
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{
-			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}

@@ -36,8 +36,6 @@ public class AdministrarPropietarioController extends BaseController {
 	@FXML
 	private Button botonEliminar;
 
-	private GestorPropietario gestorPropietario;
-
 	private ArrayList<Propietario> listaPropietarios;
 
 	@Override
@@ -45,7 +43,7 @@ public class AdministrarPropietarioController extends BaseController {
 		super.initialize(location, resources);
 
 		try{
-			listaPropietarios = gestorPropietario.obtenerPropietarios();
+			listaPropietarios = coordinador.obtenerPropietarios();
 		} catch(PersistenciaException e){
 			presentador.presentarError("Error", "No se pudieron listar los propietarios", stage);
 		}

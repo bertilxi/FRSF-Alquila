@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
@@ -38,5 +39,9 @@ public class GestorDatos {
 
 	public ArrayList<Pais> obtenerPaises() throws PersistenciaException {
 		return persistidorDatos.obtenerPaises();
+	}
+
+	public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
+		return persistidorDatos.obtenerEstados();
 	}
 }

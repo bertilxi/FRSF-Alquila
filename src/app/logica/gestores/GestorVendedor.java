@@ -13,7 +13,6 @@ import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroVendedor;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Vendedor;
-import app.datos.servicios.DatosService;
 import app.datos.servicios.VendedorService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
@@ -34,7 +33,7 @@ public class GestorVendedor {
 	protected VendedorService persistidorVendedor;
 
 	@Resource
-	protected DatosService persistidorDatos;
+	protected GestorDatos gestorDatos;
 
 	@Resource
 	protected ValidadorFormato validador;
@@ -88,7 +87,7 @@ public class GestorVendedor {
 		}
 
 		if(errores.isEmpty()){
-			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 			for(Estado e: estados){
 				if(e.getEstado().equals(EstadoStr.ALTA)){
 					vendedor.setEstado(e);
@@ -122,7 +121,7 @@ public class GestorVendedor {
 
 		if(errores.isEmpty()){
 			if(vendedor.getEstado().getEstado().equals(EstadoStr.BAJA)){
-				ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+				ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 				for(Estado e: estados){
 					if(e.getEstado().equals(EstadoStr.ALTA)){
 						vendedor.setEstado(e);
@@ -145,7 +144,7 @@ public class GestorVendedor {
 		}
 
 		if(errores.isEmpty()){
-			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 			for(Estado e: estados){
 				if(e.getEstado().equals(EstadoStr.BAJA)){
 					vendedor.setEstado(e);

@@ -34,8 +34,6 @@ public class AdministrarClienteController extends BaseController {
 	@FXML
 	private Button botonEliminar;
 
-	private GestorCliente gestorCliente;
-
 	private ArrayList<Cliente> listaClientes;
 
 	@Override
@@ -43,7 +41,7 @@ public class AdministrarClienteController extends BaseController {
 		super.initialize(location, resources);
 
 		try{
-			listaClientes = gestorCliente.obtenerClientes();
+			listaClientes = coordinador.obtenerClientes();
 		} catch(PersistenciaException e){
 			presentador.presentarError("Error", "No se pudieron listar los clientes", stage);
 		}

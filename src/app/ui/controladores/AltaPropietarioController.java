@@ -65,10 +65,6 @@ public class AltaPropietarioController extends BaseController {
 
 	private ArrayList<Pais> listaPaises;
 
-	private GestorDatos gestorDatos;
-
-	private GestorPropietario gestorPropietario;
-
 	@FXML
 	public void acceptAction() {
 
@@ -127,7 +123,7 @@ public class AltaPropietarioController extends BaseController {
 					.setDireccion(direccion);
 
 			try{
-				ResultadoCrearPropietario resultado = gestorPropietario.crearPropietario(propietario);
+				ResultadoCrearPropietario resultado = coordinador.crearPropietario(propietario);
 				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorCrearPropietario err: resultado.getErrores()){
@@ -183,13 +179,13 @@ public class AltaPropietarioController extends BaseController {
 		listaPaises = new ArrayList<>();
 		listaTiposDeDocumento = new ArrayList<>();
 		try{
-			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 		try{
-			listaPaises = gestorDatos.obtenerPaises();
+			listaPaises = coordinador.obtenerPaises();
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
@@ -202,7 +198,7 @@ public class AltaPropietarioController extends BaseController {
 
 	private void actualizarLocalidades(Provincia provincia) {
 		try{
-			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
+			listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
@@ -211,7 +207,7 @@ public class AltaPropietarioController extends BaseController {
 
 	private void actualizarProvincias(Pais pais) {
 		try{
-			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
+			listaProvincias = coordinador.obtenerProvinciasDe(pais);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
