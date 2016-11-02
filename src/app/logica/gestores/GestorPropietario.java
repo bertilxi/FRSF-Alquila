@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
+import app.datos.entidades.Estado;
 import app.datos.entidades.Propietario;
+import app.datos.servicios.DatosService;
 import app.datos.servicios.PropietarioService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
@@ -29,6 +31,9 @@ public class GestorPropietario {
 
 	@Resource
 	protected ValidadorFormato validador;
+
+	@Resource
+	protected DatosService gestorDatos;
 
 	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
@@ -52,11 +57,14 @@ public class GestorPropietario {
 		}
 
 		if(errores.isEmpty()){
-			try{
-				persistidorPropietario.guardarPropietario(propietario);
-			} catch(PersistenciaException e){
-				throw e;
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.ALTA)){
+					propietario.setEstado(e);
+					break;
+				}
 			}
+			persistidorPropietario.guardarPropietario(propietario);
 		}
 
 		return new ResultadoCrearPropietario(errores.toArray(new ErrorCrearPropietario[0]));
@@ -104,11 +112,14 @@ public class GestorPropietario {
 		}
 
 		if(errores.isEmpty()){
-			try{
-				persistidorPropietario.modificarPropietario(propietario);
-			} catch(PersistenciaException e){
-				throw e;
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.ALTA)){
+					propietario.setEstado(e);
+					break;
+				}
 			}
+			persistidorPropietario.modificarPropietario(propietario);
 		}
 
 		return new ResultadoModificarPropietario(errores.toArray(new ErrorModificarPropietario[0]));
@@ -155,11 +166,14 @@ public class GestorPropietario {
 		}
 
 		if(errores.isEmpty()){
-			try{
-				persistidorPropietario.eliminarPropietario(propietario);
-			} catch(PersistenciaException e){
-				throw e;
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.BAJA)){
+					propietario.setEstado(e);
+					break;
+				}
 			}
+			persistidorPropietario.modificarPropietario(propietario);
 		}
 
 		return new ResultadoEliminarPropietario(errores.toArray(new ErrorEliminarPropietario[0]));
