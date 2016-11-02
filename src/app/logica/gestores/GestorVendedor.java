@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import app.comun.EncriptadorPassword;
