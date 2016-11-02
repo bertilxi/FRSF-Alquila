@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
-import app.ui.componentes.VentanaError;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,7 +44,7 @@ public class AdministrarVendedorController extends BaseController {
 		try{
 			listaVendedores = coordinador.obtenerVendedores();
 		} catch(PersistenciaException e){
-			new VentanaError("Error", "No se pudieron listar los vendedores", null); //falta el stage
+			presentador.presentarError("Error", "No se pudieron listar los vendedores", stage);
 		}
 
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));

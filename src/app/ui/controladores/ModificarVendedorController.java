@@ -9,11 +9,8 @@ import app.comun.EncriptadorPassword;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
-import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoModificarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
-import app.ui.PresentadorExcepciones;
-import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -43,7 +40,7 @@ public class ModificarVendedorController extends BaseController {
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
-	protected CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
+	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
 	public ResultadoModificarVendedor acceptAction() {
 
@@ -86,7 +83,7 @@ public class ModificarVendedorController extends BaseController {
 		}
 
 		if(!error.toString().isEmpty()){
-			new VentanaError("Revise sus campos", error.toString());
+			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
 			Vendedor vendedor = new Vendedor();
@@ -95,7 +92,7 @@ public class ModificarVendedorController extends BaseController {
 					.setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc);
 			if(checkBoxCambiarContraseña.isSelected()){
-				vendedor.setPassword(EncriptadorPassword.encriptar(textFieldContraseña.getText().toCharArray(), vendedor.getSalt()));
+				vendedor.setPassword(encriptador.encriptar(textFieldContraseña.getText().toCharArray(), vendedor.getSalt()));
 			}
 
 			ResultadoModificarVendedor resultadoModificarVendedor = null;
@@ -118,13 +115,13 @@ public class ModificarVendedorController extends BaseController {
 				}
 
 				if(!error.toString().isEmpty()){
-					new VentanaError("Revise sus campos", error.toString());
+					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 
 			} catch(PersistenciaException e){
-				new VentanaError("Ha ocurrido un error en la base de datos.", "Intente nuevamente");
+				presentador.presentarExcepcion(e, stage);
 			} catch(Exception e){
-				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+				presentador.presentarExcepcionInesperada(e, stage);
 			}
 			return resultadoModificarVendedor;
 		}

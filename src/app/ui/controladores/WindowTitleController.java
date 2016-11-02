@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import app.logica.CoordinadorJavaFX;
+import app.ui.componentes.ventanas.PresentadorVentanas;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,10 +20,7 @@ public class WindowTitleController implements Initializable {
 	private HBox titlebar;
 	protected Stage stage;
 	protected CoordinadorJavaFX coordinador;
-
-	public void controlerPassing(Stage stage) {
-		this.stage = stage;
-	}
+	protected PresentadorVentanas presentador;
 
 	@FXML
 	private void exitPlatform() {
@@ -61,11 +59,15 @@ public class WindowTitleController implements Initializable {
 		});
 	}
 
-	public Stage getStage() {
-		return stage;
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
 	public void setCoordinador(CoordinadorJavaFX coordinador) {
 		this.coordinador = coordinador;
+	}
+
+	public void setPresentador(PresentadorVentanas presentador) {
+		this.presentador = presentador;
 	}
 }

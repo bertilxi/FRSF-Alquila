@@ -15,9 +15,7 @@ import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
-import app.ui.PresentadorExcepciones;
-import app.ui.componentes.VentanaConfirmacion;
-import app.ui.componentes.VentanaError;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -86,7 +84,7 @@ public class AltaClienteController extends BaseController {
 		}
 
 		if(!error.toString().isEmpty()){
-			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
+			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
 			Cliente cliente = new Cliente();
@@ -119,17 +117,17 @@ public class AltaClienteController extends BaseController {
 							break;
 						}
 					}
-					new VentanaError("No se pudo crear el cliente", stringErrores.toString(), null); //falta el stage
+					presentador.presentarError("No se pudo crear el cliente", stringErrores.toString(), stage);
 				}
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
-					VentanaConfirmacion ventana = new VentanaConfirmacion("El cliente ya existe", "El cliente ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
+					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El cliente ya existe", "El cliente ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
 					if(ventana.acepta()){
 						//TODO mandar a la vista modificar cliente
 					}
 				}
 			} catch(PersistenciaException e){
-				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+				presentador.presentarExcepcion(e, stage);
 			}
 		}
 	}
@@ -165,7 +163,7 @@ public class AltaClienteController extends BaseController {
 		try{
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 	}

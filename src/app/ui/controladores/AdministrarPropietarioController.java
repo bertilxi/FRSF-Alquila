@@ -7,14 +7,13 @@ import java.util.ResourceBundle;
 import app.datos.entidades.Propietario;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorPropietario;
-import app.ui.componentes.VentanaError;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class AdministrarPropietarioController extends BaseController{
+public class AdministrarPropietarioController extends BaseController {
 
 	@FXML
 	private TableView<Propietario> tablaPropietarios;
@@ -45,10 +44,10 @@ public class AdministrarPropietarioController extends BaseController{
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
-		try {
+		try{
 			listaPropietarios = gestorPropietario.obtenerPropietarios();
-		} catch (PersistenciaException e) {
-			new VentanaError("Error", "No se pudieron listar los propietarios", null); //falta el stage
+		} catch(PersistenciaException e){
+			presentador.presentarError("Error", "No se pudieron listar los propietarios", stage);
 		}
 
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));
@@ -61,19 +60,19 @@ public class AdministrarPropietarioController extends BaseController{
 		habilitarBotones(null);
 
 		tablaPropietarios.getSelectionModel().selectedItemProperty().addListener(
-	                (observable, oldValue, newValue) -> habilitarBotones(newValue));
+				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}
 
 	private void habilitarBotones(Propietario propietario) {
-		if(propietario==null) {
+		if(propietario == null){
 			botonVer.setDisable(true);
-    		botonModificar.setDisable(true);
-    		botonEliminar.setDisable(true);
-    	}
-    	else {
-    		botonVer.setDisable(false);
-    		botonModificar.setDisable(false);
-    		botonEliminar.setDisable(false);
-    	}
+			botonModificar.setDisable(true);
+			botonEliminar.setDisable(true);
+		}
+		else{
+			botonVer.setDisable(false);
+			botonModificar.setDisable(false);
+			botonEliminar.setDisable(false);
+		}
 	}
 }

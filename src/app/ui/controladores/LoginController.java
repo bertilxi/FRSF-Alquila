@@ -6,11 +6,8 @@ import java.util.Set;
 import app.datos.clases.DatosLogin;
 import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
-import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
-import app.ui.PresentadorExcepciones;
-import app.ui.componentes.VentanaError;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.fxml.FXML;
@@ -22,8 +19,6 @@ public class LoginController extends WindowTitleController {
 
 	public static final String URLVista = "/app/ui/vistas/Login.fxml";
 
-	protected CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
-
 	@FXML
 	protected TextField tfNumeroDocumento;
 
@@ -32,8 +27,6 @@ public class LoginController extends WindowTitleController {
 
 	@FXML
 	protected ComboBox<TipoDocumento> cbTipoDocumento;
-
-	protected Boolean desatendido = false;
 
 	@FXML
 	public void registrar() {
@@ -54,9 +47,7 @@ public class LoginController extends WindowTitleController {
 		char[] pass = pfContra.getText().toCharArray();
 
 		if(tipoDocumento == null || dni.isEmpty() || pass.length < 1){
-			if(!desatendido){
-				new VentanaError("No se ha podido iniciar sesión", "Campos vacíos.", null); //apilador.getStage()
-			}
+			presentador.presentarError("No se ha podido iniciar sesión", "Campos vacíos.", stage);
 			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
 		datos = new DatosLogin(tipoDocumento, dni, pass);
@@ -65,14 +56,10 @@ public class LoginController extends WindowTitleController {
 		try{
 			resultado = coordinador.autenticarVendedor(datos);
 		} catch(PersistenciaException e){
-			if(!desatendido){
-				PresentadorExcepciones.presentarExcepcion(e, null); //apilador.getStage()
-			}
+			presentador.presentarExcepcion(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
 		} catch(Exception e){
-			if(!desatendido){
-				PresentadorExcepciones.presentarExcepcionInesperada(e, null); //apilador.getStage()
-			}
+			presentador.presentarExcepcionInesperada(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 
@@ -89,9 +76,7 @@ public class LoginController extends WindowTitleController {
 			}
 
 			if(!errores.isEmpty()){
-				if(!desatendido){
-					new VentanaError("No se ha podido iniciar sesión", errores, null); //apilador.getStage()
-				}
+				presentador.presentarError("No se ha podido iniciar sesión", errores, stage);
 			}
 		}
 		else{

@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 public class ControladorTest implements TestRule {
 
+	private static Stage stagePrueba;
+
 	private static Thread javaFXThread = new Thread("Hilo de inicio de JavaFX") {
 		@Override
 		public void run() {
@@ -26,6 +28,7 @@ public class ControladorTest implements TestRule {
 
 		@Override
 		public void start(Stage primaryStage) throws Exception {
+			stagePrueba = primaryStage;
 			s.release();
 		}
 	}
@@ -79,6 +82,10 @@ public class ControladorTest implements TestRule {
 				}
 			}
 		};
+	}
+
+	public Stage getStagePrueba() {
+		return stagePrueba;
 	}
 
 }

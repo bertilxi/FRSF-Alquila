@@ -36,7 +36,7 @@ public class ViewLauncher extends Application {
 		primaryStage.setScene(scene);
 
 		WindowTitleController controller = loader.getController();
-		controller.controlerPassing(primaryStage);
+		controller.setStage(primaryStage);
 
 		primaryStage.show();
 	}

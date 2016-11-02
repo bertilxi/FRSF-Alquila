@@ -12,11 +12,12 @@ import javafx.scene.control.TextField;
 @Service
 public class ValidadorFormato {
 
-	public static Boolean validarDocumento(TipoDocumento tipo, String numeroDocumento) {
+	public Boolean validarDocumento(TipoDocumento tipo, String numeroDocumento) {
 		Pattern pat;
 
-		if(tipo == null)
+		if(tipo == null){
 			return false;
+		}
 
 		switch(tipo.getTipo()) {
 		case DNI:
@@ -41,26 +42,26 @@ public class ValidadorFormato {
 		return pat.matcher(numeroDocumento).matches();
 	}
 
-	public static Boolean validarNombre(String nombre) {
+	public Boolean validarNombre(String nombre) {
 		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,30}");
 		return pat.matcher(nombre).matches();
 	}
 
-	public static Boolean validarApellido(String apellido) {
+	public Boolean validarApellido(String apellido) {
 		return validarNombre(apellido);
 	}
 
-	public static Boolean validarEmail(String email) {
+	public Boolean validarEmail(String email) {
 		return EmailValidator.getInstance().isValid(email) && email.length() <= 30;
 	}
 
-	public static Boolean validarTelefono(String telefono) {
+	public Boolean validarTelefono(String telefono) {
 		Pattern pat = Pattern.compile("[0-9\\-]{0,20}");
 
 		return pat.matcher(telefono).matches();
 	}
 
-	public static Boolean validarDireccion(Direccion direccion) {
+	public Boolean validarDireccion(Direccion direccion) {
 		Pattern pat;
 
 		if(direccion == null){
@@ -100,30 +101,31 @@ public class ValidadorFormato {
 		return true;
 	}
 
-	public static Boolean validarLocalidad(String localidad) {
+	public Boolean validarLocalidad(String localidad) {
 		return validarNombre(localidad);
 	}
 
-	public static Boolean validarNombreVista(String nombre) {
+	public Boolean validarNombreVista(String nombre) {
 		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{0,30}");
 		return pat.matcher(nombre).matches();
 	}
 
-    public static Boolean validarNumeroDocumentoVista(String nombre) {
-        Pattern pat = Pattern.compile("[0-9]{0,8}");
-        return pat.matcher(nombre).matches();
-    }
-    public static Boolean validarNumeroVista(String nombre) {
-        Pattern pat = Pattern.compile("[0-9]{0,30}");
-        return pat.matcher(nombre).matches();
-    }
+	public Boolean validarNumeroDocumentoVista(String nombre) {
+		Pattern pat = Pattern.compile("[0-9]{0,8}");
+		return pat.matcher(nombre).matches();
+	}
 
-	public static Boolean validarEmailVista(String correo) {
+	public Boolean validarNumeroVista(String nombre) {
+		Pattern pat = Pattern.compile("[0-9]{0,30}");
+		return pat.matcher(nombre).matches();
+	}
+
+	public Boolean validarEmailVista(String correo) {
 		Pattern pat = Pattern.compile("[([A-Za-z]{0,30})([\\\\@]{0,1})([A-Za-z]{0,30})([\\\\.]{0,1})([A-Za-z]{0,30})([\\\\.]{0,1})([A-Za-z]{0,30})]{0,30}");
 		return pat.matcher(correo).matches();
 	}
 
-	public static void setValidadorNombre(TextField textField) {
+	public void setValidadorNombre(TextField textField) {
 		textField.textProperty().addListener((observable, oldValue, newValue) -> {
 
 			if(!validarNombreVista(newValue)){
@@ -133,7 +135,7 @@ public class ValidadorFormato {
 		});
 	}
 
-	public static void setValidadorNumeroDocumento(TextField textField) {
+	public void setValidadorNumeroDocumento(TextField textField) {
 		textField.textProperty().addListener((observable, oldValue, newValue) -> {
 
 			if(!validarNumeroDocumentoVista(newValue)){
@@ -143,7 +145,7 @@ public class ValidadorFormato {
 		});
 	}
 
-	public static void setValidadorEmail(TextField textField) {
+	public void setValidadorEmail(TextField textField) {
 		textField.textProperty().addListener((observable, oldValue, newValue) -> {
 
 			if(!validarEmailVista(newValue)){
@@ -153,23 +155,26 @@ public class ValidadorFormato {
 		});
 	}
 
-    public static void setValidadorApellido(TextField textField){
-        setValidadorNombre(textField);
-    }
-    public static void setValidadorTelefono(TextField textField){
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+	public void setValidadorApellido(TextField textField) {
+		setValidadorNombre(textField);
+	}
 
-            if(!validarNumeroVista(newValue)){
-                textField.setText(oldValue);
-            }
+	public void setValidadorTelefono(TextField textField) {
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
 
-        });
-    }
-    public static void setValidadorDireccion(TextField textField){
-        setValidadorNombre(textField);
-    }
-    public static void setValidadorLocalidad(TextField textField){
-        setValidadorNombre(textField);
-    }
+			if(!validarNumeroVista(newValue)){
+				textField.setText(oldValue);
+			}
+
+		});
+	}
+
+	public void setValidadorDireccion(TextField textField) {
+		setValidadorNombre(textField);
+	}
+
+	public void setValidadorLocalidad(TextField textField) {
+		setValidadorNombre(textField);
+	}
 
 }

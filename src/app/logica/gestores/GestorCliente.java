@@ -32,27 +32,30 @@ public class GestorCliente {
 	@Resource
 	protected DatosService persistidorDatos;
 
+	@Resource
+	protected ValidadorFormato validador;
+
 	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearCliente> errores = new ArrayList<>();
 
-		if(!ValidadorFormato.validarNombre(cliente.getNombre())){
+		if(!validador.validarNombre(cliente.getNombre())){
 			errores.add(ErrorCrearCliente.Formato_Nombre_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarApellido(cliente.getApellido())){
+		if(!validador.validarApellido(cliente.getApellido())){
 			errores.add(ErrorCrearCliente.Formato_Apellido_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarTelefono(cliente.getTelefono())){
+		if(!validador.validarTelefono(cliente.getTelefono())){
 			errores.add(ErrorCrearCliente.Formato_Telefono_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
+		if(!validador.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
 			errores.add(ErrorCrearCliente.Formato_Documento_Incorrecto);
 		}
 
 		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
-                cliente.getNumeroDocumento()));
+				cliente.getNumeroDocumento()));
 
 		if(null != clienteAuxiliar){
 			if(clienteAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
@@ -65,8 +68,8 @@ public class GestorCliente {
 
 		if(errores.isEmpty()){
 			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
-			for(Estado e: estados) {
-				if(e.getEstado().equals(EstadoStr.ALTA)) {
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.ALTA)){
 					cliente.setEstado(e);
 				}
 			}
@@ -79,34 +82,34 @@ public class GestorCliente {
 	public ResultadoModificarCliente modificarCliente(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorModificarCliente> errores = new ArrayList<>();
 
-		if(!ValidadorFormato.validarNombre(cliente.getNombre())){
+		if(!validador.validarNombre(cliente.getNombre())){
 			errores.add(ErrorModificarCliente.Formato_Nombre_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarApellido(cliente.getApellido())){
+		if(!validador.validarApellido(cliente.getApellido())){
 			errores.add(ErrorModificarCliente.Formato_Apellido_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarTelefono(cliente.getTelefono())){
+		if(!validador.validarTelefono(cliente.getTelefono())){
 			errores.add(ErrorModificarCliente.Formato_Telefono_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
+		if(!validador.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
 			errores.add(ErrorModificarCliente.Formato_Documento_Incorrecto);
 		}
 
 		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
-                cliente.getNumeroDocumento()));
+				cliente.getNumeroDocumento()));
 
 		if(null != clienteAuxiliar && !cliente.equals(clienteAuxiliar)){
 			errores.add(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 		}
 
 		if(errores.isEmpty()){
-			if (cliente.getEstado().getEstado().equals(EstadoStr.BAJA)) {
+			if(cliente.getEstado().getEstado().equals(EstadoStr.BAJA)){
 				ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
-				for(Estado e: estados) {
-					if(e.getEstado().equals(EstadoStr.ALTA)) {
+				for(Estado e: estados){
+					if(e.getEstado().equals(EstadoStr.ALTA)){
 						cliente.setEstado(e);
 					}
 				}
@@ -128,8 +131,8 @@ public class GestorCliente {
 
 		if(errores.isEmpty()){
 			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
-			for(Estado e: estados) {
-				if(e.getEstado().equals(EstadoStr.BAJA)) {
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.BAJA)){
 					cliente.setEstado(e);
 				}
 			}

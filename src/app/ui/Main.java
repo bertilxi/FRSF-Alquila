@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import app.logica.CoordinadorJavaFX;
+import app.ui.componentes.ventanas.PresentadorVentanas;
 import app.ui.controladores.WindowTitleController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -79,7 +80,8 @@ public class Main extends Application {
 						primaryStage.initStyle(StageStyle.UNDECORATED);
 						primaryStage.setScene(scene);
 						controller.setCoordinador(coordinador);
-						controller.controlerPassing(primaryStage);
+						controller.setStage(primaryStage);
+						controller.setPresentador(new PresentadorVentanas());
 
 						primaryStage.show();
 					});

@@ -36,6 +36,12 @@ public class GestorVendedor {
 	@Resource
 	protected DatosService persistidorDatos;
 
+	@Resource
+	protected ValidadorFormato validador;
+
+	@Resource
+	protected EncriptadorPassword encriptador;
+
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
 		ArrayList<ErrorAutenticacion> errores = new ArrayList<>();
 
@@ -48,7 +54,7 @@ public class GestorVendedor {
 
 			//Si lo encuentra comprueba que la contraseña ingresada coincida con la de la base de datos
 			if(vendedorAuxiliar == null ||
-					!(EncriptadorPassword.encriptar(datos.getContrasenia(), vendedorAuxiliar.getSalt())).equals(vendedorAuxiliar.getPassword())){
+					!(encriptador.encriptar(datos.getContrasenia(), vendedorAuxiliar.getSalt())).equals(vendedorAuxiliar.getPassword())){
 				//Si no coincide falla
 				errores.add(ErrorAutenticacion.Datos_Incorrectos);
 			}
@@ -59,15 +65,15 @@ public class GestorVendedor {
 	public ResultadoCrearVendedor crearVendedor(Vendedor vendedor) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearVendedor> errores = new ArrayList<>();
 
-		if(!ValidadorFormato.validarNombre(vendedor.getNombre())){
+		if(!validador.validarNombre(vendedor.getNombre())){
 			errores.add(ErrorCrearVendedor.Formato_Nombre_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarApellido(vendedor.getApellido())){
+		if(!validador.validarApellido(vendedor.getApellido())){
 			errores.add(ErrorCrearVendedor.Formato_Apellido_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarDocumento(vendedor.getTipoDocumento(), vendedor.getNumeroDocumento())){
+		if(!validador.validarDocumento(vendedor.getTipoDocumento(), vendedor.getNumeroDocumento())){
 			errores.add(ErrorCrearVendedor.Formato_Documento_Incorrecto);
 		}
 
@@ -97,15 +103,15 @@ public class GestorVendedor {
 	public ResultadoModificarVendedor modificarVendedor(Vendedor vendedor) throws PersistenciaException {
 		ArrayList<ErrorModificarVendedor> errores = new ArrayList<>();
 
-		if(!ValidadorFormato.validarNombre(vendedor.getNombre())){
+		if(!validador.validarNombre(vendedor.getNombre())){
 			errores.add(ErrorModificarVendedor.Formato_Nombre_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarApellido(vendedor.getApellido())){
+		if(!validador.validarApellido(vendedor.getApellido())){
 			errores.add(ErrorModificarVendedor.Formato_Apellido_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarDocumento(vendedor.getTipoDocumento(), vendedor.getNumeroDocumento())){
+		if(!validador.validarDocumento(vendedor.getTipoDocumento(), vendedor.getNumeroDocumento())){
 			errores.add(ErrorModificarVendedor.Formato_Documento_Incorrecto);
 		}
 

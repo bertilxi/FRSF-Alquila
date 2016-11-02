@@ -16,8 +16,6 @@ import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorPropietario;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
-import app.ui.PresentadorExcepciones;
-import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -122,23 +120,23 @@ public class ModificarPropietarioController extends BaseController {
 		}
 
 		if(!error.toString().isEmpty()){
-			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
+			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
 
 			propietarioEnModificacion.getDireccion().setNumero(alturaCalle)
-													.setCalle(calle)
-													.setBarrio(barrio)
-													.setPiso(piso)
-													.setDepartamento(departamento)
-													.setLocalidad(localidad);
+					.setCalle(calle)
+					.setBarrio(barrio)
+					.setPiso(piso)
+					.setDepartamento(departamento)
+					.setLocalidad(localidad);
 
 			propietarioEnModificacion.setNombre(nombre)
-									.setApellido(apellido)
-									.setTipoDocumento(tipoDoc)
-									.setNumeroDocumento(numeroDocumento)
-									.setTelefono(telefono)
-									.setEmail(correoElectronico);
+					.setApellido(apellido)
+					.setTipoDocumento(tipoDoc)
+					.setNumeroDocumento(numeroDocumento)
+					.setTelefono(telefono)
+					.setEmail(correoElectronico);
 
 			try{
 				ResultadoModificarPropietario resultado = gestorPropietario.modificarPropietario(propietarioEnModificacion);
@@ -169,10 +167,10 @@ public class ModificarPropietarioController extends BaseController {
 							break;
 						}
 					}
-					new VentanaError("No se pudo modificar el propietario", stringErrores.toString(), null); //falta el stage
+					presentador.presentarError("No se pudo modificar el propietario", stringErrores.toString(), stage);
 				}
 			} catch(PersistenciaException e){
-				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+				presentador.presentarExcepcion(e, stage);
 			}
 		}
 	}
@@ -192,13 +190,13 @@ public class ModificarPropietarioController extends BaseController {
 		try{
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 		try{
 			listaPaises = gestorDatos.obtenerPaises();
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxPais.getItems().addAll(listaPaises);
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
@@ -211,7 +209,7 @@ public class ModificarPropietarioController extends BaseController {
 		try{
 			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
@@ -220,7 +218,7 @@ public class ModificarPropietarioController extends BaseController {
 		try{
 			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}

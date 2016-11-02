@@ -7,14 +7,13 @@ import java.util.ResourceBundle;
 import app.datos.entidades.Cliente;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorCliente;
-import app.ui.componentes.VentanaError;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class AdministrarClienteController extends BaseController{
+public class AdministrarClienteController extends BaseController {
 
 	@FXML
 	private TableView<Cliente> tablaClientes;
@@ -43,10 +42,10 @@ public class AdministrarClienteController extends BaseController{
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
-		try {
+		try{
 			listaClientes = gestorCliente.obtenerClientes();
-		} catch (PersistenciaException e) {
-			new VentanaError("Error", "No se pudieron listar los clientes", null); //falta el stage
+		} catch(PersistenciaException e){
+			presentador.presentarError("Error", "No se pudieron listar los clientes", stage);
 		}
 
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));
@@ -59,17 +58,17 @@ public class AdministrarClienteController extends BaseController{
 		habilitarBotones(null);
 
 		tablaClientes.getSelectionModel().selectedItemProperty().addListener(
-	                (observable, oldValue, newValue) -> habilitarBotones(newValue));
+				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}
 
 	private void habilitarBotones(Cliente cliente) {
-		if(cliente==null) {
-    		botonModificar.setDisable(true);
-    		botonEliminar.setDisable(true);
-    	}
-    	else {
-    		botonModificar.setDisable(false);
-    		botonEliminar.setDisable(false);
-    	}
+		if(cliente == null){
+			botonModificar.setDisable(true);
+			botonEliminar.setDisable(true);
+		}
+		else{
+			botonModificar.setDisable(false);
+			botonEliminar.setDisable(false);
+		}
 	}
 }

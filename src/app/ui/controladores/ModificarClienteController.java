@@ -13,8 +13,6 @@ import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
-import app.ui.PresentadorExcepciones;
-import app.ui.componentes.VentanaError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ModificarClienteController extends BaseController{
+public class ModificarClienteController extends BaseController {
 
 	@FXML
 	private TextField textFieldNombre;
@@ -94,14 +92,14 @@ public class ModificarClienteController extends BaseController{
 		}
 
 		if(!error.toString().isEmpty()){
-			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
+			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
 			clienteEnModificacion.setNombre(nombre)
-								.setApellido(apellido)
-								.setTipoDocumento(tipoDoc)
-								.setNumeroDocumento(numeroDocumento)
-								.setTelefono(telefono);
+					.setApellido(apellido)
+					.setTipoDocumento(tipoDoc)
+					.setNumeroDocumento(numeroDocumento)
+					.setTelefono(telefono);
 
 			try{
 				ResultadoModificarCliente resultado = gestorCliente.modificarCliente(clienteEnModificacion);
@@ -126,10 +124,10 @@ public class ModificarClienteController extends BaseController{
 							break;
 						}
 					}
-					new VentanaError("No se pudo modificar el cliente", stringErrores.toString(), null); //falta el stage
+					presentador.presentarError("No se pudo modificar el cliente", stringErrores.toString(), stage);
 				}
 			} catch(PersistenciaException e){
-				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+				presentador.presentarExcepcion(e, stage);
 			}
 		}
 	}
@@ -165,7 +163,7 @@ public class ModificarClienteController extends BaseController{
 		try{
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 	}

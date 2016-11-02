@@ -27,6 +27,9 @@ public class GestorPropietario {
 	@Resource
 	protected PropietarioService persistidorPropietario;
 
+	@Resource
+	protected ValidadorFormato validador;
+
 	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
 
@@ -60,27 +63,27 @@ public class GestorPropietario {
 	}
 
 	private void validarDatosCrearPropietario(Propietario propietario, ArrayList<ErrorCrearPropietario> errores) {
-		if(!ValidadorFormato.validarNombre(propietario.getNombre())){
+		if(!validador.validarNombre(propietario.getNombre())){
 			errores.add(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarApellido(propietario.getApellido())){
+		if(!validador.validarApellido(propietario.getApellido())){
 			errores.add(ErrorCrearPropietario.Formato_Apellido_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
+		if(!validador.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
 			errores.add(ErrorCrearPropietario.Formato_Documento_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarTelefono(propietario.getTelefono())){
+		if(!validador.validarTelefono(propietario.getTelefono())){
 			errores.add(ErrorCrearPropietario.Formato_Telefono_Incorrecto);
 		}
 
-		if(propietario.getEmail() != null && !ValidadorFormato.validarEmail(propietario.getEmail())){
+		if(propietario.getEmail() != null && !validador.validarEmail(propietario.getEmail())){
 			errores.add(ErrorCrearPropietario.Formato_Email_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarDireccion(propietario.getDireccion())){
+		if(!validador.validarDireccion(propietario.getDireccion())){
 			errores.add(ErrorCrearPropietario.Formato_Direccion_Incorrecto);
 		}
 	}
@@ -112,27 +115,27 @@ public class GestorPropietario {
 	}
 
 	private void validarDatosModificarPropietario(Propietario propietario, ArrayList<ErrorModificarPropietario> errores) {
-		if(!ValidadorFormato.validarNombre(propietario.getNombre())){
+		if(!validador.validarNombre(propietario.getNombre())){
 			errores.add(ErrorModificarPropietario.Formato_Nombre_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarApellido(propietario.getApellido())){
+		if(!validador.validarApellido(propietario.getApellido())){
 			errores.add(ErrorModificarPropietario.Formato_Apellido_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
+		if(!validador.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())){
 			errores.add(ErrorModificarPropietario.Formato_Documento_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarTelefono(propietario.getTelefono())){
+		if(!validador.validarTelefono(propietario.getTelefono())){
 			errores.add(ErrorModificarPropietario.Formato_Telefono_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarEmail(propietario.getEmail())){
+		if(!validador.validarEmail(propietario.getEmail())){
 			errores.add(ErrorModificarPropietario.Formato_Email_Incorrecto);
 		}
 
-		if(!ValidadorFormato.validarDireccion(propietario.getDireccion())){
+		if(!validador.validarDireccion(propietario.getDireccion())){
 			errores.add(ErrorModificarPropietario.Formato_Direccion_Incorrecto);
 		}
 	}

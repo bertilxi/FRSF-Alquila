@@ -13,6 +13,8 @@ import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
+import app.ui.componentes.ventanas.PresentadorVentanas;
+import app.ui.componentes.ventanas.PresentadorVentanasMock;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import junitparams.JUnitParamsRunner;
@@ -37,12 +39,11 @@ public class LoginControllerTest {
 				return null;
 			}
 		};
+		PresentadorVentanas presentadorMock = new PresentadorVentanasMock();
 
 		LoginController loginController = new LoginController() {
 			@Override
 			public ResultadoControlador ingresar() {
-				coordinador = coordinadorMock;
-				desatendido = true;
 				tfNumeroDocumento.setText(numDoc);
 				pfContra.setText(contra);
 				cbTipoDocumento.getItems().clear();
@@ -51,8 +52,12 @@ public class LoginControllerTest {
 				return super.ingresar();
 			};
 		};
+		loginController.setCoordinador(coordinadorMock);
+		loginController.setPresentador(presentadorMock);
 
 		ControladorTest corredorTestEnJavaFXThread = new ControladorTest(LoginController.URLVista, loginController);
+
+		loginController.setStage(corredorTestEnJavaFXThread.getStagePrueba());
 
 		Statement test = new Statement() {
 			@Override

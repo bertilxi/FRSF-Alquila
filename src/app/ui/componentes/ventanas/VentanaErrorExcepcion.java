@@ -1,7 +1,6 @@
-package app.ui.componentes;
+package app.ui.componentes.ventanas;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Window;
 
 /**
@@ -9,7 +8,14 @@ import javafx.stage.Window;
  *
  * @author Acosta - Gioria - Moretti - Rebechi
  */
-public class VentanaConfirmacion extends Alert {
+public class VentanaErrorExcepcion extends Alert {
+
+	/**
+	 * Constructor. Genera parte de la ventana
+	 */
+	protected VentanaErrorExcepcion(AlertType alertType) {
+		super(alertType);
+	}
 
 	/**
 	 * Constructor. Genera la ventana
@@ -17,8 +23,8 @@ public class VentanaConfirmacion extends Alert {
 	 * @param mensaje
 	 *            mensaje a mostrar en la ventana
 	 */
-	public VentanaConfirmacion(String titulo, String mensaje) {
-		this(titulo, mensaje, null);
+	protected VentanaErrorExcepcion(String mensaje) {
+		this(mensaje, null);
 	}
 
 	/**
@@ -27,19 +33,16 @@ public class VentanaConfirmacion extends Alert {
 	 * @param mensaje
 	 *            mensaje a mostrar en la ventana
 	 * @param padre
-	 *            ventana en la que se mostrará este diálogo
+	 *            ventana en la que se mostrar� este di�logo
 	 */
-	public VentanaConfirmacion(String titulo, String mensaje, Window padre) {
-		super(AlertType.CONFIRMATION);
+	protected VentanaErrorExcepcion(String mensaje, Window padre) {
+		super(AlertType.ERROR);
 		if(padre != null){
 			this.initOwner(padre);
 		}
 		this.setContentText(mensaje);
 		this.setHeaderText(null);
-		this.setTitle(titulo);
-	}
-
-	public Boolean acepta() {
-		return (this.showAndWait().get()) == ButtonType.OK;
+		this.setTitle("Error");
+		this.showAndWait();
 	}
 }

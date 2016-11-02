@@ -19,9 +19,7 @@ import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorPropietario;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
-import app.ui.PresentadorExcepciones;
-import app.ui.componentes.VentanaConfirmacion;
-import app.ui.componentes.VentanaError;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -107,7 +105,7 @@ public class AltaPropietarioController extends BaseController {
 		}
 
 		if(!error.toString().isEmpty()){
-			new VentanaError("Revise sus campos", error.toString(), null); //falta el stage
+			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
 
@@ -157,17 +155,17 @@ public class AltaPropietarioController extends BaseController {
 							break;
 						}
 					}
-					new VentanaError("No se pudo crear el propietario", stringErrores.toString(), null); //falta el stage
+					presentador.presentarError("No se pudo crear el propietario", stringErrores.toString(), stage);
 				}
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
-					VentanaConfirmacion ventana = new VentanaConfirmacion("El propietario ya existe", "El propietario ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
+					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El propietario ya existe", "El propietario ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
 					if(ventana.acepta()){
 						//TODO mandar a la vista modificar propietario
 					}
 				}
 			} catch(PersistenciaException e){
-				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+				presentador.presentarExcepcion(e, stage);
 			}
 		}
 	}
@@ -187,13 +185,13 @@ public class AltaPropietarioController extends BaseController {
 		try{
 			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 		try{
 			listaPaises = gestorDatos.obtenerPaises();
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxPais.getItems().addAll(listaPaises);
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
@@ -206,7 +204,7 @@ public class AltaPropietarioController extends BaseController {
 		try{
 			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
@@ -215,7 +213,7 @@ public class AltaPropietarioController extends BaseController {
 		try{
 			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
 		} catch(PersistenciaException e){
-			PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}

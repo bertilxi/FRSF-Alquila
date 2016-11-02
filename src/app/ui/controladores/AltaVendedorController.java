@@ -13,9 +13,7 @@ import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
-import app.ui.PresentadorExcepciones;
-import app.ui.componentes.VentanaConfirmacion;
-import app.ui.componentes.VentanaError;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,6 +40,8 @@ public class AltaVendedorController extends BaseController {
 	protected ComboBox<TipoDocumento> comboBoxTipoDocumento;
 
 	protected ArrayList<TipoDocumento> listaTiposDeDocumento;
+
+	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
 	public ResultadoCrearVendedor acceptAction() throws PersistenciaException, GestionException {
 
@@ -82,7 +82,7 @@ public class AltaVendedorController extends BaseController {
 		}
 
 		if(!error.toString().isEmpty()){
-			new VentanaError("Revise sus campos", error.toString());
+			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
 			Vendedor vendedor = new Vendedor();
@@ -90,8 +90,8 @@ public class AltaVendedorController extends BaseController {
 					.setApellido(apellido)
 					.setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc)
-					.setSalt(EncriptadorPassword.generarSal())
-					.setPassword(EncriptadorPassword.encriptar(password1.toCharArray(), vendedor.getSalt()));
+					.setSalt(encriptador.generarSal())
+					.setPassword(encriptador.encriptar(password1.toCharArray(), vendedor.getSalt()));
 
 			ResultadoCrearVendedor resultadoCrearVendedor = null;
 
@@ -113,20 +113,20 @@ public class AltaVendedorController extends BaseController {
 				}
 
 				if(!error.toString().isEmpty()){
-					new VentanaError("Revise sus campos", error.toString());
+					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 
 			} catch(PersistenciaException e){
-				new VentanaError("Ha ocurrido un error en la base de datos.", "Intente nuevamente");
+				presentador.presentarExcepcion(e, stage);
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
-					VentanaConfirmacion ventana = new VentanaConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?");
+					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
 					if(ventana.acepta()){
 						//TODO obtener vendedor y mandarlo a la vista modificar cliente
 					}
 				}
 			} catch(Exception e){
-				PresentadorExcepciones.presentarExcepcion(e, null); //falta el stage
+				presentador.presentarExcepcionInesperada(e, stage); //falta el stage
 			}
 			return resultadoCrearVendedor;
 		}
@@ -144,7 +144,7 @@ public class AltaVendedorController extends BaseController {
 		Platform.runLater(() -> {
 			super.initialize(location, resources);
 
-			listaTiposDeDocumento = new ArrayList<TipoDocumento>();
+			listaTiposDeDocumento = new ArrayList<>();
 			try{
 				listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 			} catch(PersistenciaException e){
