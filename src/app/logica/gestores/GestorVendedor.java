@@ -157,8 +157,7 @@ public class GestorVendedor {
 		return new ResultadoEliminarVendedor(errores.toArray(new ErrorEliminarVendedor[0]));
 	}
 
-	public ArrayList<Vendedor> obtenerVendedores() {
-		//TODO implementar
-		return null;
+	public ArrayList<Vendedor> obtenerVendedores() throws PersistenciaException{
+		return persistidorVendedor.listarVendedores();
 	}
 }

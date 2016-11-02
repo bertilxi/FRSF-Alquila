@@ -77,10 +77,6 @@ public class ClienteServiceImpl implements ClienteService {
 					clientes.add((Cliente) o);
 				}
 			}
-		} catch(NoResultException e){
-			return null;
-		} catch(NonUniqueResultException e){
-			return null;
 		} catch(Exception e){
 			throw new ConsultaException();
 		}
