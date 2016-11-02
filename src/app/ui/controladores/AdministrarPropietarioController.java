@@ -4,10 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import app.datos.entidades.Cliente;
 import app.datos.entidades.Propietario;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorPropietario;
 import app.ui.componentes.VentanaError;
 import javafx.beans.property.SimpleStringProperty;
