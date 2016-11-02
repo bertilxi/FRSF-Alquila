@@ -162,4 +162,8 @@ public class GestorPropietario {
 		return new ResultadoEliminarPropietario(errores.toArray(new ErrorEliminarPropietario[0]));
 	}
 
+	public ArrayList<Propietario> obtenerPropietarios() throws PersistenciaException {
+		return persistidorPropietario.listarPropietarios();
+	}
+
 }
