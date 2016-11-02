@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 import app.comun.EncriptadorPassword;
 import app.datos.clases.DatosLogin;
@@ -23,6 +25,8 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class GestorVendedorTest {
 
+	private EncriptadorPassword encriptadorMock = Mockito.mock(EncriptadorPassword.class);
+
 	@Test
 	@Parameters
 	public void testAutenticarVendedor(DatosLogin datos, ResultadoAutenticacion resultadoLogica, Vendedor vendedor, Throwable excepcion) throws Exception {
@@ -31,6 +35,7 @@ public class GestorVendedorTest {
 		GestorVendedor gestorVendedor = new GestorVendedor() {
 			{
 				this.persistidorVendedor = vendedorServiceMock;
+				this.encriptador = encriptadorMock;
 			}
 		};
 
@@ -65,13 +70,16 @@ public class GestorVendedorTest {
 	}
 
 	protected Object[] parametersForTestAutenticarVendedor() {
+		Mockito.when(encriptadorMock.encriptar(Matchers.any(), Matchers.any())).thenReturn("1234");
+		Mockito.when(encriptadorMock.generarSal()).thenReturn("1234");
+
 		TipoDocumento tipoDocumento = new TipoDocumento().setTipo(TipoDocumentoStr.DNI);
 		String numDoc = "12345678";
 		String contrasenia = "pepe";
-		String sal = EncriptadorPassword.generarSal();
+		String sal = encriptadorMock.generarSal();
 
 		DatosLogin datosCorrectos = new DatosLogin(tipoDocumento, numDoc, contrasenia.toCharArray());
-		Vendedor vendedorCorrecto = new Vendedor().setTipoDocumento(tipoDocumento).setNumeroDocumento(numDoc).setPassword(EncriptadorPassword.encriptar(contrasenia.toCharArray(), sal)).setSalt(sal);
+		Vendedor vendedorCorrecto = new Vendedor().setTipoDocumento(tipoDocumento).setNumeroDocumento(numDoc).setPassword(encriptadorMock.encriptar(contrasenia.toCharArray(), sal)).setSalt(sal);
 
 		DatosLogin datosTipoDocumentoVacio = new DatosLogin(null, numDoc, contrasenia.toCharArray());
 
