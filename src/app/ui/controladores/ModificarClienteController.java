@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorCliente;
-import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 import javafx.event.ActionEvent;

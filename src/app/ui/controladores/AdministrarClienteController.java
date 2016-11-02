@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorCliente;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
