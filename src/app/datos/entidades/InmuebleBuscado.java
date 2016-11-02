@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -22,6 +24,10 @@ public class InmuebleBuscado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id; //ID
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idcliente", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_buscado_idcliente_fk"), nullable = false)
 	private Cliente cliente;
@@ -116,6 +122,10 @@ public class InmuebleBuscado implements Serializable {
 		this.lavadero = lavadero;
 		this.pavimento = pavimento;
 		this.telefono = telefono;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 	public Cliente getCliente() {

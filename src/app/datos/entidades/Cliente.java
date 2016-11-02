@@ -1,5 +1,6 @@
 package app.datos.entidades;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,10 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-//TODO hacer hql: listar todos los clientes con estado alta
+@NamedQueries(value = { @NamedQuery(name = "obtenerClientes", query = "SELECT c FROM Cliente c WHERE c.estado.estado = ALTA"), @NamedQuery(name = "obtenerCliente", query = "SELECT c FROM Cliente c WHERE c.numeroDocumento = :documento AND c.tipoDocumento.tipo = :tipoDocumento") })
 @Entity
 @Table(name = "cliente", uniqueConstraints = @UniqueConstraint(name = "cliente_numerodocumento_idtipodocumento_uk", columnNames = { "numerodocumento", "idtipodocumento" }))
 public class Cliente {
@@ -44,11 +48,14 @@ public class Cliente {
 	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "cliente_idestado_fk"), nullable = false)
 	private Estado estado;
 
+	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+	private InmuebleBuscado inmuebleBuscado;
+
 	public Cliente() {
 		super();
 	}
 
-	public Cliente(String nombre, String apellido, String numeroDocumento, String telefono, Estado estado, TipoDocumento tipoDocumento) {
+	public Cliente(String nombre, String apellido, String numeroDocumento, String telefono, Estado estado, TipoDocumento tipoDocumento, InmuebleBuscado inmuebleBuscado) {
 		this();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -56,6 +63,7 @@ public class Cliente {
 		this.telefono = telefono;
 		this.estado = estado;
 		this.tipoDocumento = tipoDocumento;
+		this.inmuebleBuscado = inmuebleBuscado;
 	}
 
 	public Integer getId() {
@@ -113,6 +121,15 @@ public class Cliente {
 
 	public Cliente setEstado(Estado estado) {
 		this.estado = estado;
+		return this;
+	}
+
+	public InmuebleBuscado getInmuebleBuscado() {
+		return inmuebleBuscado;
+	}
+
+	public Cliente setInmuebleBuscado(InmuebleBuscado inmuebleBuscado) {
+		this.inmuebleBuscado = inmuebleBuscado;
 		return this;
 	}
 

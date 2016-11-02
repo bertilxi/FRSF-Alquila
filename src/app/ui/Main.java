@@ -37,7 +37,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try{
 
-			URL location = getClass().getResource("/app/ui/vistas/Login.fxml");
+			URL location = getClass().getResource("/app/ui/vistas/base.fxml");
 			FXMLLoader loader = createFXMLLoader(location);
 			Parent root = loader.load(location.openStream());
 			Scene scene = new Scene(root);

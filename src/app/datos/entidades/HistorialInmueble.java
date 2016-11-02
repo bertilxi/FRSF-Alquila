@@ -63,7 +63,7 @@ public class HistorialInmueble {
 	@JoinColumn(name = "idorientacion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idorientacion_fk"))
 	private Orientacion orientacion;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_iddireccion_fk"), nullable = false)
 	private Direccion direccion;
 
@@ -83,10 +83,8 @@ public class HistorialInmueble {
 	@JoinColumn(name = "idinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idinmueble_fk"), nullable = false)
 	private Inmueble inmueble;
 
-	//Opcionales
-	//TODO historial datos edificio
-	// private DatosEdificio datosEdificio;
-	// private ArrayList<Reserva> reservas;
+	@OneToOne(mappedBy = "historialInmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+	private HistorialDatosEdificio historialDatosEdificio;
 
 	public HistorialInmueble() {
 		super();
@@ -231,6 +229,15 @@ public class HistorialInmueble {
 
 	public HistorialInmueble setInmueble(Inmueble inmueble) {
 		this.inmueble = inmueble;
+		return this;
+	}
+
+	public HistorialDatosEdificio getHistorialDatosEdificio() {
+		return historialDatosEdificio;
+	}
+
+	public HistorialInmueble setHistorialDatosEdificio(HistorialDatosEdificio historialDatosEdificio) {
+		this.historialDatosEdificio = historialDatosEdificio;
 		return this;
 	}
 

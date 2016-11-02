@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -18,6 +20,10 @@ public class DatosEdificio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id; //ID
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "datos_edificio_idinmueble_fk"), nullable = false)
 	private Inmueble inmueble;
@@ -92,6 +98,10 @@ public class DatosEdificio implements Serializable {
 		this.aguaCaliente = aguaCaliente;
 		this.lavadero = lavadero;
 		this.pavimento = pavimento;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 	public Inmueble getInmueble() {

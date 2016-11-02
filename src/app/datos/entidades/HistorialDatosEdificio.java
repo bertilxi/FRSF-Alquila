@@ -6,8 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,6 +21,10 @@ public class HistorialDatosEdificio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idhistorial_inmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_datos_edificio_idhistorial_inmueble_fk"), nullable = false)
 	private HistorialInmueble historialInmueble;
@@ -67,6 +74,10 @@ public class HistorialDatosEdificio implements Serializable {
 	@Column(name = "pavimento")
 	private Boolean pavimento;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "iddatos_edificio", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_datos_edificio_iddatos_edificio_fk"), nullable = false)
+	private DatosEdificio datosEdificio;
+
 	public HistorialDatosEdificio() {
 		super();
 	}
@@ -92,6 +103,10 @@ public class HistorialDatosEdificio implements Serializable {
 		this.aguaCaliente = aguaCaliente;
 		this.lavadero = lavadero;
 		this.pavimento = pavimento;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 	public HistorialInmueble getHistorialInmueble() {
@@ -235,6 +250,15 @@ public class HistorialDatosEdificio implements Serializable {
 
 	public HistorialDatosEdificio setPavimento(Boolean pavimento) {
 		this.pavimento = pavimento;
+		return this;
+	}
+
+	public DatosEdificio getDatosEdificio() {
+		return datosEdificio;
+	}
+
+	public HistorialDatosEdificio setDatosEdificio(DatosEdificio datosEdificio) {
+		this.datosEdificio = datosEdificio;
 		return this;
 	}
 

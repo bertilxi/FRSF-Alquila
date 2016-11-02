@@ -46,7 +46,7 @@ public class Vendedor {
 	private TipoDocumento tipoDocumento;
 
 	//@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "vendedor")
-	@Transient
+	@Transient //TODO hacer despues
 	private Set<Venta> ventas;
 
 	// baja

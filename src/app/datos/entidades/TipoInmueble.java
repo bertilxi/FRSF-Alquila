@@ -1,6 +1,8 @@
 package app.datos.entidades;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +21,8 @@ public class TipoInmueble {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
 
-	@Enumerated
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo")
 	private TipoInmuebleStr tipo;
 
 	public TipoInmueble() {

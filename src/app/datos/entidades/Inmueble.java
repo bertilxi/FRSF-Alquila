@@ -75,9 +75,8 @@ public class Inmueble {
 	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idestado_fk"), nullable = false)
 	private Estado estado;
 
-	//Opcionales
-	// private DatosEdificio datosEdificio;
-	// private ArrayList<Reserva> reservas;
+	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+	private DatosEdificio datosEdificio;
 
 	public Inmueble() {
 		super();
@@ -202,6 +201,15 @@ public class Inmueble {
 
 	public Inmueble setEstado(Estado estado) {
 		this.estado = estado;
+		return this;
+	}
+
+	public DatosEdificio getDatosEdificio() {
+		return datosEdificio;
+	}
+
+	public Inmueble setDatosEdificio(DatosEdificio datosEdificio) {
+		this.datosEdificio = datosEdificio;
 		return this;
 	}
 
