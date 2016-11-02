@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
+import app.comun.EncriptadorPassword;
 import app.comun.ValidadorFormato;
 import app.datos.clases.DatosLogin;
 import app.datos.clases.EstadoStr;
@@ -19,6 +19,7 @@ import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoAutenticacion;
+import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
 import app.logica.resultados.ResultadoEliminarVendedor;
@@ -36,7 +37,15 @@ public class GestorVendedor {
 	protected DatosService persistidorDatos;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
-		throw new NotYetImplementedException();
+		ArrayList<ErrorAutenticacion> errores = new ArrayList<ErrorAutenticacion>();
+
+		Vendedor vendedorAuxiliar =	persistidorVendedor.obtenerVendedor(new FiltroVendedor(datos.getTipoDocumento().getTipo(), datos.getDNI()));
+
+		if(vendedorAuxiliar == null || !(EncriptadorPassword.encriptarMD5(datos.getContrasenia(), vendedorAuxiliar.getSalt())).equals(vendedorAuxiliar.getPassword())) {
+			errores.add(ErrorAutenticacion.Datos_Incorrectos);
+		}
+
+		return new ResultadoAutenticacion(errores.toArray(new ErrorAutenticacion[0]));
 	}
 
 	public ResultadoCrearVendedor crearVendedor(Vendedor vendedor) throws PersistenciaException, GestionException {

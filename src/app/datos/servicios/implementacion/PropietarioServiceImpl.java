@@ -1,5 +1,7 @@
 package app.datos.servicios.implementacion;
 
+import java.util.ArrayList;
+
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 
@@ -72,6 +74,12 @@ public class PropietarioServiceImpl implements PropietarioService {
 	public void eliminarPropietario(Propietario propietario) throws PersistenciaException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<Propietario> listarPropietarios() throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

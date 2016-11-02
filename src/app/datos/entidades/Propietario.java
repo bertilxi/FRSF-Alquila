@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+//TODO hacer hql: listar todos los propietarios con estado alta
 @NamedQuery(name = "obtenerPropietario", query = "SELECT v FROM Propietario v WHERE numeroDocumento = :documento AND tipoDocumento.tipo = :tipoDocumento")
 @Entity
 @Table(name = "propietario", uniqueConstraints = @UniqueConstraint(name = "propietario_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
