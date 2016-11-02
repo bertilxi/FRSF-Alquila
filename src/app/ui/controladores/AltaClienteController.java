@@ -52,10 +52,6 @@ public class AltaClienteController extends BaseController {
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
-	private GestorDatos gestorDatos;
-
-	private GestorCliente gestorCliente;
-
 	@FXML
 	public void acceptAction() {
 
@@ -95,7 +91,7 @@ public class AltaClienteController extends BaseController {
 					.setTelefono(telefono);
 
 			try{
-				ResultadoCrearCliente resultado = gestorCliente.crearCliente(cliente);
+				ResultadoCrearCliente resultado = coordinador.crearCliente(cliente);
 				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorCrearCliente err: resultado.getErrores()){
@@ -161,7 +157,7 @@ public class AltaClienteController extends BaseController {
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{
-			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
