@@ -3,6 +3,7 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import app.logica.CoordinadorJavaFX;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ public class WindowTitleController implements Initializable {
 	@FXML
 	private HBox titlebar;
 	protected Stage stage;
+	protected CoordinadorJavaFX coordinador;
 
 	public void controlerPassing(Stage stage) {
 		this.stage = stage;
@@ -61,5 +63,9 @@ public class WindowTitleController implements Initializable {
 
 	public Stage getStage() {
 		return stage;
+	}
+
+	public void setCoordinador(CoordinadorJavaFX coordinador) {
+		this.coordinador = coordinador;
 	}
 }

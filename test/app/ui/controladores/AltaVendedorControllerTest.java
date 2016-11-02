@@ -79,7 +79,7 @@ public class AltaVendedorControllerTest {
 		};
 
 		try{
-			corredorTestEnJavaFXThread.apply(test, null).evaluate();
+			corredorTestEnJavaFXThread.apply(test, null);
 		} catch(Throwable e){
 			throw new Exception(e);
 		}

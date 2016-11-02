@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.annotation.Resource;
-
 import app.comun.EncriptadorPassword;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorDatos;
-import app.logica.gestores.GestorVendedor;
+import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoModificarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
 import app.ui.PresentadorExcepciones;
@@ -28,6 +25,7 @@ import javafx.scene.control.TextField;
 public class ModificarVendedorController extends BaseController {
 
 	public static final String URLVista = "/app/ui/vistas/modificarVendedor.fxml";
+
 	@FXML
 	private TextField textFieldNombre;
 	@FXML
@@ -45,11 +43,7 @@ public class ModificarVendedorController extends BaseController {
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
-	@Resource
-	private GestorDatos gestorDatos;
-
-	@Resource
-	private GestorVendedor gestorVendedor;
+	protected CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
 
 	public ResultadoModificarVendedor acceptAction() {
 
@@ -107,7 +101,7 @@ public class ModificarVendedorController extends BaseController {
 			ResultadoModificarVendedor resultadoModificarVendedor = null;
 
 			try{
-				resultadoModificarVendedor = gestorVendedor.modificarVendedor(vendedor);
+				resultadoModificarVendedor = coordinador.modificarVendedor(vendedor);
 				error.delete(0, error.length());
 				List<ErrorModificarVendedor> listaErrores = resultadoModificarVendedor.getErrores();
 				if(listaErrores.contains(ErrorModificarVendedor.Formato_Nombre_Incorrecto)){
@@ -160,7 +154,7 @@ public class ModificarVendedorController extends BaseController {
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{
-			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
 			// TODO mostrar error inesperado
 		}

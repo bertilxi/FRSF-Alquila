@@ -1,5 +1,6 @@
 package app.ui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 
@@ -10,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import app.logica.CoordinadorJavaFX;
 import app.ui.controladores.WindowTitleController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -22,6 +24,7 @@ public class Main extends Application {
 
 	private CoordinadorJavaFX coordinador;
 	private ApplicationContext appContext;
+	private Stage primaryStage;
 
 	public static void main(String[] args) {
 		//Ocultar logs
@@ -35,26 +38,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		try{
-
-			URL location = getClass().getResource("/app/ui/vistas/base.fxml");
-			FXMLLoader loader = createFXMLLoader(location);
-			Parent root = loader.load(location.openStream());
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
-
-			// para emular el estilo de windows 10 se usa la ventana sin decorar
-			primaryStage.initStyle(StageStyle.UNDECORATED);
-			primaryStage.setScene(scene);
-
-			WindowTitleController controller = loader.getController();
-			controller.controlerPassing(primaryStage);
-
-			primaryStage.show();
-			iniciarHibernate();
-		} catch(Exception e){
-			e.printStackTrace();
-		}
+		this.primaryStage = primaryStage;
+		iniciarHibernate();
 	}
 
 	public FXMLLoader createFXMLLoader(URL location) {
@@ -71,7 +56,34 @@ public class Main extends Application {
 				return true;
 			}
 		};
+		task.setOnSucceeded(
+				(event) -> {
+					Platform.runLater(() -> {
+						URL location = getClass().getResource("/app/ui/vistas/altaVendedor.fxml");
+						FXMLLoader loader = createFXMLLoader(location);
 
+						Parent root = null;
+						try{
+							root = loader.load(location.openStream());
+						} catch(IOException e){
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							Platform.exit();
+						}
+						Scene scene = new Scene(root);
+						scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
+
+						WindowTitleController controller = loader.getController();
+
+						// para emular el estilo de windows 10 se usa la ventana sin decorar
+						primaryStage.initStyle(StageStyle.UNDECORATED);
+						primaryStage.setScene(scene);
+						controller.setCoordinador(coordinador);
+						controller.controlerPassing(primaryStage);
+
+						primaryStage.show();
+					});
+				});
 		//Si falla, informa al usuario del error y cierra la aplicacion
 		task.setOnFailed(
 				(event) -> {

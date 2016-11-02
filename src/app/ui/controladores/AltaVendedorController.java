@@ -5,21 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.annotation.Resource;
-
 import app.comun.EncriptadorPassword;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorDatos;
-import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
 import app.ui.PresentadorExcepciones;
 import app.ui.componentes.VentanaConfirmacion;
 import app.ui.componentes.VentanaError;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -45,12 +42,6 @@ public class AltaVendedorController extends BaseController {
 	protected ComboBox<TipoDocumento> comboBoxTipoDocumento;
 
 	protected ArrayList<TipoDocumento> listaTiposDeDocumento;
-
-	@Resource
-	protected GestorDatos gestorDatos;
-
-	@Resource
-	protected GestorVendedor gestorVendedor;
 
 	public ResultadoCrearVendedor acceptAction() throws PersistenciaException, GestionException {
 
@@ -105,7 +96,7 @@ public class AltaVendedorController extends BaseController {
 			ResultadoCrearVendedor resultadoCrearVendedor = null;
 
 			try{
-				resultadoCrearVendedor = gestorVendedor.crearVendedor(vendedor);
+				resultadoCrearVendedor = coordinador.crearVendedor(vendedor);
 				error.delete(0, error.length());
 				List<ErrorCrearVendedor> listaErrores = resultadoCrearVendedor.getErrores();
 				if(listaErrores.contains(ErrorCrearVendedor.Formato_Nombre_Incorrecto)){
@@ -150,14 +141,16 @@ public class AltaVendedorController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
+		Platform.runLater(() -> {
+			super.initialize(location, resources);
 
-		listaTiposDeDocumento = new ArrayList<TipoDocumento>();
-		try{
-			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
-		} catch(PersistenciaException e){
-		}
-		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
+			listaTiposDeDocumento = new ArrayList<TipoDocumento>();
+			try{
+				listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
+			} catch(PersistenciaException e){
+			}
 
+			comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
+		});
 	}
 }
