@@ -19,7 +19,7 @@ import javafx.scene.control.TextField;
 
 public class LoginController extends OlimpoController {
 
-	public static final String URLVista = "/app/ui/vistas/Login.fxml";
+	public static final String URLVista = "/app/ui/vistas/login.fxml";
 
 	@FXML
 	protected TextField tfNumeroDocumento;
@@ -32,11 +32,13 @@ public class LoginController extends OlimpoController {
 
 	@FXML
 	public void registrar() {
-
+		cambiarScene(AltaVendedorController.URLVista);
 	}
 
 	@FXML
 	public ResultadoControlador ingresar() {
+		BaseController base = (BaseController) cambiarScene(BaseController.URLVista);
+		base.cambiarScene(AdministrarClienteController.URLVista);
 		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoAutenticacion resultado = null;
 		Boolean hayErrores;
@@ -82,17 +84,22 @@ public class LoginController extends OlimpoController {
 			}
 		}
 		else{
-			//Operacion exitosa
-			// Ir otra pantalla
-			// ControladorRomano.cambiarScene(MenuAdministracionController.URLVista, apilador, coordinador);
+			//			BaseController base = (BaseController) cambiarScene(BaseController.URLVista);
+			base.cambiarScene(AdministrarClienteController.URLVista);
 		}
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+	public void inicializar(URL location, ResourceBundle resources) {
+		setTitulo("Ingrese al sistema");
+		try{
+			cbTipoDocumento.getItems().addAll(coordinador.obtenerTiposDeDocumento());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		} catch(Exception e){
+			presentador.presentarExcepcionInesperada(e, stage);
+		}
 	}
 
 }

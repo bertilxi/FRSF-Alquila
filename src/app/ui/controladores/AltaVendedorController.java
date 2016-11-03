@@ -14,10 +14,8 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -136,19 +134,17 @@ public class AltaVendedorController extends OlimpoController {
 	}
 
 	public void cancelAction(ActionEvent event) {
-		((Node) event.getSource()).getScene().getWindow().hide();
+		stage.hide();
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		Platform.runLater(() -> {
-			listaTiposDeDocumento = new ArrayList<>();
-			try{
-				listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
-			} catch(PersistenciaException e){
-			}
+	public void inicializar(URL location, ResourceBundle resources) {
+		listaTiposDeDocumento = new ArrayList<>();
+		try{
+			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
+		} catch(PersistenciaException e){
+		}
 
-			comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
-		});
+		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 	}
 }

@@ -56,7 +56,7 @@ public class VendedorServiceImpl implements VendedorService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public Vendedor obtenerVendedor(FiltroVendedor filtro) throws PersistenciaException {
 		Vendedor vendedor = null;
 		Session session = getSessionFactory().getCurrentSession();
@@ -73,9 +73,9 @@ public class VendedorServiceImpl implements VendedorService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Vendedor> listarVendedores() throws PersistenciaException {
-		ArrayList<Vendedor> vendedores = new ArrayList<Vendedor>();
+		ArrayList<Vendedor> vendedores = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
 			for(Object o: session.getNamedQuery("listarVendedores").list()){
@@ -83,7 +83,7 @@ public class VendedorServiceImpl implements VendedorService {
 					vendedores.add((Vendedor) o);
 				}
 			}
-		} catch(Exception e) {
+		} catch(Exception e){
 			throw new ConsultaException();
 		}
 		return vendedores;

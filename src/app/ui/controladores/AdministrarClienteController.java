@@ -14,6 +14,8 @@ import javafx.scene.control.TableView;
 
 public class AdministrarClienteController extends OlimpoController {
 
+	public static final String URLVista = "/app/ui/vistas/administrarCliente.fxml";
+
 	@FXML
 	private TableView<Cliente> tablaClientes;
 
@@ -36,12 +38,14 @@ public class AdministrarClienteController extends OlimpoController {
 	private ArrayList<Cliente> listaClientes;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void inicializar(URL location, ResourceBundle resources) {
 
 		try{
 			listaClientes = coordinador.obtenerClientes();
 		} catch(PersistenciaException e){
 			presentador.presentarError("Error", "No se pudieron listar los clientes", stage);
+		} catch(Exception e){
+			presentador.presentarExcepcionInesperada(e, stage);
 		}
 
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));

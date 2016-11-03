@@ -1,17 +1,16 @@
-package app.ui.controladores;
+package app.ui;
 
 import org.springframework.stereotype.Service;
 
 import app.logica.CoordinadorJavaFX;
 import app.ui.componentes.ventanas.PresentadorVentanas;
+import app.ui.controladores.OlimpoController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 @Service
-public class CoordinadorVentanas {
+public class ScenographyChanger {
 
 	private Stage stage;
 
@@ -19,37 +18,32 @@ public class CoordinadorVentanas {
 
 	private CoordinadorJavaFX coordinador;
 
-	private Pane rootLayout;
+	private Pane background;
 
-	public CoordinadorVentanas(Stage stage, PresentadorVentanas presentadorVentanas, CoordinadorJavaFX coordinador, Pane rootLayout) {
+	public ScenographyChanger(Stage stage, PresentadorVentanas presentadorVentanas, CoordinadorJavaFX coordinador, Pane background) {
 		this.stage = stage;
 		this.presentadorVentanas = presentadorVentanas;
 		this.coordinador = coordinador;
-		this.rootLayout = rootLayout;
+		this.background = background;
 	}
 
-	public OlimpoController cambiarScene(String URLVistaACambiar) {
+	public OlimpoController cambiarScenography(String URLVistaACambiar) {
 		try{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLVistaACambiar));
-			Pane nuevaVista = (Pane) loader.load();
+			Pane newScenography = (Pane) loader.load();
 
-			rootLayout.getChildren().clear();
-			rootLayout.getChildren().add(nuevaVista);
+			background.getChildren().clear();
+			background.getChildren().add(newScenography);
 
 			OlimpoController controller = loader.getController();
-			controller.setCoordinadorVentanas(this);
-			controller.setStage(stage);
-			controller.setCoordinador(coordinador);
-			controller.setPresentador(presentadorVentanas);
+
+			controller.setScenographyChanger(this).setStage(stage).setCoordinador(coordinador).setPresentador(presentadorVentanas);
+
 			return controller;
 		} catch(Exception e){
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return null;
 		}
-	}
-
-	public void setRootLayout(Parent root) {
-		this.rootLayout = (BorderPane) root;
 	}
 }

@@ -35,7 +35,7 @@ public class AdministrarVendedorController extends OlimpoController {
 	private ArrayList<Vendedor> listaVendedores;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void inicializar(URL location, ResourceBundle resources) {
 		try{
 			listaVendedores = coordinador.obtenerVendedores();
 		} catch(PersistenciaException e){

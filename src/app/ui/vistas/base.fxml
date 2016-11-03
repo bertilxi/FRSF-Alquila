@@ -6,7 +6,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <HBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.BaseController">
@@ -61,27 +60,6 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
         </VBox>
-        <VBox HBox.hgrow="ALWAYS">
-            <children>
-                <HBox fx:id="titlebar" alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-                    <children>
-                        <Label styleClass="label-large" text="Vista base">
-                            <padding>
-                                <Insets left="30.0" right="10.0" top="30.0" />
-                            </padding>
-                        </Label>
-                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <ToggleButton fx:id="minimizeButton" maxHeight="30.0" maxWidth="40.0" minHeight="30.0" minWidth="40.0" mnemonicParsing="false" onAction="#minimizePlatform" prefHeight="30.0" prefWidth="40.0" styleClass="toggle-button-minimize" />
-                        <ToggleButton fx:id="maximizeButton" maxHeight="30.0" maxWidth="40.0" minHeight="30.0" minWidth="40.0" mnemonicParsing="false" onAction="#maximizePlatform" prefHeight="30.0" prefWidth="40.0" styleClass="toggle-button-maximize" />
-                        <ToggleButton fx:id="closeButton" maxHeight="30.0" maxWidth="40.0" minHeight="30.0" minWidth="40.0" mnemonicParsing="false" onAction="#exitPlatform" prefHeight="30.0" prefWidth="40.0" styleClass="toggle-button-close" />
-                    </children>
-                </HBox>
-                <VBox prefHeight="650.0" prefWidth="145.0" styleClass="main">
-                    <padding>
-                        <Insets top="30.0" />
-                    </padding>
-                </VBox>
-            </children>
-        </VBox>
+        <VBox fx:id="background" HBox.hgrow="ALWAYS" />
     </children>
 </HBox>

@@ -1,8 +1,6 @@
 package app.ui;
 
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
 
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
@@ -10,12 +8,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import app.logica.CoordinadorJavaFX;
 import app.ui.componentes.ventanas.PresentadorVentanas;
+import app.ui.controladores.OlimpoController;
 import app.ui.controladores.WindowTitleController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -43,10 +41,6 @@ public class Main extends Application {
 		iniciarHibernate();
 	}
 
-	public FXMLLoader createFXMLLoader(URL location) {
-		return new FXMLLoader(location, null, new JavaFXBuilderFactory(), null, Charset.forName(FXMLLoader.DEFAULT_CHARSET_NAME));
-	}
-
 	private void iniciarHibernate() {
 		//Crear tarea para iniciar hibernate y el coordinador de la aplicacion
 		Task<Boolean> task = new Task<Boolean>() {
@@ -60,30 +54,25 @@ public class Main extends Application {
 		task.setOnSucceeded(
 				(event) -> {
 					Platform.runLater(() -> {
-						URL location = getClass().getResource("/app/ui/vistas/altaVendedor.fxml");
-						FXMLLoader loader = createFXMLLoader(location);
-
-						Parent root = null;
 						try{
-							root = loader.load(location.openStream());
+							FXMLLoader loader = new FXMLLoader();
+							loader.setLocation(getClass().getResource(WindowTitleController.URLVista));
+
+							Parent root = loader.load();
+							Scene scene = new Scene(root);
+							scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
+
+							OlimpoController controller = loader.getController();
+							controller.setCoordinador(coordinador).setStage(primaryStage).setPresentador(new PresentadorVentanas());
+
+							// para emular el estilo de windows 10 se usa la ventana sin decorar
+							primaryStage.initStyle(StageStyle.UNDECORATED);
+							primaryStage.setScene(scene);
+							primaryStage.show();
 						} catch(IOException e){
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 							Platform.exit();
 						}
-						Scene scene = new Scene(root);
-						scene.getStylesheets().add(getClass().getResource("/app/ui/estilos/style.css").toExternalForm());
-
-						WindowTitleController controller = loader.getController();
-
-						// para emular el estilo de windows 10 se usa la ventana sin decorar
-						primaryStage.initStyle(StageStyle.UNDECORATED);
-						primaryStage.setScene(scene);
-						controller.setCoordinador(coordinador);
-						controller.setStage(primaryStage);
-						controller.setPresentador(new PresentadorVentanas());
-
-						primaryStage.show();
 					});
 				});
 		//Si falla, informa al usuario del error y cierra la aplicacion

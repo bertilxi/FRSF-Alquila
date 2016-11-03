@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.datos.clases.FiltroCliente;
 import app.datos.entidades.Cliente;
@@ -32,6 +33,7 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = PersistenciaException.class)
 	public void guardarCliente(Cliente cliente) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
@@ -42,6 +44,7 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = PersistenciaException.class)
 	public void modificarCliente(Cliente cliente) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
@@ -52,6 +55,7 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public Cliente obtenerCliente(FiltroCliente filtro) throws PersistenciaException {
 		Cliente cliente;
 		Session session = getSessionFactory().getCurrentSession();
@@ -68,6 +72,7 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Cliente> listarClientes() throws PersistenciaException {
 		ArrayList<Cliente> clientes = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();

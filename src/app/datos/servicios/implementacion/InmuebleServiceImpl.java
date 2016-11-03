@@ -53,6 +53,7 @@ public class InmuebleServiceImpl implements InmuebleService {
 	}
 
 	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Inmueble> listarInmuebles() throws PersistenciaException {
 		ArrayList<Inmueble> inmuebles = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();

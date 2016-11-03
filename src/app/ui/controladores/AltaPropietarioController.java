@@ -170,7 +170,7 @@ public class AltaPropietarioController extends OlimpoController {
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void inicializar(URL location, ResourceBundle resources) {
 		listaLocalidades = new ArrayList<>();
 		listaProvincias = new ArrayList<>();
 		listaPaises = new ArrayList<>();

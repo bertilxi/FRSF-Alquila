@@ -34,7 +34,7 @@ public class DatosServiceImpl implements DatosService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Localidad> obtenerLocalidadesDe(Provincia provincia) throws PersistenciaException {
 		ArrayList<Localidad> localidades = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
@@ -48,7 +48,7 @@ public class DatosServiceImpl implements DatosService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Provincia> obtenerProvinciasDe(Pais pais) throws PersistenciaException {
 		ArrayList<Provincia> provincias = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
@@ -62,7 +62,7 @@ public class DatosServiceImpl implements DatosService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Pais> obtenerPaises() throws PersistenciaException {
 		ArrayList<Pais> paises = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
@@ -76,7 +76,7 @@ public class DatosServiceImpl implements DatosService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<TipoDocumento> obtenerTiposDeDocumento() throws PersistenciaException {
 		ArrayList<TipoDocumento> tipos = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
@@ -90,7 +90,7 @@ public class DatosServiceImpl implements DatosService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<TipoInmueble> obtenerTiposDeInmueble() throws PersistenciaException {
 		ArrayList<TipoInmueble> tipos = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
@@ -104,7 +104,7 @@ public class DatosServiceImpl implements DatosService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
 		ArrayList<Estado> estados = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();

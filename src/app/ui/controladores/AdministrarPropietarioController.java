@@ -38,7 +38,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 	private ArrayList<Propietario> listaPropietarios;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void inicializar(URL location, ResourceBundle resources) {
 
 		try{
 			listaPropietarios = coordinador.obtenerPropietarios();

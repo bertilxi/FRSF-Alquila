@@ -88,7 +88,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void inicializar(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 
 	}

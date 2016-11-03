@@ -3,23 +3,28 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import app.logica.CoordinadorJavaFX;
-import app.ui.componentes.ventanas.PresentadorVentanas;
+import app.ui.ScenographyChanger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 public class WindowTitleController extends OlimpoController {
+
+	public static final String URLVista = "/app/ui/vistas/windowTitle.fxml";
 
 	private static double xOffset = 0;
 	private static double yOffset = 0;
 
 	@FXML
 	private HBox titlebar;
-	protected Stage stage;
-	protected CoordinadorJavaFX coordinador;
-	protected PresentadorVentanas presentador;
+
+	@FXML
+	private Pane background;
+
+	@FXML
+	private Label titulo;
 
 	@FXML
 	private void exitPlatform() {
@@ -43,7 +48,11 @@ public class WindowTitleController extends OlimpoController {
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void inicializar(URL location, ResourceBundle resources) {
+		this.setScenographyChanger(new ScenographyChanger(stage, presentador, coordinador, background));
+		//Primera pantalla a mostrar
+		cambiarScene(LoginController.URLVista);
+
 		// como se pierden las propiedades del sistema por no tener barra de titulo
 		// se implementan dos handlers que manejan el movimiento de arrastre de la ventana
 		// se pierden mas propiedades que por el momento ignoro
@@ -56,20 +65,7 @@ public class WindowTitleController extends OlimpoController {
 			stage.setX(event.getScreenX() + xOffset);
 			stage.setY(event.getScreenY() + yOffset);
 		});
-	}
 
-	@Override
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
-	@Override
-	public void setCoordinador(CoordinadorJavaFX coordinador) {
-		this.coordinador = coordinador;
-	}
-
-	@Override
-	public void setPresentador(PresentadorVentanas presentador) {
-		this.presentador = presentador;
+		titulo.textProperty().bind(stage.titleProperty());
 	}
 }

@@ -55,6 +55,7 @@ public class PropietarioServiceImpl implements PropietarioService {
 	}
 
 	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException {
 		Propietario propietario = null;
 		Session session = getSessionFactory().getCurrentSession();
@@ -71,6 +72,7 @@ public class PropietarioServiceImpl implements PropietarioService {
 	}
 
 	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Propietario> listarPropietarios() throws PersistenciaException {
 		ArrayList<Propietario> propietarios = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
