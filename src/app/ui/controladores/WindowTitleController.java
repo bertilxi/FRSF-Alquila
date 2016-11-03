@@ -49,9 +49,9 @@ public class WindowTitleController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
-		this.setScenographyChanger(new ScenographyChanger(stage, presentador, coordinador, background));
 		//Primera pantalla a mostrar
-		cambiarScene(LoginController.URLVista);
+		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
+		cambiarScene(background, LoginController.URLVista);
 
 		// como se pierden las propiedades del sistema por no tener barra de titulo
 		// se implementan dos handlers que manejan el movimiento de arrastre de la ventana

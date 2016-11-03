@@ -34,13 +34,14 @@ public class BaseController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
-		this.setScenographyChanger(new ScenographyChanger(stage, presentador, coordinador, background));
+		//Primera pantalla a mostrar
+		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
+		cambiarScene(background, LoginController.URLVista);
 
 		toggleButtonAyuda.setToggleGroup(toggleGroupSidebar);
 		toggleButtonClientes.setToggleGroup(toggleGroupSidebar);
 		toggleButtonInmuebles.setToggleGroup(toggleGroupSidebar);
 		toggleButtonPropietarios.setToggleGroup(toggleGroupSidebar);
 		toggleButtonVendedores.setToggleGroup(toggleGroupSidebar);
-
 	}
 }

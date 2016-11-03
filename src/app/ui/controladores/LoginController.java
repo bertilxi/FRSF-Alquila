@@ -32,13 +32,11 @@ public class LoginController extends OlimpoController {
 
 	@FXML
 	public void registrar() {
-		cambiarScene(AltaVendedorController.URLVista);
+		cambiarmeAScene(AltaVendedorController.URLVista);
 	}
 
 	@FXML
 	public ResultadoControlador ingresar() {
-		BaseController base = (BaseController) cambiarScene(BaseController.URLVista);
-		base.cambiarScene(AdministrarClienteController.URLVista);
 		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoAutenticacion resultado = null;
 		Boolean hayErrores;
@@ -84,8 +82,7 @@ public class LoginController extends OlimpoController {
 			}
 		}
 		else{
-			//			BaseController base = (BaseController) cambiarScene(BaseController.URLVista);
-			base.cambiarScene(AdministrarClienteController.URLVista);
+			cambiarmeAScene(BaseController.URLVista);
 		}
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 	}

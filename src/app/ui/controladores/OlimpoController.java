@@ -1,6 +1,8 @@
 package app.ui.controladores;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import app.logica.CoordinadorJavaFX;
@@ -9,6 +11,7 @@ import app.ui.componentes.ventanas.PresentadorVentanas;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -17,14 +20,24 @@ public abstract class OlimpoController implements Initializable {
 	protected Stage stage;
 	protected CoordinadorJavaFX coordinador;
 	protected PresentadorVentanas presentador;
-	private ScenographyChanger scenographyChanger;
+	private ScenographyChanger parentScenographyChanger;
+	private Map<Node, ScenographyChanger> myScenographyChangers = new HashMap<>();
 
-	protected OlimpoController cambiarScene(String URLVistaACambiar) {
-		return scenographyChanger.cambiarScenography(URLVistaACambiar);
+	protected OlimpoController agregarScenographyChanger(Node contexto, ScenographyChanger scenographyChanger) {
+		myScenographyChangers.put(contexto, scenographyChanger);
+		return this;
+	}
+
+	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar) {
+		return myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar);
+	}
+
+	protected OlimpoController cambiarmeAScene(String URLVistaACambiar) {
+		return parentScenographyChanger.cambiarScenography(URLVistaACambiar);
 	}
 
 	public OlimpoController setScenographyChanger(ScenographyChanger scenographyChanger) {
-		this.scenographyChanger = scenographyChanger;
+		this.parentScenographyChanger = scenographyChanger;
 		return this;
 	}
 
