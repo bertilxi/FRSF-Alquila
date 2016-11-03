@@ -26,11 +26,14 @@ import app.logica.gestores.GestorPropietario;
 import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoCrearCliente;
+import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoEliminarCliente;
+import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarPropietario;
 import app.logica.resultados.ResultadoModificarCliente;
+import app.logica.resultados.ResultadoModificarInmueble;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarVendedor;
 
@@ -104,15 +107,15 @@ public class CoordinadorJavaFX {
 		return gestorPropietario.obtenerPropietarios();
 	}
 
-	public ResultadoCrearPropietario crearInmueble(Inmueble inmbueble) throws PersistenciaException, GestionException {
+	public ResultadoCrearInmueble crearInmueble(Inmueble inmbueble) throws PersistenciaException, GestionException {
 		throw new NotYetImplementedException();
 	}
 
-	public ResultadoModificarPropietario modificarInmueble(Inmueble propietario) throws PersistenciaException {
+	public ResultadoModificarInmueble modificarInmueble(Inmueble propietario) throws PersistenciaException {
 		throw new NotYetImplementedException();
 	}
 
-	public ResultadoEliminarPropietario eliminarInmueble(Inmueble propietario) throws PersistenciaException {
+	public ResultadoEliminarInmueble eliminarInmueble(Inmueble propietario) throws PersistenciaException {
 		throw new NotYetImplementedException();
 	}
 

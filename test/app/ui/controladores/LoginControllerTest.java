@@ -21,10 +21,30 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
+/**
+ * Este test prueba los métodos de la clase LoginController
+ */
 public class LoginControllerTest {
 
 	@Test
 	@Parameters
+	/**
+	 * Prueba el método ingresar()
+	 *
+	 * @param tipoDocumento
+	 *            que se usará en el test
+	 * @param numDoc
+	 *            que se usará en el test
+	 * @param contra
+	 *            es la contraseña que se usará en el test
+	 * @param resultadoVista
+	 *            es lo que se espera que devuelva el metodo
+	 * @param resultadoLogica
+	 *            es lo que el mock de la lógica debe devolver en el test y que el controlador recibe
+	 * @param excepcion
+	 *            es la excepcion que debe lanzar el mock del controlador, si la prueba involucra procesar una excepcion de dicho controlador, debe ser nulo resultadoLogica para que se use
+	 * @throws Exception
+	 */
 	public void testIngresar(TipoDocumento tipoDocumento, String numDoc, String contra, ResultadoControlador resultadoVista, ResultadoAutenticacion resultadoLogica, Throwable excepcion) throws Exception {
 		CoordinadorJavaFX coordinadorMock = new CoordinadorJavaFX() {
 			@Override
@@ -73,6 +93,11 @@ public class LoginControllerTest {
 		}
 	}
 
+	/**
+	 * Método que devuelve los parámetros para probar el método ingresar()
+	 * 
+	 * @return parámetros de prueba
+	 */
 	protected Object[] parametersForTestIngresar() {
 		return new Object[] {
 				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "pepe", new ResultadoControlador(), new ResultadoAutenticacion(), null }, //prueba ingreso correcto
