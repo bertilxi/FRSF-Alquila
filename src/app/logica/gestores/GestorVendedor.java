@@ -53,8 +53,8 @@ public class GestorVendedor {
 			Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(datos.getTipoDocumento().getTipo(), datos.getDNI()));
 
 			//Si lo encuentra comprueba que la contraseña ingresada coincida con la de la base de datos
-			if(vendedorAuxiliar == null ||
-					!(encriptador.encriptar(datos.getContrasenia(), vendedorAuxiliar.getSalt())).equals(vendedorAuxiliar.getPassword())){
+			if(vendedorAuxiliar == null || vendedorAuxiliar.getPassword() == null ||
+					!vendedorAuxiliar.getPassword().equals(encriptador.encriptar(datos.getContrasenia(), vendedorAuxiliar.getSalt()))){
 				//Si no coincide falla
 				errores.add(ErrorAutenticacion.Datos_Incorrectos);
 			}
