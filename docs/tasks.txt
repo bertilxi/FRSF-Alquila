@@ -34,5 +34,5 @@
 ### total : 15
 
 ### fecha de inicio: martes 18 de octubre
-### fecha de fin primera iteracion: 1 de noviembre
+### fecha de fin primera iteracion: 8 de noviembre
 ### con task points de 1 dia de 3 horas de trabajo

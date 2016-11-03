@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorCliente;
-import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 import javafx.event.ActionEvent;
@@ -27,7 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ModificarClienteController extends BaseController {
+public class ModificarClienteController extends OlimpoController {
 
 	@FXML
 	private TextField textFieldNombre;
@@ -48,10 +46,6 @@ public class ModificarClienteController extends BaseController {
 	private Button buttonCargarInmueble;
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
-
-	private GestorDatos gestorDatos;
-
-	private GestorCliente gestorCliente;
 
 	private Cliente clienteEnModificacion;
 
@@ -102,7 +96,7 @@ public class ModificarClienteController extends BaseController {
 					.setTelefono(telefono);
 
 			try{
-				ResultadoModificarCliente resultado = gestorCliente.modificarCliente(clienteEnModificacion);
+				ResultadoModificarCliente resultado = coordinador.modificarCliente(clienteEnModificacion);
 				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorModificarCliente err: resultado.getErrores()){
@@ -156,12 +150,10 @@ public class ModificarClienteController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
-
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{
-			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}

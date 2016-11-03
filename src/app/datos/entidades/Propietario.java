@@ -13,14 +13,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-//TODO hacer hql: listar todos los propietarios con estado alta
-@NamedQuery(name = "obtenerPropietario", query = "SELECT v FROM Propietario v WHERE numeroDocumento = :documento AND tipoDocumento.tipo = :tipoDocumento")
+@NamedQueries(value = { @NamedQuery(name = "obtenerPropietarios", query = "SELECT p FROM Propietario p WHERE p.estado.estado = ALTA"),
+		@NamedQuery(name = "obtenerPropietario", query = "SELECT p FROM Propietario p WHERE p.numeroDocumento = :documento AND p.tipoDocumento.tipo = :tipoDocumento") })
 @Entity
 @Table(name = "propietario", uniqueConstraints = @UniqueConstraint(name = "propietario_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 public class Propietario {

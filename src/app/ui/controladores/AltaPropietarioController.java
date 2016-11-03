@@ -15,8 +15,6 @@ import app.datos.entidades.TipoDocumento;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorDatos;
-import app.logica.gestores.GestorPropietario;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
@@ -26,7 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class AltaPropietarioController extends BaseController {
+public class AltaPropietarioController extends OlimpoController {
 
 	@FXML
 	private TextField textFieldNombre;
@@ -64,10 +62,6 @@ public class AltaPropietarioController extends BaseController {
 	private ArrayList<Provincia> listaProvincias;
 
 	private ArrayList<Pais> listaPaises;
-
-	private GestorDatos gestorDatos;
-
-	private GestorPropietario gestorPropietario;
 
 	@FXML
 	public void acceptAction() {
@@ -127,7 +121,7 @@ public class AltaPropietarioController extends BaseController {
 					.setDireccion(direccion);
 
 			try{
-				ResultadoCrearPropietario resultado = gestorPropietario.crearPropietario(propietario);
+				ResultadoCrearPropietario resultado = coordinador.crearPropietario(propietario);
 				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorCrearPropietario err: resultado.getErrores()){
@@ -177,19 +171,18 @@ public class AltaPropietarioController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
 		listaLocalidades = new ArrayList<>();
 		listaProvincias = new ArrayList<>();
 		listaPaises = new ArrayList<>();
 		listaTiposDeDocumento = new ArrayList<>();
 		try{
-			listaTiposDeDocumento = gestorDatos.obtenerTiposDeDocumento();
+			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 		try{
-			listaPaises = gestorDatos.obtenerPaises();
+			listaPaises = coordinador.obtenerPaises();
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
@@ -202,7 +195,7 @@ public class AltaPropietarioController extends BaseController {
 
 	private void actualizarLocalidades(Provincia provincia) {
 		try{
-			listaLocalidades = gestorDatos.obtenerLocalidadesDe(provincia);
+			listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
@@ -211,7 +204,7 @@ public class AltaPropietarioController extends BaseController {
 
 	private void actualizarProvincias(Pais pais) {
 		try{
-			listaProvincias = gestorDatos.obtenerProvinciasDe(pais);
+			listaProvincias = coordinador.obtenerProvinciasDe(pais);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}

@@ -19,7 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class ModificarVendedorController extends BaseController {
+public class ModificarVendedorController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/modificarVendedor.fxml";
 
@@ -146,8 +146,6 @@ public class ModificarVendedorController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
-
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{

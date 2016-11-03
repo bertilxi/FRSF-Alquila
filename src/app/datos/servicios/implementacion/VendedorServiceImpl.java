@@ -1,5 +1,7 @@
 package app.datos.servicios.implementacion;
 
+import java.util.ArrayList;
+
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 
@@ -68,6 +70,23 @@ public class VendedorServiceImpl implements VendedorService {
 			throw new ConsultaException();
 		}
 		return vendedor;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ArrayList<Vendedor> listarVendedores() throws PersistenciaException {
+		ArrayList<Vendedor> vendedores = new ArrayList<Vendedor>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			for(Object o: session.getNamedQuery("listarVendedores").list()){
+				if(o instanceof Vendedor){
+					vendedores.add((Vendedor) o);
+				}
+			}
+		} catch(Exception e) {
+			throw new ConsultaException();
+		}
+		return vendedores;
 	}
 
 }

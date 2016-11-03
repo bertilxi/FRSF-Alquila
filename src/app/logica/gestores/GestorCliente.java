@@ -12,7 +12,6 @@ import app.datos.clases.FiltroCliente;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Estado;
 import app.datos.servicios.ClienteService;
-import app.datos.servicios.DatosService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
@@ -30,7 +29,7 @@ public class GestorCliente {
 	protected ClienteService persistidorCliente;
 
 	@Resource
-	protected DatosService persistidorDatos;
+	protected GestorDatos gestorDatos;
 
 	@Resource
 	protected ValidadorFormato validador;
@@ -67,7 +66,7 @@ public class GestorCliente {
 		}
 
 		if(errores.isEmpty()){
-			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 			for(Estado e: estados){
 				if(e.getEstado().equals(EstadoStr.ALTA)){
 					cliente.setEstado(e);
@@ -107,7 +106,7 @@ public class GestorCliente {
 
 		if(errores.isEmpty()){
 			if(cliente.getEstado().getEstado().equals(EstadoStr.BAJA)){
-				ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+				ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 				for(Estado e: estados){
 					if(e.getEstado().equals(EstadoStr.ALTA)){
 						cliente.setEstado(e);
@@ -130,7 +129,7 @@ public class GestorCliente {
 		}
 
 		if(errores.isEmpty()){
-			ArrayList<Estado> estados = persistidorDatos.obtenerEstados();
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 			for(Estado e: estados){
 				if(e.getEstado().equals(EstadoStr.BAJA)){
 					cliente.setEstado(e);

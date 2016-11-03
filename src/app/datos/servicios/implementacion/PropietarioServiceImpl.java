@@ -71,15 +71,19 @@ public class PropietarioServiceImpl implements PropietarioService {
 	}
 
 	@Override
-	public void eliminarPropietario(Propietario propietario) throws PersistenciaException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public ArrayList<Propietario> listarPropietarios() throws PersistenciaException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Propietario> propietarios = new ArrayList<>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			for(Object o: session.getNamedQuery("obtenerPropietarios").list()){
+				if(o instanceof Propietario){
+					propietarios.add((Propietario) o);
+				}
+			}
+		} catch(Exception e){
+			throw new ConsultaException();
+		}
+		return propietarios;
 	}
 
 }
