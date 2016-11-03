@@ -41,9 +41,9 @@ public class AdministrarPropietarioController extends OlimpoController {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		try{
-			listaPropietarios = coordinadorVentanas.obtenerPropietarios();
+			listaPropietarios = coordinador.obtenerPropietarios();
 		} catch(PersistenciaException e){
-			coordinadorVentanas.presentarError("Error", "No se pudieron listar los propietarios", stage);
+			presentador.presentarError("Error", "No se pudieron listar los propietarios", stage);
 		}
 
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));

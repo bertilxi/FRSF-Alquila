@@ -37,6 +37,7 @@ public class AdministrarClienteController extends OlimpoController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		try{
 			listaClientes = coordinador.obtenerClientes();
 		} catch(PersistenciaException e){
