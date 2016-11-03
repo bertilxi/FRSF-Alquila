@@ -39,7 +39,7 @@ public class Inmueble {
 	@Column(name = "fecha_carga", nullable = false)
 	private Date fechaCarga;
 
-	@Column(name = "precio", nullable = false)
+	@Column(name = "precio")
 	private Double precio;
 
 	@Column(name = "frente")

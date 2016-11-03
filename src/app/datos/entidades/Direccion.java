@@ -19,7 +19,7 @@ public class Direccion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
 
-	@Column(name = "numero", length = 30)
+	@Column(name = "numero", length = 30, nullable = false)
 	private String numero;
 
 	@Column(name = "piso", length = 30)
