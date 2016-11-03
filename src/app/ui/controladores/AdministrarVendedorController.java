@@ -39,7 +39,9 @@ public class AdministrarVendedorController extends OlimpoController {
 		try{
 			listaVendedores = coordinador.obtenerVendedores();
 		} catch(PersistenciaException e){
-			presentador.presentarError("Error", "No se pudieron listar los vendedores", stage);
+			presentador.presentarExcepcion(e, stage);
+		} catch(Exception e){
+			presentador.presentarExcepcion(e, stage);
 		}
 
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));

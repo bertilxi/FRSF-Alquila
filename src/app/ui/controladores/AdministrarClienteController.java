@@ -43,7 +43,7 @@ public class AdministrarClienteController extends OlimpoController {
 		try{
 			listaClientes = coordinador.obtenerClientes();
 		} catch(PersistenciaException e){
-			presentador.presentarError("Error", "No se pudieron listar los clientes", stage);
+			presentador.presentarExcepcion(e, stage);
 		} catch(Exception e){
 			presentador.presentarExcepcionInesperada(e, stage);
 		}

@@ -1,5 +1,11 @@
-package app.ui.componentes.ventanas;
+package app.ui.componentes.ventanas.mock;
 
+import app.ui.componentes.ventanas.PresentadorVentanas;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
+import app.ui.componentes.ventanas.VentanaError;
+import app.ui.componentes.ventanas.VentanaErrorExcepcion;
+import app.ui.componentes.ventanas.VentanaErrorExcepcionInesperada;
+import app.ui.componentes.ventanas.VentanaInformacion;
 import javafx.stage.Window;
 
 public class PresentadorVentanasMock extends PresentadorVentanas {

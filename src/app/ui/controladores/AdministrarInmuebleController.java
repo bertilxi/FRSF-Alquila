@@ -17,9 +17,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class LoginController extends OlimpoController {
+public class AdministrarInmuebleController extends OlimpoController {
 
-	public static final String URLVista = "/app/ui/vistas/login.fxml";
+	public static final String URLVista = "/app/ui/vistas/administrarInmueble.fxml";
 
 	@FXML
 	protected TextField tfNumeroDocumento;
@@ -37,13 +37,10 @@ public class LoginController extends OlimpoController {
 
 	@FXML
 	public ResultadoControlador ingresar() {
-		//TODO borrar para activar login
-		cambiarmeAScene(BaseController.URLVista);
 		if(true){
+			cambiarmeAScene(BaseController.URLVista);
 			return null;
 		}
-		@SuppressWarnings("unused")
-		//borrar
 		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoAutenticacion resultado = null;
 		Boolean hayErrores;

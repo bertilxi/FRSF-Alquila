@@ -14,6 +14,8 @@ import javafx.scene.control.TableView;
 
 public class AdministrarPropietarioController extends OlimpoController {
 
+	public static final String URLVista = "/app/ui/vistas/administrarPropietario.fxml";
+
 	@FXML
 	private TableView<Propietario> tablaPropietarios;
 

@@ -24,31 +24,31 @@
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
-                        <ToggleButton fx:id="toggleButtonClientes" mnemonicParsing="false" styleClass="toggle-button-cliente" />
+                        <ToggleButton fx:id="toggleButtonClientes" mnemonicParsing="false" onAction="#verClientes" styleClass="toggle-button-cliente" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Clientes" />
                     </children>
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
-                        <ToggleButton fx:id="toggleButtonInmuebles" mnemonicParsing="false" styleClass="toggle-button-inmueble" />
+                        <ToggleButton fx:id="toggleButtonInmuebles" mnemonicParsing="false" onAction="#verInmuebles" styleClass="toggle-button-inmueble" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Inmuebles" />
                     </children>
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
-                        <ToggleButton fx:id="toggleButtonVendedores" mnemonicParsing="false" styleClass="toggle-button-vendedor" />
+                        <ToggleButton fx:id="toggleButtonVendedores" mnemonicParsing="false" onAction="#verVendedores" styleClass="toggle-button-vendedor" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Vendedores" />
                     </children>
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
-                        <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" styleClass="toggle-button-propietario" />
+                        <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" onAction="#verDueños" styleClass="toggle-button-propietario" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Dueños" />
                     </children>
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
-                        <ToggleButton fx:id="toggleButtonAyuda" mnemonicParsing="false" styleClass="toggle-button-ayuda" />
+                        <ToggleButton fx:id="toggleButtonAyuda" mnemonicParsing="false" onAction="#verAyuda" styleClass="toggle-button-ayuda" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Ayuda" />
                     </children>
                 </VBox>

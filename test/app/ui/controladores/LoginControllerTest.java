@@ -14,7 +14,7 @@ import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 import app.ui.componentes.ventanas.PresentadorVentanas;
-import app.ui.componentes.ventanas.PresentadorVentanasMock;
+import app.ui.componentes.ventanas.mock.PresentadorVentanasMock;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import junitparams.JUnitParamsRunner;
