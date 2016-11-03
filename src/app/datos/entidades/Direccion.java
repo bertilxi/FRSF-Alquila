@@ -28,6 +28,9 @@ public class Direccion {
 	@Column(name = "departamento", length = 30)
 	private String departamento;
 
+	@Column(name = "otros", length = 100)
+	private String otros;
+
 	//Relaciones
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idcalle", referencedColumnName = "id", foreignKey = @ForeignKey(name = "direccion_idcalle_fk"))
@@ -87,6 +90,15 @@ public class Direccion {
 		return this;
 	}
 
+	public String getOtros() {
+		return otros;
+	}
+
+	public Direccion setOtros(String otros) {
+		this.otros = otros;
+		return this;
+	}
+
 	public Calle getCalle() {
 		return calle;
 	}
@@ -124,6 +136,7 @@ public class Direccion {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((localidad == null) ? 0 : localidad.hashCode());
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+		result = prime * result + ((otros == null) ? 0 : otros.hashCode());
 		result = prime * result + ((piso == null) ? 0 : piso.hashCode());
 		return result;
 	}
@@ -140,6 +153,17 @@ public class Direccion {
 			return false;
 		}
 		Direccion other = (Direccion) obj;
+		if(id == null){
+			if(other.id != null){
+				return false;
+			}
+		}
+		else if(!id.equals(other.id)){
+			return false;
+		}
+		else{
+			return true;
+		}
 		if(barrio == null){
 			if(other.barrio != null){
 				return false;
@@ -164,12 +188,12 @@ public class Direccion {
 		else if(!departamento.equals(other.departamento)){
 			return false;
 		}
-		if(id == null){
-			if(other.id != null){
+		if(otros == null){
+			if(other.otros != null){
 				return false;
 			}
 		}
-		else if(!id.equals(other.id)){
+		else if(!otros.equals(other.otros)){
 			return false;
 		}
 		if(localidad == null){
