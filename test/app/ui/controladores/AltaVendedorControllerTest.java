@@ -16,8 +16,7 @@ import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorDatos;
-import app.logica.gestores.GestorVendedor;
+import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
 import junitparams.JUnitParamsRunner;
@@ -30,8 +29,7 @@ public class AltaVendedorControllerTest {
 	@Parameters
 	public void testCrearVendedor(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String contraseña, String contraseña2, ResultadoCrearVendedor resultadoCrearVendedorEsperado, Integer llamaACrearVendedor, Throwable excepcion) throws Exception {
 
-		GestorVendedor gestorVendedorMock = Mockito.mock(GestorVendedor.class);
-		GestorDatos gestorDatosMock = Mockito.mock(GestorDatos.class);
+		CoordinadorJavaFX coordinadorMock = Mockito.mock(CoordinadorJavaFX.class);
 
 		Vendedor vendedor = new Vendedor()
 				.setNombre(nombre)
@@ -40,18 +38,17 @@ public class AltaVendedorControllerTest {
 				.setNumeroDocumento(numeroDocumento)
 				.setPassword(contraseña);
 
-		ArrayList<TipoDocumento> tipos = new ArrayList<TipoDocumento>();
+		ArrayList<TipoDocumento> tipos = new ArrayList<>();
 		tipos.add(tipoDocumento);
 
-		Mockito.when(gestorVendedorMock.crearVendedor(vendedor)).thenReturn(resultadoCrearVendedorEsperado);
-		Mockito.when(gestorDatosMock.obtenerTiposDeDocumento()).thenReturn(tipos);
+		Mockito.when(coordinadorMock.crearVendedor(vendedor)).thenReturn(resultadoCrearVendedorEsperado);
+		Mockito.when(coordinadorMock.obtenerTiposDeDocumento()).thenReturn(tipos);
 
 		AltaVendedorController altaVendedorController = new AltaVendedorController() {
 			@Override
-			public void initialize(URL location, ResourceBundle resources) {
-				this.gestorDatos = gestorDatosMock;
-				this.gestorVendedor = gestorVendedorMock;
-				super.initialize(location, resources);
+			public void inicializar(URL location, ResourceBundle resources) {
+				this.coordinador = coordinadorMock;
+				super.inicializar(location, resources);
 			}
 
 			@Override
@@ -71,10 +68,10 @@ public class AltaVendedorControllerTest {
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
-				Mockito.verify(gestorDatosMock).obtenerTiposDeDocumento();
+				Mockito.verify(coordinadorMock).obtenerTiposDeDocumento();
 				ResultadoCrearVendedor resultadoCrearVendedor = altaVendedorController.acceptAction();
 				assertEquals(resultadoCrearVendedorEsperado, resultadoCrearVendedor);
-				Mockito.verify(gestorVendedorMock, Mockito.times(llamaACrearVendedor)).crearVendedor(Mockito.any());
+				Mockito.verify(coordinadorMock, Mockito.times(llamaACrearVendedor)).crearVendedor(Mockito.any());
 			}
 		};
 
