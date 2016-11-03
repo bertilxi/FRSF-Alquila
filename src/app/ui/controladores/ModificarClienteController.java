@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorCliente;
-import app.logica.gestores.GestorDatos;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 import javafx.event.ActionEvent;
@@ -27,7 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ModificarClienteController extends BaseController {
+public class ModificarClienteController extends OlimpoController {
 
 	@FXML
 	private TextField textFieldNombre;
@@ -152,8 +150,6 @@ public class ModificarClienteController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
-
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{

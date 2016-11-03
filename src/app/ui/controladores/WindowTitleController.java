@@ -7,11 +7,10 @@ import app.logica.CoordinadorJavaFX;
 import app.ui.componentes.ventanas.PresentadorVentanas;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class WindowTitleController implements Initializable {
+public class WindowTitleController extends OlimpoController {
 
 	private static double xOffset = 0;
 	private static double yOffset = 0;
@@ -59,14 +58,17 @@ public class WindowTitleController implements Initializable {
 		});
 	}
 
+	@Override
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
 
+	@Override
 	public void setCoordinador(CoordinadorJavaFX coordinador) {
 		this.coordinador = coordinador;
 	}
 
+	@Override
 	public void setPresentador(PresentadorVentanas presentador) {
 		this.presentador = presentador;
 	}

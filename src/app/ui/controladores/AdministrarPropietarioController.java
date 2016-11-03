@@ -6,14 +6,13 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Propietario;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorPropietario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class AdministrarPropietarioController extends BaseController {
+public class AdministrarPropietarioController extends OlimpoController {
 
 	@FXML
 	private TableView<Propietario> tablaPropietarios;
@@ -40,12 +39,11 @@ public class AdministrarPropietarioController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
 
 		try{
-			listaPropietarios = coordinador.obtenerPropietarios();
+			listaPropietarios = coordinadorVentanas.obtenerPropietarios();
 		} catch(PersistenciaException e){
-			presentador.presentarError("Error", "No se pudieron listar los propietarios", stage);
+			coordinadorVentanas.presentarError("Error", "No se pudieron listar los propietarios", stage);
 		}
 
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));

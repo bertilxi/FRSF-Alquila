@@ -11,7 +11,6 @@ import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Propietario;
-import app.datos.servicios.DatosService;
 import app.datos.servicios.PropietarioService;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
@@ -33,7 +32,7 @@ public class GestorPropietario {
 	protected ValidadorFormato validador;
 
 	@Resource
-	protected DatosService gestorDatos;
+	protected GestorDatos gestorDatos;
 
 	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();

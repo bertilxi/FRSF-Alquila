@@ -12,8 +12,6 @@ import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorDatos;
-import app.logica.gestores.GestorPropietario;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
 import javafx.event.ActionEvent;
@@ -22,7 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class ModificarPropietarioController extends BaseController {
+public class ModificarPropietarioController extends OlimpoController {
 	@FXML
 	private TextField textFieldNombre;
 	@FXML
@@ -178,7 +176,6 @@ public class ModificarPropietarioController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
 		listaLocalidades = new ArrayList<>();
 		listaProvincias = new ArrayList<>();
 		listaPaises = new ArrayList<>();

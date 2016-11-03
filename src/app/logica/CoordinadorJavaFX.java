@@ -13,6 +13,7 @@ import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
+import app.logica.gestores.GestorInmueble;
 import app.logica.gestores.GestorPropietario;
 import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoAutenticacion;
@@ -31,8 +32,8 @@ public class CoordinadorJavaFX {
 	@Resource
 	GestorPropietario gestorPropietario;
 
-	//@Resource
-	//GestorInmueble gestorInmueble;
+	@Resource
+	GestorInmueble gestorInmueble;
 
 	@Resource
 	GestorDatos gestorDatos;

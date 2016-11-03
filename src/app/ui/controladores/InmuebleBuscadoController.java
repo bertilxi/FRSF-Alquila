@@ -1,5 +1,8 @@
 package app.ui.controladores;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import app.datos.entidades.InmuebleBuscado;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,7 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
-public class InmuebleBuscadoController {
+public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private TextField textFieldSuperficie;
@@ -82,6 +85,12 @@ public class InmuebleBuscadoController {
 
 	public void cancelAction(ActionEvent event) {
 		((Node) (event.getSource())).getScene().getWindow().hide();
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

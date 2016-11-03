@@ -15,8 +15,6 @@ import app.datos.entidades.TipoDocumento;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorDatos;
-import app.logica.gestores.GestorPropietario;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
@@ -26,7 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class AltaPropietarioController extends BaseController {
+public class AltaPropietarioController extends OlimpoController {
 
 	@FXML
 	private TextField textFieldNombre;
@@ -173,7 +171,6 @@ public class AltaPropietarioController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
 		listaLocalidades = new ArrayList<>();
 		listaProvincias = new ArrayList<>();
 		listaPaises = new ArrayList<>();

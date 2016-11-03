@@ -6,14 +6,13 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
-import app.logica.CoordinadorJavaFX;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class AdministrarVendedorController extends BaseController {
+public class AdministrarVendedorController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarVendedor.fxml";
 
@@ -35,12 +34,8 @@ public class AdministrarVendedorController extends BaseController {
 
 	private ArrayList<Vendedor> listaVendedores;
 
-	protected CoordinadorJavaFX coordinador = new CoordinadorJavaFX();
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
-
 		try{
 			listaVendedores = coordinador.obtenerVendedores();
 		} catch(PersistenciaException e){

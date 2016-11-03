@@ -1,6 +1,8 @@
 package app.ui.controladores;
 
+import java.net.URL;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import app.datos.clases.DatosLogin;
@@ -15,7 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class LoginController extends WindowTitleController {
+public class LoginController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/Login.fxml";
 
@@ -85,6 +87,12 @@ public class LoginController extends WindowTitleController {
 			// ControladorRomano.cambiarScene(MenuAdministracionController.URLVista, apilador, coordinador);
 		}
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -6,14 +6,13 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
 import app.excepciones.PersistenciaException;
-import app.logica.gestores.GestorCliente;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class AdministrarClienteController extends BaseController {
+public class AdministrarClienteController extends OlimpoController {
 
 	@FXML
 	private TableView<Cliente> tablaClientes;
@@ -38,8 +37,6 @@ public class AdministrarClienteController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize(location, resources);
-
 		try{
 			listaClientes = coordinador.obtenerClientes();
 		} catch(PersistenciaException e){
