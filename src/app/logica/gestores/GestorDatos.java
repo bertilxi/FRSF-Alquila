@@ -23,6 +23,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.entidades.Barrio;
+import app.datos.entidades.Calle;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Pais;
@@ -60,5 +62,13 @@ public class GestorDatos {
 
 	public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
 		return persistidorDatos.obtenerEstados();
+	}
+
+	public ArrayList<Barrio> obtenerBarriosDe(Localidad localidad) throws PersistenciaException {
+		return persistidorDatos.obtenerBarriosDe(localidad);
+	}
+
+	public ArrayList<Calle> obtenerCallesDe(Localidad localidad) throws PersistenciaException {
+		return persistidorDatos.obtenerCallesDe(localidad);
 	}
 }

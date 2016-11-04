@@ -25,6 +25,8 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import app.datos.clases.DatosLogin;
+import app.datos.entidades.Barrio;
+import app.datos.entidades.Calle;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
@@ -165,4 +167,11 @@ public class CoordinadorJavaFX {
 		return gestorVendedor.obtenerVendedor(vendedor);
 	}
 
+	public ArrayList<Barrio> obtenerBarriosDe(Localidad localidad) throws PersistenciaException {
+		return gestorDatos.obtenerBarriosDe(localidad);
+	}
+
+	public ArrayList<Calle> obtenerCallesDe(Localidad localidad) throws PersistenciaException {
+		return gestorDatos.obtenerCallesDe(localidad);
+	}
 }
