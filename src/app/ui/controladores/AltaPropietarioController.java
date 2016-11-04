@@ -18,9 +18,7 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -168,8 +166,8 @@ public class AltaPropietarioController extends OlimpoController {
 	}
 
 	@FXML
-	public void cancelAction(ActionEvent event) {
-		((Node) event.getSource()).getScene().getWindow().hide();
+	public void cancelAction() {
+		cambiarmeAScene(AdministrarPropietarioController.URLVista);
 	}
 
 	@Override

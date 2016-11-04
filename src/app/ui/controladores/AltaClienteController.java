@@ -13,9 +13,7 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -128,7 +126,7 @@ public class AltaClienteController extends OlimpoController {
 
 	@FXML
 	public void cancelAction() {
-		//TODO hacer esto
+		cambiarmeAScene(AdministrarClienteController.URLVista);
 	}
 
 	@Override
