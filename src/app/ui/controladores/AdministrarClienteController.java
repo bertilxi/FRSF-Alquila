@@ -82,17 +82,23 @@ public class AdministrarClienteController extends OlimpoController {
 
 	@FXML
 	private void handleModificar() {
+		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
 		ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
 		controlador.setClienteEnModificacion(tablaClientes.getSelectionModel().getSelectedItem());
 	}
 
 	@FXML
 	private void handleEliminar() {
+		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar cliente", "Está a punto de eliminar al cliente.\n ¿Está seguro que desea hacerlo?", this.stage);
-		if(ventana.acepta()) {
-			try {
+		if(ventana.acepta()){
+			try{
 				ResultadoEliminarCliente resultado = coordinador.eliminarCliente(tablaClientes.getSelectionModel().getSelectedItem());
-				if(resultado.hayErrores()) {
+				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorEliminarCliente err: resultado.getErrores()){
 						switch(err) {
@@ -106,7 +112,7 @@ public class AdministrarClienteController extends OlimpoController {
 				}
 				tablaClientes.getItems().clear();
 				tablaClientes.getItems().addAll(coordinador.obtenerClientes());
-			} catch (PersistenciaException e) {
+			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 		}

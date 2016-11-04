@@ -89,17 +89,23 @@ public class AdministrarPropietarioController extends OlimpoController {
 
 	@FXML
 	private void handleModificar() {
+		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
 		ModificarPropietarioController controlador = (ModificarPropietarioController) cambiarmeAScene(ModificarPropietarioController.URLVista);
 		controlador.setPropietarioEnModificacion(tablaPropietarios.getSelectionModel().getSelectedItem());
 	}
 
 	@FXML
 	private void handleEliminar() {
+		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar propietario", "Está a punto de eliminar al propietario.\n ¿Está seguro que desea hacerlo?", this.stage);
-		if(ventana.acepta()) {
-			try {
+		if(ventana.acepta()){
+			try{
 				ResultadoEliminarPropietario resultado = coordinador.eliminarPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
-				if(resultado.hayErrores()) {
+				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorEliminarPropietario err: resultado.getErrores()){
 						switch(err) {
@@ -113,7 +119,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 				}
 				tablaPropietarios.getItems().clear();
 				tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());
-			} catch (PersistenciaException e) {
+			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
