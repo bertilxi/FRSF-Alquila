@@ -1,14 +1,16 @@
 package app.logica.gestores;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import org.junit.Rule;
+import java.util.ArrayList;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.rule.PowerMockRule;
 
 import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
@@ -20,7 +22,6 @@ import app.datos.entidades.Direccion;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Propietario;
-import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.datos.servicios.PropietarioService;
 import app.logica.resultados.ResultadoCrearPropietario;
@@ -31,14 +32,9 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-@PrepareForTest({ ValidadorFormato.class, TipoDocumento.class, Localidad.class, Provincia.class, Calle.class, Barrio.class, Direccion.class, Estado.class })
 public class GestorPropietarioTest {
 
-	@Rule
-	public PowerMockRule rule = new PowerMockRule();
 	private static Propietario propietario;
-	private static GestorPropietario gestorPropietario;
-	private static PropietarioService propietarioService;
 	private static FiltroPropietario filtro;
 
 	protected Object[] parametersForTestCrearPropietario() {
@@ -67,47 +63,49 @@ public class GestorPropietarioTest {
 
 	@Test
 	@Parameters
-	public void testCrearPropietario_correcto(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValEmail, Boolean resValDireccion, Propietario resObtenerPropietario, Integer guardar, ResultadoCrearPropietario resultadoCrearPropietarioEsperado) throws Exception {
+	public void testCrearPropietario(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValEmail, Boolean resValDireccion, Propietario resObtenerPropietario, Integer guardar, ResultadoCrearPropietario resultadoCrearPropietarioEsperado) throws Exception {
 		//Inicialización de los mocks
-		propietarioService = PowerMockito.mock(PropietarioService.class);
-		PowerMockito.mockStatic(ValidadorFormato.class);
+		PropietarioService propietarioServiceMock = mock(PropietarioService.class);
+		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
+		GestorDatos gestorDatosMock = mock(GestorDatos.class);
 
 		//Clase anónima necesaria para inyectar dependencias hasta que funcione Spring
-		gestorPropietario = new GestorPropietario() {
+		GestorPropietario gestorPropietario = new GestorPropietario() {
 			{
-				this.persistidorPropietario = propietarioService;
+				this.persistidorPropietario = propietarioServiceMock;
+				this.validador = validadorFormatoMock;
+				this.gestorDatos = gestorDatosMock;
 			}
 		};
 
+		ArrayList<Estado> estados = new ArrayList<>();
+		estados.add(new Estado(EstadoStr.ALTA));
+
 		//Setear valores esperados a los mocks
-		PowerMockito.when(ValidadorFormato.validarNombre(propietario.getNombre())).thenReturn(resValNombre);
-		PowerMockito.when(ValidadorFormato.validarApellido(propietario.getApellido())).thenReturn(resValApellido);
-		PowerMockito.when(ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())).thenReturn(resValDocumento);
-		PowerMockito.when(ValidadorFormato.validarTelefono(propietario.getTelefono())).thenReturn(resValTelefono);
-		PowerMockito.when(ValidadorFormato.validarEmail(propietario.getEmail())).thenReturn(resValEmail);
-		PowerMockito.when(ValidadorFormato.validarDireccion(propietario.getDireccion())).thenReturn(resValDireccion);
-		PowerMockito.when(propietarioService.obtenerPropietario(filtro)).thenReturn(resObtenerPropietario);
-		PowerMockito.doNothing().when(propietarioService).guardarPropietario(propietario); //Para métodos void la sintaxis es distinta
+		when(validadorFormatoMock.validarNombre(propietario.getNombre())).thenReturn(resValNombre);
+		when(validadorFormatoMock.validarApellido(propietario.getApellido())).thenReturn(resValApellido);
+		when(validadorFormatoMock.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())).thenReturn(resValDocumento);
+		when(validadorFormatoMock.validarTelefono(propietario.getTelefono())).thenReturn(resValTelefono);
+		when(validadorFormatoMock.validarEmail(propietario.getEmail())).thenReturn(resValEmail);
+		when(validadorFormatoMock.validarDireccion(propietario.getDireccion())).thenReturn(resValDireccion);
+		when(propietarioServiceMock.obtenerPropietario(filtro)).thenReturn(resObtenerPropietario);
+		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
+		doNothing().when(propietarioServiceMock).guardarPropietario(propietario); //Para métodos void la sintaxis es distinta
 
 		//Llamar al método a testear
 		ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
 
 		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
 		assertEquals(resultadoCrearPropietarioEsperado.getErrores(), resultadoCrearPropietario.getErrores());
-		PowerMockito.verifyStatic(); //ejecutar siempre verifyStatic antes del método estático a comprobar que se llama
-		ValidadorFormato.validarNombre(propietario.getNombre());
-		PowerMockito.verifyStatic();
-		ValidadorFormato.validarApellido(propietario.getApellido());
-		PowerMockito.verifyStatic();
-		ValidadorFormato.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento());
-		PowerMockito.verifyStatic();
-		ValidadorFormato.validarTelefono(propietario.getTelefono());
-		PowerMockito.verifyStatic();
-		ValidadorFormato.validarEmail(propietario.getEmail());
-		PowerMockito.verifyStatic();
-		ValidadorFormato.validarDireccion(propietario.getDireccion());
-		Mockito.verify(propietarioService).obtenerPropietario(filtro);
-		Mockito.verify(propietarioService, Mockito.times(guardar)).guardarPropietario(propietario);
+		verify(validadorFormatoMock).validarNombre(propietario.getNombre());
+		verify(validadorFormatoMock).validarApellido(propietario.getApellido());
+		verify(validadorFormatoMock).validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento());
+		verify(validadorFormatoMock).validarTelefono(propietario.getTelefono());
+		verify(validadorFormatoMock).validarEmail(propietario.getEmail());
+		verify(validadorFormatoMock).validarDireccion(propietario.getDireccion());
+		verify(propietarioServiceMock).obtenerPropietario(filtro);
+		verify(gestorDatosMock, times(guardar)).obtenerEstados();
+		verify(propietarioServiceMock, times(guardar)).guardarPropietario(propietario);
 	}
 
 	//Para crearPropietario
