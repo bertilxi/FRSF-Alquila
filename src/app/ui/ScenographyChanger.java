@@ -36,6 +36,10 @@ public class ScenographyChanger {
 			background.getChildren().clear();
 			background.getChildren().add(newScenography);
 
+			newScenography.autosize();
+			background.autosize();
+			stage.sizeToScene();
+
 			OlimpoController controller = loader.getController();
 
 			controller.setScenographyChanger(this).setStage(stage).setCoordinador(coordinador).setPresentador(presentadorVentanas);

@@ -22,14 +22,15 @@ public class BaseController extends OlimpoController {
 
 	@FXML
 	private ToggleButton toggleButtonClientes;
+
 	@FXML
 	private ToggleButton toggleButtonInmuebles;
+
 	@FXML
 	private ToggleButton toggleButtonVendedores;
+
 	@FXML
 	private ToggleButton toggleButtonPropietarios;
-	@FXML
-	private ToggleButton toggleButtonAyuda;
 
 	private ToggleGroup toggleGroupSidebar = new ToggleGroup();
 
@@ -42,7 +43,6 @@ public class BaseController extends OlimpoController {
 		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
 		cambiarScene(background, ventanaInicio);
 
-		toggleButtonAyuda.setToggleGroup(toggleGroupSidebar);
 		toggleButtonClientes.setToggleGroup(toggleGroupSidebar);
 		toggleButtonInmuebles.setToggleGroup(toggleGroupSidebar);
 		toggleButtonPropietarios.setToggleGroup(toggleGroupSidebar);
