@@ -156,7 +156,11 @@ public class GestorVendedor {
 		return new ResultadoEliminarVendedor(errores.toArray(new ErrorEliminarVendedor[0]));
 	}
 
-	public ArrayList<Vendedor> obtenerVendedores() throws PersistenciaException{
+	public ArrayList<Vendedor> obtenerVendedores() throws PersistenciaException {
 		return persistidorVendedor.listarVendedores();
+	}
+
+	public Vendedor obtenerVendedor(Vendedor vendedor) throws PersistenciaException {
+		return persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento()));
 	}
 }
