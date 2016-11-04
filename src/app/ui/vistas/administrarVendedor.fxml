@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 
     Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
@@ -31,14 +32,14 @@
          <children>
             <TableView fx:id="tablaVendedores" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="columnaNumeroDocumento" editable="false" minWidth="-1.0" prefWidth="166.0" text="Numero Documento" />
+                <TableColumn fx:id="columnaNumeroDocumento" editable="false" minWidth="-1.0" prefWidth="184.0" text="Numero Documento" />
                 <TableColumn fx:id="columnaNombre" editable="false" prefWidth="300.0" text="Nombre" />
                 <TableColumn fx:id="columnaApellido" prefWidth="300.0" text="Apellido" />
               </columns>
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" maxWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
+      <VBox alignment="TOP_CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
          <children>
             <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregarAction" text="Agregar" />
             <Button fx:id="botonModificar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#modificarAction" text="Modificar" />
