@@ -1,94 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+    This file is part of Olimpo.
+
+    Olimpo is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Olimpo is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="altaClienteBox" prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaClienteController">
-    <VBox alignment="TOP_CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="sidebar">
-        <HBox.margin>
-            <Insets />
-        </HBox.margin>
-        <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-        </padding>
-        <VBox alignment="CENTER">
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
-                <Image url="@../../../../res/img/icono-w-64.png" />
-            </ImageView>
-            <Label alignment="CENTER" styleClass="label-white-title" text="Olimpo" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonClientes" mnemonicParsing="false" styleClass="toggle-button-cliente" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Clientes" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonInmuebles" mnemonicParsing="false" styleClass="toggle-button-inmueble" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Inmuebles" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonVendedores" mnemonicParsing="false" styleClass="toggle-button-vendedor" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Vendedores" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" styleClass="toggle-button-propietario" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Dueños" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonAyuda" mnemonicParsing="false" styleClass="toggle-button-ayuda" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Ayuda" />
-        </VBox>
-    </VBox>
+<HBox prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaClienteController">
     <VBox HBox.hgrow="ALWAYS">
-        <HBox fx:id="titlebar" alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-            <Label styleClass="label-large" text="Alta Cliente">
-                <padding>
-                    <Insets left="30.0" right="10.0" top="30.0" />
-                </padding>
-            </Label>
-            <Pane fx:id="titlePane" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <ToggleButton fx:id="minimizeButton" mnemonicParsing="false" onAction="#minimizePlatform" styleClass="toggle-button-minimize" />
-            <ToggleButton fx:id="maximizeButton" mnemonicParsing="false" onAction="#maximizePlatform" styleClass="toggle-button-maximize" />
-            <ToggleButton fx:id="closeButton" mnemonicParsing="false" onAction="#exitPlatform" styleClass="toggle-button-close" />
-        </HBox>
         <GridPane alignment="CENTER" hgap="15.0" styleClass="grid-pane" stylesheets="@../estilos/style.css" vgap="10.0" VBox.vgrow="SOMETIMES">
             <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="30.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="250.0" prefWidth="300.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="30.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="250.0" prefWidth="300.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="30.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="109.66666793823242" minWidth="30.0" prefWidth="109.66666793823242" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="178.33334350585938" prefWidth="178.33334350585938" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="177.66668701171875" minWidth="20.666656494140625" prefWidth="20.666656494140625" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="511.3333435058594" minWidth="250.0" prefWidth="421.3333740234375" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="173.6666259765625" minWidth="30.0" prefWidth="121.6666259765625" />
             </columnConstraints>
             <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" />
             </rowConstraints>
             <padding>
                 <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />
             </padding>
-            <TextField fx:id="textFieldNombre" maxHeight="1000.0" maxWidth="1000.0" promptText="Nombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="textFieldApellido" maxHeight="1000.0" maxWidth="1000.0" promptText="Apellido" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField fx:id="textFieldNumeroDocumento" maxHeight="1000.0" maxWidth="1000.0" promptText="Número de Documento" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="textFieldCorreo" maxHeight="1000.0" maxWidth="1000.0" promptText="Correo electrónico" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de documento" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="buttonCargarInmueble" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#cargarInmueble" styleClass="button-action" text="Cargar inmueble buscado" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <TextField fx:id="textFieldNombre" maxHeight="1000.0" maxWidth="1000.0" promptText="Nombre" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="textFieldApellido" maxHeight="1000.0" maxWidth="1000.0" promptText="Apellido" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="textFieldNumeroDocumento" maxHeight="1000.0" maxWidth="1000.0" promptText="Número de Documento" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Teléfono" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de documento" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Button fx:id="buttonCargarInmueble" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#cargarInmueble" styleClass="button-action" text="Cargar inmueble buscado" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+         <Label maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <Label layoutX="141.0" layoutY="83.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Apellido:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <Label layoutX="141.0" layoutY="146.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Tipo de documento:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         <Label layoutX="141.0" layoutY="204.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Número de documento:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <Label layoutX="141.0" layoutY="262.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
         </GridPane>
         <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
             <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />

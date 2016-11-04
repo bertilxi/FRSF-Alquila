@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * This file is part of Olimpo.
+ *
+ * Olimpo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Olimpo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.ui.controladores;
 
 import java.net.URL;
@@ -14,9 +31,7 @@ import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -101,19 +116,40 @@ public class ModificarPropietarioController extends OlimpoController {
 		Calle calle = comboBoxCalle.getValue();
 
 		if(nombre.isEmpty()){
-			error.append("Inserte un nombre").append("\r\n");
+			error.append("Inserte un nombre").append("\n");
 		}
 		if(apellido.isEmpty()){
-			error.append("Inserte un apellido").append("\r\n ");
+			error.append("Inserte un apellido").append("\n ");
 		}
 		if(numeroDocumento.isEmpty()){
-			error.append("Inserte un numero de documento").append("\r\n ");
+			error.append("Inserte un numero de documento").append("\n ");
 		}
 		if(alturaCalle.isEmpty()){
-			error.append("Inserte una altura").append("\r\n ");
+			error.append("Inserte una altura").append("\n ");
+		}
+		if(piso.isEmpty()) {
+			error.append("Inserte un piso").append("\n ");
+		}
+		if(departamento.isEmpty()) {
+			error.append("Inserte un departamento").append("\n ");
 		}
 		if(telefono.isEmpty()){
-			error.append("Inserte un telefono").append("\r\n ");
+			error.append("Inserte un telefono").append("\n ");
+		}
+		if(correoElectronico.isEmpty()) {
+			error.append("Inserte un correo electrónico").append("\n ");
+		}
+		if(calle == null) {
+			error.append("Elija una calle").append("\n");
+		}
+		if(barrio == null) {
+			error.append("Elija un barrio").append("\n");
+		}
+		if(tipoDoc == null) {
+			error.append("Elija un tipo de documento").append("\n");
+		}
+		if(localidad == null) {
+			error.append("Elija una localidad").append("\n");
 		}
 
 		if(!error.toString().isEmpty()){
@@ -173,8 +209,8 @@ public class ModificarPropietarioController extends OlimpoController {
 	}
 
 	@FXML
-	public void cancelAction(ActionEvent event) {
-		((Node) event.getSource()).getScene().getWindow().hide();
+	public void cancelAction() {
+		cambiarmeAScene(AdministrarPropietarioController.URLVista);
 	}
 
 	@Override

@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * This file is part of Olimpo.
+ *
+ * Olimpo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Olimpo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.datos.entidades;
 
 import java.util.HashSet;
@@ -42,6 +59,9 @@ public class Vendedor {
 	@Column(name = "salt", nullable = false)
 	private String salt;
 
+	@Column(name = "root", nullable = false)
+	private Boolean root;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"), nullable = false)
 	private TipoDocumento tipoDocumento;
@@ -58,6 +78,7 @@ public class Vendedor {
 	public Vendedor() {
 		super();
 		this.ventas = new HashSet<>();
+		this.root = false;
 	}
 
 	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, Estado estado) {
@@ -121,6 +142,14 @@ public class Vendedor {
 		return this;
 	}
 
+	public Boolean getRoot() {
+		return root;
+	}
+
+	public void setRoot(Boolean root) {
+		this.root = root;
+	}
+
 	public TipoDocumento getTipoDocumento() {
 		return tipoDocumento;
 	}
@@ -165,22 +194,41 @@ public class Vendedor {
 		else{
 			return true;
 		}
-
-		if(!getNumeroDocumento().equals(vendedor.getNumeroDocumento())){
+		if(numeroDocumento == null){
+			if(vendedor.numeroDocumento != null){
+				return false;
+			}
+		}
+		else if(!numeroDocumento.equals(vendedor.numeroDocumento)){
 			return false;
 		}
-		if(!getTipoDocumento().equals(vendedor.getTipoDocumento())){
+		if(tipoDocumento == null){
+			if(vendedor.tipoDocumento != null){
+				return false;
+			}
+		}
+		else if(!tipoDocumento.equals(vendedor.tipoDocumento)){
 			return false;
 		}
-		return getVentas() != null ? getVentas().equals(vendedor.getVentas()) : vendedor.getVentas() == null;
-
+		if(ventas == null){
+			if(vendedor.ventas != null){
+				return false;
+			}
+		}
+		else if(!ventas.equals(vendedor.ventas)){
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = getId().hashCode();
-		result = 31 * result + getNumeroDocumento().hashCode();
-		result = 31 * result + getTipoDocumento().hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
+		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
+		result = prime * result + ((ventas == null) ? 0 : ventas.hashCode());
 		return result;
 	}
 }

@@ -38,7 +38,7 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class GestorVendedorTest {
 
-	private EncriptadorPassword encriptadorMock = Mockito.mock(EncriptadorPassword.class);
+	private static EncriptadorPassword encriptadorMock = Mockito.mock(EncriptadorPassword.class);
 
 	@Test
 	@Parameters
@@ -177,7 +177,6 @@ public class GestorVendedorTest {
 		verify(validadorFormatoMock).validarNombre(vendedor.getNombre());
 		verify(validadorFormatoMock).validarApellido(vendedor.getApellido());
 		verify(validadorFormatoMock).validarDocumento(vendedor.getTipoDocumento(), vendedor.getNumeroDocumento());
-		verify(vendedorServiceMock).obtenerVendedor(filtro);
 		verify(gestorDatosMock, times(guardar)).obtenerEstados();
 		verify(vendedorServiceMock, times(guardar)).guardarVendedor(vendedor);
 	}
