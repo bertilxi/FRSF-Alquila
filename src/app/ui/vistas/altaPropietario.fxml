@@ -5,70 +5,23 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <HBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaPropietarioController">
-    <VBox alignment="TOP_CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="sidebar">
-        <HBox.margin>
-            <Insets />
-        </HBox.margin>
-        <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-        </padding>
-        <VBox alignment="CENTER">
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
-                <Image url="@../../../../res/img/icono-w-64.png" />
-            </ImageView>
-            <Label alignment="CENTER" styleClass="label-white-title" text="Olimpo" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonClientes" mnemonicParsing="false" styleClass="toggle-button-cliente" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Clientes" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonInmuebles" mnemonicParsing="false" styleClass="toggle-button-inmueble" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Inmuebles" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonVendedores" mnemonicParsing="false" styleClass="toggle-button-vendedor" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Vendedores" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" styleClass="toggle-button-propietario" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Dueños" />
-        </VBox>
-        <VBox alignment="CENTER">
-            <ToggleButton fx:id="toggleButtonAyuda" mnemonicParsing="false" styleClass="toggle-button-ayuda" />
-            <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Ayuda" />
-        </VBox>
-    </VBox>
     <VBox HBox.hgrow="ALWAYS">
-        <HBox fx:id="titlebar" alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-            <Label styleClass="label-large" text="Alta Propietario">
-                <padding>
-                    <Insets left="30.0" right="10.0" top="30.0" />
-                </padding>
-            </Label>
-            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <ToggleButton fx:id="minimizeButton" mnemonicParsing="false" onAction="#minimizePlatform" styleClass="toggle-button-minimize" />
-            <ToggleButton fx:id="maximizeButton" mnemonicParsing="false" onAction="#maximizePlatform" styleClass="toggle-button-maximize" />
-            <ToggleButton fx:id="closeButton" mnemonicParsing="false" onAction="#exitPlatform" styleClass="toggle-button-close" />
-        </HBox>
         <GridPane alignment="CENTER" hgap="15.0" styleClass="grid-pane" stylesheets="@../estilos/style.css" vgap="10.0" VBox.vgrow="SOMETIMES">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="250.0" prefWidth="300.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="250.0" prefWidth="300.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.666664123535156" minWidth="12.666666030883789" prefWidth="45.333335876464844" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.33334350585938" minWidth="30.0" prefWidth="130.66666412353516" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="229.66665649414062" prefWidth="242.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.33331298828125" minWidth="9.3333740234375" prefWidth="40.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.66665649414062" minWidth="30.0" prefWidth="155.33334350585938" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="250.0" prefWidth="270.66668701171875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="38.3333740234375" minWidth="17.0" prefWidth="17.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
@@ -84,20 +37,34 @@
             <padding>
                 <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />
             </padding>
-            <TextField fx:id="textFieldNombre" maxHeight="1000.0" maxWidth="1000.0" promptText="Nombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="textFieldApellido" maxHeight="1000.0" maxWidth="1000.0" promptText="Apellido" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de Documento" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="textFieldNumeroDocumento" maxHeight="1000.0" maxWidth="1000.0" promptText="Número de Documento" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <ComboBox fx:id="comboBoxCalle" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Calle" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="textFieldAlturaCalle" maxHeight="1000.0" maxWidth="1000.0" promptText="Altura" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <TextField fx:id="textFieldPiso" maxHeight="1000.0" maxWidth="1000.0" promptText="Piso" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextField fx:id="textFieldDepartamento" maxHeight="1000.0" maxWidth="1000.0" promptText="Departamento" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-            <ComboBox fx:id="comboBoxProvincia" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <TextField fx:id="textFieldCorreoElectronico" maxHeight="1000.0" maxWidth="1000.0" promptText="Correo electrónico" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <ComboBox fx:id="comboBoxLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Telefono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="comboBoxBarrio" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-         <ComboBox fx:id="comboBoxPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Pais" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="textFieldNombre" maxHeight="1000.0" maxWidth="1000.0" promptText="Nombre" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="textFieldApellido" maxHeight="1000.0" maxWidth="1000.0" promptText="Apellido" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de Documento" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="textFieldNumeroDocumento" maxHeight="1000.0" maxWidth="1000.0" promptText="Número de Documento" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <ComboBox fx:id="comboBoxCalle" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Calle" styleClass="combo-box" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <TextField fx:id="textFieldAlturaCalle" maxHeight="1000.0" maxWidth="1000.0" promptText="Altura" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+            <TextField fx:id="textFieldPiso" maxHeight="1000.0" maxWidth="1000.0" promptText="Piso" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <TextField fx:id="textFieldDepartamento" maxHeight="1000.0" maxWidth="1000.0" promptText="Departamento" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+            <ComboBox fx:id="comboBoxProvincia" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia" styleClass="combo-box" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <TextField fx:id="textFieldCorreoElectronico" maxHeight="1000.0" maxWidth="1000.0" promptText="Correo electrónico" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <ComboBox fx:id="comboBoxLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad" styleClass="combo-box" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Telefono" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <ComboBox fx:id="comboBoxBarrio" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio" styleClass="combo-box" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+         <ComboBox fx:id="comboBoxPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Pais" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+         <Label maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Label layoutX="112.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Tipo de documento:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <Label layoutX="112.0" layoutY="158.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <Label layoutX="112.0" layoutY="216.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="País:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         <Label layoutX="112.0" layoutY="274.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Localidad:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <Label layoutX="112.0" layoutY="332.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Calle:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+         <Label layoutX="112.0" layoutY="390.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Piso:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+         <Label layoutX="112.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Apellido:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+         <Label layoutX="573.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Número de documento:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+         <Label layoutX="573.0" layoutY="158.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Correo electrónico:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+         <Label layoutX="573.0" layoutY="216.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Provincia:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+         <Label layoutX="573.0" layoutY="274.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Barrio:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+         <Label layoutX="573.0" layoutY="332.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Altura:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+         <Label layoutX="573.0" layoutY="390.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Departamento:" GridPane.columnIndex="4" GridPane.rowIndex="7" />
         </GridPane>
         <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
             <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />

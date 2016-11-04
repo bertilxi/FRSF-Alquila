@@ -42,7 +42,7 @@
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
-                        <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" onAction="#verDueños" styleClass="toggle-button-propietario" />
+                        <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" onAction="#verPropietarios" styleClass="toggle-button-propietario" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Propietarios" />
                     </children>
                 </VBox>
