@@ -41,6 +41,8 @@ public class AltaVendedorController extends OlimpoController {
 
 	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
+	private String padreURL;
+
 	public void acceptAction() throws PersistenciaException, GestionException {
 
 		StringBuilder error = new StringBuilder("");
@@ -132,8 +134,12 @@ public class AltaVendedorController extends OlimpoController {
 		}
 	}
 
+	public void setURLVistaPadre(String padreURL) {
+		this.padreURL = padreURL;
+	}
+
 	public void cancelAction(ActionEvent event) {
-		cambiarmeAScene(AdministrarVendedorController.URLVista);
+		cambiarmeAScene(padreURL);
 	}
 
 	@Override
