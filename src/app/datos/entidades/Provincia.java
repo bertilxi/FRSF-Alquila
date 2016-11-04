@@ -17,6 +17,7 @@
  */
 package app.datos.entidades;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,7 +44,7 @@ public class Provincia {
 	private String nombre;
 
 	//Relaciones
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idpais", referencedColumnName = "id", foreignKey = @ForeignKey(name = "provincia_idpais_fk"), nullable = false)
 	private Pais pais;
 
@@ -129,5 +130,10 @@ public class Provincia {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return nombre;
 	}
 }

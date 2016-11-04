@@ -129,4 +129,9 @@ public class Barrio {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return nombre;
+	}
+
 }

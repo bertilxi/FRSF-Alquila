@@ -128,4 +128,9 @@ public class Calle {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return nombre;
+	}
 }

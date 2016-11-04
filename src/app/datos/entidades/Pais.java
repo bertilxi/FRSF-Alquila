@@ -100,4 +100,9 @@ public class Pais {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return nombre;
+	}
 }
