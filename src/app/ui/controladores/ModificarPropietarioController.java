@@ -21,6 +21,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class ModificarPropietarioController extends OlimpoController {
+
+	public static final String URLVista = "/app/ui/vistas/modificarPropietario.fxml";
+
 	@FXML
 	private TextField textFieldNombre;
 	@FXML

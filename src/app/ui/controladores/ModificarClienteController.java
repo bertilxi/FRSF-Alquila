@@ -2,7 +2,6 @@ package app.ui.controladores;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -13,19 +12,14 @@ import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class ModificarClienteController extends OlimpoController {
+
+	public static final String URLVista = "/app/ui/vistas/modificarCliente.fxml";
 
 	@FXML
 	private TextField textFieldNombre;
@@ -127,20 +121,7 @@ public class ModificarClienteController extends OlimpoController {
 	}
 
 	public void cargarInmueble() throws IOException {
-		Stage stage = new Stage();
-		URL location = getClass().getResource("/app/ui/vistas/inmuebleBuscado.fxml");
-		FXMLLoader loader = createFXMLLoader(location);
-		Parent root = loader.load(location.openStream());
-		stage.setScene(new Scene(root));
-		stage.setTitle("My modal window");
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initStyle(StageStyle.UNDECORATED);
-		stage.showAndWait();
-
-	}
-
-	public FXMLLoader createFXMLLoader(URL location) {
-		return new FXMLLoader(location, null, new JavaFXBuilderFactory(), null, Charset.forName(FXMLLoader.DEFAULT_CHARSET_NAME));
+		//TODO hacer esto
 	}
 
 	@FXML
