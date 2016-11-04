@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 
     Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
@@ -60,30 +61,30 @@
             <TextField fx:id="textFieldApellido" maxHeight="1000.0" maxWidth="1000.0" promptText="Apellido" GridPane.columnIndex="5" GridPane.rowIndex="1" />
             <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de Documento" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <TextField fx:id="textFieldNumeroDocumento" maxHeight="1000.0" maxWidth="1000.0" promptText="Número de Documento" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Telefono" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <TextField fx:id="textFieldCorreoElectronico" maxHeight="1000.0" maxWidth="1000.0" promptText="Correo electrónico" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+         <ComboBox fx:id="comboBoxPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Pais" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <ComboBox fx:id="comboBoxProvincia" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia" styleClass="combo-box" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <ComboBox fx:id="comboBoxLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad" styleClass="combo-box" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <ComboBox fx:id="comboBoxBarrio" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio" styleClass="combo-box" GridPane.columnIndex="5" GridPane.rowIndex="5" />
             <ComboBox fx:id="comboBoxCalle" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Calle" styleClass="combo-box" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <TextField fx:id="textFieldAlturaCalle" maxHeight="1000.0" maxWidth="1000.0" promptText="Altura" GridPane.columnIndex="5" GridPane.rowIndex="6" />
             <TextField fx:id="textFieldPiso" maxHeight="1000.0" maxWidth="1000.0" promptText="Piso" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <TextField fx:id="textFieldDepartamento" maxHeight="1000.0" maxWidth="1000.0" promptText="Departamento" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-            <ComboBox fx:id="comboBoxProvincia" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia" styleClass="combo-box" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-            <TextField fx:id="textFieldCorreoElectronico" maxHeight="1000.0" maxWidth="1000.0" promptText="Correo electrónico" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <ComboBox fx:id="comboBoxLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad" styleClass="combo-box" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Telefono" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <ComboBox fx:id="comboBoxBarrio" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio" styleClass="combo-box" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-         <ComboBox fx:id="comboBoxPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Pais" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-         <Label maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-         <Label layoutX="112.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Tipo de documento:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-         <Label layoutX="112.0" layoutY="158.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-         <Label layoutX="112.0" layoutY="216.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="País:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-         <Label layoutX="112.0" layoutY="274.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Localidad:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-         <Label layoutX="112.0" layoutY="332.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Calle:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-         <Label layoutX="112.0" layoutY="390.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Piso:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-         <Label layoutX="112.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Apellido:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-         <Label layoutX="573.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Número de documento:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-         <Label layoutX="573.0" layoutY="158.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Correo electrónico:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-         <Label layoutX="573.0" layoutY="216.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Provincia:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-         <Label layoutX="573.0" layoutY="274.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Barrio:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-         <Label layoutX="573.0" layoutY="332.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Altura:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-         <Label layoutX="573.0" layoutY="390.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Departamento:" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+         <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Label focusTraversable="false" layoutX="112.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Tipo de documento:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <Label focusTraversable="false" layoutX="112.0" layoutY="158.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <Label focusTraversable="false" layoutX="112.0" layoutY="216.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="País:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         <Label focusTraversable="false" layoutX="112.0" layoutY="274.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Localidad:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <Label focusTraversable="false" layoutX="112.0" layoutY="332.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Calle:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+         <Label focusTraversable="false" layoutX="112.0" layoutY="390.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Piso:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+         <Label focusTraversable="false" layoutX="112.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Apellido:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+         <Label focusTraversable="false" layoutX="573.0" layoutY="100.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Número de documento:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+         <Label focusTraversable="false" layoutX="573.0" layoutY="158.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Correo electrónico:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+         <Label focusTraversable="false" layoutX="573.0" layoutY="216.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Provincia:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+         <Label focusTraversable="false" layoutX="573.0" layoutY="274.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Barrio:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+         <Label focusTraversable="false" layoutX="573.0" layoutY="332.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Altura:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+         <Label focusTraversable="false" layoutX="573.0" layoutY="390.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Departamento:" GridPane.columnIndex="4" GridPane.rowIndex="7" />
         </GridPane>
         <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
             <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />
