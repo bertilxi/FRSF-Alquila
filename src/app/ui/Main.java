@@ -17,7 +17,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -66,7 +65,7 @@ public class Main extends Application {
 							controller.setCoordinador(coordinador).setStage(primaryStage).setPresentador(new PresentadorVentanas());
 
 							// para emular el estilo de windows 10 se usa la ventana sin decorar
-							primaryStage.initStyle(StageStyle.UNDECORATED);
+							//							primaryStage.initStyle(StageStyle.UNDECORATED);
 							primaryStage.setScene(scene);
 							primaryStage.show();
 						} catch(IOException e){

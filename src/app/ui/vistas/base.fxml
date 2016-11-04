@@ -43,13 +43,7 @@
                 <VBox alignment="CENTER">
                     <children>
                         <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" onAction="#verDueños" styleClass="toggle-button-propietario" />
-                        <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Dueños" />
-                    </children>
-                </VBox>
-                <VBox alignment="CENTER">
-                    <children>
-                        <ToggleButton fx:id="toggleButtonAyuda" mnemonicParsing="false" onAction="#verAyuda" styleClass="toggle-button-ayuda" />
-                        <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Ayuda" />
+                        <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Propietarios" />
                     </children>
                 </VBox>
             </children>

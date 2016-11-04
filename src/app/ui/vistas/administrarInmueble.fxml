@@ -6,20 +6,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarInmuebleController">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarInmuebleController">
    <children>
       <VBox alignment="CENTER" styleClass="grid-pane" HBox.hgrow="ALWAYS">
          <children>
-            <TableView fx:id="tablaVendedores" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tablaVendedores" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="columnaNumeroDocumento" minWidth="-1.0" prefWidth="166.0" text="Tipo" />
-                <TableColumn fx:id="columnaNombre" prefWidth="129.0" text="Localidad" />
-                <TableColumn fx:id="columnaApellido" prefWidth="134.0" text="Precio" />
+                <TableColumn fx:id="columnaNumeroDocumento" minWidth="100.0" prefWidth="-1.0" text="Tipo" />
+                <TableColumn fx:id="columnaNombre" minWidth="300.0" prefWidth="-1.0" text="Ubicación" />
+                <TableColumn fx:id="columnaApellido" minWidth="150.0" prefWidth="-1.0" text="Propietario" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" maxWidth="150.0" styleClass="buttonbar" HBox.hgrow="ALWAYS">
+      <VBox alignment="TOP_CENTER" maxWidth="150.0" styleClass="buttonbar">
          <children>
             <Button fx:id="botonVer1" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Ver más" />
             <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
