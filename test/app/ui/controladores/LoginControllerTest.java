@@ -9,6 +9,7 @@ import org.junit.runners.model.Statement;
 import app.datos.clases.DatosLogin;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.TipoDocumento;
+import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoAutenticacion;
@@ -71,6 +72,11 @@ public class LoginControllerTest {
 				cbTipoDocumento.getSelectionModel().select(tipoDocumento);
 				return super.ingresar();
 			};
+
+			@Override
+			protected OlimpoController cambiarmeAScene(String URLVistaACambiar) {
+				return null;
+			}
 		};
 		loginController.setCoordinador(coordinadorMock);
 		loginController.setPresentador(presentadorMock);
@@ -95,7 +101,7 @@ public class LoginControllerTest {
 
 	/**
 	 * Método que devuelve los parámetros para probar el método ingresar()
-	 * 
+	 *
 	 * @return parámetros de prueba
 	 */
 	protected Object[] parametersForTestIngresar() {
@@ -106,7 +112,7 @@ public class LoginControllerTest {
 				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LE), "12345678", "", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba Contraseña vacia
 				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.CEDULA_EXTRANJERA), "12345678", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto
 				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.PASAPORTE), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto con caracteres UTF8
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Persistencia), null, new PersistenciaException("Error de persistencia. Test.") }, //Prueba una excepcion de persistencia
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Persistencia), null, new ObjNotFoundException("Error de persistencia. Test.", new Exception()) }, //Prueba una excepcion de persistencia
 				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Desconocido), null, new Exception() } //Prueba una excepcion desconocida
 		};
 	}

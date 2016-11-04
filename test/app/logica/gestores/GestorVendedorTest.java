@@ -27,6 +27,7 @@ import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.datos.servicios.VendedorService;
 import app.datos.servicios.mock.VendedorServiceMock;
+import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
@@ -109,7 +110,7 @@ public class GestorVendedorTest {
 				new Object[] { datosContraseniaVacia, new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), vendedorCorrecto, null }, //prueba Contraseña vacia, ingreso incorrecto
 				new Object[] { datosCorrectos, new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null, null }, //prueba un ingreso incorrecto
 				new Object[] { datosCaracteresRaros, new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null, null }, //prueba un ingreso incorrecto con caracteres UTF8
-				new Object[] { datosCorrectos, null, null, new PersistenciaException("Error de persistencia. Test.") }, //Prueba una excepcion de persistencia
+				new Object[] { datosCorrectos, null, null, new ObjNotFoundException("Error de persistencia. Test.", new Exception()) }, //Prueba una excepcion de persistencia
 				new Object[] { datosCorrectos, null, null, new Exception() } //Prueba una excepcion desconocida
 		};
 	}

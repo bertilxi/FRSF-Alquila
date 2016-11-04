@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+
+    Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+    This file is part of Olimpo.
+
+    Olimpo is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Olimpo is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -16,9 +36,9 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane fx:id="padre" prefHeight="650.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.NMVInmuebleController">
+<Pane fx:id="padre" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.NMVInmuebleController">
    <children>
-      <VBox fx:id="pantalla1" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css">
+      <VBox fx:id="pantalla1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css">
             <children>
                   <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="grid-pane" VBox.vgrow="NEVER">
                       <columnConstraints>
@@ -65,7 +85,7 @@
                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                       </padding>
                   </GridPane>
-                  <GridPane styleClass="grid-pane" VBox.vgrow="SOMETIMES">
+                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" VBox.vgrow="SOMETIMES">
                       <columnConstraints>
                           <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
                   <ColumnConstraints />
@@ -111,7 +131,7 @@
                               <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
                           </children>
                       </HBox>
-                  <Label text="* Campos obligatrios" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label text="* Campos obligatorios" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -120,7 +140,7 @@
                   </GridPane>
             </children>
         </VBox>
-      <VBox fx:id="pantalla2" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css">
+      <VBox fx:id="pantalla2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css">
          <children>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="grid-pane" VBox.vgrow="ALWAYS">
                <columnConstraints>

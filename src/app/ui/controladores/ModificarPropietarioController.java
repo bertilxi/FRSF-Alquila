@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * This file is part of Olimpo.
+ *
+ * Olimpo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Olimpo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.ui.controladores;
 
 import java.net.URL;
@@ -17,6 +34,7 @@ import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropiet
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 
 public class ModificarPropietarioController extends OlimpoController {
 
@@ -218,6 +236,141 @@ public class ModificarPropietarioController extends OlimpoController {
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
 		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
+
+		comboBoxPais.setConverter(new StringConverter<Pais>() {
+
+			@Override
+			public String toString(Pais object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Pais fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Pais pais: comboBoxPais.getItems()){
+					if(nombre.equals(pais.getNombre())){
+						return pais;
+					}
+				}
+				Pais pais = new Pais();
+				pais.setNombre(nombre);
+				return pais;
+			}
+		});
+
+		comboBoxProvincia.setConverter(new StringConverter<Provincia>() {
+
+			@Override
+			public String toString(Provincia object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Provincia fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Provincia prov: comboBoxProvincia.getItems()){
+					if(nombre.equals(prov.getNombre())){
+						return prov;
+					}
+				}
+				Provincia prov = new Provincia();
+				prov.setNombre(nombre);
+				return prov;
+			}
+		});
+
+		comboBoxLocalidad.setConverter(new StringConverter<Localidad>() {
+
+			@Override
+			public String toString(Localidad object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Localidad fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Localidad loc: comboBoxLocalidad.getItems()){
+					if(nombre.equals(loc.getNombre())){
+						return loc;
+					}
+				}
+				Localidad loc = new Localidad();
+				loc.setNombre(nombre);
+				return loc;
+			}
+		});
+
+		comboBoxBarrio.setConverter(new StringConverter<Barrio>() {
+
+			@Override
+			public String toString(Barrio object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Barrio fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Barrio bar: comboBoxBarrio.getItems()){
+					if(nombre.equals(bar.getNombre())){
+						return bar;
+					}
+				}
+				Barrio bar = new Barrio();
+				bar.setNombre(nombre);
+				return bar;
+			}
+		});
+
+		comboBoxCalle.setConverter(new StringConverter<Calle>() {
+
+			@Override
+			public String toString(Calle object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Calle fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Calle cal: comboBoxCalle.getItems()){
+					if(nombre.equals(cal.getNombre())){
+						return cal;
+					}
+				}
+				Calle cal = new Calle();
+				cal.setNombre(nombre);
+				return cal;
+			}
+		});
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
