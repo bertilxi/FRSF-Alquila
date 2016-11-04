@@ -151,7 +151,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 	@FXML
 	public void cancelar() {
-		salir();
+		cambiarmeAScene(AdministrarInmuebleController.URLVista);
 	}
 
 	@FXML
