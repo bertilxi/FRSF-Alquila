@@ -139,4 +139,8 @@ public class CoordinadorJavaFX {
 		return gestorDatos.obtenerPaises();
 	}
 
+	public void eliminarVendedor(Vendedor vendedor) throws PersistenciaException {
+		gestorVendedor.eliminarVendedor(vendedor);
+	}
+
 }

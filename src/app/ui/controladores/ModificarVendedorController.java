@@ -13,7 +13,7 @@ import app.logica.resultados.ResultadoModificarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -37,12 +37,18 @@ public class ModificarVendedorController extends OlimpoController {
 	private CheckBox checkBoxCambiarContraseña;
 	@FXML
 	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
+	@FXML
+	private Button acceptButton;
+	@FXML
+	private Button cancelButton;
+
+	private Vendedor vendedor;
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
 	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
-	public ResultadoModificarVendedor acceptAction() {
+	public void acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -86,7 +92,6 @@ public class ModificarVendedorController extends OlimpoController {
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
-			Vendedor vendedor = new Vendedor();
 			vendedor.setNombre(nombre)
 					.setApellido(apellido)
 					.setNumeroDocumento(numeroDocumento)
@@ -117,20 +122,21 @@ public class ModificarVendedorController extends OlimpoController {
 				if(!error.toString().isEmpty()){
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
+				else{
+					cambiarmeAScene(AdministrarVendedorController.URLVista);
+				}
 
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			} catch(Exception e){
 				presentador.presentarExcepcionInesperada(e, stage);
 			}
-			return resultadoModificarVendedor;
 		}
 
-		return null;
 	}
 
 	public void cancelAction(ActionEvent event) {
-		((Node) event.getSource()).getScene().getWindow().hide();
+		cambiarmeAScene(AdministrarVendedorController.URLVista);
 	}
 
 	public void checkBoxAction() {
@@ -160,6 +166,7 @@ public class ModificarVendedorController extends OlimpoController {
 	}
 
 	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
 		textFieldNombre.setText(vendedor.getNombre());
 		textFieldApellido.setText(vendedor.getApellido());
 		textFieldNumeroDocumento.setText(vendedor.getNumeroDocumento());

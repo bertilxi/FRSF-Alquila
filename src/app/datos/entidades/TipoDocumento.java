@@ -84,4 +84,10 @@ public class TipoDocumento {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return tipo.toString();
+	}
+
 }

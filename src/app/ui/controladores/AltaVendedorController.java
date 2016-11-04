@@ -41,7 +41,7 @@ public class AltaVendedorController extends OlimpoController {
 
 	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
-	public ResultadoCrearVendedor acceptAction() throws PersistenciaException, GestionException {
+	public void acceptAction() throws PersistenciaException, GestionException {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -113,6 +113,9 @@ public class AltaVendedorController extends OlimpoController {
 				if(!error.toString().isEmpty()){
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
+				else{
+					cambiarmeAScene(AdministrarVendedorController.URLVista);
+				}
 
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
@@ -126,15 +129,11 @@ public class AltaVendedorController extends OlimpoController {
 			} catch(Exception e){
 				presentador.presentarExcepcionInesperada(e, stage); //falta el stage
 			}
-			return resultadoCrearVendedor;
 		}
-
-		return null;
-
 	}
 
 	public void cancelAction(ActionEvent event) {
-		stage.hide();
+		cambiarmeAScene(AdministrarVendedorController.URLVista);
 	}
 
 	@Override

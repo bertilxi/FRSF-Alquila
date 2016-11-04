@@ -1,12 +1,12 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -32,12 +32,10 @@ public class AdministrarVendedorController extends OlimpoController {
 	@FXML
 	private Button botonEliminar;
 
-	private ArrayList<Vendedor> listaVendedores;
-
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		try{
-			listaVendedores = coordinador.obtenerVendedores();
+			tablaVendedores.getItems().addAll(coordinador.obtenerVendedores());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		} catch(Exception e){
@@ -47,8 +45,6 @@ public class AdministrarVendedorController extends OlimpoController {
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));
 		columnaNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
-
-		tablaVendedores.getItems().addAll(listaVendedores);
 
 		habilitarBotones(null);
 
@@ -64,6 +60,32 @@ public class AdministrarVendedorController extends OlimpoController {
 		else{
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
+		}
+	}
+
+	public void agregarAction(ActionEvent event) {
+		cambiarmeAScene(AltaVendedorController.URLVista);
+	}
+
+	public void modificarAction(ActionEvent event) {
+		Vendedor vendedor = tablaVendedores.getSelectionModel().getSelectedItem();
+		if(vendedor == null){
+			return;
+		}
+		ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista);
+		modificarVendedorController.setVendedor(vendedor);
+	}
+
+	public void eliminarAction(ActionEvent event) {
+		Vendedor vendedor = tablaVendedores.getSelectionModel().getSelectedItem();
+		if(vendedor == null){
+			return;
+		}
+		try{
+			coordinador.eliminarVendedor(vendedor);
+			tablaVendedores.getItems().remove(vendedor);
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
 		}
 	}
 }

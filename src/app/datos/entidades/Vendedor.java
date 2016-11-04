@@ -154,6 +154,18 @@ public class Vendedor {
 
 		Vendedor vendedor = (Vendedor) o;
 
+		if(id == null){
+			if(vendedor.getId() != null){
+				return false;
+			}
+		}
+		else if(!id.equals(vendedor.getId())){
+			return false;
+		}
+		else{
+			return true;
+		}
+
 		if(!getNumeroDocumento().equals(vendedor.getNumeroDocumento())){
 			return false;
 		}
