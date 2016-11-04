@@ -23,7 +23,7 @@
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" maxWidth="150.0" styleClass="buttonbar" HBox.hgrow="ALWAYS">
+      <VBox alignment="TOP_CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
          <children>
             <Button fx:id="botonVer" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVer" text="Ver" />
             <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleAgregar" text="Agregar" />
