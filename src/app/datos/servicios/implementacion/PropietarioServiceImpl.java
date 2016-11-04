@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
  * This file is part of Olimpo.
  *
  * Olimpo is free software: you can redistribute it and/or modify
@@ -9,11 +9,11 @@
  *
  * Olimpo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
  */
 package app.datos.servicios.implementacion;
 
@@ -56,7 +56,7 @@ public class PropietarioServiceImpl implements PropietarioService {
 		try{
 			session.save(propietario);
 		} catch(Exception e){
-			throw new SaveUpdateException();
+			throw new SaveUpdateException(e);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class PropietarioServiceImpl implements PropietarioService {
 		try{
 			session.update(propietario);
 		} catch(Exception e){
-			throw new SaveUpdateException();
+			throw new SaveUpdateException(e);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class PropietarioServiceImpl implements PropietarioService {
 		} catch(NonUniqueResultException e){
 			return null;
 		} catch(Exception e){
-			throw new ConsultaException();
+			throw new ConsultaException(e);
 		}
 		return propietario;
 	}
@@ -100,7 +100,7 @@ public class PropietarioServiceImpl implements PropietarioService {
 				}
 			}
 		} catch(Exception e){
-			throw new ConsultaException();
+			throw new ConsultaException(e);
 		}
 		return propietarios;
 	}
