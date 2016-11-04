@@ -81,6 +81,10 @@ public class AltaPropietarioController extends OlimpoController {
 
 	private ArrayList<Pais> listaPaises;
 
+	private ArrayList<Barrio> listaBarrios;
+
+	private ArrayList<Calle> listaCalles;
+
 	@FXML
 	public void acceptAction() {
 
@@ -215,6 +219,9 @@ public class AltaPropietarioController extends OlimpoController {
 		listaProvincias = new ArrayList<>();
 		listaPaises = new ArrayList<>();
 		listaTiposDeDocumento = new ArrayList<>();
+		listaBarrios = new ArrayList<Barrio>();
+		listaCalles = new ArrayList<Calle>();
+
 		try{
 			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
@@ -231,6 +238,8 @@ public class AltaPropietarioController extends OlimpoController {
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
 		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
+		comboBoxLocalidad.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarBarriosYCalles(newValue));
 
 		comboBoxPais.setConverter(new StringConverter<Pais>() {
 
@@ -282,6 +291,7 @@ public class AltaPropietarioController extends OlimpoController {
 				}
 				Provincia prov = new Provincia();
 				prov.setNombre(nombre);
+				prov.setPais(comboBoxPais.getValue());
 				return prov;
 			}
 		});
@@ -309,6 +319,7 @@ public class AltaPropietarioController extends OlimpoController {
 				}
 				Localidad loc = new Localidad();
 				loc.setNombre(nombre);
+				loc.setProvincia(comboBoxProvincia.getValue());
 				return loc;
 			}
 		});
@@ -336,6 +347,7 @@ public class AltaPropietarioController extends OlimpoController {
 				}
 				Barrio bar = new Barrio();
 				bar.setNombre(nombre);
+				bar.setLocalidad(comboBoxLocalidad.getValue());
 				return bar;
 			}
 		});
@@ -363,6 +375,7 @@ public class AltaPropietarioController extends OlimpoController {
 				}
 				Calle cal = new Calle();
 				cal.setNombre(nombre);
+				cal.setLocalidad(comboBoxLocalidad.getValue());
 				return cal;
 			}
 		});
@@ -370,20 +383,37 @@ public class AltaPropietarioController extends OlimpoController {
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
-		try{
-			listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
-		} catch(PersistenciaException e){
-			presentador.presentarExcepcion(e, stage);
+		if(provincia.getId()!=null) {
+			try{
+				listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+			comboBoxLocalidad.getItems().addAll(listaLocalidades);
 		}
-		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
 
 	private void actualizarProvincias(Pais pais) {
-		try{
-			listaProvincias = coordinador.obtenerProvinciasDe(pais);
-		} catch(PersistenciaException e){
-			presentador.presentarExcepcion(e, stage);
+		if(pais.getId()!=null) {
+			try{
+				listaProvincias = coordinador.obtenerProvinciasDe(pais);
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+			comboBoxProvincia.getItems().addAll(listaProvincias);
 		}
-		comboBoxProvincia.getItems().addAll(listaProvincias);
+	}
+
+	private void actualizarBarriosYCalles(Localidad loc) {
+		if(loc.getId()!=null) {
+			try{
+				listaBarrios = coordinador.obtenerBarriosDe(loc);
+				listaCalles = coordinador.obtenerCallesDe(loc);
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+			comboBoxBarrio.getItems().addAll(listaBarrios);
+			comboBoxCalle.getItems().addAll(listaCalles);
+		}
 	}
 }
