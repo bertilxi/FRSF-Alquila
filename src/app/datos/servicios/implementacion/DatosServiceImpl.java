@@ -25,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import app.datos.entidades.Barrio;
+import app.datos.entidades.Calle;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Pais;
@@ -149,6 +151,40 @@ public class DatosServiceImpl implements DatosService {
 			throw new ConsultaException(e);
 		}
 		return estados;
+	}
+
+	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
+	public ArrayList<Barrio> obtenerBarriosDe(Localidad localidad) throws PersistenciaException {
+		ArrayList<Barrio> barrios = new ArrayList<>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			for(Object o: session.getNamedQuery("obtenerBarriosDe").setParameter("loc", localidad).list()){
+				if(o instanceof Barrio){
+					barrios.add((Barrio) o);
+				}
+			}
+		} catch(Exception e){
+			throw new ConsultaException(e);
+		}
+		return barrios;
+	}
+
+	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
+	public ArrayList<Calle> obtenerCallesDe(Localidad localidad) throws PersistenciaException {
+		ArrayList<Calle> calles = new ArrayList<>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			for(Object o: session.getNamedQuery("obtenerCallesDe").setParameter("loc",localidad).list()){
+				if(o instanceof Calle){
+					calles.add((Calle) o);
+				}
+			}
+		} catch(Exception e){
+			throw new ConsultaException(e);
+		}
+		return calles;
 	}
 
 }
