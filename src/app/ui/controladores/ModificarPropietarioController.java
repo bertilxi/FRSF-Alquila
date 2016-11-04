@@ -14,9 +14,7 @@ import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -173,8 +171,8 @@ public class ModificarPropietarioController extends OlimpoController {
 	}
 
 	@FXML
-	public void cancelAction(ActionEvent event) {
-		((Node) event.getSource()).getScene().getWindow().hide();
+	public void cancelAction() {
+		cambiarmeAScene(AdministrarPropietarioController.URLVista);
 	}
 
 	@Override

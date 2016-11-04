@@ -32,6 +32,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
+@SuppressWarnings("unused") //TODO quitar
 public class GestorPropietarioTest {
 
 	private static Propietario propietario;

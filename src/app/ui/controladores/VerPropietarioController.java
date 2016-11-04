@@ -40,16 +40,26 @@ public class VerPropietarioController extends OlimpoController{
 	@FXML
 	private TextField textFieldBarrio;
 
-	private Propietario propietario;
-
-	public void setPropietario(Propietario propietario) {
-		this.propietario = propietario;
-		//TODO setear campos
+	public void setPropietario(Propietario 	propietario) {
+		textFieldAlturaCalle.setText(propietario.getDireccion().getNumero());
+		textFieldApellido.setText(propietario.getApellido());
+		textFieldBarrio.setText(propietario.getDireccion().getBarrio().getNombre());
+		textFieldCalle.setText(propietario.getDireccion().getCalle().getNombre());
+		textFieldCorreoElectronico.setText(propietario.getEmail());
+		textFieldDepartamento.setText(propietario.getDireccion().getDepartamento());
+		textFieldLocalidad.setText(propietario.getDireccion().getLocalidad().getNombre());
+		textFieldNombre.setText(propietario.getNombre());
+		textFieldNumeroDocumento.setText(propietario.getNumeroDocumento());
+		textFieldPais.setText(propietario.getDireccion().getLocalidad().getProvincia().getPais().getNombre());
+		textFieldPiso.setText(propietario.getDireccion().getPiso());
+		textFieldProvincia.setText(propietario.getDireccion().getLocalidad().getProvincia().getNombre());
+		textFieldTelefono.setText(propietario.getTelefono());
+		textFieldTipoDeDocumento.setText(propietario.getTipoDocumento().toString());
 	}
 
 	@FXML
 	public void handleAtras( ) {
-		//TODO hacer
+		cambiarmeAScene(AdministrarPropietarioController.URLVista);
 	}
 
 	@Override
