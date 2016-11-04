@@ -1,12 +1,9 @@
 package app.logica.gestores;
 
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.rule.PowerMockRule;
+import org.mockito.Mockito;
 
 import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
@@ -24,11 +21,10 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-@PrepareForTest({ ValidadorFormato.class, })
+@SuppressWarnings("unused") //TODO quitar
 public class GestorClienteTest {
 
-	@Rule
-	public PowerMockRule rule = new PowerMockRule();
+	private static ValidadorFormato validadorMock;
 	private static Cliente cliente;
 	private static GestorCliente gestorCliente;
 	private static ClienteService clienteService;
@@ -59,39 +55,38 @@ public class GestorClienteTest {
 			new ResultadoModificarCliente(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 
 	@BeforeClass
-	public static void setUp() {
+	public static void setUp() throws Exception {
 		//Setear valores esperados a los mocks
-		PowerMockito.when(ValidadorFormato.validarNombre(cliente.getNombre())).thenReturn(resValNombre);
-		PowerMockito.when(ValidadorFormato.validarApellido(cliente.getApellido())).thenReturn(resValApellido);
-		PowerMockito.when(ValidadorFormato.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())).thenReturn(resValDocumento);
-		PowerMockito.when(ValidadorFormato.validarTelefono(cliente.getTelefono())).thenReturn(resValTelefono);
-		PowerMockito.when(ValidadorFormato.validarEmail(cliente.getEmail())).thenReturn(resValEmail);
-		PowerMockito.when(ValidadorFormato.validarDireccion(cliente.getDireccion())).thenReturn(resValDireccion);
-		PowerMockito.when(clienteService.obtenercliente(filtro)).thenReturn(resObtenercliente);
-		PowerMockito.doNothing().when(clienteService).guardarcliente(cliente); //Para métodos void la sintaxis es distinta
+		validadorMock = Mockito.mock(ValidadorFormato.class);
+		Mockito.when(validadorMock.validarNombre(cliente.getNombre())).thenReturn(true);
+		Mockito.when(validadorMock.validarApellido(cliente.getApellido())).thenReturn(true);
+		Mockito.when(validadorMock.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())).thenReturn(true);
+		Mockito.when(validadorMock.validarTelefono(cliente.getTelefono())).thenReturn(true);
+		Mockito.when(clienteService.obtenerCliente(filtro)).thenReturn(cliente);
+		Mockito.doNothing().when(clienteService).guardarCliente(cliente); //Para métodos void la sintaxis es distinta
 
 	}
 
 	@Test
-	@Parameters(method = "clientesValues")
+	@Parameters
 	public void crearCliente(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento,
 			String telefono, Estado estado, Boolean shouldSuccess) throws Exception {
 
-		clienteService = PowerMockito.mock(ClienteService.class);
-		PowerMockito.mockStatic(ValidadorFormato.class);
+		clienteService = Mockito.mock(ClienteService.class);
 
 		gestorCliente = new GestorCliente() {
 			{
 				this.persistidorCliente = clienteService;
+				this.validador = validadorMock;
 			}
 		};
 
-		cliente.setId(null).setNombre(nombre).setApellido(apellido).setTipoDocumento(tipoDocumento)
+		cliente.setNombre(nombre).setApellido(apellido).setTipoDocumento(tipoDocumento)
 				.setNumeroDocumento(numeroDocumento).setTelefono(telefono).setEstado(estado);
 
 	}
 
-	private Object[] clientesValues() {
+	protected Object[] parametersForCrearCliente() {
 		return new Object[] {
 				// Prueba todos los datos correctos
 				new Object[] { "Jose", "Perez", new TipoDocumento(TipoDocumentoStr.DNI), "30123456",
