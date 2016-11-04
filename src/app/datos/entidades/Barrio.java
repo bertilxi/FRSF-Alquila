@@ -26,9 +26,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+@NamedQuery(name = "obtenerBarriosDe", query = "SELECT b FROM Barrio b WHERE localidad=:loc")
 @Entity
 @Table(name = "barrio", uniqueConstraints = @UniqueConstraint(name = "barrio_nombre_idlocalidad_uk", columnNames = { "nombre", "idlocalidad" }))
 public class Barrio {
