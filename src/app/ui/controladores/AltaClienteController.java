@@ -23,27 +23,27 @@ public class AltaClienteController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/altaCliente.fxml";
 
 	@FXML
-	private TextField textFieldNombre;
+	protected TextField textFieldNombre;
 
 	@FXML
-	private TextField textFieldApellido;
+	protected TextField textFieldApellido;
 
 	@FXML
-	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
+	protected ComboBox<TipoDocumento> comboBoxTipoDocumento;
 
 	@FXML
-	private TextField textFieldNumeroDocumento;
+	protected TextField textFieldNumeroDocumento;
 
 	@FXML
-	private TextField textFieldTelefono;
+	protected TextField textFieldTelefono;
 
 	@FXML
-	private Button buttonCargarInmueble;
+	protected Button buttonCargarInmueble;
 
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
 	@FXML
-	public void acceptAction() {
+	public void acceptAction() throws PersistenciaException, GestionException {
 
 		StringBuilder error = new StringBuilder("");
 

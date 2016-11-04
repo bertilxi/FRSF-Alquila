@@ -1,28 +1,28 @@
 package app.ui.controladores;
 
-import app.datos.clases.TipoDocumentoStr;
-import app.datos.entidades.Cliente;
-import app.datos.entidades.TipoDocumento;
-import app.datos.entidades.Vendedor;
-import app.excepciones.GestionException;
-import app.excepciones.PersistenciaException;
-import app.logica.CoordinadorJavaFX;
-import app.logica.resultados.ResultadoCrearCliente;
-import app.logica.resultados.ResultadoCrearCliente;
-import junitparams.Parameters;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import org.junit.Test;
 import org.junit.runners.model.Statement;
 import org.mockito.Mockito;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import app.datos.clases.TipoDocumentoStr;
+import app.datos.entidades.Cliente;
+import app.datos.entidades.TipoDocumento;
+import app.excepciones.GestionException;
+import app.excepciones.PersistenciaException;
+import app.logica.CoordinadorJavaFX;
+import app.logica.resultados.ResultadoCrearCliente;
+import junitparams.Parameters;
 
 public class AltaClienteControllerTest {
 
 	@Test
 	@Parameters
 	// TODO: probar con inmueble buscado
+    // TODO: terminar y corregir
 	public void testCrearClientetestCrearVendedor(String nombre,
 			String apellido,
 			TipoDocumento tipoDocumento,
@@ -31,6 +31,7 @@ public class AltaClienteControllerTest {
 			ResultadoCrearCliente resultadoCrearClienteEsperado,
 			Integer llamaACrearCliente,
 			Throwable excepcion) throws Exception {
+
 		CoordinadorJavaFX coordinadorMock = Mockito.mock(CoordinadorJavaFX.class);
 
 		Cliente cliente = new Cliente()
@@ -90,27 +91,27 @@ public class AltaClienteControllerTest {
 				//prueba correcta
 				new Object[] { "Juan", "Perez",
 						(new TipoDocumento()).setTipo(TipoDocumentoStr.DNI),
-						"12345678", "abc", "abc", resultadoCorrecto, 1, null },
+						"12345678", "", resultadoCorrecto, 1, null },
 				//prueba nombre incorrecto
 				new Object[] { "Juan", "Perez",
 						(new TipoDocumento()).setTipo(TipoDocumentoStr.DNI),
-						"12345678", "abc", "abc", resultadoCrearNombreIncorrecto, 1, null },
+						"12345678", "", resultadoCrearNombreIncorrecto, 1, null },
 				//prueba apellido incorrecto
 				new Object[] { "Juan", "Perez",
 						(new TipoDocumento()).setTipo(TipoDocumentoStr.DNI),
-						"12345678", "abc", "abc", resultadoCrearApellidoIncorrecto, 1, null },
+						"12345678", "", resultadoCrearApellidoIncorrecto, 1, null },
 				//prueba documento incorrecto
 				new Object[] { "Juan", "Perez",
 						(new TipoDocumento()).setTipo(TipoDocumentoStr.DNI),
-						"12345678", "abc", "abc", resultadoCrearDocumentoIncorrecto, 1, null },
+						"12345678", "", resultadoCrearDocumentoIncorrecto, 1, null },
 				//prueba ya existe vendedor
 				new Object[] { "Juan", "Perez",
 						(new TipoDocumento()).setTipo(TipoDocumentoStr.DNI),
-						"12345678", "abc", "abc", resultadoCrearYaExiste, 1, null },
+						"12345678", "", resultadoCrearYaExiste, 1, null },
 				//prueba ya existe vendedor
 				new Object[] { "Juan", "Perez",
 						(new TipoDocumento()).setTipo(TipoDocumentoStr.DNI),
-						"12345678", "abc", "abc",
+						"12345678", "",
 						new ResultadoCrearCliente(ResultadoCrearCliente.ErrorCrearCliente.Formato_Nombre_Incorrecto,
 								ResultadoCrearCliente.ErrorCrearCliente.Formato_Apellido_Incorrecto),
 						1, null },
