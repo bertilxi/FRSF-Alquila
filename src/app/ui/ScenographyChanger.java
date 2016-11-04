@@ -36,9 +36,8 @@ public class ScenographyChanger {
 			background.getChildren().clear();
 			background.getChildren().add(newScenography);
 
-			newScenography.autosize();
-			background.autosize();
 			stage.sizeToScene();
+			newScenography.minHeightProperty().bind(background.heightProperty());
 
 			OlimpoController controller = loader.getController();
 
