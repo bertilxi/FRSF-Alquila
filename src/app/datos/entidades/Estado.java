@@ -38,7 +38,7 @@ public class Estado {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
 
-	@Column(name = "estado", unique = true)
+	@Column(name = "estado", length = 20, unique = true)
 	@Enumerated(EnumType.STRING)
 	private EstadoStr estado;
 

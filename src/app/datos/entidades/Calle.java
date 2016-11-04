@@ -39,7 +39,7 @@ public class Calle {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
 
-	@Column(name = "nombre", length = 30, nullable = false)
+	@Column(name = "nombre", length = 50, nullable = false)
 	private String nombre;
 
 	//Relaciones

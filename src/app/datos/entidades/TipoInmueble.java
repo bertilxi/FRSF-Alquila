@@ -39,7 +39,7 @@ public class TipoInmueble {
 	private Integer id; //ID
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo")
+	@Column(name = "tipo", length = 30)
 	private TipoInmuebleStr tipo;
 
 	public TipoInmueble() {
