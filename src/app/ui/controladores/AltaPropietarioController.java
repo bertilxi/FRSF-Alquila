@@ -83,19 +83,40 @@ public class AltaPropietarioController extends OlimpoController {
 		Calle calle = comboBoxCalle.getValue();
 
 		if(nombre.isEmpty()){
-			error.append("Inserte un nombre").append("\r\n");
+			error.append("Inserte un nombre").append("\n");
 		}
 		if(apellido.isEmpty()){
-			error.append("Inserte un apellido").append("\r\n ");
+			error.append("Inserte un apellido").append("\n ");
 		}
 		if(numeroDocumento.isEmpty()){
-			error.append("Inserte un numero de documento").append("\r\n ");
+			error.append("Inserte un numero de documento").append("\n ");
 		}
 		if(alturaCalle.isEmpty()){
-			error.append("Inserte una altura").append("\r\n ");
+			error.append("Inserte una altura").append("\n ");
+		}
+		if(piso.isEmpty()) {
+			error.append("Inserte un piso").append("\n ");
+		}
+		if(departamento.isEmpty()) {
+			error.append("Inserte un departamento").append("\n ");
 		}
 		if(telefono.isEmpty()){
-			error.append("Inserte un telefono").append("\r\n ");
+			error.append("Inserte un telefono").append("\n ");
+		}
+		if(correoElectronico.isEmpty()) {
+			error.append("Inserte un correo electrónico").append("\n ");
+		}
+		if(calle == null) {
+			error.append("Elija una calle").append("\n");
+		}
+		if(barrio == null) {
+			error.append("Elija un barrio").append("\n");
+		}
+		if(tipoDoc == null) {
+			error.append("Elija un tipo de documento").append("\n");
+		}
+		if(localidad == null) {
+			error.append("Elija una localidad").append("\n");
 		}
 
 		if(!error.toString().isEmpty()){
