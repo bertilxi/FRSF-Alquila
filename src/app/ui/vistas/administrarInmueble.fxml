@@ -12,15 +12,16 @@
          <children>
             <TableView fx:id="tablaVendedores" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="columnaNumeroDocumento" minWidth="-1.0" prefWidth="166.0" text="Numero Documento" />
-                <TableColumn fx:id="columnaNombre" prefWidth="129.0" text="Nombre" />
-                <TableColumn fx:id="columnaApellido" prefWidth="134.0" text="Apellido" />
+                <TableColumn fx:id="columnaNumeroDocumento" minWidth="-1.0" prefWidth="166.0" text="Tipo" />
+                <TableColumn fx:id="columnaNombre" prefWidth="129.0" text="Localidad" />
+                <TableColumn fx:id="columnaApellido" prefWidth="134.0" text="Precio" />
               </columns>
             </TableView>
          </children>
       </VBox>
       <VBox alignment="TOP_CENTER" maxWidth="150.0" styleClass="buttonbar" HBox.hgrow="ALWAYS">
          <children>
+            <Button fx:id="botonVer1" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Ver más" />
             <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Agregar" />
             <Button fx:id="botonModificar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Modificar" />
             <Button fx:id="botonEliminar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Eliminar" />

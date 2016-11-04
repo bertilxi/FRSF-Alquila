@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import app.comun.ValidadorFormato;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -20,7 +19,7 @@ public class ValidadorFormatoTest {
 			"Nombre Incorrect0 por numer0s, false",
 			"ácéntós íú y ñ, true" })
 	public void validarNombreTest(String nombre, boolean esperado) {
-		assertEquals(esperado, ValidadorFormato.validarNombre(nombre));
+		assertEquals(esperado, new ValidadorFormato().validarNombre(nombre));
 	}
 
 	@Test
@@ -33,13 +32,13 @@ public class ValidadorFormatoTest {
 			"caracte^r~@juan.com, true",
 			"ácéntós@juan.com, true" })
 	public void validarEmailTest(String email, boolean esperado) {
-		assertEquals(esperado, ValidadorFormato.validarEmail(email));
+		assertEquals(esperado, new ValidadorFormato().validarEmail(email));
 	}
 
 	@Test
 	@Parameters({ "juan@juan.com, true",
 	})
 	public void validarDomicilioTest(String email, boolean esperado) {
-		assertEquals(esperado, ValidadorFormato.validarEmail(email));
+		assertEquals(esperado, new ValidadorFormato().validarEmail(email));
 	}
 }

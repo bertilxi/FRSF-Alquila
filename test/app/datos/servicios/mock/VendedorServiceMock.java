@@ -1,5 +1,7 @@
 package app.datos.servicios.mock;
 
+import java.util.ArrayList;
+
 import app.datos.clases.FiltroVendedor;
 import app.datos.entidades.Vendedor;
 import app.datos.servicios.VendedorService;
@@ -35,6 +37,11 @@ public class VendedorServiceMock implements VendedorService {
 			throw (PersistenciaException) excepcion;
 		}
 		new Integer("asd");
+		return null;
+	}
+
+	@Override
+	public ArrayList<Vendedor> listarVendedores() throws PersistenciaException {
 		return null;
 	}
 }
