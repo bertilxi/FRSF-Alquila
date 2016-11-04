@@ -1,7 +1,5 @@
 package app.ui.controladores;
 
-import static org.junit.Assert.assertEquals;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -52,14 +50,13 @@ public class AltaVendedorControllerTest {
 			}
 
 			@Override
-			public ResultadoCrearVendedor acceptAction() throws PersistenciaException, GestionException {
+			public void acceptAction() throws PersistenciaException, GestionException {
 				this.textFieldNombre.setText(nombre);
 				this.textFieldApellido.setText(apellido);
 				this.comboBoxTipoDocumento.getSelectionModel().select(tipoDocumento);
 				this.textFieldNumeroDocumento.setText(numeroDocumento);
 				this.passwordFieldContraseña.setText(contraseña);
 				this.passwordFieldRepiteContraseña.setText(contraseña);
-				return super.acceptAction();
 			};
 		};
 
@@ -69,8 +66,7 @@ public class AltaVendedorControllerTest {
 			@Override
 			public void evaluate() throws Throwable {
 				Mockito.verify(coordinadorMock).obtenerTiposDeDocumento();
-				ResultadoCrearVendedor resultadoCrearVendedor = altaVendedorController.acceptAction();
-				assertEquals(resultadoCrearVendedorEsperado, resultadoCrearVendedor);
+				altaVendedorController.acceptAction();
 				Mockito.verify(coordinadorMock, Mockito.times(llamaACrearVendedor)).crearVendedor(Mockito.any());
 			}
 		};
