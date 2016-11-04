@@ -16,6 +16,7 @@ import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -36,6 +37,10 @@ public class AltaVendedorController extends OlimpoController {
 	protected PasswordField passwordFieldRepiteContraseña;
 	@FXML
 	protected ComboBox<TipoDocumento> comboBoxTipoDocumento;
+	@FXML
+	private Button acceptButton;
+	@FXML
+	private Button cancelButton;
 
 	protected ArrayList<TipoDocumento> listaTiposDeDocumento;
 

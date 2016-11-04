@@ -6,20 +6,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarVendedorController">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarVendedorController">
    <children>
       <TableView fx:id="tablaVendedores" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
         <columns>
-          <TableColumn fx:id="columnaNumeroDocumento" minWidth="-1.0" prefWidth="166.0" text="Numero Documento" />
-          <TableColumn fx:id="columnaNombre" prefWidth="150.0" text="Nombre" />
-          <TableColumn fx:id="columnaApellido" prefWidth="150.0" text="Apellido" />
+          <TableColumn fx:id="columnaNumeroDocumento" editable="false" minWidth="-1.0" prefWidth="166.0" text="Numero Documento" />
+          <TableColumn fx:id="columnaNombre" editable="false" prefWidth="300.0" text="Nombre" />
+          <TableColumn fx:id="columnaApellido" prefWidth="300.0" text="Apellido" />
         </columns>
       </TableView>
       <VBox alignment="TOP_CENTER" maxWidth="150.0" styleClass="buttonbar" HBox.hgrow="ALWAYS">
          <children>
-            <Button fx:id="botonAgregar" onAction="#agregarAction" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Agregar" />
-            <Button fx:id="botonModificar" onAction="#modificarAction" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Modificar" />
-            <Button fx:id="botonEliminar" onAction="#eliminarAction" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Eliminar" />
+            <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregarAction" text="Agregar" />
+            <Button fx:id="botonModificar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#modificarAction" text="Modificar" />
+            <Button fx:id="botonEliminar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#eliminarAction" text="Eliminar" />
          </children>
       </VBox>
    </children>
