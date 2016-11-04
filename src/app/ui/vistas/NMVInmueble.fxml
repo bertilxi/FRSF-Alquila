@@ -15,114 +15,111 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.BaseController">
+<VBox fx:id="padre" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.NMVInmuebleController">
    <children>
-      <VBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css">
+      <VBox fx:id="pantalla1" prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css">
             <children>
-                <VBox prefHeight="200.0" prefWidth="100.0" styleClass="main" VBox.vgrow="ALWAYS">
-                    <children>
-                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="grid-pane" VBox.vgrow="NEVER">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                                <ColumnConstraints hgrow="ALWAYS" minWidth="250.0" prefWidth="300.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                                <ColumnConstraints hgrow="ALWAYS" minWidth="250.0" prefWidth="300.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <ComboBox maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de Inmueble*" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <TextField disable="true" editable="false" maxHeight="1000.0" maxWidth="1000.0" promptText="Fecha de carga" GridPane.columnIndex="3" />
-                        <ComboBox editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="País*" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <ComboBox editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia*" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                <ComboBox editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ComboBox editable="true" layoutX="565.0" layoutY="64.0" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio*" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <children>
-                              <ComboBox editable="true" maxHeight="1500.0" maxWidth="1500.0" prefHeight="36.0" prefWidth="347.0" promptText="Calle*" HBox.hgrow="ALWAYS" />
-                                      <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Altura*" HBox.hgrow="NEVER" />
-                           </children>
-                        </HBox>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                           <children>
-                                      <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Piso" HBox.hgrow="ALWAYS" />
-                                      <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Departamento" HBox.hgrow="ALWAYS" />
-                                      <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Otros" />
-                           </children>
-                        </HBox>
-                                <ComboBox maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Orientación" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <ComboBox layoutX="119.0" layoutY="195.0" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Propietario*" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Precio de venta" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <TextField disable="true" editable="false" layoutX="565.0" layoutY="20.0" maxHeight="1000.0" maxWidth="1000.0" promptText="Código" GridPane.columnIndex="1" />
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                        </GridPane>
-                        <GridPane styleClass="grid-pane" VBox.vgrow="SOMETIMES">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                        <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" prefWidth="100.0" />
-                                <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
-                                <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
-                                <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="70.0" prefHeight="70.0" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                        <Label text="Medidas del inmueble" GridPane.columnIndex="1" />
-                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Frente en metros" GridPane.columnIndex="2" />
-                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Fondo en metros" GridPane.columnIndex="3" />
-                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Superficie en metros^2" GridPane.columnIndex="4" />
-                                <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Agregar Foto" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <GridPane.margin>
-                              <Insets right="15.0" />
-                           </GridPane.margin>
+                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="grid-pane" VBox.vgrow="NEVER">
+                      <columnConstraints>
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
+                          <ColumnConstraints hgrow="ALWAYS" minWidth="250.0" prefWidth="300.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
+                          <ColumnConstraints hgrow="ALWAYS" minWidth="250.0" prefWidth="300.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                      <children>
+                  <TextField fx:id="tfCodigo" disable="true" editable="false" layoutX="565.0" layoutY="20.0" maxHeight="1000.0" maxWidth="1000.0" promptText="Código" GridPane.columnIndex="1" />
+                          <TextField fx:id="tfFechaCarga" disable="true" editable="false" maxHeight="1000.0" maxWidth="1000.0" promptText="Fecha de carga" GridPane.columnIndex="3" />
+                          <ComboBox fx:id="cbTipoInmueble" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de Inmueble*" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="cbPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="País*" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                          <ComboBox fx:id="cbProvincia" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Provincia*" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                          <ComboBox fx:id="cbLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad*" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cbBarrio" editable="true" layoutX="565.0" layoutY="64.0" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio*" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <children>
+                        <ComboBox fx:id="cbCalle" editable="true" maxHeight="1500.0" maxWidth="1500.0" prefHeight="36.0" prefWidth="347.0" promptText="Calle*" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="tfAltura" maxHeight="1000.0" maxWidth="1000.0" promptText="Altura*" HBox.hgrow="NEVER" />
+                     </children>
+                  </HBox>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <children>
+                                <TextField fx:id="tfPiso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Piso" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="tfDepartamento" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Departamento" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="tfOtros" maxHeight="1000.0" maxWidth="1000.0" promptText="Otros" />
+                     </children>
+                  </HBox>
+                          <ComboBox fx:id="cbOrientacion" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Orientación" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="cbPropietario" layoutX="119.0" layoutY="195.0" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Propietario*" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                          <TextField fx:id="tfPrecioVenta" maxHeight="1000.0" maxWidth="1000.0" promptText="Precio de venta" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                      </children>
+                      <padding>
+                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                      </padding>
+                  </GridPane>
+                  <GridPane styleClass="grid-pane" VBox.vgrow="SOMETIMES">
+                      <columnConstraints>
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
+                  <ColumnConstraints />
+                          <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
+                          <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
+                          <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="70.0" prefHeight="70.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                      <children>
+                  <Label text="Medidas del inmueble" GridPane.columnIndex="1" />
+                          <TextField fx:id="tfFrente" maxHeight="1000.0" maxWidth="1000.0" promptText="Frente en metros" GridPane.columnIndex="2" />
+                          <TextField fx:id="tfFondo" maxHeight="1000.0" maxWidth="1000.0" promptText="Fondo en metros" GridPane.columnIndex="3" />
+                          <TextField fx:id="tfSuperficie" maxHeight="1000.0" maxWidth="1000.0" promptText="Superficie en metros^2" GridPane.columnIndex="4" />
+                          <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#agregarFoto" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Agregar Foto" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets right="15.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#quitarFoto" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Quitar Foto" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets right="15.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <content>
+                        <TilePane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                     </content>
+                  </ScrollPane>
+                      <HBox alignment="CENTER_RIGHT" styleClass="buttonbar" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="4">
+                          <children>
+                        <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#siguiente" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Siguiente">
+                           <HBox.margin>
+                              <Insets right="8.0" />
+                           </HBox.margin>
                         </Button>
-                        <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Quitar Foto" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
-                           <GridPane.margin>
-                              <Insets right="15.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <content>
-                              <TilePane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                           </content>
-                        </ScrollPane>
-                            <HBox alignment="CENTER_RIGHT" styleClass="buttonbar" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="4">
-                                <children>
-                              <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Siguiente">
-                                 <HBox.margin>
-                                    <Insets right="8.0" />
-                                 </HBox.margin>
-                              </Button>
-                                    <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
-                                </children>
-                            </HBox>
-                        <Label text="* Campos obligatrios" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                            </children>
-                        </GridPane>
-                    </children>
-                    <padding>
-                        <Insets top="30.0" />
-                    </padding>
-                </VBox>
+                              <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
+                          </children>
+                      </HBox>
+                  <Label text="* Campos obligatrios" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                      </children>
+                  </GridPane>
             </children>
         </VBox>
-      <VBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css">
+      <VBox fx:id="pantalla2" prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css">
          <children>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="grid-pane" VBox.vgrow="ALWAYS">
                <columnConstraints>
@@ -145,31 +142,34 @@
                   <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextField fx:id="textFieldAntiguedad" maxHeight="1000.0" maxWidth="1000.0" promptText="Antiguedad" GridPane.columnIndex="3" />
-                  <TextField fx:id="textFieldDormitorios" maxHeight="1000.0" maxWidth="1000.0" promptText="Cantidad de dormitorios" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="textFieldBaños" maxHeight="1000.0" maxWidth="1000.0" promptText="Cantidad de baños" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="checkboxPropiedadHorizontal" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Propiedad horizontal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="checkboxGarage" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene garage" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="checkboxPatio" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene patio" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="checkboxPiscina" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene piscina" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="checkboxAguaCorriente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene agua corriente" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="checkboxCloaca" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene cloaca" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="checkboxGasNatural" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene gas natural" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="checkboxAguaCaliente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene agua caliente" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="checkboxTelefono" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene teléfono" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="checkboxLavadero" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene lavadero" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="checkboxPavimento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene pavimento" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Obsevaciones" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
-                  <TextField fx:id="textFieldAntiguedad1" layoutX="571.0" layoutY="68.0" maxHeight="1000.0" maxWidth="1000.0" promptText="Superficie del edificio" GridPane.columnIndex="1" />
-                  <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="tfSuperficieEdificio" layoutX="571.0" layoutY="68.0" maxHeight="1000.0" maxWidth="1000.0" promptText="Superficie del edificio" GridPane.columnIndex="1" />
+                  <TextField fx:id="tfAntiguedad" maxHeight="1000.0" maxWidth="1000.0" promptText="Antiguedad" GridPane.columnIndex="3" />
+                  <TextField fx:id="tfDormitorios" maxHeight="1000.0" maxWidth="1000.0" promptText="Cantidad de dormitorios" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="tfBaños" maxHeight="1000.0" maxWidth="1000.0" promptText="Cantidad de baños" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <CheckBox fx:id="cbPropiedadHorizontal" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Propiedad horizontal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <CheckBox fx:id="cbGarage" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene garage" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <CheckBox fx:id="cbPatio" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene patio" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="cbPiscina" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene piscina" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="cbAguaCorriente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene agua corriente" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <CheckBox fx:id="cbCloaca" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene cloaca" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <CheckBox fx:id="cbGasNatural" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene gas natural" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <CheckBox fx:id="cbAguaCaliente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene agua caliente" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <CheckBox fx:id="cbTelefono" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene teléfono" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <CheckBox fx:id="cbLavadero" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene lavadero" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                  <CheckBox fx:id="cbPavimento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene pavimento" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextArea fx:id="taObservaciones" prefHeight="200.0" prefWidth="200.0" promptText="Obsevaciones" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+                  <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#atras" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                     <GridPane.margin>
+                        <Insets left="15.0" />
+                     </GridPane.margin></Button>
                   <HBox alignment="CENTER_RIGHT" styleClass="buttonbar" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="9">
                      <children>
-                        <Button fx:id="acceptButton1" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS">
+                        <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#aceptar" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="8.0" />
                            </HBox.margin>
                         </Button>
-                        <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
+                        <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
