@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Propietario;
 import app.excepciones.PersistenciaException;
+import app.logica.resultados.ResultadoEliminarPropietario;
+import app.logica.resultados.ResultadoEliminarPropietario.ErrorEliminarPropietario;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -71,6 +74,48 @@ public class AdministrarPropietarioController extends OlimpoController {
 			botonVer.setDisable(false);
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
+		}
+	}
+
+	@FXML
+	private void handleVer() {
+		//TODO hacer esto
+	}
+
+	@FXML
+	private void handleAgregar() {
+		cambiarmeAScene(AltaPropietarioController.URLVista);
+	}
+
+	@FXML
+	private void handleModificar() {
+		ModificarPropietarioController controlador = (ModificarPropietarioController) cambiarmeAScene(ModificarPropietarioController.URLVista);
+		controlador.setPropietarioEnModificacion(tablaPropietarios.getSelectionModel().getSelectedItem());
+	}
+
+	@FXML
+	private void handleEliminar() {
+		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar propietario", "Está a punto de eliminar al propietario.\n ¿Está seguro que desea hacerlo?", this.stage);
+		if(ventana.acepta()) {
+			try {
+				ResultadoEliminarPropietario resultado = coordinador.eliminarPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
+				if(resultado.hayErrores()) {
+					StringBuilder stringErrores = new StringBuilder();
+					for(ErrorEliminarPropietario err: resultado.getErrores()){
+						switch(err) {
+						case No_Existe_Propietario:
+							stringErrores.append("No existe el propietario que desea eliminar.\n");
+							break;
+						}
+					}
+					presentador.presentarError("No se pudo eliminar el propietario", stringErrores.toString(), stage);
+
+				}
+				tablaPropietarios.getItems().clear();
+				tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());
+			} catch (PersistenciaException e) {
+				presentador.presentarExcepcion(e, stage);
+			}
 		}
 	}
 }

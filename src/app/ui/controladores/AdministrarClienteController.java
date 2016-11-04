@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
 import app.excepciones.PersistenciaException;
+import app.logica.resultados.ResultadoEliminarCliente;
+import app.logica.resultados.ResultadoEliminarCliente.ErrorEliminarCliente;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -69,6 +72,43 @@ public class AdministrarClienteController extends OlimpoController {
 		else{
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
+		}
+	}
+
+	@FXML
+	private void handleAgregar() {
+		cambiarmeAScene(AltaClienteController.URLVista);
+	}
+
+	@FXML
+	private void handleModificar() {
+		ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
+		controlador.setClienteEnModificacion(tablaClientes.getSelectionModel().getSelectedItem());
+	}
+
+	@FXML
+	private void handleEliminar() {
+		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar cliente", "Está a punto de eliminar al cliente.\n ¿Está seguro que desea hacerlo?", this.stage);
+		if(ventana.acepta()) {
+			try {
+				ResultadoEliminarCliente resultado = coordinador.eliminarCliente(tablaClientes.getSelectionModel().getSelectedItem());
+				if(resultado.hayErrores()) {
+					StringBuilder stringErrores = new StringBuilder();
+					for(ErrorEliminarCliente err: resultado.getErrores()){
+						switch(err) {
+						case No_Existe_Cliente:
+							stringErrores.append("No existe el cliente que desea eliminar.\n");
+							break;
+						}
+					}
+					presentador.presentarError("No se pudo eliminar el cliente", stringErrores.toString(), stage);
+
+				}
+				tablaClientes.getItems().clear();
+				tablaClientes.getItems().addAll(coordinador.obtenerClientes());
+			} catch (PersistenciaException e) {
+				presentador.presentarExcepcion(e, stage);
+			}
 		}
 	}
 }

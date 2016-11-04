@@ -26,6 +26,8 @@ import javafx.scene.control.TextField;
 
 public class AltaPropietarioController extends OlimpoController {
 
+	public static final String URLVista = "/app/ui/vistas/altaPropietario.fxml";
+
 	@FXML
 	private TextField textFieldNombre;
 	@FXML
@@ -155,7 +157,8 @@ public class AltaPropietarioController extends OlimpoController {
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
 					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El propietario ya existe", "El propietario ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
 					if(ventana.acepta()){
-						//TODO mandar a la vista modificar propietario
+						ModificarPropietarioController controlador = (ModificarPropietarioController) cambiarmeAScene(ModificarPropietarioController.URLVista);
+						controlador.setPropietarioEnModificacion(propietario);
 					}
 				}
 			} catch(PersistenciaException e){

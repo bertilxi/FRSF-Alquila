@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 
 public class ModificarClienteController extends OlimpoController {
 
+	public static final String URLVista = "/app/ui/vistas/modificarCliente.fxml";
+
 	@FXML
 	private TextField textFieldNombre;
 

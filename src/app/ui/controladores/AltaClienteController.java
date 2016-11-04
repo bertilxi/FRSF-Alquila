@@ -22,6 +22,8 @@ import javafx.scene.control.TextField;
 
 public class AltaClienteController extends OlimpoController {
 
+	public static final String URLVista = "/app/ui/vistas/altaCliente.fxml";
+
 	@FXML
 	private TextField textFieldNombre;
 
@@ -109,7 +111,8 @@ public class AltaClienteController extends OlimpoController {
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
 					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El cliente ya existe", "El cliente ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
 					if(ventana.acepta()){
-						//TODO mandar a la vista modificar cliente
+						ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
+						controlador.setClienteEnModificacion(cliente);
 					}
 				}
 			} catch(PersistenciaException e){

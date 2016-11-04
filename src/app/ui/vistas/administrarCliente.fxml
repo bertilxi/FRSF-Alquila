@@ -10,21 +10,21 @@
    <children>
       <VBox alignment="CENTER" styleClass="grid-pane" HBox.hgrow="ALWAYS">
          <children>
-            <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tablaClientes" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
               <columns>
-                  <TableColumn minWidth="-1.0" prefWidth="184.0" text="Numero Documento" />
-                <TableColumn prefWidth="91.0" text="Nombre" />
-                <TableColumn prefWidth="75.0" text="Apellido" />
-                  <TableColumn prefWidth="75.0" text="Telefono" />
+                  <TableColumn fx:id="columnaNumeroDocumento" editable="false" minWidth="-1.0" prefWidth="184.0" text="Numero Documento" />
+                <TableColumn fx:id="columnaNombre" editable="false" prefWidth="91.0" text="Nombre" />
+                <TableColumn fx:id="columnaApellido" editable="false" prefWidth="75.0" text="Apellido" />
+                  <TableColumn fx:id="columnaTelefono" editable="false" prefWidth="75.0" text="Telefono" />
               </columns>
             </TableView>
          </children>
       </VBox>
       <VBox alignment="TOP_CENTER" maxWidth="150.0" styleClass="buttonbar" HBox.hgrow="ALWAYS">
          <children>
-            <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Agregar" />
-            <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Modificar" />
-            <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Eliminar" />
+            <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleAgregar" text="Agregar" />
+            <Button fx:id="botonModificar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleModificar" text="Modificar" />
+            <Button fx:id="botonEliminar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleEliminar" text="Eliminar" />
          </children>
       </VBox>
    </children>
