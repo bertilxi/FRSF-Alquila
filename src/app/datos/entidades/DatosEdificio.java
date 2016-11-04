@@ -41,13 +41,13 @@ public class DatosEdificio implements Serializable {
 	private Integer baños;
 
 	@Column(name = "garaje")
-	private Integer garaje;
+	private Boolean garaje;
 
 	@Column(name = "patio")
-	private Integer patio;
+	private Boolean patio;
 
 	@Column(name = "piscina")
-	private Integer piscina;
+	private Boolean piscina;
 
 	@Column(name = "telefono")
 	private Boolean telefono;
@@ -78,7 +78,7 @@ public class DatosEdificio implements Serializable {
 	}
 
 	public DatosEdificio(Inmueble inmueble, Double superficie, Integer antiguedad, Integer dormitorios, Integer baños,
-			Integer garaje, Integer patio, Integer piscina, Boolean telefono, Boolean propiedadHorizontal,
+			Boolean garaje, Boolean patio, Boolean piscina, Boolean telefono, Boolean propiedadHorizontal,
 			Boolean aguaCorriente, Boolean cloacas, Boolean gasNatural, Boolean aguaCaliente, Boolean lavadero,
 			Boolean pavimento) {
 		super();
@@ -149,29 +149,29 @@ public class DatosEdificio implements Serializable {
 		return this;
 	}
 
-	public Integer getGaraje() {
+	public Boolean getGaraje() {
 		return garaje;
 	}
 
-	public DatosEdificio setGaraje(Integer garaje) {
+	public DatosEdificio setGaraje(Boolean garaje) {
 		this.garaje = garaje;
 		return this;
 	}
 
-	public Integer getPatio() {
+	public Boolean getPatio() {
 		return patio;
 	}
 
-	public DatosEdificio setPatio(Integer patio) {
+	public DatosEdificio setPatio(Boolean patio) {
 		this.patio = patio;
 		return this;
 	}
 
-	public Integer getPiscina() {
+	public Boolean getPiscina() {
 		return piscina;
 	}
 
-	public DatosEdificio setPiscina(Integer piscina) {
+	public DatosEdificio setPiscina(Boolean piscina) {
 		this.piscina = piscina;
 		return this;
 	}

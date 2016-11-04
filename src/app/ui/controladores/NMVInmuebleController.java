@@ -3,9 +3,9 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ModificarInmuebleController extends OlimpoController {
+public class NMVInmuebleController extends OlimpoController {
 
-	public static final String URLVista = "/app/ui/vistas/modificarVendedor.fxml";
+	public static final String URLVista = "/app/ui/vistas/altaVendedor.fxml";
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {

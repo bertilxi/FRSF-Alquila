@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.BaseController">
    <children>
       <VBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css">
@@ -85,9 +84,9 @@
                             </rowConstraints>
                             <children>
                         <Label text="Medidas del inmueble" GridPane.columnIndex="1" />
-                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Frente" GridPane.columnIndex="2" />
-                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Fondo" GridPane.columnIndex="3" />
-                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Superficie" GridPane.columnIndex="4" />
+                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Frente en metros" GridPane.columnIndex="2" />
+                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Fondo en metros" GridPane.columnIndex="3" />
+                                <TextField maxHeight="1000.0" maxWidth="1000.0" promptText="Superficie en metros^2" GridPane.columnIndex="4" />
                                 <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Agregar Foto" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets right="15.0" />
