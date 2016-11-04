@@ -121,9 +121,11 @@ public class AltaVendedorController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
-					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
+					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fue dado de baja. ¿Desea continuar?", stage);
 					if(ventana.acepta()){
-						//TODO obtener vendedor y mandarlo a la vista modificar cliente
+						vendedor = coordinador.obtenerVendedor(vendedor);
+						ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista);
+						modificarVendedorController.setVendedor(vendedor);
 					}
 				}
 			} catch(Exception e){

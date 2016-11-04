@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
+import app.logica.resultados.ResultadoEliminarVendedor;
+import app.logica.resultados.ResultadoEliminarVendedor.ErrorEliminarVendedor;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -81,11 +84,28 @@ public class AdministrarVendedorController extends OlimpoController {
 		if(vendedor == null){
 			return;
 		}
-		try{
-			coordinador.eliminarVendedor(vendedor);
-			tablaVendedores.getItems().remove(vendedor);
-		} catch(PersistenciaException e){
-			presentador.presentarExcepcion(e, stage);
+		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar vendedor", "Está a punto de eliminar al vendedor.\n¿Desea continuar?", this.stage);
+		if(ventana.acepta()){
+			try{
+				ResultadoEliminarVendedor resultado = coordinador.eliminarVendedor(vendedor);
+				if(resultado.hayErrores()){
+					StringBuilder stringErrores = new StringBuilder();
+					for(ErrorEliminarVendedor err: resultado.getErrores()){
+						switch(err) {
+						case No_Existe_Vendedor:
+							stringErrores.append("No existe el vendedor que desea eliminar.\n");
+							break;
+						}
+					}
+					presentador.presentarError("No se pudo eliminar el propietario", stringErrores.toString(), stage);
+
+				}
+				else{
+					tablaVendedores.getItems().remove(vendedor);
+				}
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
 		}
 	}
 }

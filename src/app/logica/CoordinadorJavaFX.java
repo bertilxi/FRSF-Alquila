@@ -32,6 +32,7 @@ import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoEliminarCliente;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarPropietario;
+import app.logica.resultados.ResultadoEliminarVendedor;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarInmueble;
 import app.logica.resultados.ResultadoModificarPropietario;
@@ -139,8 +140,12 @@ public class CoordinadorJavaFX {
 		return gestorDatos.obtenerPaises();
 	}
 
-	public void eliminarVendedor(Vendedor vendedor) throws PersistenciaException {
-		gestorVendedor.eliminarVendedor(vendedor);
+	public ResultadoEliminarVendedor eliminarVendedor(Vendedor vendedor) throws PersistenciaException {
+		return gestorVendedor.eliminarVendedor(vendedor);
+	}
+
+	public Vendedor obtenerVendedor(Vendedor vendedor) throws PersistenciaException {
+		return gestorVendedor.obtenerVendedor(vendedor);
 	}
 
 }
