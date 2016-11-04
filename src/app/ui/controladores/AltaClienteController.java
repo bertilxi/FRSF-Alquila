@@ -126,7 +126,7 @@ public class AltaClienteController extends OlimpoController {
 
 	@FXML
 	public void cancelAction() {
-		//TODO hacer esto
+		cambiarmeAScene(AdministrarClienteController.URLVista);
 	}
 
 	@Override

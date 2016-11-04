@@ -10,9 +10,7 @@ import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -125,8 +123,8 @@ public class ModificarClienteController extends OlimpoController {
 	}
 
 	@FXML
-	public void cancelAction(ActionEvent event) {
-		((Node) event.getSource()).getScene().getWindow().hide();
+	public void cancelAction() {
+		cambiarmeAScene(AdministrarClienteController.URLVista);
 	}
 
 	@Override
