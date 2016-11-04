@@ -42,6 +42,9 @@ public class Vendedor {
 	@Column(name = "salt", nullable = false)
 	private String salt;
 
+	@Column(name = "root", nullable = false)
+	private Boolean root;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"), nullable = false)
 	private TipoDocumento tipoDocumento;
@@ -58,6 +61,7 @@ public class Vendedor {
 	public Vendedor() {
 		super();
 		this.ventas = new HashSet<>();
+		this.root = false;
 	}
 
 	public Vendedor(Integer id, String nombre, String apellido, String numeroDocumento, String password, String salt, TipoDocumento tipoDocumento, Estado estado) {
@@ -121,6 +125,14 @@ public class Vendedor {
 		return this;
 	}
 
+	public Boolean getRoot() {
+		return root;
+	}
+
+	public void setRoot(Boolean root) {
+		this.root = root;
+	}
+
 	public TipoDocumento getTipoDocumento() {
 		return tipoDocumento;
 	}
@@ -165,22 +177,41 @@ public class Vendedor {
 		else{
 			return true;
 		}
-
-		if(!getNumeroDocumento().equals(vendedor.getNumeroDocumento())){
+		if(numeroDocumento == null){
+			if(vendedor.numeroDocumento != null){
+				return false;
+			}
+		}
+		else if(!numeroDocumento.equals(vendedor.numeroDocumento)){
 			return false;
 		}
-		if(!getTipoDocumento().equals(vendedor.getTipoDocumento())){
+		if(tipoDocumento == null){
+			if(vendedor.tipoDocumento != null){
+				return false;
+			}
+		}
+		else if(!tipoDocumento.equals(vendedor.tipoDocumento)){
 			return false;
 		}
-		return getVentas() != null ? getVentas().equals(vendedor.getVentas()) : vendedor.getVentas() == null;
-
+		if(ventas == null){
+			if(vendedor.ventas != null){
+				return false;
+			}
+		}
+		else if(!ventas.equals(vendedor.ventas)){
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = getId().hashCode();
-		result = 31 * result + getNumeroDocumento().hashCode();
-		result = 31 * result + getTipoDocumento().hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
+		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
+		result = prime * result + ((ventas == null) ? 0 : ventas.hashCode());
 		return result;
 	}
 }
