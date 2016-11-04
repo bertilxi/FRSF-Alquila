@@ -1,10 +1,5 @@
 package app.logica.gestores;
 
-import app.comun.ValidadorFormato;
-import app.datos.clases.EstadoStr;
-import app.datos.clases.TipoDocumentoStr;
-import app.datos.entidades.Estado;
-import app.datos.entidades.TipoDocumento;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,8 +8,13 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
+import app.comun.ValidadorFormato;
+import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroCliente;
+import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Cliente;
+import app.datos.entidades.Estado;
+import app.datos.entidades.TipoDocumento;
 import app.datos.servicios.ClienteService;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
@@ -60,17 +60,17 @@ public class GestorClienteTest {
 
 	@BeforeClass
 	public static void setUp() {
-        //Setear valores esperados a los mocks
-        PowerMockito.when(ValidadorFormato.validarNombre(cliente.getNombre())).thenReturn(resValNombre);
-        PowerMockito.when(ValidadorFormato.validarApellido(cliente.getApellido())).thenReturn(resValApellido);
-        PowerMockito.when(ValidadorFormato.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())).thenReturn(resValDocumento);
-        PowerMockito.when(ValidadorFormato.validarTelefono(cliente.getTelefono())).thenReturn(resValTelefono);
-        PowerMockito.when(ValidadorFormato.validarEmail(cliente.getEmail())).thenReturn(resValEmail);
-        PowerMockito.when(ValidadorFormato.validarDireccion(cliente.getDireccion())).thenReturn(resValDireccion);
-        PowerMockito.when(clienteService.obtenercliente(filtro)).thenReturn(resObtenercliente);
-        PowerMockito.doNothing().when(clienteService).guardarcliente(cliente); //Para métodos void la sintaxis es distinta
+		//Setear valores esperados a los mocks
+		PowerMockito.when(ValidadorFormato.validarNombre(cliente.getNombre())).thenReturn(resValNombre);
+		PowerMockito.when(ValidadorFormato.validarApellido(cliente.getApellido())).thenReturn(resValApellido);
+		PowerMockito.when(ValidadorFormato.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())).thenReturn(resValDocumento);
+		PowerMockito.when(ValidadorFormato.validarTelefono(cliente.getTelefono())).thenReturn(resValTelefono);
+		PowerMockito.when(ValidadorFormato.validarEmail(cliente.getEmail())).thenReturn(resValEmail);
+		PowerMockito.when(ValidadorFormato.validarDireccion(cliente.getDireccion())).thenReturn(resValDireccion);
+		PowerMockito.when(clienteService.obtenercliente(filtro)).thenReturn(resObtenercliente);
+		PowerMockito.doNothing().when(clienteService).guardarcliente(cliente); //Para métodos void la sintaxis es distinta
 
-    }
+	}
 
 	@Test
 	@Parameters(method = "clientesValues")
@@ -94,29 +94,29 @@ public class GestorClienteTest {
 	private Object[] clientesValues() {
 		return new Object[] {
 				// Prueba todos los datos correctos
-				new Object[] { "Jose", "Perez", new TipoDocumento(null, TipoDocumentoStr.DNI), "30123456",
-                        "03424802234", new Estado(null, EstadoStr.ALTA), true },
+				new Object[] { "Jose", "Perez", new TipoDocumento(TipoDocumentoStr.DNI), "30123456",
+						"03424802234", new Estado(EstadoStr.ALTA), true },
 				// Prueba nombre vacio
-				new Object[] { null, "Perez", new TipoDocumento(null, TipoDocumentoStr.DNI), "30123456",
-                        "03424802234", new Estado(null, EstadoStr.ALTA), false },
+				new Object[] { null, "Perez", new TipoDocumento(TipoDocumentoStr.DNI), "30123456",
+						"03424802234", new Estado(EstadoStr.ALTA), false },
 				// Prueba apellido vaio
-				new Object[] { "Jose", null, new TipoDocumento(null, TipoDocumentoStr.DNI), "30123456",
-                        "03424802234", new Estado(null, EstadoStr.ALTA), false },
-                // Prueba tipo documento vacio
-                new Object[] { "Jose", "Perez", null, "30123456",
-                        "03424802234", new Estado(null, EstadoStr.ALTA), false },
-                // Prueba numero documento vacio
-                new Object[] { "Jose", "Perez", new TipoDocumento(null, TipoDocumentoStr.DNI), null,
-                        "03424802234", new Estado(null, EstadoStr.ALTA), false },
+				new Object[] { "Jose", null, new TipoDocumento(TipoDocumentoStr.DNI), "30123456",
+						"03424802234", new Estado(EstadoStr.ALTA), false },
+				// Prueba tipo documento vacio
+				new Object[] { "Jose", "Perez", null, "30123456",
+						"03424802234", new Estado(EstadoStr.ALTA), false },
+				// Prueba numero documento vacio
+				new Object[] { "Jose", "Perez", new TipoDocumento(TipoDocumentoStr.DNI), null,
+						"03424802234", new Estado(EstadoStr.ALTA), false },
 				// Prueba estado vacio
-				new Object[] { "Jose", "Perez", new TipoDocumento(null, TipoDocumentoStr.DNI), "30123456",
-                        "03424802234", new Estado(null, EstadoStr.ALTA), false },
+				new Object[] { "Jose", "Perez", new TipoDocumento(TipoDocumentoStr.DNI), "30123456",
+						"03424802234", new Estado(EstadoStr.ALTA), false },
 				// prueba estado en baja
-				new Object[] { "Jose", "Perez", new TipoDocumento(null, TipoDocumentoStr.DNI), "30123456",
-                        "03424802234", new Estado(null, EstadoStr.ALTA), false },
+				new Object[] { "Jose", "Perez", new TipoDocumento(TipoDocumentoStr.DNI), "30123456",
+						"03424802234", new Estado(EstadoStr.ALTA), false },
 				// prueba estado en alta
-				new Object[] { "Jose", "Perez", new TipoDocumento(null, TipoDocumentoStr.DNI), "30123456",
-                        "03424802234", new Estado(null, EstadoStr.ALTA), false }
+				new Object[] { "Jose", "Perez", new TipoDocumento(TipoDocumentoStr.DNI), "30123456",
+						"03424802234", new Estado(EstadoStr.ALTA), false }
 		};
 	}
 
