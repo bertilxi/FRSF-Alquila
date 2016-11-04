@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
  * This file is part of Olimpo.
  *
  * Olimpo is free software: you can redistribute it and/or modify
@@ -9,11 +9,11 @@
  *
  * Olimpo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
  */
 package app.ui.controladores;
 
@@ -38,6 +38,7 @@ import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 
 public class AltaPropietarioController extends OlimpoController {
 
@@ -111,28 +112,28 @@ public class AltaPropietarioController extends OlimpoController {
 		if(alturaCalle.isEmpty()){
 			error.append("Inserte una altura").append("\n ");
 		}
-		if(piso.isEmpty()) {
+		if(piso.isEmpty()){
 			error.append("Inserte un piso").append("\n ");
 		}
-		if(departamento.isEmpty()) {
+		if(departamento.isEmpty()){
 			error.append("Inserte un departamento").append("\n ");
 		}
 		if(telefono.isEmpty()){
 			error.append("Inserte un telefono").append("\n ");
 		}
-		if(correoElectronico.isEmpty()) {
+		if(correoElectronico.isEmpty()){
 			error.append("Inserte un correo electrónico").append("\n ");
 		}
-		if(calle == null) {
+		if(calle == null){
 			error.append("Elija una calle").append("\n");
 		}
-		if(barrio == null) {
+		if(barrio == null){
 			error.append("Elija un barrio").append("\n");
 		}
-		if(tipoDoc == null) {
+		if(tipoDoc == null){
 			error.append("Elija un tipo de documento").append("\n");
 		}
-		if(localidad == null) {
+		if(localidad == null){
 			error.append("Elija una localidad").append("\n");
 		}
 
@@ -230,6 +231,33 @@ public class AltaPropietarioController extends OlimpoController {
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
 		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
+		comboBoxPais.setConverter(new StringConverter<Pais>() {
+
+			@Override
+			public String toString(Pais object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Pais fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Pais pais: comboBoxPais.getItems()){
+					if(nombre.equals(pais.getNombre())){
+						return pais;
+					}
+				}
+				Pais pais = new Pais();
+				pais.setNombre(nombre);
+				return pais;
+			}
+		});
+
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
