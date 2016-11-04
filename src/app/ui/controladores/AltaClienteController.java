@@ -127,8 +127,8 @@ public class AltaClienteController extends OlimpoController {
 	}
 
 	@FXML
-	public void cancelAction(ActionEvent event) {
-		((Node) event.getSource()).getScene().getWindow().hide();
+	public void cancelAction() {
+		//TODO hacer esto
 	}
 
 	@Override
