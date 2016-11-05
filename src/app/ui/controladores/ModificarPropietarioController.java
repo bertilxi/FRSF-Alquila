@@ -97,11 +97,11 @@ public class ModificarPropietarioController extends OlimpoController {
 			textFieldDepartamento.setText(propietarioEnModificacion.getDireccion().getDepartamento());
 			textFieldCorreoElectronico.setText(propietarioEnModificacion.getEmail());
 			textFieldTelefono.setText(propietarioEnModificacion.getTelefono());
-			comboBoxBarrio.setValue(propietarioEnModificacion.getDireccion().getBarrio());
-			comboBoxCalle.setValue(propietarioEnModificacion.getDireccion().getCalle());
-			comboBoxLocalidad.setValue(propietarioEnModificacion.getDireccion().getLocalidad());
 			comboBoxPais.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia().getPais());
 			comboBoxProvincia.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia());
+			comboBoxLocalidad.setValue(propietarioEnModificacion.getDireccion().getLocalidad());
+			comboBoxBarrio.setValue(propietarioEnModificacion.getDireccion().getBarrio());
+			comboBoxCalle.setValue(propietarioEnModificacion.getDireccion().getCalle());
 			comboBoxTipoDocumento.setValue(propietarioEnModificacion.getTipoDocumento());
 		});
 	}
