@@ -47,9 +47,11 @@ public class ModificarVendedorController extends OlimpoController {
 	@FXML
 	private TextField textFieldNumeroDocumento;
 	@FXML
-	private PasswordField textFieldContraseña;
+	private PasswordField passwordFieldContraseñaAntigua;
 	@FXML
-	private PasswordField textFieldRepiteContraseña;
+	private PasswordField passwordFieldContraseñaNueva;
+	@FXML
+	private PasswordField passwordFieldRepiteContraseña;
 	@FXML
 	private CheckBox checkBoxCambiarContraseña;
 	@FXML
@@ -72,8 +74,9 @@ public class ModificarVendedorController extends OlimpoController {
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
-		String password1 = textFieldContraseña.getText().trim();
-		String password2 = textFieldRepiteContraseña.getText().trim();
+		String passwordAntigua = passwordFieldContraseñaAntigua.getText();
+		String password1 = passwordFieldContraseñaNueva.getText();
+		String password2 = passwordFieldRepiteContraseña.getText();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
 		if(nombre.isEmpty()){
@@ -92,16 +95,17 @@ public class ModificarVendedorController extends OlimpoController {
 		}
 
 		if(checkBoxCambiarContraseña.isSelected()){
-			if(password1.isEmpty() && password2.isEmpty()){
-				error.append("Inserte su contraseña").append("\r\n");
+			if(passwordAntigua.isEmpty()){
+				error.append("Ingrese su antigua contraseña\r\n");
 			}
-			if(!password1.isEmpty() && password2.isEmpty()){
-				error.append("Inserte su contraseña nuevamente").append("\r\n");
+			if(!encriptador.encriptar(passwordAntigua.toCharArray(), vendedor.getSalt()).equals(vendedor.getPassword()) && !passwordAntigua.isEmpty()){
+				error.append("Su contraseña antigua es incorrecta\r\n");
+			}
+			if(password1.isEmpty() && password2.isEmpty()){
+				error.append("Ingrese su nueva contraseña").append("\r\n");
 			}
 			if(!password1.equals(password2)){
-				error.append("Sus contraseñas no coinciden, Ingreselas nuevamente").append("\r\n");
-				textFieldContraseña.setText("");
-				textFieldRepiteContraseña.setText("");
+				error.append("Sus nuevas contraseñas no coinciden. Ingréselas nuevamente").append("\r\n");
 			}
 		}
 
@@ -114,7 +118,7 @@ public class ModificarVendedorController extends OlimpoController {
 					.setNumeroDocumento(numeroDocumento)
 					.setTipoDocumento(tipoDoc);
 			if(checkBoxCambiarContraseña.isSelected()){
-				vendedor.setPassword(encriptador.encriptar(textFieldContraseña.getText().toCharArray(), vendedor.getSalt()));
+				vendedor.setPassword(encriptador.encriptar(passwordFieldContraseñaNueva.getText().toCharArray(), vendedor.getSalt()));
 			}
 
 			ResultadoModificarVendedor resultadoModificarVendedor = null;
@@ -158,12 +162,14 @@ public class ModificarVendedorController extends OlimpoController {
 
 	public void checkBoxAction() {
 		if(checkBoxCambiarContraseña.isSelected()){
-			textFieldContraseña.setDisable(false);
-			textFieldRepiteContraseña.setDisable(false);
+			passwordFieldContraseñaAntigua.setDisable(false);
+			passwordFieldContraseñaNueva.setDisable(false);
+			passwordFieldRepiteContraseña.setDisable(false);
 		}
 		else{
-			textFieldContraseña.setDisable(true);
-			textFieldRepiteContraseña.setDisable(true);
+			passwordFieldContraseñaAntigua.setDisable(true);
+			passwordFieldContraseñaNueva.setDisable(true);
+			passwordFieldRepiteContraseña.setDisable(true);
 		}
 	}
 
@@ -174,11 +180,12 @@ public class ModificarVendedorController extends OlimpoController {
 		try{
 			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
 		} catch(PersistenciaException e){
-			// TODO mostrar error inesperado
+			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
-		textFieldContraseña.setDisable(true);
-		textFieldRepiteContraseña.setDisable(true);
+		passwordFieldContraseñaAntigua.setDisable(true);
+		passwordFieldContraseñaNueva.setDisable(true);
+		passwordFieldRepiteContraseña.setDisable(true);
 		checkBoxCambiarContraseña.setSelected(false);
 	}
 

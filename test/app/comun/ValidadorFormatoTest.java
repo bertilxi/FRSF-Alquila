@@ -66,8 +66,7 @@ public class ValidadorFormatoTest {
 				new Object[] { new Direccion("abc", "1", "A", calle1, barrio1, localidad1), false },
 				new Object[] { new Direccion("123", "1", "A", null, barrio1, localidad1), false },
 				new Object[] { new Direccion("123", "1", "A", calle1, null, localidad1), true },
-				new Object[] { new Direccion("123", "1", "A", calle1, barrio1, null), false },
-				new Object[] { new Direccion("123", "1", "A", calle1, barrio1, null), false },
+				new Object[] { new Direccion("123", "1", "A", calle1, barrio1, null), false }
 		};
 	}
 
