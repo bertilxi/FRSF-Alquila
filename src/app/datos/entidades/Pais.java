@@ -28,7 +28,7 @@ import javax.persistence.Table;
 @NamedQuery(name = "obtenerPaises", query = "SELECT p FROM Pais p")
 @Entity
 @Table(name = "pais")
-public class Pais {
+public class Pais implements Comparable<Pais>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,5 +104,10 @@ public class Pais {
 	@Override
 	public String toString() {
 		return nombre;
+	}
+
+	@Override
+	public int compareTo(Pais o) {
+		return this.nombre.compareToIgnoreCase(o.getNombre());
 	}
 }

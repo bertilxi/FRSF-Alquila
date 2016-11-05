@@ -31,6 +31,7 @@ import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -86,21 +87,23 @@ public class ModificarPropietarioController extends OlimpoController {
 	private Propietario propietarioEnModificacion;
 
 	public void setPropietarioEnModificacion(Propietario propietarioEnModificacion) {
-		this.propietarioEnModificacion = propietarioEnModificacion;
-		textFieldNombre.setText(propietarioEnModificacion.getNombre());
-		textFieldApellido.setText(propietarioEnModificacion.getApellido());
-		textFieldNumeroDocumento.setText(propietarioEnModificacion.getNumeroDocumento());
-		textFieldAlturaCalle.setText(propietarioEnModificacion.getDireccion().getNumero());
-		textFieldPiso.setText(propietarioEnModificacion.getDireccion().getPiso());
-		textFieldDepartamento.setText(propietarioEnModificacion.getDireccion().getDepartamento());
-		textFieldCorreoElectronico.setText(propietarioEnModificacion.getEmail());
-		textFieldTelefono.setText(propietarioEnModificacion.getTelefono());
-		comboBoxBarrio.setValue(propietarioEnModificacion.getDireccion().getBarrio());
-		comboBoxCalle.setValue(propietarioEnModificacion.getDireccion().getCalle());
-		comboBoxLocalidad.setValue(propietarioEnModificacion.getDireccion().getLocalidad());
-		comboBoxPais.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia().getPais());
-		comboBoxProvincia.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia());
-		comboBoxTipoDocumento.setValue(propietarioEnModificacion.getTipoDocumento());
+		Platform.runLater(() -> {
+			this.propietarioEnModificacion = propietarioEnModificacion;
+			textFieldNombre.setText(propietarioEnModificacion.getNombre());
+			textFieldApellido.setText(propietarioEnModificacion.getApellido());
+			textFieldNumeroDocumento.setText(propietarioEnModificacion.getNumeroDocumento());
+			textFieldAlturaCalle.setText(propietarioEnModificacion.getDireccion().getNumero());
+			textFieldPiso.setText(propietarioEnModificacion.getDireccion().getPiso());
+			textFieldDepartamento.setText(propietarioEnModificacion.getDireccion().getDepartamento());
+			textFieldCorreoElectronico.setText(propietarioEnModificacion.getEmail());
+			textFieldTelefono.setText(propietarioEnModificacion.getTelefono());
+			comboBoxBarrio.setValue(propietarioEnModificacion.getDireccion().getBarrio());
+			comboBoxCalle.setValue(propietarioEnModificacion.getDireccion().getCalle());
+			comboBoxLocalidad.setValue(propietarioEnModificacion.getDireccion().getLocalidad());
+			comboBoxPais.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia().getPais());
+			comboBoxProvincia.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia());
+			comboBoxTipoDocumento.setValue(propietarioEnModificacion.getTipoDocumento());
+		});
 	}
 
 	@FXML

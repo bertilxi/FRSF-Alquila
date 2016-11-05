@@ -34,7 +34,7 @@ import javax.persistence.UniqueConstraint;
 @NamedQuery(name = "obtenerCallesDe", query = "SELECT c FROM Calle c WHERE localidad=:loc")
 @Entity
 @Table(name = "calle", uniqueConstraints = @UniqueConstraint(name = "calle_nombre_idlocalidad_uk", columnNames = { "nombre", "idlocalidad" }))
-public class Calle {
+public class Calle implements Comparable<Calle>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -133,5 +133,10 @@ public class Calle {
 	@Override
 	public String toString() {
 		return nombre;
+	}
+
+	@Override
+	public int compareTo(Calle o) {
+		return this.nombre.compareToIgnoreCase(o.getNombre());
 	}
 }

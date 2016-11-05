@@ -18,6 +18,7 @@
 package app.logica.gestores;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.annotation.Resource;
 
@@ -49,15 +50,21 @@ public class GestorDatos {
 	}
 
 	public ArrayList<Provincia> obtenerProvinciasDe(Pais pais) throws PersistenciaException {
-		return persistidorDatos.obtenerProvinciasDe(pais);
+		ArrayList<Provincia> lista = persistidorDatos.obtenerProvinciasDe(pais);
+		Collections.sort(persistidorDatos.obtenerProvinciasDe(pais));
+		return lista;
 	}
 
 	public ArrayList<Localidad> obtenerLocalidadesDe(Provincia prov) throws PersistenciaException {
-		return persistidorDatos.obtenerLocalidadesDe(prov);
+		ArrayList<Localidad> lista = persistidorDatos.obtenerLocalidadesDe(prov);
+		Collections.sort(lista);
+		return lista;
 	}
 
 	public ArrayList<Pais> obtenerPaises() throws PersistenciaException {
-		return persistidorDatos.obtenerPaises();
+		ArrayList<Pais> lista = persistidorDatos.obtenerPaises();
+		Collections.sort(lista);
+		return lista;
 	}
 
 	public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
@@ -65,10 +72,14 @@ public class GestorDatos {
 	}
 
 	public ArrayList<Barrio> obtenerBarriosDe(Localidad localidad) throws PersistenciaException {
-		return persistidorDatos.obtenerBarriosDe(localidad);
+		ArrayList<Barrio> lista = persistidorDatos.obtenerBarriosDe(localidad);
+		Collections.sort(lista);
+		return lista;
 	}
 
 	public ArrayList<Calle> obtenerCallesDe(Localidad localidad) throws PersistenciaException {
-		return persistidorDatos.obtenerCallesDe(localidad);
+		ArrayList<Calle> lista = persistidorDatos.obtenerCallesDe(localidad);
+		Collections.sort(lista);
+		return lista;
 	}
 }
