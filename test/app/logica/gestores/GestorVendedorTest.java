@@ -37,12 +37,28 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
+/**
+ * Este test prueba los métodos de la clase GestorVendedor
+ */
 public class GestorVendedorTest {
 
 	private static EncriptadorPassword encriptadorMock = Mockito.mock(EncriptadorPassword.class);
 
 	@Test
 	@Parameters
+	/**
+	 * Prueba el método autenticarVendedor(datos), el cual corresponde con la taskcard 1 de la iteración 1 y a la historia 1
+	 *
+	 * @param datos
+	 *            que se usarán en el test
+	 * @param resultadoLogica
+	 *            es lo que se espera que devuelva el metodo
+	 * @param vendedor
+	 *            es lo que el mock de la capa de datos debe devolver en el test y que el controlador recibe
+	 * @param excepcion
+	 *            es la excepcion que debe lanzar el mock de la capa de datos, si la prueba involucra procesar una excepcion de dicha capa de datos, debe ser nulo vendedor para que se use
+	 * @throws Exception
+	 */
 	public void testAutenticarVendedor(DatosLogin datos, ResultadoAutenticacion resultadoLogica, Vendedor vendedor, Throwable excepcion) throws Exception {
 		//Creamos el soporte de la prueba
 		VendedorService vendedorServiceMock = new VendedorServiceMock(vendedor, excepcion);
@@ -83,6 +99,11 @@ public class GestorVendedorTest {
 		}
 	}
 
+	/**
+	 * Método que devuelve los parámetros para probar el método autenticarVendedor(datos)
+	 *
+	 * @return parámetros de prueba
+	 */
 	protected Object[] parametersForTestAutenticarVendedor() {
 		Mockito.when(encriptadorMock.encriptar(Matchers.any(), Matchers.any())).thenReturn("1234");
 		Mockito.when(encriptadorMock.generarSal()).thenReturn("1234");

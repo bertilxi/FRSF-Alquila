@@ -32,7 +32,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 /**
- * Controlador base que se encarga de manejar la barra de titulos y la barra lateral
+ * Controlador base de la vista principal para la administración que se encarga de manejar el cambio entre funcionalidades
+ * Pertenece a la taskcard 4 de la iteración 1 y a la historia 1
  */
 public class BaseController extends OlimpoController {
 

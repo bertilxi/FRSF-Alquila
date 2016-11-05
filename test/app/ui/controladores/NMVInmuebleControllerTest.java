@@ -25,6 +25,7 @@ public class NMVInmuebleControllerTest {
 
 	@Test
 	@Parameters
+	//Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
 	public void testCrearInmueble(Propietario propietario,
 			Provincia provincia,
 			Localidad localidad,
@@ -114,6 +115,7 @@ public class NMVInmuebleControllerTest {
 
 	@Test
 	@Parameters
+	//Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
 	public void testModificarInmueble(Propietario propietario,
 			Provincia provincia,
 			Localidad localidad,

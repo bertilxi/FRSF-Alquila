@@ -58,6 +58,16 @@ public class GestorVendedor {
 	@Resource
 	protected EncriptadorPassword encriptador;
 
+	/**
+	 * Método que permite a un vendedor entrar al sistema.
+	 * Pertenece a la taskcard 1 de la iteración 1 y a la historia 1
+	 *
+	 * @param datos
+	 *            con los que se autentica en el sistema
+	 * @return ResultadoAutenticacion el resultado que devuelve la operación
+	 * @throws PersistenciaException
+	 *             si la interacción con la base de datos es infructuosa
+	 */
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
 		ArrayList<ErrorAutenticacion> errores = new ArrayList<>();
 

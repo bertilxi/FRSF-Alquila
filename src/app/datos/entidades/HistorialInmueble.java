@@ -40,6 +40,10 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "historial_inmueble")
+/**
+ * Entidad que modela un estado anterior de un inmueble
+ * Pertenece a la taskcard 11 de la iteración 1 y a la historia 3
+ */
 public class HistorialInmueble {
 
 	@Id

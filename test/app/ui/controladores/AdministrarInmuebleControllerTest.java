@@ -14,6 +14,7 @@ public class AdministrarInmuebleControllerTest {
 
 	@Test
 	@Parameters
+	//Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
 	public void testEliminarInmueble(Inmueble inmueble, Boolean acepta, ResultadoControlador resultadoControlador, ResultadoEliminarInmueble resultadoLogica, Throwable excepcion) {
 
 	}

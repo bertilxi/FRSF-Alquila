@@ -23,6 +23,10 @@ import app.datos.clases.FiltroCliente;
 import app.datos.entidades.Cliente;
 import app.excepciones.PersistenciaException;
 
+/**
+ * Interface que define los métodos de persistencia de un cliente
+ * Pertenece a la taskcard 19 de la iteración 1 y a la historia 6
+ */
 public interface ClienteService {
 
 	public void guardarCliente(Cliente cliente) throws PersistenciaException;

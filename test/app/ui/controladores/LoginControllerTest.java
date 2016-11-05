@@ -30,7 +30,7 @@ public class LoginControllerTest {
 	@Test
 	@Parameters
 	/**
-	 * Prueba el método ingresar()
+	 * Prueba el método ingresar(), el cual corresponde con la taskcard 1 de la iteración 1 y a la historia 1
 	 *
 	 * @param tipoDocumento
 	 *            que se usará en el test
@@ -43,7 +43,7 @@ public class LoginControllerTest {
 	 * @param resultadoLogica
 	 *            es lo que el mock de la lógica debe devolver en el test y que el controlador recibe
 	 * @param excepcion
-	 *            es la excepcion que debe lanzar el mock del controlador, si la prueba involucra procesar una excepcion de dicho controlador, debe ser nulo resultadoLogica para que se use
+	 *            es la excepcion que debe lanzar el mock de la lógica, si la prueba involucra procesar una excepcion de dicha lógica, debe ser nulo resultadoLogica para que se use
 	 * @throws Exception
 	 */
 	public void testIngresar(TipoDocumento tipoDocumento, String numDoc, String contra, ResultadoControlador resultadoVista, ResultadoAutenticacion resultadoLogica, Throwable excepcion) throws Exception {

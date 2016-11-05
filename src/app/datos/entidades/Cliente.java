@@ -36,6 +36,10 @@ import javax.persistence.UniqueConstraint;
 @NamedQueries(value = { @NamedQuery(name = "obtenerClientes", query = "SELECT c FROM Cliente c WHERE c.estado.estado = 'ALTA'"), @NamedQuery(name = "obtenerCliente", query = "SELECT c FROM Cliente c WHERE c.numeroDocumento = :documento AND c.tipoDocumento.tipo = :tipoDocumento") })
 @Entity
 @Table(name = "cliente", uniqueConstraints = @UniqueConstraint(name = "cliente_numerodocumento_idtipodocumento_uk", columnNames = { "numerodocumento", "idtipodocumento" }))
+/**
+ * Entidad que modela un cliente
+ * Pertenece a la taskcard 16 de la iteración 1 y a la historia 6
+ */
 public class Cliente {
 
 	@Id
