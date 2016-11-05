@@ -162,18 +162,23 @@ public class InmuebleBuscadoController extends OlimpoController {
 				textFieldSuperficie.setText(inmueble.getSuperficieMin().toString());
 				for(TipoInmueble tipo: inmueble.getTiposInmueblesBuscados()) {
 					switch(tipo.getTipo()) {
-					//TODO setear los checkBox
 					case LOCAL:
+						checkBoxLocal.setSelected(true);
 						break;
 					case CASA:
+						checkBoxCasa.setSelected(true);
 						break;
 					case DEPARTAMENTO:
+						checkBoxDepartamento.setSelected(true);
 						break;
 					case GALPON:
+						checkBoxGalpon.setSelected(true);
 						break;
 					case QUINTA:
+						checkBoxQuinta.setSelected(true);
 						break;
 					case TERRENO:
+						checkBoxTerreno.setSelected(true);
 						break;
 					}
 				}
@@ -361,7 +366,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void handleAgregarLocalidad() {
-		if(comboBoxLocalidad.getSelectionModel().getSelectedItem()!=null) {
+		if(comboBoxLocalidad.getSelectionModel().getSelectedItem()!=null && !listaLocalidadesSeleccionadas.contains(comboBoxLocalidad.getSelectionModel().getSelectedItem())) {
 			listaLocalidadesSeleccionadas.add(comboBoxLocalidad.getSelectionModel().getSelectedItem());
 			tablaLocalidades.getItems().clear();
 			tablaLocalidades.getItems().addAll(listaLocalidadesSeleccionadas);
@@ -373,10 +378,11 @@ public class InmuebleBuscadoController extends OlimpoController {
 		if(tablaLocalidades.getSelectionModel().getSelectedItem()!=null) {
 			for(Barrio bar: listaBarriosSeleccionados) {
 				if(bar.getLocalidad().equals(tablaLocalidades.getSelectionModel().getSelectedItem())) {
-					tablaBarrios.getSelectionModel().select(bar);
-					handleQuitarBarrio();
+					listaBarriosSeleccionados.remove(bar);
 				}
 			}
+			tablaBarrios.getItems().clear();
+			tablaBarrios.getItems().addAll(listaBarriosSeleccionados);
 			listaLocalidadesSeleccionadas.remove(tablaLocalidades.getSelectionModel().getSelectedItem());
 			tablaLocalidades.getItems().clear();
 			tablaLocalidades.getItems().addAll(listaLocalidadesSeleccionadas);
@@ -385,7 +391,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void handleAgregarBarrio() {
-		if(comboBoxBarrio.getSelectionModel().getSelectedItem()!=null) {
+		if(comboBoxBarrio.getSelectionModel().getSelectedItem()!=null && !listaBarriosSeleccionados.contains(comboBoxBarrio.getSelectionModel().getSelectedItem())) {
 			listaBarriosSeleccionados.add(comboBoxBarrio.getSelectionModel().getSelectedItem());
 			tablaBarrios.getItems().clear();
 			tablaBarrios.getItems().addAll(listaBarriosSeleccionados);
