@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
  * This file is part of Olimpo.
  *
  * Olimpo is free software: you can redistribute it and/or modify
@@ -9,11 +9,11 @@
  *
  * Olimpo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
  */
 package app.datos.entidades;
 
@@ -34,7 +34,7 @@ import javax.persistence.UniqueConstraint;
 @NamedQuery(name = "obtenerProvinciasDe", query = "SELECT p FROM Provincia p WHERE pais=:pa")
 @Entity
 @Table(name = "provincia", uniqueConstraints = @UniqueConstraint(name = "provincia_nombre_idpais_uk", columnNames = { "nombre", "idpais" }))
-public class Provincia implements Comparable<Provincia>{
+public class Provincia implements Comparable<Provincia> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +50,7 @@ public class Provincia implements Comparable<Provincia>{
 
 	public Provincia() {
 		super();
+		this.nombre = "";
 	}
 
 	public Provincia(String nombre, Pais pais) {
