@@ -366,7 +366,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void handleAgregarLocalidad() {
-		if(comboBoxLocalidad.getSelectionModel().getSelectedItem()!=null) {
+		if(comboBoxLocalidad.getSelectionModel().getSelectedItem()!=null && !listaLocalidadesSeleccionadas.contains(comboBoxLocalidad.getSelectionModel().getSelectedItem())) {
 			listaLocalidadesSeleccionadas.add(comboBoxLocalidad.getSelectionModel().getSelectedItem());
 			tablaLocalidades.getItems().clear();
 			tablaLocalidades.getItems().addAll(listaLocalidadesSeleccionadas);
@@ -378,10 +378,11 @@ public class InmuebleBuscadoController extends OlimpoController {
 		if(tablaLocalidades.getSelectionModel().getSelectedItem()!=null) {
 			for(Barrio bar: listaBarriosSeleccionados) {
 				if(bar.getLocalidad().equals(tablaLocalidades.getSelectionModel().getSelectedItem())) {
-					tablaBarrios.getSelectionModel().select(bar);
-					handleQuitarBarrio();
+					listaBarriosSeleccionados.remove(bar);
 				}
 			}
+			tablaBarrios.getItems().clear();
+			tablaBarrios.getItems().addAll(listaBarriosSeleccionados);
 			listaLocalidadesSeleccionadas.remove(tablaLocalidades.getSelectionModel().getSelectedItem());
 			tablaLocalidades.getItems().clear();
 			tablaLocalidades.getItems().addAll(listaLocalidadesSeleccionadas);
@@ -390,7 +391,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void handleAgregarBarrio() {
-		if(comboBoxBarrio.getSelectionModel().getSelectedItem()!=null) {
+		if(comboBoxBarrio.getSelectionModel().getSelectedItem()!=null && !listaBarriosSeleccionados.contains(comboBoxBarrio.getSelectionModel().getSelectedItem())) {
 			listaBarriosSeleccionados.add(comboBoxBarrio.getSelectionModel().getSelectedItem());
 			tablaBarrios.getItems().clear();
 			tablaBarrios.getItems().addAll(listaBarriosSeleccionados);

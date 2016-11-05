@@ -73,7 +73,7 @@
                   </GridPane>
                </children>
             </VBox>
-            <TableView fx:id="tablaLocalidades" prefHeight="200.0" prefWidth="150.0">
+            <TableView fx:id="tablaLocalidades" focusTraversable="false" prefHeight="200.0" prefWidth="150.0">
               <columns>
                 <TableColumn fx:id="columnaNombreLocalidad" prefWidth="75.0" text="Localidad" />
               </columns>
@@ -114,7 +114,7 @@
                   </GridPane>
                </children>
             </VBox>
-            <TableView fx:id="tablaBarrios" prefHeight="200.0" prefWidth="150.0">
+            <TableView fx:id="tablaBarrios" focusTraversable="false" prefHeight="200.0" prefWidth="150.0">
               <columns>
                 <TableColumn fx:id="columnaNombreBarrio" prefWidth="75.0" text="Barrio" />
               </columns>
