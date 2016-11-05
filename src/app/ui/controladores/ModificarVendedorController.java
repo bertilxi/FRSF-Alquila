@@ -33,6 +33,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -54,6 +55,12 @@ public class ModificarVendedorController extends OlimpoController {
 	private PasswordField passwordFieldRepiteContraseña;
 	@FXML
 	private CheckBox checkBoxCambiarContraseña;
+	@FXML
+	private Label labelContraseñaAntigua;
+	@FXML
+	private Label labelContraseñaNueva;
+	@FXML
+	private Label labelRepiteContraseña;
 	@FXML
 	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
 	@FXML
@@ -162,11 +169,17 @@ public class ModificarVendedorController extends OlimpoController {
 
 	public void checkBoxAction() {
 		if(checkBoxCambiarContraseña.isSelected()){
+			labelContraseñaAntigua.setDisable(false);
+			labelContraseñaNueva.setDisable(false);
+			labelRepiteContraseña.setDisable(false);
 			passwordFieldContraseñaAntigua.setDisable(false);
 			passwordFieldContraseñaNueva.setDisable(false);
 			passwordFieldRepiteContraseña.setDisable(false);
 		}
 		else{
+			labelContraseñaAntigua.setDisable(true);
+			labelContraseñaNueva.setDisable(true);
+			labelRepiteContraseña.setDisable(true);
 			passwordFieldContraseñaAntigua.setDisable(true);
 			passwordFieldContraseñaNueva.setDisable(true);
 			passwordFieldRepiteContraseña.setDisable(true);
@@ -183,6 +196,9 @@ public class ModificarVendedorController extends OlimpoController {
 			presentador.presentarExcepcion(e, stage);
 		}
 		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
+		labelContraseñaAntigua.setDisable(true);
+		labelContraseñaNueva.setDisable(true);
+		labelRepiteContraseña.setDisable(true);
 		passwordFieldContraseñaAntigua.setDisable(true);
 		passwordFieldContraseñaNueva.setDisable(true);
 		passwordFieldRepiteContraseña.setDisable(true);
