@@ -31,12 +31,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane fx:id="padre" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.NMVInmuebleController">
+<StackPane fx:id="padre" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.NMVInmuebleController">
    <children>
       <VBox fx:id="pantalla1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css">
             <children>
@@ -142,12 +142,12 @@
         </VBox>
       <VBox fx:id="pantalla2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css">
          <children>
-            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="grid-pane" VBox.vgrow="ALWAYS">
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="grid-pane" VBox.vgrow="ALWAYS">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="500.0" minWidth="200.0" prefWidth="250.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" prefWidth="250.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="500.0" minWidth="200.0" prefWidth="250.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" prefWidth="250.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="50.0" />
                </columnConstraints>
                <rowConstraints>
@@ -199,4 +199,4 @@
          </children>
       </VBox>
    </children>
-</Pane>
+</StackPane>
