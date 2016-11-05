@@ -454,6 +454,7 @@ public class AltaPropietarioController extends OlimpoController {
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
+			comboBoxLocalidad.getItems().clear();
 			comboBoxLocalidad.getItems().addAll(listaLocalidades);
 		}
 	}
@@ -465,6 +466,7 @@ public class AltaPropietarioController extends OlimpoController {
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
+			comboBoxProvincia.getItems().clear();
 			comboBoxProvincia.getItems().addAll(listaProvincias);
 		}
 	}
@@ -477,7 +479,9 @@ public class AltaPropietarioController extends OlimpoController {
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
+			comboBoxBarrio.getItems().clear();
 			comboBoxBarrio.getItems().addAll(listaBarrios);
+			comboBoxCalle.getItems().clear();
 			comboBoxCalle.getItems().addAll(listaCalles);
 		}
 	}
