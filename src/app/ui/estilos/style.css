@@ -55,7 +55,6 @@
    -fx-background-color: transparent;
 }
 
-
 .table-view:focused{
     -fx-background-color: gray;
 }
@@ -316,4 +315,12 @@
 
 .toggle-button-maximize:selected {
   -fx-graphic: url('/res/img/restore-focused-normal.png');
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: white;
+  }
+
+.scroll-pane {
+    -fx-background-color:transparent;
 }
