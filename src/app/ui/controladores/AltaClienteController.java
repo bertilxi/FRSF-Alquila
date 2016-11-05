@@ -17,7 +17,6 @@
  */
 package app.ui.controladores;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -31,7 +30,6 @@ import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -54,13 +52,12 @@ public class AltaClienteController extends OlimpoController {
 	@FXML
 	protected TextField textFieldTelefono;
 
-	@FXML
-	protected Button buttonCargarInmueble;
-
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
+	private Cliente cliente;
+
 	@FXML
-	public void acceptAction() throws PersistenciaException, GestionException {
+	private void acceptAction() throws PersistenciaException, GestionException {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -71,26 +68,29 @@ public class AltaClienteController extends OlimpoController {
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
 		if(nombre.isEmpty()){
-			error.append("Inserte un nombre").append("\r\n");
+			error.append("Inserte un nombre").append("\n");
 		}
 		if(apellido.isEmpty()){
-			error.append("Inserte un apellido").append("\r\n");
+			error.append("Inserte un apellido").append("\n");
 		}
 		if(tipoDoc == null){
-			error.append("Elija un tipo de documento").append("\r\n");
+			error.append("Elija un tipo de documento").append("\n");
 		}
 		if(numeroDocumento.isEmpty()){
-			error.append("Inserte un numero de documento").append("\r\n");
+			error.append("Inserte un numero de documento").append("\n");
 		}
 		if(telefono.isEmpty()){
-			error.append("Inserte un telefono").append("\r\n");
+			error.append("Inserte un telefono").append("\n");
+		}
+
+		if(cliente.getInmuebleBuscado()==null) {
+			error.append("Debe cargar un inmueble buscado al cliente").append("\n");
 		}
 
 		if(!error.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
-			Cliente cliente = new Cliente();
 			cliente.setNombre(nombre)
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
@@ -138,19 +138,22 @@ public class AltaClienteController extends OlimpoController {
 		}
 	}
 
-	public void cargarInmueble() throws IOException {
-		//TODO hacer esto
-
+	@FXML
+	private void cargarInmueble() {
+		InmuebleBuscadoController controlador = (InmuebleBuscadoController) cambiarmeAScene(InmuebleBuscadoController.URLVista);
+		controlador.setCliente(cliente);
 	}
 
 	@FXML
-	public void cancelAction() {
+	private void cancelAction() {
 		cambiarmeAScene(AdministrarClienteController.URLVista);
 	}
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		listaTiposDeDocumento = new ArrayList<>();
+
+		cliente = new Cliente();
 
 		try{
 			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();

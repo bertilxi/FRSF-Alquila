@@ -62,7 +62,7 @@
             <ComboBox fx:id="comboBoxTipoDocumento" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de documento" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <TextField fx:id="textFieldNumeroDocumento" maxHeight="1000.0" maxWidth="1000.0" promptText="Número de Documento" GridPane.columnIndex="3" GridPane.rowIndex="5" />
             <TextField fx:id="textFieldTelefono" maxHeight="1000.0" maxWidth="1000.0" promptText="Teléfono" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <Button fx:id="buttonCargarInmueble" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#cargarInmueble" styleClass="button-action" text="Cargar inmueble buscado" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+            <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#cargarInmueble" styleClass="button-action" text="Cargar inmueble buscado" GridPane.columnIndex="3" GridPane.rowIndex="9" />
          <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          <Label focusTraversable="false" layoutX="141.0" layoutY="83.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Apellido:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          <Label focusTraversable="false" layoutX="141.0" layoutY="146.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Tipo de documento:" GridPane.columnIndex="1" GridPane.rowIndex="4" />

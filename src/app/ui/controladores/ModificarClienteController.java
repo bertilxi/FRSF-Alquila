@@ -17,7 +17,6 @@
  */
 package app.ui.controladores;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -28,7 +27,6 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -51,9 +49,6 @@ public class ModificarClienteController extends OlimpoController {
 	@FXML
 	private TextField textFieldTelefono;
 
-	@FXML
-	private Button buttonCargarInmueble;
-
 	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
 	private Cliente clienteEnModificacion;
@@ -68,7 +63,7 @@ public class ModificarClienteController extends OlimpoController {
 	}
 
 	@FXML
-	public void acceptAction() {
+	private void acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -137,12 +132,14 @@ public class ModificarClienteController extends OlimpoController {
 		}
 	}
 
-	public void cargarInmueble() throws IOException {
-		//TODO hacer esto
+	@FXML
+	private void cargarInmueble() {
+		InmuebleBuscadoController controlador = (InmuebleBuscadoController) cambiarmeAScene(InmuebleBuscadoController.URLVista);
+		controlador.setCliente(clienteEnModificacion);
 	}
 
 	@FXML
-	public void cancelAction() {
+	private void cancelAction() {
 		cambiarmeAScene(AdministrarClienteController.URLVista);
 	}
 
