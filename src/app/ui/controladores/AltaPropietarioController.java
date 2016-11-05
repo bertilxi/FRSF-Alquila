@@ -116,12 +116,6 @@ public class AltaPropietarioController extends OlimpoController {
 		if(alturaCalle.isEmpty()){
 			error.append("Inserte una altura").append("\n ");
 		}
-		if(piso.isEmpty()){
-			error.append("Inserte un piso").append("\n ");
-		}
-		if(departamento.isEmpty()){
-			error.append("Inserte un departamento").append("\n ");
-		}
 		if(telefono.isEmpty()){
 			error.append("Inserte un telefono").append("\n ");
 		}
@@ -193,6 +187,8 @@ public class AltaPropietarioController extends OlimpoController {
 						}
 					}
 					presentador.presentarError("No se pudo crear el propietario", stringErrores.toString(), stage);
+				} else {
+					cambiarmeAScene(AdministrarPropietarioController.URLVista);
 				}
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){

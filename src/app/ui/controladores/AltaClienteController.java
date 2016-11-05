@@ -121,6 +121,8 @@ public class AltaClienteController extends OlimpoController {
 						}
 					}
 					presentador.presentarError("No se pudo crear el cliente", stringErrores.toString(), stage);
+				} else {
+					cambiarmeAScene(AdministrarClienteController.URLVista);
 				}
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){

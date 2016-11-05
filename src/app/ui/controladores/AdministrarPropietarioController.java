@@ -96,7 +96,11 @@ public class AdministrarPropietarioController extends OlimpoController {
 
 	@FXML
 	private void handleVer() {
-		//TODO hacer esto
+		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
+		VerPropietarioController controlador = (VerPropietarioController) cambiarmeAScene(VerPropietarioController.URLVista);
+		controlador.setPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
 	}
 
 	@FXML
