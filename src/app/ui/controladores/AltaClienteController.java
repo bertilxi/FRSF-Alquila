@@ -57,20 +57,21 @@ public class AltaClienteController extends OlimpoController {
 	private Cliente cliente;
 
 	public void setCliente(Cliente cliente) {
-		if(cliente!=null) {
+		if(cliente != null){
 			this.cliente = cliente;
 			textFieldNombre.setText(cliente.getNombre());
 			textFieldApellido.setText(cliente.getApellido());
 			textFieldTelefono.setText(cliente.getTelefono());
 			textFieldNumeroDocumento.setText(cliente.getNumeroDocumento());
 			comboBoxTipoDocumento.setValue(cliente.getTipoDocumento());
-		} else {
+		}
+		else{
 			this.cliente = new Cliente();
 		}
 	}
 
 	@FXML
-	private void acceptAction() throws PersistenciaException, GestionException {
+	public void acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -96,7 +97,7 @@ public class AltaClienteController extends OlimpoController {
 			error.append("Inserte un telefono").append("\n");
 		}
 
-		if(cliente.getInmuebleBuscado()==null) {
+		if(cliente.getInmuebleBuscado() == null){
 			error.append("Debe cargar un inmueble buscado al cliente").append("\n");
 		}
 
@@ -134,7 +135,8 @@ public class AltaClienteController extends OlimpoController {
 						}
 					}
 					presentador.presentarError("No se pudo crear el cliente", stringErrores.toString(), stage);
-				} else {
+				}
+				else{
 					cambiarmeAScene(AdministrarClienteController.URLVista);
 				}
 			} catch(GestionException e){
@@ -154,10 +156,10 @@ public class AltaClienteController extends OlimpoController {
 	@FXML
 	private void cargarInmueble() {
 		cliente.setNombre(textFieldNombre.getText().trim())
-		.setApellido(textFieldApellido.getText().trim())
-		.setTipoDocumento(comboBoxTipoDocumento.getValue())
-		.setNumeroDocumento(textFieldNumeroDocumento.getText().trim())
-		.setTelefono(textFieldTelefono.getText().trim());
+				.setApellido(textFieldApellido.getText().trim())
+				.setTipoDocumento(comboBoxTipoDocumento.getValue())
+				.setNumeroDocumento(textFieldNumeroDocumento.getText().trim())
+				.setTelefono(textFieldTelefono.getText().trim());
 		InmuebleBuscadoController controlador = (InmuebleBuscadoController) cambiarmeAScene(InmuebleBuscadoController.URLVista);
 		controlador.setCliente(cliente);
 	}

@@ -11,8 +11,6 @@ import org.mockito.Mockito;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.TipoDocumento;
-import app.excepciones.GestionException;
-import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoCrearCliente;
 import junitparams.Parameters;
@@ -22,7 +20,7 @@ public class AltaClienteControllerTest {
 	@Test
 	@Parameters
 	// TODO: probar con inmueble buscado
-    // TODO: terminar y corregir
+	// TODO: terminar y corregir
 	public void testCrearClientetestCrearVendedor(String nombre,
 			String apellido,
 			TipoDocumento tipoDocumento,
@@ -56,7 +54,7 @@ public class AltaClienteControllerTest {
 			}
 
 			@Override
-			public void acceptAction() throws PersistenciaException, GestionException {
+			public void acceptAction() {
 				this.textFieldNombre.setText(nombre);
 				this.textFieldApellido.setText(apellido);
 				this.comboBoxTipoDocumento.getSelectionModel().select(tipoDocumento);
