@@ -56,6 +56,19 @@ public class AltaClienteController extends OlimpoController {
 
 	private Cliente cliente;
 
+	public void setCliente(Cliente cliente) {
+		if(cliente!=null) {
+			this.cliente = cliente;
+			textFieldNombre.setText(cliente.getNombre());
+			textFieldApellido.setText(cliente.getApellido());
+			textFieldTelefono.setText(cliente.getTelefono());
+			textFieldNumeroDocumento.setText(cliente.getNumeroDocumento());
+			comboBoxTipoDocumento.setValue(cliente.getTipoDocumento());
+		} else {
+			this.cliente = new Cliente();
+		}
+	}
+
 	@FXML
 	private void acceptAction() throws PersistenciaException, GestionException {
 
@@ -140,6 +153,11 @@ public class AltaClienteController extends OlimpoController {
 
 	@FXML
 	private void cargarInmueble() {
+		cliente.setNombre(textFieldNombre.getText().trim())
+		.setApellido(textFieldApellido.getText().trim())
+		.setTipoDocumento(comboBoxTipoDocumento.getValue())
+		.setNumeroDocumento(textFieldNumeroDocumento.getText().trim())
+		.setTelefono(textFieldTelefono.getText().trim());
 		InmuebleBuscadoController controlador = (InmuebleBuscadoController) cambiarmeAScene(InmuebleBuscadoController.URLVista);
 		controlador.setCliente(cliente);
 	}
@@ -152,8 +170,6 @@ public class AltaClienteController extends OlimpoController {
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		listaTiposDeDocumento = new ArrayList<>();
-
-		cliente = new Cliente();
 
 		try{
 			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();

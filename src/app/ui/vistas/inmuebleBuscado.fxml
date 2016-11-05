@@ -157,10 +157,24 @@
             <RowConstraints maxHeight="50.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
+            <Label focusTraversable="false" layoutX="141.0" layoutY="132.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Tipo de inmueble:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <CheckBox fx:id="checkBoxLocal" layoutX="326.0" layoutY="235.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Local" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <CheckBox fx:id="checkBoxCasa" layoutX="326.0" layoutY="20.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Casa" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <CheckBox fx:id="checkBoxQuinta" layoutX="326.0" layoutY="20.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Quinta" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <CheckBox fx:id="checkBoxDepartamento" layoutX="326.0" layoutY="28.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Departamento" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <CheckBox fx:id="checkBoxGalpon" layoutX="326.0" layoutY="66.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Galpón" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <CheckBox fx:id="checkBoxTerreno" layoutX="326.0" layoutY="66.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Terreno" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Superficie mínima:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Antigüedad máxima:" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Mínimo de dormitorios:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Mínimo de baños:" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Label focusTraversable="false" layoutX="466.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Precio máximo:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                 <TextField fx:id="textFieldSuperficie" maxHeight="1000.0" maxWidth="1000.0" promptText="Superficie" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                 <TextField fx:id="textFieldAntiguedad" maxHeight="1000.0" maxWidth="1000.0" promptText="Antiguedad" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                 <TextField fx:id="textFieldDormitorios" maxHeight="1000.0" maxWidth="1000.0" promptText="Mínimo de dormitorios" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                 <TextField fx:id="textFieldBaños" maxHeight="1000.0" maxWidth="1000.0" promptText="Mínimo de baños" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <TextField fx:id="textFieldPrecio" layoutX="163.0" layoutY="136.0" maxHeight="1000.0" maxWidth="1000.0" promptText="Precio" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label focusTraversable="false" layoutX="59.0" layoutY="28.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Características:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                 <CheckBox fx:id="checkBoxPropiedadHorizontal" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="propiedad horizontal ?" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                 <CheckBox fx:id="checkBoxGarage" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con garage ?" GridPane.columnIndex="3" GridPane.rowIndex="9" />
                 <CheckBox fx:id="checkBoxPatio" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con patio ?" GridPane.columnIndex="2" GridPane.rowIndex="9" />
@@ -172,20 +186,6 @@
                 <CheckBox fx:id="checkBoxTelefono" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con telefono ?" GridPane.columnIndex="2" GridPane.rowIndex="11" />
                 <CheckBox fx:id="checkBoxLavadero" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con lavadero ?" GridPane.columnIndex="3" GridPane.rowIndex="11" />
                 <CheckBox fx:id="checkBoxPavimento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con pavimento ?" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-            <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Superficie mínima:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Antigüedad máxima:" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Mínimo de dormitorios:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Mínimo de baños:" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <Label focusTraversable="false" layoutX="466.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Precio máximo:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="textFieldPrecio" layoutX="163.0" layoutY="136.0" maxHeight="1000.0" maxWidth="1000.0" promptText="Precio" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <CheckBox fx:id="checkBoxLocal" layoutX="326.0" layoutY="235.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Local" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <CheckBox fx:id="checkBoxCasa" layoutX="326.0" layoutY="20.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Casa" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <CheckBox fx:id="checkBoxQuinta" layoutX="326.0" layoutY="20.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Quinta" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <CheckBox fx:id="checkBoxDepartamento" layoutX="326.0" layoutY="28.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Departamento" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <CheckBox fx:id="checkBoxGalpon" layoutX="326.0" layoutY="66.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Galpón" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <CheckBox fx:id="checkBoxTerreno" layoutX="326.0" layoutY="66.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Terreno" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <Label focusTraversable="false" layoutX="141.0" layoutY="132.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Tipo de inmueble:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label focusTraversable="false" layoutX="59.0" layoutY="28.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Características:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             </children>
         </GridPane>
         <HBox alignment="BOTTOM_RIGHT" styleClass="buttonbar">

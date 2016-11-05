@@ -94,7 +94,8 @@ public class AdministrarClienteController extends OlimpoController {
 
 	@FXML
 	private void handleAgregar() {
-		cambiarmeAScene(AltaClienteController.URLVista);
+		AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
+		controlador.setCliente(null);
 	}
 
 	@FXML

@@ -160,6 +160,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 				textFieldBaños.setText(inmueble.getBañosMin().toString());
 				textFieldDormitorios.setText(inmueble.getDormitoriosMin().toString());
 				textFieldSuperficie.setText(inmueble.getSuperficieMin().toString());
+				textFieldPrecio.setText(inmueble.getPrecioMax().toString());
 				for(TipoInmueble tipo: inmueble.getTiposInmueblesBuscados()) {
 					switch(tipo.getTipo()) {
 					case LOCAL:
@@ -246,6 +247,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 			if(alta) {
 				inmuebleBuscado = new InmuebleBuscado();
 				cliente.setInmuebleBuscado(inmuebleBuscado);
+				inmuebleBuscado.setCliente(cliente);
 			}
 			inmuebleBuscado.setSuperficieMin(supeficieMinima)
 			.setAntiguedadMax(antiguedadMaxima)
@@ -307,7 +309,8 @@ public class InmuebleBuscadoController extends OlimpoController {
 			}
 
 			if (alta) {
-				cambiarmeAScene(AltaClienteController.URLVista);
+				AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
+				controlador.setCliente(cliente);
 			} else {
 				cambiarmeAScene(ModificarClienteController.URLVista);
 			}
@@ -376,7 +379,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 	@FXML
 	private void handleQuitarLocalidad() {
 		if(tablaLocalidades.getSelectionModel().getSelectedItem()!=null) {
-			for(Barrio bar: listaBarriosSeleccionados) {
+			for(Barrio bar: tablaBarrios.getItems()) {
 				if(bar.getLocalidad().equals(tablaLocalidades.getSelectionModel().getSelectedItem())) {
 					listaBarriosSeleccionados.remove(bar);
 				}
