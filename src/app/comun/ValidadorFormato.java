@@ -86,7 +86,7 @@ public class ValidadorFormato {
 		}
 
 		pat = Pattern.compile("([0-9]*[1-9]+[0-9]*){0,30}");
-		if(!pat.matcher(direccion.getNumero()).matches()){
+		if(direccion.getNumero() == null || !pat.matcher(direccion.getNumero()).matches()){
 			return false;
 		}
 
@@ -113,6 +113,14 @@ public class ValidadorFormato {
 		pat = Pattern.compile("[a-zA-Z0-9\\ ]{1,50}");
 		if(direccion.getLocalidad() == null || !pat.matcher(direccion.getLocalidad().getNombre()).matches()){
 			return false;
+		}
+		else{
+			if(direccion.getLocalidad().getProvincia() == null || !pat.matcher(direccion.getLocalidad().getProvincia().getNombre()).matches()){
+				return false;
+			}
+			else if(direccion.getLocalidad().getProvincia().getPais() == null || !pat.matcher(direccion.getLocalidad().getProvincia().getPais().getNombre()).matches()){
+				return false;
+			}
 		}
 
 		return true;
