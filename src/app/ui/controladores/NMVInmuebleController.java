@@ -28,6 +28,7 @@ import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoInmueble;
+import app.ui.controladores.resultado.ResultadoControlador;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -35,6 +36,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
+/**
+ * Controlador de la vista que crea, modifica o muestra un inmueble
+ * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+ */
 public class NMVInmuebleController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/NMVInmueble.fxml";
@@ -171,8 +176,36 @@ public class NMVInmuebleController extends OlimpoController {
 	}
 
 	@FXML
-	public void aceptar() {
+	/**
+	 * Método que permite guardar los cambios hechos en la vista
+	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 *
+	 * @return ResultadoControlador que resume lo que hizo el controlador
+	 */
+	public ResultadoControlador aceptar() {
+		crearInmueble();
+		modificarInmueble();
+		return null;
+	}
 
+	/**
+	 * Método que permite crear un inmueble
+	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 *
+	 * @return ResultadoControlador que resume lo que hizo el controlador
+	 */
+	private ResultadoControlador crearInmueble() {
+		return null;
+	}
+
+	/**
+	 * Método que permite modificar un inmueble
+	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 *
+	 * @return ResultadoControlador que resume lo que hizo el controlador
+	 */
+	private ResultadoControlador modificarInmueble() {
+		return null;
 	}
 
 	@FXML

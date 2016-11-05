@@ -36,6 +36,10 @@ import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
 @Repository
+/**
+ * Implementación con hibernate de la interface que define los métodos de persistencia de un cliente
+ * Pertenece a la taskcard 19 de la iteración 1 y a la historia 6
+ */
 public class ClienteServiceImpl implements ClienteService {
 
 	private SessionFactory sessionFactory;

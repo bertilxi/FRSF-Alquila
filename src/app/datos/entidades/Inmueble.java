@@ -42,6 +42,10 @@ import javax.persistence.TemporalType;
 @Entity
 @NamedQuery(name = "obtenerInmuebles", query = "SELECT i FROM Inmueble i WHERE i.estado.estado = 'ALTA'")
 @Table(name = "inmueble")
+/**
+ * Entidad que modela un inmueble
+ * Pertenece a la taskcard 11 de la iteración 1 y a la historia 3
+ */
 public class Inmueble {
 
 	@Id

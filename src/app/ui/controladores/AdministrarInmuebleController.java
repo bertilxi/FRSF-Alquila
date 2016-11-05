@@ -20,8 +20,13 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import app.ui.controladores.resultado.ResultadoControlador;
 import javafx.fxml.FXML;
 
+/**
+ * Controlador de la vista de administración de inmuebles que se encarga de manejar el listado y la eliminación de inmuebles
+ * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+ */
 public class AdministrarInmuebleController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarInmueble.fxml";
@@ -36,4 +41,16 @@ public class AdministrarInmuebleController extends OlimpoController {
 	public void agregar() {
 		cambiarmeAScene(NMVInmuebleController.URLVista);
 	}
+
+	/**
+	 * Método que permite eliminar un inmueble
+	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 *
+	 * @return ResultadoControlador que resume lo que hizo el controlador
+	 */
+	@FXML
+	public ResultadoControlador eliminarInmueble() {
+		return null;
+	}
+
 }

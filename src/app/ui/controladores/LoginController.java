@@ -34,6 +34,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * Controlador de la vista de login que se encarga de manejar el ingreso de un vendedor al sistema
+ * Pertenece a la taskcard 1 de la iteración 1 y a la historia 1
+ */
 public class LoginController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/login.fxml";
@@ -54,6 +58,12 @@ public class LoginController extends OlimpoController {
 	}
 
 	@FXML
+	/**
+	 * Método que permite a un vendedor entrar al sistema.
+	 * Pertenece a la taskcard 1 de la iteración 1 y a la historia 1
+	 *
+	 * @return ResultadoControlador que resume lo que hizo el controlador
+	 */
 	public ResultadoControlador ingresar() {
 		//TODO borrar para activar login
 		cambiarmeAScene(BaseController.URLVista);
