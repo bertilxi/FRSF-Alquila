@@ -152,8 +152,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
-		padre.getChildren().clear();
-		padre.getChildren().add(pantalla1);
+		atras();
 	}
 
 	@FXML

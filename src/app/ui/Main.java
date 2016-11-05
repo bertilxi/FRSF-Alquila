@@ -65,7 +65,6 @@ public class Main extends Application {
 		//Inicializar parametros
 		this.primaryStage = primaryStage;
 		this.presentador = new PresentadorVentanas();
-		iniciarHibernate();
 
 		//Setear icono y titulo de aplicacion
 		primaryStage.getIcons().add(new IconoAplicacion());
@@ -75,6 +74,8 @@ public class Main extends Application {
 			SessionFactory sessionFact = (SessionFactory) appContext.getBean("sessionFactory");
 			sessionFact.close();
 		});
+
+		iniciarHibernate();
 	}
 
 	private void iniciarHibernate() {
