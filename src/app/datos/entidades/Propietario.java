@@ -67,7 +67,7 @@ public class Propietario {
 	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_idtipo_fk"))
 	private TipoDocumento tipoDocumento;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_iddireccion_fk"))
 	private Direccion direccion;
 
