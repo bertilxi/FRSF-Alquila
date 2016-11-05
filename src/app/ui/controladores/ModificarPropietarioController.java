@@ -97,11 +97,11 @@ public class ModificarPropietarioController extends OlimpoController {
 			textFieldDepartamento.setText(propietarioEnModificacion.getDireccion().getDepartamento());
 			textFieldCorreoElectronico.setText(propietarioEnModificacion.getEmail());
 			textFieldTelefono.setText(propietarioEnModificacion.getTelefono());
-			comboBoxBarrio.setValue(propietarioEnModificacion.getDireccion().getBarrio());
-			comboBoxCalle.setValue(propietarioEnModificacion.getDireccion().getCalle());
-			comboBoxLocalidad.setValue(propietarioEnModificacion.getDireccion().getLocalidad());
 			comboBoxPais.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia().getPais());
 			comboBoxProvincia.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia());
+			comboBoxLocalidad.setValue(propietarioEnModificacion.getDireccion().getLocalidad());
+			comboBoxBarrio.setValue(propietarioEnModificacion.getDireccion().getBarrio());
+			comboBoxCalle.setValue(propietarioEnModificacion.getDireccion().getCalle());
 			comboBoxTipoDocumento.setValue(propietarioEnModificacion.getTipoDocumento());
 		});
 	}
@@ -454,6 +454,7 @@ public class ModificarPropietarioController extends OlimpoController {
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
+			comboBoxLocalidad.getItems().clear();
 			comboBoxLocalidad.getItems().addAll(listaLocalidades);
 		}
 	}
@@ -465,6 +466,7 @@ public class ModificarPropietarioController extends OlimpoController {
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
+			comboBoxProvincia.getItems().clear();
 			comboBoxProvincia.getItems().addAll(listaProvincias);
 		}
 	}
@@ -477,7 +479,9 @@ public class ModificarPropietarioController extends OlimpoController {
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
+			comboBoxBarrio.getItems().clear();
 			comboBoxBarrio.getItems().addAll(listaBarrios);
+			comboBoxCalle.getItems().clear();
 			comboBoxCalle.getItems().addAll(listaCalles);
 		}
 	}
