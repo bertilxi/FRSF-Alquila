@@ -162,18 +162,23 @@ public class InmuebleBuscadoController extends OlimpoController {
 				textFieldSuperficie.setText(inmueble.getSuperficieMin().toString());
 				for(TipoInmueble tipo: inmueble.getTiposInmueblesBuscados()) {
 					switch(tipo.getTipo()) {
-					//TODO setear los checkBox
 					case LOCAL:
+						checkBoxLocal.setSelected(true);
 						break;
 					case CASA:
+						checkBoxCasa.setSelected(true);
 						break;
 					case DEPARTAMENTO:
+						checkBoxDepartamento.setSelected(true);
 						break;
 					case GALPON:
+						checkBoxGalpon.setSelected(true);
 						break;
 					case QUINTA:
+						checkBoxQuinta.setSelected(true);
 						break;
 					case TERRENO:
+						checkBoxTerreno.setSelected(true);
 						break;
 					}
 				}
