@@ -234,7 +234,7 @@ public class AltaPropietarioController extends OlimpoController {
 		comboBoxPais.getItems().addAll(listaPaises);
 
 		comboBoxPais.getSelectionModel().selectFirst();
-		while(comboBoxPais.getSelectionModel().getSelectedItem().getNombre()!="Argentina") {
+		while(!comboBoxPais.getSelectionModel().getSelectedItem().getNombre().equals("Argentina")) {
 			comboBoxPais.getSelectionModel().selectNext();
 		}
 		actualizarProvincias(comboBoxPais.getSelectionModel().getSelectedItem());
