@@ -31,6 +31,8 @@ import app.datos.entidades.TipoDocumento;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -378,6 +380,66 @@ public class ModificarPropietarioController extends OlimpoController {
 				cal.setNombre(nombre);
 				cal.setLocalidad(comboBoxLocalidad.getValue());
 				return cal;
+			}
+		});
+
+		comboBoxPais.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+			{
+				if (!newPropertyValue)
+				{
+					comboBoxPais.getSelectionModel().select(comboBoxPais.getConverter().fromString(comboBoxPais.getEditor().getText()));
+
+				}
+			}
+		});
+
+		comboBoxProvincia.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+			{
+				if (!newPropertyValue)
+				{
+					comboBoxProvincia.getSelectionModel().select(comboBoxProvincia.getConverter().fromString(comboBoxProvincia.getEditor().getText()));
+
+				}
+			}
+		});
+
+		comboBoxLocalidad.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+			{
+				if (!newPropertyValue)
+				{
+					comboBoxLocalidad.getSelectionModel().select(comboBoxLocalidad.getConverter().fromString(comboBoxLocalidad.getEditor().getText()));
+
+				}
+			}
+		});
+
+		comboBoxBarrio.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+			{
+				if (!newPropertyValue)
+				{
+					comboBoxBarrio.getSelectionModel().select(comboBoxBarrio.getConverter().fromString(comboBoxBarrio.getEditor().getText()));
+
+				}
+			}
+		});
+
+		comboBoxCalle.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+			{
+				if (!newPropertyValue)
+				{
+					comboBoxCalle.getSelectionModel().select(comboBoxCalle.getConverter().fromString(comboBoxCalle.getEditor().getText()));
+
+				}
 			}
 		});
 	}
