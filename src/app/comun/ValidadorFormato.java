@@ -119,7 +119,8 @@ public class ValidadorFormato {
 	}
 
 	public Boolean validarLocalidad(String localidad) {
-		return validarNombre(localidad);
+		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,50}");
+		return pat.matcher(localidad).matches();
 	}
 
 	public Boolean validarNombreVista(String nombre) {
@@ -191,7 +192,13 @@ public class ValidadorFormato {
 	}
 
 	public void setValidadorLocalidad(TextField textField) {
-		setValidadorNombre(textField);
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+			if(!validarLocalidad(newValue)){
+				textField.setText(oldValue);
+			}
+
+		});
 	}
 
 }
