@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+    Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
     This file is part of Olimpo.
 
     Olimpo is free software: you can redistribute it and/or modify
@@ -11,21 +11,20 @@
 
     Olimpo is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+    along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarInmuebleController">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarInmuebleController">
    <children>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" HBox.hgrow="ALWAYS">
          <children>
@@ -43,10 +42,10 @@
       </VBox>
       <VBox alignment="TOP_CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
          <children>
-            <Button fx:id="botonVer1" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Ver más" />
+            <Button fx:id="botonVer1" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Ver más" />
             <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
-            <Button fx:id="botonModificar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Modificar" />
-            <Button fx:id="botonEliminar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Eliminar" />
+            <Button fx:id="botonModificar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Modificar" />
+            <Button fx:id="botonEliminar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Eliminar" />
          </children>
       </VBox>
    </children>

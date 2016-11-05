@@ -2,7 +2,7 @@
 
 <!--
 
-    Copyright (C) 2016  Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+    Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
     This file is part of Olimpo.
 
     Olimpo is free software: you can redistribute it and/or modify
@@ -12,11 +12,11 @@
 
     Olimpo is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Olimpo.  If not, see <http://www.gnu.org/licenses/>.
+    along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
@@ -24,8 +24,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-
-<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.WindowTitleController">
+<ScrollPane fitToHeight="true" fitToWidth="true" styleClass="table-view" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.WindowTitleController">
    <content>
       <AnchorPane>
          <children>
