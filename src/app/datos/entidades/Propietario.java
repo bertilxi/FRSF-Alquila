@@ -37,6 +37,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import app.comun.FormateadorString;
+
 @NamedQueries(value = { @NamedQuery(name = "obtenerPropietarios", query = "SELECT p FROM Propietario p WHERE p.estado.estado = 'ALTA'"),
 		@NamedQuery(name = "obtenerPropietario", query = "SELECT p FROM Propietario p WHERE p.numeroDocumento = :documento AND p.tipoDocumento.tipo = :tipoDocumento") })
 @Entity
@@ -229,5 +231,11 @@ public class Propietario {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		FormateadorString formateador = new FormateadorString();
+		return formateador.primeraMayuscula(nombre) + " " + formateador.primeraMayuscula(apellido);
 	}
 }
