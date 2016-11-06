@@ -35,6 +35,6 @@ public class VentanaEsperaBaseDeDatos extends Dialog<Void> {
 		}
 		this.setContentText("Esperando a la base de datos...");
 		this.setHeaderText(null);
-		//		this.setTitle("Esperando");
+		this.setTitle("Esperando");
 	}
 }
