@@ -32,7 +32,6 @@ import app.datos.entidades.TipoInmueble;
 import app.excepciones.PersistenciaException;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -320,7 +319,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 	}
 
 	@FXML
-	private void cancelAction(ActionEvent event) {
+	private void cancelAction() {
 		if (alta) {
 			cambiarmeAScene(AltaClienteController.URLVista);
 		} else {

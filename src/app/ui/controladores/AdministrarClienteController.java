@@ -49,6 +49,8 @@ public class AdministrarClienteController extends OlimpoController {
 	private TableColumn<Cliente, String> columnaTelefono;
 
 	@FXML
+	private Button botonVerInmuebleBuscado;
+	@FXML
 	private Button botonAgregar;
 	@FXML
 	private Button botonModificar;
@@ -83,13 +85,24 @@ public class AdministrarClienteController extends OlimpoController {
 
 	private void habilitarBotones(Cliente cliente) {
 		if(cliente == null){
+			botonVerInmuebleBuscado.setDisable(true);
 			botonModificar.setDisable(true);
 			botonEliminar.setDisable(true);
 		}
 		else{
+			botonVerInmuebleBuscado.setDisable(false);
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
 		}
+	}
+
+	@FXML
+	private void handleVerInmuebleBuscado() {
+		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
+		VerInmuebleBuscadoController controlador = (VerInmuebleBuscadoController) cambiarmeAScene(VerInmuebleBuscadoController.URLVista);
+		controlador.setInmueble(tablaClientes.getSelectionModel().getSelectedItem().getInmuebleBuscado());
 	}
 
 	@FXML
