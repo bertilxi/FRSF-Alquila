@@ -39,6 +39,7 @@ public abstract class OlimpoController implements Initializable {
 	protected PresentadorVentanas presentador;
 	private ScenographyChanger parentScenographyChanger;
 	private Map<Node, ScenographyChanger> myScenographyChangers = new HashMap<>();
+	protected String URLVistaRetorno;
 
 	protected OlimpoController agregarScenographyChanger(Node contexto, ScenographyChanger scenographyChanger) {
 		myScenographyChangers.put(contexto, scenographyChanger);
@@ -51,6 +52,12 @@ public abstract class OlimpoController implements Initializable {
 
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar) {
 		return parentScenographyChanger.cambiarScenography(URLVistaACambiar);
+	}
+
+	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
+		OlimpoController nuevoController = parentScenographyChanger.cambiarScenography(URLVistaACambiar);
+		nuevoController.URLVistaRetorno = URLVistaRetorno;
+		return nuevoController;
 	}
 
 	public OlimpoController setScenographyChanger(ScenographyChanger scenographyChanger) {
@@ -84,7 +91,12 @@ public abstract class OlimpoController implements Initializable {
 
 	@FXML
 	public void salir() {
-		stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+		if(URLVistaRetorno != null){
+			cambiarmeAScene(URLVistaRetorno);
+		}
+		else{
+			stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+		}
 	}
 
 	protected void setTitulo(String titulo) {

@@ -24,11 +24,22 @@ import org.springframework.stereotype.Service;
 
 import app.datos.entidades.Direccion;
 import app.datos.entidades.TipoDocumento;
-import javafx.scene.control.TextField;
 
 @Service
+/**
+ * Clase encargada de validar formatos de tipos de datos
+ */
 public class ValidadorFormato {
 
+	/**
+	 * Valida si un documento tiene el formato adecuado
+	 *
+	 * @param tipo
+	 *            tipo de documento a validar
+	 * @param numeroDocumento
+	 *            numero de documento a validar
+	 * @return si la combinación es valida
+	 */
 	public Boolean validarDocumento(TipoDocumento tipo, String numeroDocumento) {
 		Pattern pat;
 
@@ -59,25 +70,60 @@ public class ValidadorFormato {
 		return pat.matcher(numeroDocumento).matches();
 	}
 
+	/**
+	 * Valida si un nombre tiene el formato adecuado
+	 *
+	 * @param nombre
+	 *            nombre a validar
+	 * @return si es valido
+	 */
 	public Boolean validarNombre(String nombre) {
 		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,30}");
 		return pat.matcher(nombre).matches();
 	}
 
+	/**
+	 * Valida si un apellido tiene el formato adecuado
+	 *
+	 * @param apellido
+	 *            apellido a validar
+	 * @return si es valido
+	 */
 	public Boolean validarApellido(String apellido) {
 		return validarNombre(apellido);
 	}
 
+	/**
+	 * Valida si un email tiene el formato adecuado
+	 *
+	 * @param email
+	 *            email a validar
+	 * @return si es valido
+	 */
 	public Boolean validarEmail(String email) {
 		return EmailValidator.getInstance().isValid(email) && email.length() <= 30;
 	}
 
+	/**
+	 * Valida si un telefono tiene el formato adecuado
+	 *
+	 * @param telefono
+	 *            telefono a validar
+	 * @return si es valido
+	 */
 	public Boolean validarTelefono(String telefono) {
 		Pattern pat = Pattern.compile("[0-9\\-]{0,20}");
 
 		return pat.matcher(telefono).matches();
 	}
 
+	/**
+	 * Valida si una direccion tiene el formato adecuado
+	 *
+	 * @param direccion
+	 *            direccion a validar
+	 * @return si es valida
+	 */
 	public Boolean validarDireccion(Direccion direccion) {
 		Pattern pat;
 
@@ -126,87 +172,15 @@ public class ValidadorFormato {
 		return true;
 	}
 
+	/**
+	 * Valida si una localidad tiene el formato adecuado
+	 *
+	 * @param localidad
+	 *            localidad a validar
+	 * @return si es valida
+	 */
 	public Boolean validarLocalidad(String localidad) {
 		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,50}");
 		return pat.matcher(localidad).matches();
 	}
-
-	public Boolean validarNombreVista(String nombre) {
-		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{0,30}");
-		return pat.matcher(nombre).matches();
-	}
-
-	public Boolean validarNumeroDocumentoVista(String nombre) {
-		Pattern pat = Pattern.compile("[0-9]{0,8}");
-		return pat.matcher(nombre).matches();
-	}
-
-	public Boolean validarNumeroVista(String nombre) {
-		Pattern pat = Pattern.compile("[0-9]{0,30}");
-		return pat.matcher(nombre).matches();
-	}
-
-	public Boolean validarEmailVista(String correo) {
-		Pattern pat = Pattern.compile("[([A-Za-z]{0,30})([\\\\@]{0,1})([A-Za-z]{0,30})([\\\\.]{0,1})([A-Za-z]{0,30})([\\\\.]{0,1})([A-Za-z]{0,30})]{0,30}");
-		return pat.matcher(correo).matches();
-	}
-
-	public void setValidadorNombre(TextField textField) {
-		textField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-			if(!validarNombreVista(newValue)){
-				textField.setText(oldValue);
-			}
-
-		});
-	}
-
-	public void setValidadorNumeroDocumento(TextField textField) {
-		textField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-			if(!validarNumeroDocumentoVista(newValue)){
-				textField.setText(oldValue);
-			}
-
-		});
-	}
-
-	public void setValidadorEmail(TextField textField) {
-		textField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-			if(!validarEmailVista(newValue)){
-				textField.setText(oldValue);
-			}
-
-		});
-	}
-
-	public void setValidadorApellido(TextField textField) {
-		setValidadorNombre(textField);
-	}
-
-	public void setValidadorTelefono(TextField textField) {
-		textField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-			if(!validarNumeroVista(newValue)){
-				textField.setText(oldValue);
-			}
-
-		});
-	}
-
-	public void setValidadorDireccion(TextField textField) {
-		setValidadorNombre(textField);
-	}
-
-	public void setValidadorLocalidad(TextField textField) {
-		textField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-			if(!validarLocalidad(newValue)){
-				textField.setText(oldValue);
-			}
-
-		});
-	}
-
 }

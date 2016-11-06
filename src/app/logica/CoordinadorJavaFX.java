@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import app.datos.clases.DatosLogin;
@@ -128,19 +127,19 @@ public class CoordinadorJavaFX {
 	}
 
 	public ResultadoCrearInmueble crearInmueble(Inmueble inmbueble) throws PersistenciaException, GestionException {
-		throw new NotYetImplementedException();
+		return gestorInmueble.crearInmueble(inmbueble);
 	}
 
-	public ResultadoModificarInmueble modificarInmueble(Inmueble propietario) throws PersistenciaException {
-		throw new NotYetImplementedException();
+	public ResultadoModificarInmueble modificarInmueble(Inmueble inmbueble) throws PersistenciaException {
+		return gestorInmueble.modificarInmueble(inmbueble);
 	}
 
-	public ResultadoEliminarInmueble eliminarInmueble(Inmueble propietario) throws PersistenciaException {
-		throw new NotYetImplementedException();
+	public ResultadoEliminarInmueble eliminarInmueble(Inmueble inmbueble) throws PersistenciaException {
+		return gestorInmueble.eliminarInmueble(inmbueble);
 	}
 
 	public ArrayList<Inmueble> obtenerInmuebles() throws PersistenciaException {
-		throw new NotYetImplementedException();
+		return gestorInmueble.obtenerInmuebles();
 	}
 
 	public ArrayList<TipoInmueble> obtenerTiposInmueble() throws PersistenciaException {

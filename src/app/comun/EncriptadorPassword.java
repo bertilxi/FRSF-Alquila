@@ -39,7 +39,7 @@ public class EncriptadorPassword {
 	private final static String SAL_GLOBAL = "G��vh�{|Xз�m�Ũ`h";
 
 	/**
-	 * Encripta un String con el algoritmo MD5.
+	 * Encripta un String.
 	 *
 	 * @param palabra
 	 *            palabra a encriptar, se borrará al terminar.
@@ -64,6 +64,11 @@ public class EncriptadorPassword {
 		}
 	}
 
+	/**
+	 * Genera una sal aleatoria segura
+	 * 
+	 * @return sal
+	 */
 	public String generarSal() {
 		SecureRandom random = new SecureRandom();
 		byte bytes[] = new byte[20];

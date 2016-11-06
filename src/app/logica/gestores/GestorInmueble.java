@@ -17,9 +17,47 @@
  */
 package app.logica.gestores;
 
+import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
+
+import app.comun.ValidadorFormato;
+import app.datos.entidades.Inmueble;
+import app.datos.servicios.InmuebleService;
+import app.excepciones.GestionException;
+import app.excepciones.PersistenciaException;
+import app.logica.resultados.ResultadoCrearInmueble;
+import app.logica.resultados.ResultadoEliminarInmueble;
+import app.logica.resultados.ResultadoModificarInmueble;
 
 @Service
 public class GestorInmueble {
 
+	@Resource
+	protected InmuebleService persistidorInmueble;
+
+	@Resource
+	protected GestorDatos gestorDatos;
+
+	@Resource
+	protected ValidadorFormato validador;
+
+	public ResultadoCrearInmueble crearInmueble(Inmueble inmbueble) throws PersistenciaException, GestionException {
+		throw new NotYetImplementedException();
+	}
+
+	public ResultadoModificarInmueble modificarInmueble(Inmueble propietario) throws PersistenciaException {
+		throw new NotYetImplementedException();
+	}
+
+	public ResultadoEliminarInmueble eliminarInmueble(Inmueble propietario) throws PersistenciaException {
+		throw new NotYetImplementedException();
+	}
+
+	public ArrayList<Inmueble> obtenerInmuebles() throws PersistenciaException {
+		throw new NotYetImplementedException();
+	}
 }

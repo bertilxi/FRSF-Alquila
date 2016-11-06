@@ -85,8 +85,7 @@ public class AdministrarVendedorController extends OlimpoController {
 	}
 
 	public void agregarAction(ActionEvent event) {
-		AltaVendedorController controlador = (AltaVendedorController) cambiarmeAScene(AltaVendedorController.URLVista);
-		controlador.setURLVistaPadre(URLVista);
+		cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
 	}
 
 	public void modificarAction(ActionEvent event) {

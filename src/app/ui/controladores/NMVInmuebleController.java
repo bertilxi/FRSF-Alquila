@@ -29,6 +29,8 @@ import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoInmueble;
 import app.ui.controladores.resultado.ResultadoControlador;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -155,8 +157,19 @@ public class NMVInmuebleController extends OlimpoController {
 	@FXML
 	private Pane pantalla2;
 
+	private StringProperty titulo1 = new SimpleStringProperty();
+
+	private StringProperty titulo2 = new SimpleStringProperty();
+
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
+		titulo1.addListener((observable, oldValue, newValue) -> {
+			setTitulo(newValue + " - " + titulo2.get());
+		});
+		titulo2.addListener((observable, oldValue, newValue) -> {
+			setTitulo(titulo1.get() + " - " + newValue);
+		});
+		titulo1.set("Nuevo inmueble");
 		atras();
 	}
 
@@ -172,7 +185,17 @@ public class NMVInmuebleController extends OlimpoController {
 
 	@FXML
 	public void cancelar() {
-		cambiarmeAScene(AdministrarInmuebleController.URLVista);
+		salir();
+	}
+
+	@Override
+	public void salir() {
+		if(URLVistaRetorno != null){
+			cambiarmeAScene(URLVistaRetorno);
+		}
+		else{
+			cambiarmeAScene(AdministrarInmuebleController.URLVista);
+		}
 	}
 
 	@FXML
@@ -209,14 +232,16 @@ public class NMVInmuebleController extends OlimpoController {
 	}
 
 	@FXML
-	public void siguiente() {
-		padre.getChildren().clear();
-		padre.getChildren().add(pantalla2);
-	}
-
-	@FXML
 	public void atras() {
 		padre.getChildren().clear();
 		padre.getChildren().add(pantalla1);
+		titulo2.set("Datos inmueble");
+	}
+
+	@FXML
+	public void siguiente() {
+		padre.getChildren().clear();
+		padre.getChildren().add(pantalla2);
+		titulo2.set("Datos edificio");
 	}
 }
