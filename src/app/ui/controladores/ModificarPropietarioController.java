@@ -18,7 +18,6 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Barrio;
@@ -71,18 +70,6 @@ public class ModificarPropietarioController extends OlimpoController {
 	private ComboBox<Calle> comboBoxCalle;
 	@FXML
 	private ComboBox<Barrio> comboBoxBarrio;
-
-	private ArrayList<TipoDocumento> listaTiposDeDocumento;
-
-	private ArrayList<Localidad> listaLocalidades;
-
-	private ArrayList<Provincia> listaProvincias;
-
-	private ArrayList<Pais> listaPaises;
-
-	private ArrayList<Barrio> listaBarrios;
-
-	private ArrayList<Calle> listaCalles;
 
 	private Propietario propietarioEnModificacion;
 
@@ -140,19 +127,19 @@ public class ModificarPropietarioController extends OlimpoController {
 		if(telefono.isEmpty()){
 			error.append("Inserte un telefono").append("\n ");
 		}
-		if(correoElectronico.isEmpty()) {
+		if(correoElectronico.isEmpty()){
 			error.append("Inserte un correo electrónico").append("\n ");
 		}
-		if(calle == null) {
+		if(calle == null){
 			error.append("Elija una calle").append("\n");
 		}
-		if(barrio == null) {
+		if(barrio == null){
 			error.append("Elija un barrio").append("\n");
 		}
-		if(tipoDoc == null) {
+		if(tipoDoc == null){
 			error.append("Elija un tipo de documento").append("\n");
 		}
-		if(localidad == null) {
+		if(localidad == null){
 			error.append("Elija una localidad").append("\n");
 		}
 
@@ -205,7 +192,8 @@ public class ModificarPropietarioController extends OlimpoController {
 						}
 					}
 					presentador.presentarError("No se pudo modificar el propietario", stringErrores.toString(), stage);
-				} else {
+				}
+				else{
 					cambiarmeAScene(AdministrarPropietarioController.URLVista);
 				}
 			} catch(PersistenciaException e){
@@ -223,25 +211,16 @@ public class ModificarPropietarioController extends OlimpoController {
 	public void inicializar(URL location, ResourceBundle resources) {
 		this.setTitulo("Modificar propietario");
 
-		listaLocalidades = new ArrayList<>();
-		listaProvincias = new ArrayList<>();
-		listaPaises = new ArrayList<>();
-		listaTiposDeDocumento = new ArrayList<>();
-		listaBarrios = new ArrayList<Barrio>();
-		listaCalles = new ArrayList<Calle>();
-
 		try{
-			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
+			comboBoxTipoDocumento.getItems().addAll(coordinador.obtenerTiposDeDocumento());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 		try{
-			listaPaises = coordinador.obtenerPaises();
+			comboBoxPais.getItems().addAll(coordinador.obtenerPaises());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		comboBoxPais.getItems().addAll(listaPaises);
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
 		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
@@ -390,10 +369,8 @@ public class ModificarPropietarioController extends OlimpoController {
 
 		comboBoxPais.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-			{
-				if (!newPropertyValue)
-				{
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
 					comboBoxPais.getSelectionModel().select(comboBoxPais.getConverter().fromString(comboBoxPais.getEditor().getText()));
 
 				}
@@ -402,10 +379,8 @@ public class ModificarPropietarioController extends OlimpoController {
 
 		comboBoxProvincia.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-			{
-				if (!newPropertyValue)
-				{
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
 					comboBoxProvincia.getSelectionModel().select(comboBoxProvincia.getConverter().fromString(comboBoxProvincia.getEditor().getText()));
 
 				}
@@ -414,10 +389,8 @@ public class ModificarPropietarioController extends OlimpoController {
 
 		comboBoxLocalidad.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-			{
-				if (!newPropertyValue)
-				{
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
 					comboBoxLocalidad.getSelectionModel().select(comboBoxLocalidad.getConverter().fromString(comboBoxLocalidad.getEditor().getText()));
 
 				}
@@ -426,10 +399,8 @@ public class ModificarPropietarioController extends OlimpoController {
 
 		comboBoxBarrio.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-			{
-				if (!newPropertyValue)
-				{
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
 					comboBoxBarrio.getSelectionModel().select(comboBoxBarrio.getConverter().fromString(comboBoxBarrio.getEditor().getText()));
 
 				}
@@ -438,10 +409,8 @@ public class ModificarPropietarioController extends OlimpoController {
 
 		comboBoxCalle.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-			{
-				if (!newPropertyValue)
-				{
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
 					comboBoxCalle.getSelectionModel().select(comboBoxCalle.getConverter().fromString(comboBoxCalle.getEditor().getText()));
 
 				}
@@ -450,41 +419,37 @@ public class ModificarPropietarioController extends OlimpoController {
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
-		if(provincia!=null && provincia.getId()!=null) {
+		if(provincia != null && provincia.getId() != null){
 			try{
-				listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
+				comboBoxLocalidad.getItems().clear();
+				comboBoxLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
-			comboBoxLocalidad.getItems().clear();
-			comboBoxLocalidad.getItems().addAll(listaLocalidades);
 		}
 	}
 
 	private void actualizarProvincias(Pais pais) {
-		if(pais!=null && pais.getId()!=null) {
+		if(pais != null && pais.getId() != null){
 			try{
-				listaProvincias = coordinador.obtenerProvinciasDe(pais);
+				comboBoxProvincia.getItems().clear();
+				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
-			comboBoxProvincia.getItems().clear();
-			comboBoxProvincia.getItems().addAll(listaProvincias);
 		}
 	}
 
 	private void actualizarBarriosYCalles(Localidad loc) {
-		if(loc!=null && loc.getId()!=null) {
+		if(loc != null && loc.getId() != null){
 			try{
-				listaBarrios = coordinador.obtenerBarriosDe(loc);
-				listaCalles = coordinador.obtenerCallesDe(loc);
+				comboBoxBarrio.getItems().clear();
+				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(loc));
+				comboBoxCalle.getItems().clear();
+				comboBoxCalle.getItems().addAll(coordinador.obtenerCallesDe(loc));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
-			comboBoxBarrio.getItems().clear();
-			comboBoxBarrio.getItems().addAll(listaBarrios);
-			comboBoxCalle.getItems().clear();
-			comboBoxCalle.getItems().addAll(listaCalles);
 		}
 	}
 }

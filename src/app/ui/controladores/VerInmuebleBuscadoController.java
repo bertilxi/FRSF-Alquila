@@ -1,7 +1,6 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Barrio;
@@ -15,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class VerInmuebleBuscadoController extends OlimpoController{
+public class VerInmuebleBuscadoController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/verInmuebleBuscado.fxml";
 
 	@FXML
@@ -29,7 +28,6 @@ public class VerInmuebleBuscadoController extends OlimpoController{
 	private TableColumn<Barrio, String> columnaNombreBarrio;
 	@FXML
 	private TableColumn<Barrio, String> columnaNombreLocalidadDelBarrio;
-
 
 	@FXML
 	private Label labelLocal;
@@ -78,32 +76,26 @@ public class VerInmuebleBuscadoController extends OlimpoController{
 	@FXML
 	private Label labelPavimento;
 
-	private ArrayList<Localidad> listaLocalidadesBuscadas;
-
-	private ArrayList<Barrio> listaBarriosBuscados;
-
 	public void setInmueble(InmuebleBuscado inmueble) {
 		Platform.runLater(() -> {
-			listaBarriosBuscados.addAll(inmueble.getBarrios());
-			listaLocalidadesBuscadas.addAll(inmueble.getLocalidades());
-			labelAguaCaliente.setText((inmueble.getAguaCaliente())?("Si"):("No"));
-			labelAguaCorriente.setText((inmueble.getAguaCorriente())?("Si"):("No"));
-			labelCloaca.setText((inmueble.getCloacas())?("Si"):("No"));
-			labelGarage.setText((inmueble.getGaraje())?("Si"):("No"));
-			labelGasNatural.setText((inmueble.getGasNatural())?("Si"):("No"));
-			labelLavadero.setText((inmueble.getLavadero())?("Si"):("No"));
-			labelPatio.setText((inmueble.getPatio())?("Si"):("No"));
-			labelPavimento.setText((inmueble.getPavimento())?("Si"):("No"));
-			labelPiscina.setText((inmueble.getPiscina())?("Si"):("No"));
-			labelPropiedadHorizontal.setText((inmueble.getPropiedadHorizontal())?("Si"):("No"));
-			labelTelefono.setText((inmueble.getTelefono())?("Si"):("No"));
+			labelAguaCaliente.setText((inmueble.getAguaCaliente()) ? ("Si") : ("No"));
+			labelAguaCorriente.setText((inmueble.getAguaCorriente()) ? ("Si") : ("No"));
+			labelCloaca.setText((inmueble.getCloacas()) ? ("Si") : ("No"));
+			labelGarage.setText((inmueble.getGaraje()) ? ("Si") : ("No"));
+			labelGasNatural.setText((inmueble.getGasNatural()) ? ("Si") : ("No"));
+			labelLavadero.setText((inmueble.getLavadero()) ? ("Si") : ("No"));
+			labelPatio.setText((inmueble.getPatio()) ? ("Si") : ("No"));
+			labelPavimento.setText((inmueble.getPavimento()) ? ("Si") : ("No"));
+			labelPiscina.setText((inmueble.getPiscina()) ? ("Si") : ("No"));
+			labelPropiedadHorizontal.setText((inmueble.getPropiedadHorizontal()) ? ("Si") : ("No"));
+			labelTelefono.setText((inmueble.getTelefono()) ? ("Si") : ("No"));
 			labelAntiguedad.setText(inmueble.getAntiguedadMax().toString());
 			labelBaños.setText(inmueble.getBañosMin().toString());
 			labelDormitorios.setText(inmueble.getDormitoriosMin().toString());
 			labelSuperficie.setText(inmueble.getSuperficieMin().toString());
 			labelPrecio.setText(inmueble.getPrecioMax().toString());
 
-			for(TipoInmueble tipo: inmueble.getTiposInmueblesBuscados()) {
+			for(TipoInmueble tipo: inmueble.getTiposInmueblesBuscados()){
 				switch(tipo.getTipo()) {
 				case LOCAL:
 					labelLocal.setText("Si");
@@ -126,9 +118,9 @@ public class VerInmuebleBuscadoController extends OlimpoController{
 				}
 			}
 			tablaBarrios.getItems().clear();
-			tablaBarrios.getItems().addAll(listaBarriosBuscados);
+			tablaBarrios.getItems().addAll(inmueble.getBarrios());
 			tablaLocalidades.getItems().clear();
-			tablaLocalidades.getItems().addAll(listaLocalidadesBuscadas);
+			tablaLocalidades.getItems().addAll(inmueble.getLocalidades());
 		});
 	}
 
@@ -145,9 +137,6 @@ public class VerInmuebleBuscadoController extends OlimpoController{
 		labelGalpon.setText("No");
 		labelQuinta.setText("No");
 		labelTerreno.setText("No");
-
-		listaBarriosBuscados = new ArrayList<>();
-		listaLocalidadesBuscadas = new ArrayList<>();
 
 		columnaNombreLocalidad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaNombreBarrio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));

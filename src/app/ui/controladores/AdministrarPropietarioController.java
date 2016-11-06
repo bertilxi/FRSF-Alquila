@@ -18,7 +18,6 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Propietario;
@@ -57,13 +56,11 @@ public class AdministrarPropietarioController extends OlimpoController {
 	@FXML
 	private Button botonEliminar;
 
-	private ArrayList<Propietario> listaPropietarios;
-
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 
 		try{
-			listaPropietarios = coordinador.obtenerPropietarios();
+			tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());
 		} catch(PersistenciaException e){
 			presentador.presentarError("Error", "No se pudieron listar los propietarios", stage);
 		}
@@ -72,8 +69,6 @@ public class AdministrarPropietarioController extends OlimpoController {
 		columnaNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
 		columnaTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
-
-		tablaPropietarios.getItems().addAll(listaPropietarios);
 
 		habilitarBotones(null);
 

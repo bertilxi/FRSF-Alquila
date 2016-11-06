@@ -126,15 +126,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	private Cliente cliente;
 
-	private ArrayList<Pais> listaPaises;
-
-	private ArrayList<Provincia> listaProvincias;
-
-	private ArrayList<Localidad> listaLocalidades;
-
 	private ArrayList<Localidad> listaLocalidadesSeleccionadas;
-
-	private ArrayList<Barrio> listaBarrios;
 
 	private ArrayList<Barrio> listaBarriosSeleccionados;
 
@@ -142,7 +134,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 		this.cliente = cliente;
 		InmuebleBuscado inmueble = cliente.getInmuebleBuscado();
 		Platform.runLater(() -> {
-			if(inmueble!=null) {
+			if(inmueble != null){
 				alta = false;
 				listaBarriosSeleccionados.addAll(inmueble.getBarrios());
 				listaLocalidadesSeleccionadas.addAll(inmueble.getLocalidades());
@@ -162,7 +154,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 				textFieldDormitorios.setText(inmueble.getDormitoriosMin().toString());
 				textFieldSuperficie.setText(inmueble.getSuperficieMin().toString());
 				textFieldPrecio.setText(inmueble.getPrecioMax().toString());
-				for(TipoInmueble tipo: inmueble.getTiposInmueblesBuscados()) {
+				for(TipoInmueble tipo: inmueble.getTiposInmueblesBuscados()){
 					switch(tipo.getTipo()) {
 					case LOCAL:
 						checkBoxLocal.setSelected(true);
@@ -184,7 +176,8 @@ public class InmuebleBuscadoController extends OlimpoController {
 						break;
 					}
 				}
-			} else {
+			}
+			else{
 				alta = true;
 			}
 			tablaBarrios.getItems().clear();
@@ -199,25 +192,26 @@ public class InmuebleBuscadoController extends OlimpoController {
 		StringBuffer errores = new StringBuffer("");
 
 		Pattern pat = Pattern.compile("[0-9]{1,30}");
-		if(!pat.matcher(textFieldSuperficie.getText().trim()).matches()) {
+		if(!pat.matcher(textFieldSuperficie.getText().trim()).matches()){
 			errores.append("Superficie incorrecta. Introduzca solo números");
 		}
-		if(!pat.matcher(textFieldPrecio.getText().trim()).matches()) {
+		if(!pat.matcher(textFieldPrecio.getText().trim()).matches()){
 			errores.append("Precio incorrecto. Introduzca solo números");
 		}
-		if(!pat.matcher(textFieldAntiguedad.getText().trim()).matches()) {
+		if(!pat.matcher(textFieldAntiguedad.getText().trim()).matches()){
 			errores.append("Antigüedad incorrecta. Introduzca solo números");
 		}
-		if(!pat.matcher(textFieldDormitorios.getText().trim()).matches()) {
+		if(!pat.matcher(textFieldDormitorios.getText().trim()).matches()){
 			errores.append("Dormitorios incorrecto. Introduzca solo números");
 		}
-		if(!pat.matcher(textFieldBaños.getText().trim()).matches()) {
+		if(!pat.matcher(textFieldBaños.getText().trim()).matches()){
 			errores.append("Baños incorrecto. Introduzca solo números");
 		}
 
 		if(!errores.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
-		} else {
+		}
+		else{
 
 			Double supeficieMinima = Double.valueOf(textFieldSuperficie.getText().trim());
 			Integer antiguedadMaxima = Integer.valueOf(textFieldAntiguedad.getText().trim());
@@ -245,74 +239,75 @@ public class InmuebleBuscadoController extends OlimpoController {
 			Boolean quinta = checkBoxQuinta.isSelected();
 
 			InmuebleBuscado inmuebleBuscado = cliente.getInmuebleBuscado();
-			if(alta) {
+			if(alta){
 				inmuebleBuscado = new InmuebleBuscado();
 				cliente.setInmuebleBuscado(inmuebleBuscado);
 				inmuebleBuscado.setCliente(cliente);
 			}
 			inmuebleBuscado.setSuperficieMin(supeficieMinima)
-			.setAntiguedadMax(antiguedadMaxima)
-			.setDormitoriosMin(dormitoriosMinimos)
-			.setBañosMin(bañosMinimos)
-			.setPrecioMax(precioMaximo)
-			.setPropiedadHorizontal(propiedadHorizontal)
-			.setGaraje(garage)
-			.setPatio(patio)
-			.setPiscina(piscina)
-			.setAguaCaliente(aguaCaliente)
-			.setAguaCorriente(aguaCorriente)
-			.setCloacas(cloaca)
-			.setGasNatural(gasNatural)
-			.setTelefono(telefono)
-			.setLavadero(lavadero)
-			.setPavimento(pavimento);
+					.setAntiguedadMax(antiguedadMaxima)
+					.setDormitoriosMin(dormitoriosMinimos)
+					.setBañosMin(bañosMinimos)
+					.setPrecioMax(precioMaximo)
+					.setPropiedadHorizontal(propiedadHorizontal)
+					.setGaraje(garage)
+					.setPatio(patio)
+					.setPiscina(piscina)
+					.setAguaCaliente(aguaCaliente)
+					.setAguaCorriente(aguaCorriente)
+					.setCloacas(cloaca)
+					.setGasNatural(gasNatural)
+					.setTelefono(telefono)
+					.setLavadero(lavadero)
+					.setPavimento(pavimento);
 
 			inmuebleBuscado.getLocalidades().addAll(listaLocalidadesSeleccionadas);
 			inmuebleBuscado.getBarrios().addAll(listaBarriosSeleccionados);
 
-			try {
-				for(TipoInmueble tipo: coordinador.obtenerTiposInmueble()) {
+			try{
+				for(TipoInmueble tipo: coordinador.obtenerTiposInmueble()){
 					switch(tipo.getTipo()) {
 					case CASA:
-						if (casa) {
+						if(casa){
 							inmuebleBuscado.getTiposInmueblesBuscados().add(tipo);
 						}
 						break;
 					case DEPARTAMENTO:
-						if (departamento) {
+						if(departamento){
 							inmuebleBuscado.getTiposInmueblesBuscados().add(tipo);
 						}
 						break;
 					case GALPON:
-						if (galpon) {
+						if(galpon){
 							inmuebleBuscado.getTiposInmueblesBuscados().add(tipo);
 						}
 						break;
 					case LOCAL:
-						if (local) {
+						if(local){
 							inmuebleBuscado.getTiposInmueblesBuscados().add(tipo);
 						}
 						break;
 					case QUINTA:
-						if (quinta) {
+						if(quinta){
 							inmuebleBuscado.getTiposInmueblesBuscados().add(tipo);
 						}
 						break;
 					case TERRENO:
-						if (terreno) {
+						if(terreno){
 							inmuebleBuscado.getTiposInmueblesBuscados().add(tipo);
 						}
 						break;
 					}
 				}
-			} catch (PersistenciaException e) {
+			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 
-			if (alta) {
+			if(alta){
 				AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
 				controlador.setCliente(cliente);
-			} else {
+			}
+			else{
 				cambiarmeAScene(ModificarClienteController.URLVista);
 			}
 		}
@@ -320,28 +315,24 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void cancelAction() {
-		if (alta) {
+		if(alta){
 			cambiarmeAScene(AltaClienteController.URLVista);
-		} else {
+		}
+		else{
 			cambiarmeAScene(ModificarClienteController.URLVista);
 		}
 	}
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
-		listaPaises = new ArrayList<>();
-		listaProvincias = new ArrayList<>();
-		listaLocalidades = new ArrayList<>();
-		listaBarrios = new ArrayList<>();
 		listaLocalidadesSeleccionadas = new ArrayList<>();
 		listaBarriosSeleccionados = new ArrayList<>();
 
 		try{
-			listaPaises = coordinador.obtenerPaises();
+			comboBoxPais.getItems().addAll(coordinador.obtenerPaises());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		comboBoxPais.getItems().addAll(listaPaises);
 
 		botonAgregarBarrio.setDisable(true);
 		botonAgregarLocalidad.setDisable(true);
@@ -371,7 +362,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void handleAgregarLocalidad() {
-		if(comboBoxLocalidad.getSelectionModel().getSelectedItem()!=null && !listaLocalidadesSeleccionadas.contains(comboBoxLocalidad.getSelectionModel().getSelectedItem())) {
+		if(comboBoxLocalidad.getSelectionModel().getSelectedItem() != null && !listaLocalidadesSeleccionadas.contains(comboBoxLocalidad.getSelectionModel().getSelectedItem())){
 			listaLocalidadesSeleccionadas.add(comboBoxLocalidad.getSelectionModel().getSelectedItem());
 			tablaLocalidades.getItems().clear();
 			tablaLocalidades.getItems().addAll(listaLocalidadesSeleccionadas);
@@ -380,9 +371,9 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void handleQuitarLocalidad() {
-		if(tablaLocalidades.getSelectionModel().getSelectedItem()!=null) {
-			for(Barrio bar: tablaBarrios.getItems()) {
-				if(bar.getLocalidad().equals(tablaLocalidades.getSelectionModel().getSelectedItem())) {
+		if(tablaLocalidades.getSelectionModel().getSelectedItem() != null){
+			for(Barrio bar: tablaBarrios.getItems()){
+				if(bar.getLocalidad().equals(tablaLocalidades.getSelectionModel().getSelectedItem())){
 					listaBarriosSeleccionados.remove(bar);
 				}
 			}
@@ -396,7 +387,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void handleAgregarBarrio() {
-		if(comboBoxBarrio.getSelectionModel().getSelectedItem()!=null && !listaBarriosSeleccionados.contains(comboBoxBarrio.getSelectionModel().getSelectedItem())) {
+		if(comboBoxBarrio.getSelectionModel().getSelectedItem() != null && !listaBarriosSeleccionados.contains(comboBoxBarrio.getSelectionModel().getSelectedItem())){
 			listaBarriosSeleccionados.add(comboBoxBarrio.getSelectionModel().getSelectedItem());
 			tablaBarrios.getItems().clear();
 			tablaBarrios.getItems().addAll(listaBarriosSeleccionados);
@@ -405,7 +396,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@FXML
 	private void handleQuitarBarrio() {
-		if(tablaBarrios.getSelectionModel().getSelectedItem()!=null) {
+		if(tablaBarrios.getSelectionModel().getSelectedItem() != null){
 			listaBarriosSeleccionados.remove(tablaBarrios.getSelectionModel().getSelectedItem());
 			tablaBarrios.getItems().clear();
 			tablaBarrios.getItems().addAll(listaBarriosSeleccionados);
@@ -413,65 +404,66 @@ public class InmuebleBuscadoController extends OlimpoController {
 	}
 
 	private void BarrioSeleccionadoTabla(Barrio bar) {
-		if(bar==null) {
+		if(bar == null){
 			botonQuitarBarrio.setDisable(true);
-		} else {
+		}
+		else{
 			botonQuitarBarrio.setDisable(false);
 		}
 	}
 
 	private void localidadSeleccionadaTabla(Localidad loc) {
 		comboBoxBarrio.getItems().clear();
-		if (loc==null) {
+		if(loc == null){
 			botonQuitarLocalidad.setDisable(true);
-		} else {
+		}
+		else{
 			botonQuitarLocalidad.setDisable(false);
 			try{
-				listaBarrios = coordinador.obtenerBarriosDe(loc);
+				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(loc));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
-			comboBoxBarrio.getItems().addAll(listaBarrios);
 		}
 	}
 
 	private void BarrioSeleccionadoCombo(Barrio bar) {
-		if(bar==null) {
+		if(bar == null){
 			botonAgregarBarrio.setDisable(true);
-		} else {
+		}
+		else{
 			botonAgregarBarrio.setDisable(false);
 		}
 	}
 
 	private void localidadSeleccionadaCombo(Localidad loc) {
-		if(loc==null) {
+		if(loc == null){
 			botonAgregarLocalidad.setDisable(true);
-		} else {
+		}
+		else{
 			botonAgregarLocalidad.setDisable(false);
 		}
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
-		if (provincia!=null) {
+		if(provincia != null){
 			try{
-				listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
+				comboBoxLocalidad.getItems().clear();
+				comboBoxLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
-			comboBoxLocalidad.getItems().clear();
-			comboBoxLocalidad.getItems().addAll(listaLocalidades);
 		}
 	}
 
 	private void actualizarProvincias(Pais pais) {
-		if (pais!=null) {
+		if(pais != null){
 			try{
-				listaProvincias = coordinador.obtenerProvinciasDe(pais);
+				comboBoxProvincia.getItems().clear();
+				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
-			comboBoxProvincia.getItems().clear();
-			comboBoxProvincia.getItems().addAll(listaProvincias);
 		}
 	}
 }

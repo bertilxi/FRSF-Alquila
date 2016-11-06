@@ -18,7 +18,6 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
@@ -51,8 +50,6 @@ public class AltaClienteController extends OlimpoController {
 
 	@FXML
 	protected TextField textFieldTelefono;
-
-	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
 	private Cliente cliente;
 
@@ -173,13 +170,10 @@ public class AltaClienteController extends OlimpoController {
 	public void inicializar(URL location, ResourceBundle resources) {
 		this.setTitulo("Nuevo cliente");
 
-		listaTiposDeDocumento = new ArrayList<>();
-
 		try{
-			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
+			comboBoxTipoDocumento.getItems().addAll(coordinador.obtenerTiposDeDocumento());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 	}
 }

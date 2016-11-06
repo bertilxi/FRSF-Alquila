@@ -18,7 +18,6 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -58,8 +57,6 @@ public class AltaVendedorController extends OlimpoController {
 	private Button acceptButton;
 	@FXML
 	private Button cancelButton;
-
-	protected ArrayList<TipoDocumento> listaTiposDeDocumento;
 
 	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
@@ -163,12 +160,9 @@ public class AltaVendedorController extends OlimpoController {
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		this.setTitulo("Nuevo vendedor");
-		listaTiposDeDocumento = new ArrayList<>();
 		try{
-			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
+			comboBoxTipoDocumento.getItems().addAll(coordinador.obtenerTiposDeDocumento());
 		} catch(PersistenciaException e){
 		}
-
-		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 	}
 }
