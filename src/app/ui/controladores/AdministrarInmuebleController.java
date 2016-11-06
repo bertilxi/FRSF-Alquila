@@ -33,8 +33,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+		setTitulo("Administrar inmuebles");
 	}
 
 	@FXML
