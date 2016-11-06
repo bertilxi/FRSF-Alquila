@@ -419,7 +419,12 @@ public class ModificarPropietarioController extends OlimpoController {
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
+<<<<<<< HEAD
+		listaLocalidades.clear();
+		if(provincia!=null && provincia.getId()!=null) {
+=======
 		if(provincia != null && provincia.getId() != null){
+>>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			try{
 				comboBoxLocalidad.getItems().clear();
 				comboBoxLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
@@ -427,10 +432,18 @@ public class ModificarPropietarioController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
+		comboBoxLocalidad.getItems().clear();
+		comboBoxLocalidad.getItems().addAll(listaLocalidades);
+		actualizarBarriosYCalles(null);
 	}
 
 	private void actualizarProvincias(Pais pais) {
+<<<<<<< HEAD
+		listaProvincias.clear();
+		if(pais!=null && pais.getId()!=null) {
+=======
 		if(pais != null && pais.getId() != null){
+>>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			try{
 				comboBoxProvincia.getItems().clear();
 				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
@@ -438,10 +451,19 @@ public class ModificarPropietarioController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
+		comboBoxProvincia.getItems().clear();
+		comboBoxProvincia.getItems().addAll(listaProvincias);
+		actualizarLocalidades(null);
 	}
 
 	private void actualizarBarriosYCalles(Localidad loc) {
+<<<<<<< HEAD
+		listaBarrios.clear();
+		listaCalles.clear();
+		if(loc!=null && loc.getId()!=null) {
+=======
 		if(loc != null && loc.getId() != null){
+>>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			try{
 				comboBoxBarrio.getItems().clear();
 				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(loc));
@@ -451,5 +473,11 @@ public class ModificarPropietarioController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
+		comboBoxBarrio.getEditor().clear();
+		comboBoxBarrio.getItems().clear();
+		comboBoxBarrio.getItems().addAll(listaBarrios);
+		comboBoxCalle.getEditor().clear();
+		comboBoxCalle.getItems().clear();
+		comboBoxCalle.getItems().addAll(listaCalles);
 	}
 }
