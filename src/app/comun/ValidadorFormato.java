@@ -136,7 +136,7 @@ public class ValidadorFormato {
 			return false;
 		}
 
-		pat = Pattern.compile("[a-zA-Z0-9\\ ]{1,50}");
+		pat = Pattern.compile("[a-zA-Z0-9áéíóúüñÁÉÍÚÓÜÑ\\ ]{1,50}");
 		if(direccion.getCalle() == null || !pat.matcher(direccion.getCalle().getNombre()).matches()){
 			return false;
 		}
@@ -151,12 +151,12 @@ public class ValidadorFormato {
 			return false;
 		}
 
-		pat = Pattern.compile("[a-zA-Z0-9\\ ]{1,50}");
+		pat = Pattern.compile("[a-zA-Z0-9áéíóúüñÁÉÍÚÓÜÑ\\ ]{1,50}");
 		if(direccion.getBarrio() != null && direccion.getBarrio().getNombre() != null && !pat.matcher(direccion.getBarrio().getNombre()).matches()){
 			return false;
 		}
 
-		pat = Pattern.compile("[a-zA-Z0-9\\ ]{1,50}");
+		pat = Pattern.compile("[a-zA-Z0-9áéíóúüñÁÉÍÚÓÜÑ\\ ]{1,50}");
 		if(direccion.getLocalidad() == null || !pat.matcher(direccion.getLocalidad().getNombre()).matches()){
 			return false;
 		}
