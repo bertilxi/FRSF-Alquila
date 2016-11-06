@@ -193,19 +193,19 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 		Pattern pat = Pattern.compile("[0-9]{1,30}");
 		if(!pat.matcher(textFieldSuperficie.getText().trim()).matches()){
-			errores.append("Superficie incorrecta. Introduzca solo números");
+			errores.append("Superficie incorrecta. Introduzca solo números\n");
 		}
 		if(!pat.matcher(textFieldPrecio.getText().trim()).matches()){
-			errores.append("Precio incorrecto. Introduzca solo números");
+			errores.append("Precio incorrecto. Introduzca solo números\n");
 		}
 		if(!pat.matcher(textFieldAntiguedad.getText().trim()).matches()){
-			errores.append("Antigüedad incorrecta. Introduzca solo números");
+			errores.append("Antigüedad incorrecta. Introduzca solo números\n");
 		}
 		if(!pat.matcher(textFieldDormitorios.getText().trim()).matches()){
-			errores.append("Dormitorios incorrecto. Introduzca solo números");
+			errores.append("Dormitorios incorrecto. Introduzca solo números\n");
 		}
 		if(!pat.matcher(textFieldBaños.getText().trim()).matches()){
-			errores.append("Baños incorrecto. Introduzca solo números");
+			errores.append("Baños incorrecto. Introduzca solo números\n");
 		}
 
 		if(!errores.toString().isEmpty()){
@@ -325,6 +325,8 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		this.setTitulo("Cargar inmueble buscado");
+
 		listaLocalidadesSeleccionadas = new ArrayList<>();
 		listaBarriosSeleccionados = new ArrayList<>();
 

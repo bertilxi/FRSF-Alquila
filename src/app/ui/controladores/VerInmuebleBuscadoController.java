@@ -112,6 +112,13 @@ public class VerInmuebleBuscadoController extends OlimpoController {
 			labelSuperficie.setText(inmueble.getSuperficieMin().toString());
 			labelPrecio.setText(inmueble.getPrecioMax().toString());
 
+			labelLocal.setText("No");
+			labelCasa.setText("No");
+			labelDepartamento.setText("No");
+			labelGalpon.setText("No");
+			labelQuinta.setText("No");
+			labelTerreno.setText("No");
+
 			for(TipoInmueble tipo: inmueble.getTiposInmueblesBuscados()){
 				switch(tipo.getTipo()) {
 				case LOCAL:
@@ -134,27 +141,21 @@ public class VerInmuebleBuscadoController extends OlimpoController {
 					break;
 				}
 			}
-			tablaBarrios.getItems().clear();
-			tablaBarrios.getItems().addAll(inmueble.getBarrios());
 			tablaLocalidades.getItems().clear();
 			tablaLocalidades.getItems().addAll(inmueble.getLocalidades());
+			tablaBarrios.getItems().clear();
+			tablaBarrios.getItems().addAll(inmueble.getBarrios());
 		});
 	}
 
 	@FXML
-	private void HandleAtras() {
+	private void handleAtras() {
 		cambiarmeAScene(AdministrarClienteController.URLVista);
 	}
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
-		labelLocal.setText("No");
-		labelCasa.setText("No");
-		labelDepartamento.setText("No");
-		labelGalpon.setText("No");
-		labelQuinta.setText("No");
-		labelTerreno.setText("No");
-
+		this.setTitulo("Ver inmueble buscado");
 		columnaNombreLocalidad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaNombreBarrio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaNombreLocalidadDelBarrio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocalidad().getNombre()));
