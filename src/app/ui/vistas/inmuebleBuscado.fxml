@@ -178,17 +178,17 @@
                 <TextField fx:id="textFieldBaños" maxHeight="1000.0" maxWidth="1000.0" promptText="Mínimo de baños" GridPane.columnIndex="4" GridPane.rowIndex="5" />
             <TextField fx:id="textFieldPrecio" layoutX="163.0" layoutY="136.0" maxHeight="1000.0" maxWidth="1000.0" promptText="Precio" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <Label focusTraversable="false" layoutX="59.0" layoutY="28.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Características:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                <CheckBox fx:id="checkBoxPropiedadHorizontal" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="propiedad horizontal ?" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                <CheckBox fx:id="checkBoxGarage" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con garage ?" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-                <CheckBox fx:id="checkBoxPatio" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con patio ?" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                <CheckBox fx:id="checkBoxPiscina" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con piscina ?" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                <CheckBox fx:id="checkBoxAguaCorriente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con agua corriente ?" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-                <CheckBox fx:id="checkBoxCloaca" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con cloaca ?" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-                <CheckBox fx:id="checkBoxGasNatural" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con gas natural ?" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                <CheckBox fx:id="checkBoxAguaCaliente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con agua caliente ?" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-                <CheckBox fx:id="checkBoxTelefono" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con telefono ?" GridPane.columnIndex="2" GridPane.rowIndex="11" />
-                <CheckBox fx:id="checkBoxLavadero" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con lavadero ?" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-                <CheckBox fx:id="checkBoxPavimento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Con pavimento ?" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                <CheckBox fx:id="checkBoxPropiedadHorizontal" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Propiedad horizontal" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                <CheckBox fx:id="checkBoxPatio" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Patio" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                <CheckBox fx:id="checkBoxGarage" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Garage" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                <CheckBox fx:id="checkBoxPavimento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Pavimento" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                <CheckBox fx:id="checkBoxPiscina" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Piscina" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                <CheckBox fx:id="checkBoxCloaca" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Cloaca" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                <CheckBox fx:id="checkBoxAguaCorriente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Agua corriente" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                <CheckBox fx:id="checkBoxAguaCaliente" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Agua caliente" GridPane.columnIndex="4" GridPane.rowIndex="10" />
+                <CheckBox fx:id="checkBoxGasNatural" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Gas natural" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                <CheckBox fx:id="checkBoxTelefono" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Teléfono" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                <CheckBox fx:id="checkBoxLavadero" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" styleClass="label-medium" text="Lavadero" GridPane.columnIndex="3" GridPane.rowIndex="11" />
             </children>
         </GridPane>
         <HBox alignment="BOTTOM_RIGHT" styleClass="buttonbar">
