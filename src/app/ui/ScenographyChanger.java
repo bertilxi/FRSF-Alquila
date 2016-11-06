@@ -54,6 +54,7 @@ public class ScenographyChanger {
 			background.getChildren().add(newScenography);
 
 			stage.sizeToScene();
+			stage.centerOnScreen();
 
 			OlimpoController controller = loader.getController();
 
