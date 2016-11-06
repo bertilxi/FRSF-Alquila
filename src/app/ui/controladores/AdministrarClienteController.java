@@ -18,7 +18,6 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
@@ -57,13 +56,11 @@ public class AdministrarClienteController extends OlimpoController {
 	@FXML
 	private Button botonEliminar;
 
-	private ArrayList<Cliente> listaClientes;
-
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 
 		try{
-			listaClientes = coordinador.obtenerClientes();
+			tablaClientes.getItems().addAll(coordinador.obtenerClientes());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		} catch(Exception e){
@@ -74,8 +71,6 @@ public class AdministrarClienteController extends OlimpoController {
 		columnaNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
 		columnaTelefono.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelefono()));
-
-		tablaClientes.getItems().addAll(listaClientes);
 
 		habilitarBotones(null);
 

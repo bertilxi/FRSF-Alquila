@@ -18,7 +18,6 @@
 package app.ui.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
@@ -48,8 +47,6 @@ public class ModificarClienteController extends OlimpoController {
 
 	@FXML
 	private TextField textFieldTelefono;
-
-	private ArrayList<TipoDocumento> listaTiposDeDocumento;
 
 	private Cliente clienteEnModificacion;
 
@@ -123,7 +120,8 @@ public class ModificarClienteController extends OlimpoController {
 						}
 					}
 					presentador.presentarError("No se pudo modificar el cliente", stringErrores.toString(), stage);
-				} else {
+				}
+				else{
 					cambiarmeAScene(AdministrarClienteController.URLVista);
 				}
 			} catch(PersistenciaException e){
@@ -147,13 +145,10 @@ public class ModificarClienteController extends OlimpoController {
 	public void inicializar(URL location, ResourceBundle resources) {
 		this.setTitulo("Modificar cliente");
 
-		listaTiposDeDocumento = new ArrayList<>();
-
 		try{
-			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();
+			comboBoxTipoDocumento.getItems().addAll(coordinador.obtenerTiposDeDocumento());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		comboBoxTipoDocumento.getItems().addAll(listaTiposDeDocumento);
 	}
 }
