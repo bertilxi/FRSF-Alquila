@@ -413,28 +413,18 @@ public class InmuebleBuscadoController extends OlimpoController {
 	}
 
 	private void localidadSeleccionadaTabla(Localidad loc) {
-<<<<<<< HEAD
 		if (loc==null) {
 			comboBoxBarrio.getItems().clear();
-=======
-		comboBoxBarrio.getItems().clear();
-		if(loc == null){
->>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			botonQuitarLocalidad.setDisable(true);
 		}
 		else{
 			botonQuitarLocalidad.setDisable(false);
-			listaBarrios.clear();
+			comboBoxBarrio.getItems().clear();
 			try{
 				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(loc));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
-<<<<<<< HEAD
-			comboBoxBarrio.getItems().clear();
-			comboBoxBarrio.getItems().addAll(listaBarrios);
-=======
->>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 		}
 	}
 
@@ -457,38 +447,24 @@ public class InmuebleBuscadoController extends OlimpoController {
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
-<<<<<<< HEAD
-		listaLocalidades.clear();
-		if (provincia!=null) {
-=======
+		comboBoxLocalidad.getItems().clear();
 		if(provincia != null){
->>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			try{
-				comboBoxLocalidad.getItems().clear();
 				comboBoxLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
-		comboBoxLocalidad.getItems().clear();
-		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
 
 	private void actualizarProvincias(Pais pais) {
-<<<<<<< HEAD
-		listaProvincias.clear();
-		if (pais!=null) {
-=======
+		comboBoxProvincia.getItems().clear();
 		if(pais != null){
->>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			try{
-				comboBoxProvincia.getItems().clear();
 				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
-		comboBoxProvincia.getItems().clear();
-		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}
 }

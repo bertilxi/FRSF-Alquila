@@ -418,65 +418,41 @@ public class AltaPropietarioController extends OlimpoController {
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
-<<<<<<< HEAD
-		listaLocalidades.clear();
-		if(provincia!=null && provincia.getId()!=null) {
-=======
+		comboBoxLocalidad.getItems().clear();
 		if(provincia != null && provincia.getId() != null){
-			comboBoxLocalidad.getItems().clear();
->>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			try{
 				comboBoxLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
-		comboBoxLocalidad.getItems().clear();
-		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 		actualizarBarriosYCalles(null);
 	}
 
 	private void actualizarProvincias(Pais pais) {
-<<<<<<< HEAD
-		listaProvincias.clear();
-		if(pais!=null && pais.getId()!=null) {
-=======
+		comboBoxProvincia.getItems().clear();
 		if(pais != null && pais.getId() != null){
-			comboBoxProvincia.getItems().clear();
->>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			try{
 				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
-		comboBoxProvincia.getItems().clear();
-		comboBoxProvincia.getItems().addAll(listaProvincias);
 		actualizarLocalidades(null);
 	}
 
 	private void actualizarBarriosYCalles(Localidad loc) {
-<<<<<<< HEAD
-		listaBarrios.clear();
-		listaCalles.clear();
-		if(loc!=null && loc.getId()!=null) {
-=======
+		comboBoxBarrio.getItems().clear();
+		comboBoxCalle.getItems().clear();
 		if(loc != null && loc.getId() != null){
->>>>>>> branch 'master' of https://github.com/bertilxi/Olimpo.git
 			try{
-				comboBoxBarrio.getItems().clear();
 				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(loc));
-				comboBoxCalle.getItems().clear();
 				comboBoxCalle.getItems().addAll(coordinador.obtenerCallesDe(loc));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
 		comboBoxBarrio.getEditor().clear();
-		comboBoxBarrio.getItems().clear();
-		comboBoxBarrio.getItems().addAll(listaBarrios);
 		comboBoxCalle.getEditor().clear();
-		comboBoxCalle.getItems().clear();
-		comboBoxCalle.getItems().addAll(listaCalles);
 	}
 }
