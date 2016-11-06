@@ -168,6 +168,7 @@ public class AltaVendedorController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		this.setTitulo("Nuevo vendedor");
 		listaTiposDeDocumento = new ArrayList<>();
 		try{
 			listaTiposDeDocumento = coordinador.obtenerTiposDeDocumento();

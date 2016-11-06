@@ -206,6 +206,7 @@ public class ModificarVendedorController extends OlimpoController {
 	}
 
 	public void setVendedor(Vendedor vendedor) {
+		this.setTitulo("Modificar vendedor");
 		this.vendedor = vendedor;
 		textFieldNombre.setText(vendedor.getNombre());
 		textFieldApellido.setText(vendedor.getApellido());
