@@ -74,7 +74,7 @@
             <TableView fx:id="tablaBarrios" focusTraversable="false" prefHeight="200.0" prefWidth="360.0">
               <columns>
                 <TableColumn fx:id="columnaNombreBarrio" prefWidth="75.0" text="Barrio" />
-                  <TableColumn prefWidth="75.0" text="Localidad" />
+                  <TableColumn fx:id="columnaNombreLocalidadDelBarrio" prefWidth="75.0" text="Localidad" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
