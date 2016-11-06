@@ -28,8 +28,18 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 
 @Service
+/**
+ * Clase encargada de la conversion de fechas
+ */
 public class ConversorFechas {
 
+	/**
+	 * Convierte de Date a LocalDate
+	 *
+	 * @param fecha
+	 *            a convertir
+	 * @return la fecha convertida a LocalDate
+	 */
 	public LocalDate getLocalDate(Date fecha) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(fecha);
@@ -39,12 +49,26 @@ public class ConversorFechas {
 		return localDate;
 	}
 
+	/**
+	 * Convierte de LocalDate a Date
+	 *
+	 * @param fecha
+	 *            a convertir
+	 * @return la fecha convertida a Date
+	 */
 	public Date getDate(LocalDate fecha) {
 		Instant instant = Instant.from(fecha.atStartOfDay(ZoneId.systemDefault()));
 		Date date = Date.from(instant);
 		return date;
 	}
 
+	/**
+	 * Convierte de Date a un String con el formato dd/MM/yyyy
+	 *
+	 * @param fecha
+	 *            a convertir
+	 * @return la fecha convertida a String dd/MM/yyyy
+	 */
 	public String diaMesYAnioToString(Date fecha) {
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		return formatter.format(fecha);
