@@ -55,8 +55,9 @@ public abstract class OlimpoController implements Initializable {
 	}
 
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
-		this.URLVistaRetorno = URLVistaRetorno;
-		return parentScenographyChanger.cambiarScenography(URLVistaACambiar);
+		OlimpoController nuevoController = parentScenographyChanger.cambiarScenography(URLVistaACambiar);
+		nuevoController.URLVistaRetorno = URLVistaRetorno;
+		return nuevoController;
 	}
 
 	public OlimpoController setScenographyChanger(ScenographyChanger scenographyChanger) {
