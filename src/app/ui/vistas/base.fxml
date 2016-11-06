@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 
     Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
@@ -18,6 +19,7 @@
     along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
 
 -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -31,7 +33,7 @@
 
 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.BaseController">
     <children>
-        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="sidebar" HBox.hgrow="ALWAYS">
+        <VBox fx:id="panelGeneral" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="sidebar" HBox.hgrow="ALWAYS">
             <children>
                 <VBox alignment="CENTER">
                     <children>
@@ -43,6 +45,12 @@
                         <Label alignment="CENTER" styleClass="label-white-title" text="Olimpo" />
                     </children>
                 </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <ToggleButton fx:id="toggleButtonDatosVendedor" mnemonicParsing="false" onAction="#verMisDatos" styleClass="toggle-button-vendedor" />
+                  <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Mis datos" />
+               </children>
+            </VBox>
                 <VBox alignment="CENTER">
                     <children>
                         <ToggleButton fx:id="toggleButtonClientes" mnemonicParsing="false" onAction="#verClientes" styleClass="toggle-button-cliente" />
@@ -57,16 +65,22 @@
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
-                        <ToggleButton fx:id="toggleButtonVendedores" mnemonicParsing="false" onAction="#verVendedores" styleClass="toggle-button-vendedor" />
-                        <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Vendedores" />
-                    </children>
-                </VBox>
-                <VBox alignment="CENTER">
-                    <children>
                         <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" onAction="#verPropietarios" styleClass="toggle-button-propietario" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Propietarios" />
                     </children>
                 </VBox>
+                <VBox fx:id="panelVendedores" alignment="CENTER">
+                    <children>
+                        <ToggleButton fx:id="toggleButtonVendedores" mnemonicParsing="false" onAction="#verVendedores" styleClass="toggle-button-vendedor" />
+                        <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Vendedores" />
+                    </children>
+                </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <ToggleButton fx:id="toggleButtonSalir" mnemonicParsing="false" onAction="#salir" styleClass="toggle-button-vendedor" />
+                  <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Salir" />
+               </children>
+            </VBox>
             </children>
             <HBox.margin>
                 <Insets />

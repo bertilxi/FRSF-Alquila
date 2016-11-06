@@ -17,15 +17,23 @@
  */
 package app.logica.resultados;
 
+import app.datos.entidades.Vendedor;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 
 public class ResultadoAutenticacion extends Resultado<ErrorAutenticacion> {
 
-	public ResultadoAutenticacion(ErrorAutenticacion... errores) {
-		super(errores);
-	}
-
 	public enum ErrorAutenticacion {
 		Datos_Incorrectos
+	}
+
+	Vendedor vendedorLogueado;
+
+	public ResultadoAutenticacion(Vendedor vendedorLogueado, ErrorAutenticacion... errores) {
+		super(errores);
+		this.vendedorLogueado = vendedorLogueado;
+	}
+
+	public Vendedor getVendedorLogueado() {
+		return vendedorLogueado;
 	}
 }

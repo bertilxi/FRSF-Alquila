@@ -20,7 +20,9 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import app.datos.entidades.Vendedor;
 import app.ui.ScenographyChanger;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener.Change;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -42,21 +44,35 @@ public class BaseController extends OlimpoController {
 	private String ventanaInicio = InicioController.URLVista;
 
 	@FXML
+	private ToggleButton toggleButtonDatosVendedor;
+
+	@FXML
 	private ToggleButton toggleButtonClientes;
 
 	@FXML
 	private ToggleButton toggleButtonInmuebles;
 
 	@FXML
+	private ToggleButton toggleButtonPropietarios;
+
+	@FXML
 	private ToggleButton toggleButtonVendedores;
 
 	@FXML
-	private ToggleButton toggleButtonPropietarios;
+	private ToggleButton toggleButtonSalir;
 
 	private ToggleGroup toggleGroupSidebar = new ToggleGroup();
 
 	@FXML
 	private Pane background;
+
+	@FXML
+	private Pane panelGeneral;
+
+	@FXML
+	private Pane panelVendedores;
+
+	private Vendedor vendedorLogueado;
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
@@ -64,10 +80,12 @@ public class BaseController extends OlimpoController {
 		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
 		cambiarScene(background, ventanaInicio);
 
+		toggleButtonDatosVendedor.setToggleGroup(toggleGroupSidebar);
 		toggleButtonClientes.setToggleGroup(toggleGroupSidebar);
 		toggleButtonInmuebles.setToggleGroup(toggleGroupSidebar);
 		toggleButtonPropietarios.setToggleGroup(toggleGroupSidebar);
 		toggleButtonVendedores.setToggleGroup(toggleGroupSidebar);
+		toggleButtonSalir.setToggleGroup(toggleGroupSidebar);
 		addAlwaysOneSelectedSupport(toggleGroupSidebar);
 	}
 
@@ -97,31 +115,37 @@ public class BaseController extends OlimpoController {
 	}
 
 	@FXML
+	public void verMisDatos(Event event) {
+		ModificarVendedorController nuevaPantalla = (ModificarVendedorController) cambiarScene(background, ModificarVendedorController.URLVista);
+		nuevaPantalla.setVendedor(vendedorLogueado);
+	}
+
+	@FXML
 	public void verClientes(Event event) {
 		cambiarScene(background, AdministrarClienteController.URLVista);
-		if(toggleButtonClientes.isSelected()){
-
-		}
 	}
 
 	@FXML
 	public void verInmuebles() {
 		cambiarScene(background, AdministrarInmuebleController.URLVista);
-		if(toggleButtonInmuebles.isSelected()){
-		}
 	}
 
 	@FXML
 	public void verVendedores() {
 		cambiarScene(background, AdministrarVendedorController.URLVista);
-		if(toggleButtonVendedores.isSelected()){
-		}
 	}
 
 	@FXML
 	public void verPropietarios() {
 		cambiarScene(background, AdministrarPropietarioController.URLVista);
-		if(toggleButtonPropietarios.isSelected()){
-		}
+	}
+
+	public void formatearConVendedor(Vendedor vendedor) {
+		this.vendedorLogueado = vendedor;
+		Platform.runLater(() -> {
+			if(!vendedor.getRoot()){
+				panelGeneral.getChildren().remove(panelVendedores);
+			}
+		});
 	}
 }

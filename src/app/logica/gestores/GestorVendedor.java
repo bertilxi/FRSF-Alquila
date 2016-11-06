@@ -70,22 +70,26 @@ public class GestorVendedor {
 	 */
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin datos) throws PersistenciaException {
 		ArrayList<ErrorAutenticacion> errores = new ArrayList<>();
+		Vendedor vendedorLogueado = null;
 
 		//Compruebo que los datos no sean nulos ni vacios
 		if(datos.getContrasenia() == null || datos.getContrasenia().length < 1 || datos.getDNI() == null || datos.getDNI().length() < 1 || datos.getTipoDocumento() == null){
 			errores.add(ErrorAutenticacion.Datos_Incorrectos);
 		}
 		else{
-			Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(datos.getTipoDocumento().getTipo(), datos.getDNI()));
+			vendedorLogueado = persistidorVendedor.obtenerVendedor(new FiltroVendedor(datos.getTipoDocumento().getTipo(), datos.getDNI()));
 
 			//Si lo encuentra comprueba que la contraseña ingresada coincida con la de la base de datos
-			if(vendedorAuxiliar == null || vendedorAuxiliar.getPassword() == null ||
-					!vendedorAuxiliar.getPassword().equals(encriptador.encriptar(datos.getContrasenia(), vendedorAuxiliar.getSalt()))){
+			if(vendedorLogueado == null || vendedorLogueado.getPassword() == null ||
+					!vendedorLogueado.getPassword().equals(encriptador.encriptar(datos.getContrasenia(), vendedorLogueado.getSalt()))){
 				//Si no coincide falla
 				errores.add(ErrorAutenticacion.Datos_Incorrectos);
 			}
 		}
-		return new ResultadoAutenticacion(errores.toArray(new ErrorAutenticacion[0]));
+		if(!errores.isEmpty()){
+			vendedorLogueado = null;
+		}
+		return new ResultadoAutenticacion(vendedorLogueado, errores.toArray(new ErrorAutenticacion[0]));
 	}
 
 	public ResultadoCrearVendedor crearVendedor(Vendedor vendedor) throws PersistenciaException, GestionException {

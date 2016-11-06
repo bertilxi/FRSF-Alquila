@@ -9,6 +9,7 @@ import org.junit.runners.model.Statement;
 import app.datos.clases.DatosLogin;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.TipoDocumento;
+import app.datos.entidades.Vendedor;
 import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
@@ -26,6 +27,8 @@ import junitparams.Parameters;
  * Este test prueba los métodos de la clase LoginController
  */
 public class LoginControllerTest {
+
+	private static Vendedor vendedorRetorno;
 
 	@Test
 	@Parameters
@@ -75,7 +78,22 @@ public class LoginControllerTest {
 
 			@Override
 			protected OlimpoController cambiarmeAScene(String URLVistaACambiar) {
-				return null;
+				return new BaseController() {
+					@Override
+					public void formatearConVendedor(Vendedor vendedor) {
+						assertEquals(vendedorRetorno, vendedor);
+					}
+				};
+			}
+
+			@Override
+			protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
+				return new BaseController() {
+					@Override
+					public void formatearConVendedor(Vendedor vendedor) {
+						assertEquals(vendedorRetorno, vendedor);
+					}
+				};
 			}
 		};
 		loginController.setCoordinador(coordinadorMock);
@@ -105,13 +123,14 @@ public class LoginControllerTest {
 	 * @return parámetros de prueba
 	 */
 	protected Object[] parametersForTestIngresar() {
+		vendedorRetorno = new Vendedor();
 		return new Object[] {
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "pepe", new ResultadoControlador(), new ResultadoAutenticacion(), null }, //prueba ingreso correcto
-				new Object[] { null, "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba TipoDocumento vacio
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba numero de documento vacio
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LE), "12345678", "", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba Contraseña vacia
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.CEDULA_EXTRANJERA), "12345678", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.PASAPORTE), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto con caracteres UTF8
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "pepe", new ResultadoControlador(), new ResultadoAutenticacion(vendedorRetorno), null }, //prueba ingreso correcto
+				new Object[] { null, "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba TipoDocumento vacio
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba numero de documento vacio
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LE), "12345678", "", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba Contraseña vacia
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.CEDULA_EXTRANJERA), "12345678", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto
+				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.PASAPORTE), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto con caracteres UTF8
 				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Persistencia), null, new ObjNotFoundException("Error de persistencia. Test.", new Exception()) }, //Prueba una excepcion de persistencia
 				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Desconocido), null, new Exception() } //Prueba una excepcion desconocida
 		};
