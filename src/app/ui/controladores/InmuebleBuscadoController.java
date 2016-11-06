@@ -68,6 +68,8 @@ public class InmuebleBuscadoController extends OlimpoController {
 	private TableView<Barrio> tablaBarrios;
 	@FXML
 	private TableColumn<Barrio, String> columnaNombreBarrio;
+	@FXML
+	private TableColumn<Barrio, String> columnaNombreLocalidadDelBarrio;
 
 	@FXML
 	private Button botonAgregarBarrio;
@@ -349,6 +351,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 		columnaNombreLocalidad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaNombreBarrio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+		columnaNombreLocalidadDelBarrio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocalidad().getNombre()));
 
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
