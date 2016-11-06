@@ -452,22 +452,26 @@ public class InmuebleBuscadoController extends OlimpoController {
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
-		try{
-			listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
-		} catch(PersistenciaException e){
-			presentador.presentarExcepcion(e, stage);
+		if (provincia!=null) {
+			try{
+				listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+			comboBoxLocalidad.getItems().clear();
+			comboBoxLocalidad.getItems().addAll(listaLocalidades);
 		}
-		comboBoxLocalidad.getItems().clear();
-		comboBoxLocalidad.getItems().addAll(listaLocalidades);
 	}
 
 	private void actualizarProvincias(Pais pais) {
-		try{
-			listaProvincias = coordinador.obtenerProvinciasDe(pais);
-		} catch(PersistenciaException e){
-			presentador.presentarExcepcion(e, stage);
+		if (pais!=null) {
+			try{
+				listaProvincias = coordinador.obtenerProvinciasDe(pais);
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+			comboBoxProvincia.getItems().clear();
+			comboBoxProvincia.getItems().addAll(listaProvincias);
 		}
-		comboBoxProvincia.getItems().clear();
-		comboBoxProvincia.getItems().addAll(listaProvincias);
 	}
 }
