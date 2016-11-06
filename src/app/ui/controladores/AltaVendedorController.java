@@ -136,7 +136,7 @@ public class AltaVendedorController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
-					cambiarmeAScene(AdministrarVendedorController.URLVista);
+					cambiarmeAScene(URLVistaRetorno);
 				}
 
 			} catch(PersistenciaException e){
