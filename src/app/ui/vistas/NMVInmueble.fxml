@@ -36,6 +36,10 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
+<!--
+Vista que crea, modifica o muestra un inmueble
+Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+-->
 <StackPane fx:id="padre" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.NMVInmuebleController">
    <children>
       <VBox fx:id="pantalla1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css">
