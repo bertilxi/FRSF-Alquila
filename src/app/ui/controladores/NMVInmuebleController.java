@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
+import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
@@ -229,6 +230,18 @@ public class NMVInmuebleController extends OlimpoController {
 	 */
 	private ResultadoControlador modificarInmueble() {
 		return null;
+	}
+
+	public void formatearNuevoInmueble() {
+
+	}
+
+	public void formatearModificarInmueble(Inmueble inmueble) {
+
+	}
+
+	public void formatearVerInmueble(Inmueble inmueble) {
+
 	}
 
 	@FXML

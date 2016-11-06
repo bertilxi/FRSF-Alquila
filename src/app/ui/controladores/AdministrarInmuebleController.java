@@ -20,8 +20,13 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import app.datos.entidades.Inmueble;
 import app.ui.controladores.resultado.ResultadoControlador;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 /**
  * Controlador de la vista de administración de inmuebles que se encarga de manejar el listado y la eliminación de inmuebles
@@ -31,14 +36,88 @@ public class AdministrarInmuebleController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarInmueble.fxml";
 
+	@FXML
+	private TableView<Inmueble> tablaInmuebles;
+
+	@FXML
+	private TableColumn<Inmueble, String> columnaTipoInmueble;
+
+	@FXML
+	private TableColumn<Inmueble, String> columnaUbicacionInmueble;
+
+	@FXML
+	private TableColumn<Inmueble, String> columnaPropietarioInmueble;
+
+	@FXML
+	private Button btVerMas;
+
+	@FXML
+	private Button btModificar;
+
+	@FXML
+	private Button btEliminar;
+
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar inmuebles");
+
+		tablaInmuebles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			Boolean noHayInmuebleSeleccionado = newValue == null;
+			btVerMas.setDisable(noHayInmuebleSeleccionado);
+			btModificar.setDisable(noHayInmuebleSeleccionado);
+			btEliminar.setDisable(noHayInmuebleSeleccionado);
+		});
+
+		columnaTipoInmueble.setCellValueFactory(param -> {
+			if(param.getValue() != null){
+				if(param.getValue().getTipo() != null){
+					return new SimpleStringProperty(param.getValue().getTipo().toString());
+				}
+			}
+			return new SimpleStringProperty("<Sin tipo>");
+		});
+		columnaUbicacionInmueble.setCellValueFactory(param -> {
+			if(param.getValue() != null){
+				if(param.getValue().getDireccion() != null){
+					return new SimpleStringProperty(param.getValue().getDireccion().toString());
+				}
+			}
+			return new SimpleStringProperty("<Sin ubicación>");
+		});
+		columnaPropietarioInmueble.setCellValueFactory(param -> {
+			if(param.getValue() != null){
+				if(param.getValue().getPropietario() != null){
+					return new SimpleStringProperty(param.getValue().getPropietario().toString());
+				}
+			}
+			return new SimpleStringProperty("<Sin propietario>");
+		});
 	}
 
 	@FXML
 	public void agregar() {
-		cambiarmeAScene(NMVInmuebleController.URLVista);
+		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista);
+		nuevaPantalla.formatearNuevoInmueble();
+	}
+
+	@FXML
+	public void modificar() {
+		Inmueble inmueble = tablaInmuebles.getSelectionModel().getSelectedItem();
+		if(inmueble == null){
+			return;
+		}
+		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista);
+		nuevaPantalla.formatearModificarInmueble(inmueble);
+	}
+
+	@FXML
+	public void verMas() {
+		Inmueble inmueble = tablaInmuebles.getSelectionModel().getSelectedItem();
+		if(inmueble == null){
+			return;
+		}
+		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista);
+		nuevaPantalla.formatearVerInmueble(inmueble);
 	}
 
 	/**

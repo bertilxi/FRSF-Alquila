@@ -450,7 +450,7 @@ public class ModificarPropietarioController extends OlimpoController {
 	}
 
 	private void actualizarLocalidades(Provincia provincia) {
-		if(provincia.getId()!=null) {
+		if(provincia!=null && provincia.getId()!=null) {
 			try{
 				listaLocalidades = coordinador.obtenerLocalidadesDe(provincia);
 			} catch(PersistenciaException e){
@@ -462,7 +462,7 @@ public class ModificarPropietarioController extends OlimpoController {
 	}
 
 	private void actualizarProvincias(Pais pais) {
-		if(pais.getId()!=null) {
+		if(pais!=null && pais.getId()!=null) {
 			try{
 				listaProvincias = coordinador.obtenerProvinciasDe(pais);
 			} catch(PersistenciaException e){
@@ -474,7 +474,7 @@ public class ModificarPropietarioController extends OlimpoController {
 	}
 
 	private void actualizarBarriosYCalles(Localidad loc) {
-		if(loc.getId()!=null) {
+		if(loc!=null && loc.getId()!=null) {
 			try{
 				listaBarrios = coordinador.obtenerBarriosDe(loc);
 				listaCalles = coordinador.obtenerCallesDe(loc);
