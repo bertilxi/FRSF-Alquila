@@ -171,6 +171,8 @@ public class AltaClienteController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		this.setTitulo("Nuevo cliente");
+
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{

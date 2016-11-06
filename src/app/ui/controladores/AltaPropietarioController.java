@@ -213,6 +213,8 @@ public class AltaPropietarioController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		this.setTitulo("Nuevo propietario");
+
 		listaLocalidades = new ArrayList<>();
 		listaProvincias = new ArrayList<>();
 		listaPaises = new ArrayList<>();

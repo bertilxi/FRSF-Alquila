@@ -81,6 +81,7 @@ public class VerPropietarioController extends OlimpoController{
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		this.setTitulo("Ver propietario");
 
 	}
 }

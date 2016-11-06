@@ -145,6 +145,8 @@ public class ModificarClienteController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		this.setTitulo("Modificar cliente");
+
 		listaTiposDeDocumento = new ArrayList<>();
 
 		try{
