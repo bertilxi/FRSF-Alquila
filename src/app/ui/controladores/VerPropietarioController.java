@@ -24,6 +24,9 @@ import app.datos.entidades.Propietario;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+/**
+ * Controlador de la vista para ver los datos de un propietario
+ */
 public class VerPropietarioController extends OlimpoController{
 
 	public static final String URLVista = "/app/ui/vistas/VerPropietario.fxml";
@@ -57,6 +60,12 @@ public class VerPropietarioController extends OlimpoController{
 	@FXML
 	private TextField textFieldBarrio;
 
+	/**
+	 * Setea los campos con los datos del propietario pasado por parámetro.
+	 *
+	 * @param propietario
+	 * 			propietario del que se obtienen los datos.
+	 */
 	public void setPropietario(Propietario 	propietario) {
 		textFieldAlturaCalle.setText(propietario.getDireccion().getNumero());
 		textFieldApellido.setText(propietario.getApellido());
@@ -74,6 +83,10 @@ public class VerPropietarioController extends OlimpoController{
 		textFieldTipoDeDocumento.setText(propietario.getTipoDocumento().toString());
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón atrás.
+	 * Se vuelve a la pantalla administrar propietario
+	 */
 	@FXML
 	public void handleAtras( ) {
 		cambiarmeAScene(AdministrarPropietarioController.URLVista);
