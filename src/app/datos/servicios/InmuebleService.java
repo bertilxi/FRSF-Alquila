@@ -30,4 +30,6 @@ public interface InmuebleService {
 
 	ArrayList<Inmueble> listarInmuebles() throws PersistenciaException;
 
+	public Inmueble obtenerInmueble(Integer id) throws PersistenciaException;
+
 }
