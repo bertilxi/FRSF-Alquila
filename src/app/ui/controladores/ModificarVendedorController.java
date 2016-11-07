@@ -161,7 +161,7 @@ public class ModificarVendedorController extends OlimpoController {
 	}
 
 	public void cancelAction(ActionEvent event) {
-		cambiarmeAScene(AdministrarVendedorController.URLVista);
+		cambiarmeAScene(URLVistaRetorno);
 	}
 
 	public void checkBoxAction() {
