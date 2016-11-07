@@ -199,4 +199,13 @@ public class GestorPropietario {
 		return persistidorPropietario.listarPropietarios();
 	}
 
+	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException {
+		Propietario propietarioAuxiliar;
+		try{
+			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(filtro.getTipoDocumento(), filtro.getDocumento()));
+		} catch(PersistenciaException e){
+			throw e;
+		}
+		return propietarioAuxiliar;
+	}
 }

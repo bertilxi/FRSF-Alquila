@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import app.datos.clases.DatosLogin;
+import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Cliente;
@@ -172,5 +173,9 @@ public class CoordinadorJavaFX {
 
 	public ArrayList<Calle> obtenerCallesDe(Localidad localidad) throws PersistenciaException {
 		return gestorDatos.obtenerCallesDe(localidad);
+	}
+
+	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException {
+		return gestorPropietario.obtenerPropietario(filtro);
 	}
 }
