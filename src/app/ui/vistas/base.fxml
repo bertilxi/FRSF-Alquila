@@ -31,7 +31,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.BaseController">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.BaseController">
     <children>
         <VBox fx:id="panelGeneral" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="sidebar" HBox.hgrow="ALWAYS">
             <children>
@@ -77,7 +77,7 @@
                 </VBox>
             <VBox alignment="CENTER">
                <children>
-                  <ToggleButton fx:id="toggleButtonSalir" mnemonicParsing="false" onAction="#salir" styleClass="toggle-button-vendedor" />
+                  <ToggleButton fx:id="toggleButtonSalir" mnemonicParsing="false" onAction="#salir" styleClass="toggle-button-salir" />
                   <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Salir" />
                </children>
             </VBox>

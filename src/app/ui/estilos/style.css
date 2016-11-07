@@ -286,6 +286,10 @@
   -fx-graphic: url('/res/img/propietario-icon-selected.png');
 }
 
+.toggle-button-salir {
+  -fx-graphic: url('/res/img/salir_icon.png');
+  -fx-background-color: transparent;
+}
 .toggle-button-close {
   -fx-graphic: url('/res/img/close-focused-normal.png');
   -fx-background-color: transparent;
