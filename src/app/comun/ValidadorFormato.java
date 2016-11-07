@@ -78,6 +78,10 @@ public class ValidadorFormato {
 	 * @return si es valido
 	 */
 	public Boolean validarNombre(String nombre) {
+		if(nombre == null){
+			return false;
+		}
+
 		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,30}");
 		return pat.matcher(nombre).matches();
 	}
@@ -101,6 +105,10 @@ public class ValidadorFormato {
 	 * @return si es valido
 	 */
 	public Boolean validarEmail(String email) {
+		if(email == null){
+			return false;
+		}
+
 		return EmailValidator.getInstance().isValid(email) && email.length() <= 30;
 	}
 
@@ -112,8 +120,11 @@ public class ValidadorFormato {
 	 * @return si es valido
 	 */
 	public Boolean validarTelefono(String telefono) {
-		Pattern pat = Pattern.compile("[0-9\\-]{0,20}");
+		if(telefono == null){
+			return false;
+		}
 
+		Pattern pat = Pattern.compile("[0-9\\-]{0,20}");
 		return pat.matcher(telefono).matches();
 	}
 
@@ -125,11 +136,11 @@ public class ValidadorFormato {
 	 * @return si es valida
 	 */
 	public Boolean validarDireccion(Direccion direccion) {
-		Pattern pat;
-
 		if(direccion == null){
 			return false;
 		}
+
+		Pattern pat;
 
 		pat = Pattern.compile("([0-9]*[1-9]+[0-9]*){0,30}");
 		if(direccion.getNumero() == null || !pat.matcher(direccion.getNumero()).matches()){
@@ -180,6 +191,10 @@ public class ValidadorFormato {
 	 * @return si es valida
 	 */
 	public Boolean validarLocalidad(String localidad) {
+		if(localidad == null){
+			return false;
+		}
+
 		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,50}");
 		return pat.matcher(localidad).matches();
 	}
