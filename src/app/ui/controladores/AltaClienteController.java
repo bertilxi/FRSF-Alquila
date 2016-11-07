@@ -32,6 +32,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+/**
+ * Controlador de la vista para dar de alta un cliente
+ */
 public class AltaClienteController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/altaCliente.fxml";
@@ -53,6 +56,12 @@ public class AltaClienteController extends OlimpoController {
 
 	private Cliente cliente;
 
+	/**
+	 * Setea los campos con los datos del cliente pasado por parámetro. Si no se pasa ninguno se lo crea
+	 *
+	 * @param cliente
+	 * 			cliente del que se obtienen los datos. Si no hay cliente, es <code>null</code>
+	 */
 	public void setCliente(Cliente cliente) {
 		if(cliente != null){
 			this.cliente = cliente;
@@ -67,6 +76,12 @@ public class AltaClienteController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Acción que se ejecuta al apretar el botón aceptar.
+	 *
+	 * Valida que se hayan insertado datos, los carga al cliente y deriva la operación a capa lógica.
+	 * Si la capa lógica retorna errores, se muestran al usuario.
+	 */
 	@FXML
 	public void acceptAction() {
 
@@ -150,6 +165,10 @@ public class AltaClienteController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón cargar inmueble.
+	 * Se pasa a la pantalla de inmueble buscado
+	 */
 	@FXML
 	private void cargarInmueble() {
 		cliente.setNombre(textFieldNombre.getText().trim())
@@ -161,6 +180,10 @@ public class AltaClienteController extends OlimpoController {
 		controlador.setCliente(cliente);
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón cancelar.
+	 * Se vuelve a la pantalla administrar cliente.
+	 */
 	@FXML
 	private void cancelAction() {
 		cambiarmeAScene(AdministrarClienteController.URLVista);

@@ -101,7 +101,8 @@ public class AdministrarPropietarioController extends OlimpoController {
 	}
 
 	/**
-	 * acción que se ejecuta al presionar el botón ver más
+	 * Acción que se ejecuta al presionar el botón ver más
+	 * Se pasa a la pantalla ver propietario
 	 */
 	@FXML
 	private void handleVer() {
@@ -113,13 +114,18 @@ public class AdministrarPropietarioController extends OlimpoController {
 	}
 
 	/**
-	 * acción que se ejecuta al presionar el botón agregar
+	 * Acción que se ejecuta al presionar el botón agregar
+	 * Se pasa a la pantalla alta propietario
 	 */
 	@FXML
 	private void handleAgregar() {
 		cambiarmeAScene(AltaPropietarioController.URLVista);
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón modificar propietario
+	 * Se pasa a la pantalla modificar propietario
+	 */
 	@FXML
 	private void handleModificar() {
 		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){
@@ -130,7 +136,8 @@ public class AdministrarPropietarioController extends OlimpoController {
 	}
 
 	/**
-	 * acción que se ejecuta al presionar el botón eliminar
+	 * Acción que se ejecuta al presionar el botón eliminar
+	 * Se muestra una ventana emergente para confirmar la operación
 	 */
 	@FXML
 	private void handleEliminar() {
