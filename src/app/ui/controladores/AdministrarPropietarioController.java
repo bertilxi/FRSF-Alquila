@@ -31,6 +31,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Controlador de la vista que lista y administra los propietarios
+ */
 public class AdministrarPropietarioController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarPropietario.fxml";
@@ -56,6 +59,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 	@FXML
 	private Button botonEliminar;
 
+
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar propietarios");
@@ -77,6 +81,12 @@ public class AdministrarPropietarioController extends OlimpoController {
 				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}
 
+	/**
+	 * Habilita o deshabilita botones según si hay un propietario seleccionado o no
+	 *
+	 * @param propietario
+	 * 		propietario seleccionado. Si no hay propietario seleccionado, es <code>null</code>
+	 */
 	private void habilitarBotones(Propietario propietario) {
 		if(propietario == null){
 			botonVer.setDisable(true);
@@ -90,6 +100,9 @@ public class AdministrarPropietarioController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * acción que se ejecuta al presionar el botón ver más
+	 */
 	@FXML
 	private void handleVer() {
 		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){
@@ -99,6 +112,9 @@ public class AdministrarPropietarioController extends OlimpoController {
 		controlador.setPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
 	}
 
+	/**
+	 * acción que se ejecuta al presionar el botón agregar
+	 */
 	@FXML
 	private void handleAgregar() {
 		cambiarmeAScene(AltaPropietarioController.URLVista);
@@ -113,6 +129,9 @@ public class AdministrarPropietarioController extends OlimpoController {
 		controlador.setPropietarioEnModificacion(tablaPropietarios.getSelectionModel().getSelectedItem());
 	}
 
+	/**
+	 * acción que se ejecuta al presionar el botón eliminar
+	 */
 	@FXML
 	private void handleEliminar() {
 		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){

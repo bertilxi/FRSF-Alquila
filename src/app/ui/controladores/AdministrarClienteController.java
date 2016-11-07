@@ -31,6 +31,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Controlador de la vista que lista y administra los clientes
+ */
 public class AdministrarClienteController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarCliente.fxml";
@@ -78,6 +81,12 @@ public class AdministrarClienteController extends OlimpoController {
 				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}
 
+	/**
+	 * Habilita o deshabilita botones según si hay un cliente seleccionado o no
+	 *
+	 * @param cliente
+	 * 			cliente seleccionado. Si no hay propietario seleccionado, es <code>null</code>
+	 */
 	private void habilitarBotones(Cliente cliente) {
 		if(cliente == null){
 			botonVerInmuebleBuscado.setDisable(true);
@@ -91,6 +100,9 @@ public class AdministrarClienteController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * acción que se ejecuta al presionar el botón ver inmueble
+	 */
 	@FXML
 	private void handleVerInmuebleBuscado() {
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
@@ -100,6 +112,9 @@ public class AdministrarClienteController extends OlimpoController {
 		controlador.setInmueble(tablaClientes.getSelectionModel().getSelectedItem().getInmuebleBuscado());
 	}
 
+	/**
+	 * acción que se ejecuta al presionar el botón agregar
+	 */
 	@FXML
 	private void handleAgregar() {
 		AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
@@ -115,6 +130,9 @@ public class AdministrarClienteController extends OlimpoController {
 		controlador.setClienteEnModificacion(tablaClientes.getSelectionModel().getSelectedItem());
 	}
 
+	/**
+	 * acción que se ejecuta al presionar el botón eliminar
+	 */
 	@FXML
 	private void handleEliminar() {
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){

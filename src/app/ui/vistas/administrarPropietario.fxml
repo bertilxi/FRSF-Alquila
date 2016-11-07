@@ -43,7 +43,7 @@
       </VBox>
       <VBox alignment="TOP_CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
          <children>
-            <Button fx:id="botonVer" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVer" text="Ver" />
+            <Button fx:id="botonVer" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVer" text="Ver más" />
             <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleAgregar" text="Agregar" />
             <Button fx:id="botonModificar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleModificar" text="Modificar" />
             <Button fx:id="botonEliminar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleEliminar" text="Eliminar" />
