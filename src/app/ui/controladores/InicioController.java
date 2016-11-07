@@ -24,9 +24,14 @@ public class InicioController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/inicio.fxml";
 
+	public static Runnable hacerAlInicializar;
+
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
 		this.setTitulo("Bienvenido");
+		if(hacerAlInicializar != null){
+			hacerAlInicializar.run();
+		}
 	}
 
 }

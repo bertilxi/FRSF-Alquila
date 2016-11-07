@@ -79,7 +79,13 @@ public class BaseController extends OlimpoController {
 		//Primera pantalla a mostrar
 		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
 		cambiarScene(background, ventanaInicio);
+		InicioController.hacerAlInicializar = () -> {
+			toggleGroupSidebar.getToggles().forEach(t -> {
+				t.setSelected(false);
+			});
+		};
 
+		//Agrupados botones
 		toggleButtonDatosVendedor.setToggleGroup(toggleGroupSidebar);
 		toggleButtonClientes.setToggleGroup(toggleGroupSidebar);
 		toggleButtonInmuebles.setToggleGroup(toggleGroupSidebar);
