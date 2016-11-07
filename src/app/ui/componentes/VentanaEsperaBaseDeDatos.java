@@ -18,6 +18,7 @@
 package app.ui.componentes;
 
 import javafx.scene.control.Dialog;
+import javafx.scene.image.ImageView;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
@@ -33,8 +34,8 @@ public class VentanaEsperaBaseDeDatos extends Dialog<Void> {
 		if(padre != null){
 			this.initOwner(padre);
 		}
+		this.setGraphic(new ImageView(this.getClass().getResource("../../../res/img/icono_256.gif").toString()));
 		this.setContentText("Esperando a la base de datos...");
-		this.setHeaderText(null);
 		this.setTitle("Esperando");
 	}
 }
