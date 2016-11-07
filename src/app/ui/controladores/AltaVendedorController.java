@@ -29,6 +29,7 @@ import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
+import app.ui.componentes.Toast;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -133,6 +134,11 @@ public class AltaVendedorController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
+					String toastMsg = "fd";
+					int toastMsgTime = 3500; //3.5 seconds
+					int fadeInTime = 500; //0.5 seconds
+					int fadeOutTime = 500; //0.5 seconds
+					Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
 					cambiarmeAScene(URLVistaRetorno);
 				}
 
