@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
+import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Direccion;
 import app.datos.entidades.TipoDocumento;
 
@@ -206,6 +207,14 @@ public class ValidadorFormato {
 		if(numero < 0){
 			return false;
 		}
+		return true;
+	}
+
+	public Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
+		if(datosEdificio == null){
+			return false;
+		}
+
 		return true;
 	}
 }

@@ -143,7 +143,7 @@ public class AltaVendedorController extends OlimpoController {
 					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fue dado de baja. ¿Desea continuar?", stage);
 					if(ventana.acepta()){
 						vendedor = coordinador.obtenerVendedor(vendedor);
-						ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista);
+						ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, AdministrarVendedorController.URLVista);
 						modificarVendedorController.setVendedor(vendedor);
 					}
 				}
