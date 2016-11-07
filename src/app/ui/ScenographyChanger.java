@@ -52,7 +52,8 @@ public class ScenographyChanger {
 
 			background.getChildren().clear();
 			background.getChildren().add(newScenography);
-
+			background.resize(newScenography.getWidth(), newScenography.getHeight());
+			
 			stage.sizeToScene();
 			stage.centerOnScreen();
 
