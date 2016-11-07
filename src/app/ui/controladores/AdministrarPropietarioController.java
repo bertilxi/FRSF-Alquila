@@ -58,6 +58,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		setTitulo("Administrar propietarios");
 
 		try{
 			tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());

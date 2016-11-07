@@ -116,9 +116,8 @@ public class BaseController extends OlimpoController {
 
 	@FXML
 	public void verMisDatos(Event event) {
-		ModificarVendedorController nuevaPantalla = (ModificarVendedorController) cambiarScene(background, ModificarVendedorController.URLVista);
+		ModificarVendedorController nuevaPantalla = (ModificarVendedorController) cambiarScene(background, ModificarVendedorController.URLVista, ventanaInicio);
 		nuevaPantalla.setVendedor(vendedorLogueado);
-		nuevaPantalla.URLVistaRetorno = ventanaInicio;
 	}
 
 	@FXML

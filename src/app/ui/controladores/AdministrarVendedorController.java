@@ -54,7 +54,7 @@ public class AdministrarVendedorController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
-		this.setTitulo("Vendedores");
+		setTitulo("Administrar vendedores");
 		try{
 			tablaVendedores.getItems().addAll(coordinador.obtenerVendedores());
 		} catch(PersistenciaException e){

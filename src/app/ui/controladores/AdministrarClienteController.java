@@ -58,7 +58,7 @@ public class AdministrarClienteController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
-
+		setTitulo("Administrar clientes");
 		try{
 			tablaClientes.getItems().addAll(coordinador.obtenerClientes());
 		} catch(PersistenciaException e){

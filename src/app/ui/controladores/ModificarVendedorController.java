@@ -129,7 +129,6 @@ public class ModificarVendedorController extends OlimpoController {
 
 			try{
 				resultadoModificarVendedor = coordinador.modificarVendedor(vendedor);
-				error.delete(0, error.length());
 				List<ErrorModificarVendedor> listaErrores = resultadoModificarVendedor.getErrores();
 				if(listaErrores.contains(ErrorModificarVendedor.Formato_Nombre_Incorrecto)){
 					error.append("Nombre Incorrecto").append("\r\n");
@@ -148,7 +147,7 @@ public class ModificarVendedorController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
-					cambiarmeAScene(AdministrarVendedorController.URLVista);
+					cambiarmeAScene(URLVistaRetorno);
 				}
 
 			} catch(PersistenciaException e){
