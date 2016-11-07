@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import app.comun.ValidadorFormato;
 import app.datos.clases.FiltroPropietario;
+import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.InmuebleService;
@@ -101,7 +102,7 @@ public class GestorInmueble {
 			errores.add(ErrorModificarInmueble.Formato_Direccion_Incorrecto);
 		}
 
-		if(!validador.validarDatosEdificio(inmueble.getDatosEdificio())){
+		if(!validarDatosEdificio(inmueble.getDatosEdificio())){
 			errores.add(ErrorModificarInmueble.Datos_Edificio_Incorrectos);
 		}
 
@@ -123,5 +124,59 @@ public class GestorInmueble {
 
 	public ArrayList<Inmueble> obtenerInmuebles() throws PersistenciaException {
 		throw new NotYetImplementedException();
+	}
+
+	public Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
+		if(datosEdificio == null){
+			return false;
+		}
+
+		if(datosEdificio.getAguaCaliente() == null){
+			return false;
+		}
+		if(datosEdificio.getAguaCorriente() == null){
+			return false;
+		}
+		if(datosEdificio.getCloacas() == null){
+			return false;
+		}
+		if(datosEdificio.getGaraje() == null){
+			return false;
+		}
+		if(datosEdificio.getGasNatural() == null){
+			return false;
+		}
+		if(datosEdificio.getLavadero() == null){
+			return false;
+		}
+		if(datosEdificio.getPatio() == null){
+			return false;
+		}
+		if(datosEdificio.getPavimento() == null){
+			return false;
+		}
+		if(datosEdificio.getPiscina() == null){
+			return false;
+		}
+		if(datosEdificio.getPropiedadHorizontal() == null){
+			return false;
+		}
+		if(datosEdificio.getTelefono() == null){
+			return false;
+		}
+		if(datosEdificio.getAntiguedad() != null && !validador.validarEnteroPositivo(datosEdificio.getAntiguedad())){
+			return false;
+		}
+		if(datosEdificio.getBaños() != null && !validador.validarEnteroPositivo(datosEdificio.getBaños())){
+			return false;
+		}
+		if(datosEdificio.getDormitorios() != null && !validador.validarEnteroPositivo(datosEdificio.getDormitorios())){
+			return false;
+		}
+		if(datosEdificio.getSuperficie() != null && !validador.validarDoublePositivo(datosEdificio.getSuperficie())){
+			return false;
+		}
+
+		return true;
 	}
 }
