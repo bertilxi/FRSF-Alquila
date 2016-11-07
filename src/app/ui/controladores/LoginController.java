@@ -66,7 +66,7 @@ public class LoginController extends OlimpoController {
 	 */
 	public ResultadoControlador ingresar() {
 		//TODO borrar para activar login
-		BaseController siguientePantallaa = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista);
+		BaseController siguientePantallaa = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista, true);
 		siguientePantallaa.formatearConVendedor(new Vendedor().setRoot(true));
 		if(true){
 			return null;
@@ -118,7 +118,7 @@ public class LoginController extends OlimpoController {
 			}
 		}
 		else{
-			BaseController siguientePantalla = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista);
+			BaseController siguientePantalla = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista, true);
 			siguientePantalla.formatearConVendedor(resultado.getVendedorLogueado());
 		}
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));

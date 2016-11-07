@@ -46,24 +46,32 @@ public abstract class OlimpoController implements Initializable {
 		return this;
 	}
 
-	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar) {
-		return myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar);
+	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar, boolean useStageSize) {
+		return myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar, useStageSize);
+	}
+	
+	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar){
+		return cambiarScene(contexto, URLVistaACambiar, false);
 	}
 
 	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar, String URLVistaRetorno) {
-		OlimpoController nuevoController = myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar);
+		OlimpoController nuevoController = myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar, false);
 		nuevoController.URLVistaRetorno = URLVistaRetorno;
 		return nuevoController;
 	}
-
+	
+	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno, boolean useSceneSize) {
+		OlimpoController nuevoController = parentScenographyChanger.cambiarScenography(URLVistaACambiar, useSceneSize);
+		nuevoController.URLVistaRetorno = URLVistaRetorno;
+		return nuevoController;
+	}
+	
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar) {
-		return parentScenographyChanger.cambiarScenography(URLVistaACambiar);
+		return parentScenographyChanger.cambiarScenography(URLVistaACambiar, false);
 	}
-
-	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
-		OlimpoController nuevoController = parentScenographyChanger.cambiarScenography(URLVistaACambiar);
-		nuevoController.URLVistaRetorno = URLVistaRetorno;
-		return nuevoController;
+	
+	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno){
+		return cambiarmeAScene(URLVistaACambiar, URLVistaRetorno, false);
 	}
 
 	public OlimpoController setScenographyChanger(ScenographyChanger scenographyChanger) {

@@ -66,6 +66,9 @@ public class Main extends Application {
 		this.primaryStage = primaryStage;
 		this.presentador = new PresentadorVentanas();
 
+		//Iniciar el stage en el centro de la pantalla
+		this.primaryStage.centerOnScreen();
+		
 		//Setear icono y titulo de aplicacion
 		primaryStage.getIcons().add(new IconoAplicacion());
 

@@ -78,7 +78,8 @@ public class BaseController extends OlimpoController {
 	public void inicializar(URL location, ResourceBundle resources) {
 		//Primera pantalla a mostrar
 		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
-		cambiarScene(background, ventanaInicio);
+		cambiarScene(background, ventanaInicio, true);
+		stage.centerOnScreen();
 		InicioController.hacerAlInicializar = () -> {
 			toggleGroupSidebar.getToggles().forEach(t -> {
 				t.setSelected(false);
