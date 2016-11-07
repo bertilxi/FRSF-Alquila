@@ -25,8 +25,10 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import app.comun.ValidadorFormato;
+import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.DatosEdificio;
+import app.datos.entidades.Estado;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.InmuebleService;
@@ -34,6 +36,7 @@ import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble;
+import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
 import app.logica.resultados.ResultadoModificarInmueble;
 import app.logica.resultados.ResultadoModificarInmueble.ErrorModificarInmueble;
 
@@ -118,12 +121,49 @@ public class GestorInmueble {
 		return new ResultadoModificarInmueble(errores.toArray(new ErrorModificarInmueble[0]));
 	}
 
-	public ResultadoEliminarInmueble eliminarInmueble(Inmueble propietario) throws PersistenciaException {
-		throw new NotYetImplementedException();
+	/**
+	 * Se encarga de validar que exista el inmueble a eliminar, se setea el estado en BAJA y,
+	 *  en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * @param inmueble
+	 * 			inmueble a eliminar
+	 * @return un resultado informando errores correspondientes en caso de que los haya
+	 *
+	 * @throws PersistenciaException
+	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
+	public ResultadoEliminarInmueble eliminarInmueble(Inmueble inmueble) throws PersistenciaException {
+		ArrayList<ErrorEliminarInmueble> errores = new ArrayList<>();
+
+		Inmueble inmuebleAuxiliar = persistidorInmueble.obtenerInmueble(inmueble.getId());
+
+		if(null == inmuebleAuxiliar){
+			errores.add(ErrorEliminarInmueble.No_Existe_Inmueble);
+		}
+
+		if(errores.isEmpty()){
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.BAJA)){
+					inmueble.setEstado(e);
+				}
+			}
+			persistidorInmueble.modificarInmueble(inmueble);
+		}
+
+		return new ResultadoEliminarInmueble(errores.toArray(new ErrorEliminarInmueble[0]));
 	}
 
+	/**
+	 * Obtiene el listado de inmuebles solicitándola a la capa de acceso a datos
+	 *
+	 * @return el listado de inmuebles solicitados
+	 *
+	 * @throws PersistenciaException
+	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
 	public ArrayList<Inmueble> obtenerInmuebles() throws PersistenciaException {
-		throw new NotYetImplementedException();
+		return persistidorInmueble.listarInmuebles();
 	}
 
 	public Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
