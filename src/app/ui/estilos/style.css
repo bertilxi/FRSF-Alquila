@@ -335,3 +335,50 @@
     -fx-background-insets: 0, 1;
     -fx-background-radius: 3, 2;
 }
+
+/* Dialog */
+
+.dialog-pane .button{
+  -fx-background-color: #ffffff ;
+  -fx-border-color: #ddd4d4;
+  -fx-border-radius: 0.4em;
+  -fx-text-fill: black;
+  -fx-font-size: 1.2em;
+  -fx-background-insets: 1 1 1 1 ;
+ }
+
+.dialog-pane .button:hover{     
+  -fx-background-color: #6bcbee;
+  -fx-text-fill: black;
+  -fx-border-color: #0066ff;
+ }
+
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane .label {
+    -fx-text-fill: black;
+}
+
+.alert.confirmation.dialog-pane,
+.text-input-dialog.dialog-pane,
+.choice-dialog.dialog-pane {
+/*    -fx-graphic: url('/res/img/imagen.png');      para cambiar imagen ventana confirmacion*/
+}
+
+
+.alert.information.dialog-pane {
+/*    -fx-graphic: url('/res/img/imagen.png');      para cambiar imagen ventana informacion*/
+}
+
+
+.alert.error.dialog-pane {
+/*    -fx-graphic: url('/res/img/imagen.png');      para cambiar imagen ventana error*/
+}
+
+
+.alert.warning.dialog-pane {
+/*    -fx-graphic: url('/res/img/imagen.png');      para cambiar imagen ventana advertencia*/
+}
+ 

@@ -17,7 +17,6 @@
  */
 package app.ui.componentes.ventanas;
 
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Window;
 
@@ -26,7 +25,7 @@ import javafx.stage.Window;
  *
  * @author Acosta - Gioria - Moretti - Rebechi
  */
-public class VentanaConfirmacion extends Alert {
+public class VentanaConfirmacion extends CustomAlert {
 
 	/**
 	 * Constructor. Genera la ventana

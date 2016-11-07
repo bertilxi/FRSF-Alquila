@@ -15,24 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
  */
-package app.ui.componentes;
+package app.ui.componentes.ventanas;
 
+import app.ui.componentes.IconoAnimadoEspera;
 import javafx.geometry.Pos;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
-public class VentanaEsperaBaseDeDatos extends Dialog<Void> {
+public class VentanaEsperaBaseDeDatos extends CustomAlert {
 
 	protected VentanaEsperaBaseDeDatos() {
 		this(null);
 	}
 
 	public VentanaEsperaBaseDeDatos(Window padre) {
-		super();
+		super(AlertType.NONE);
 		this.initStyle(StageStyle.UNDECORATED);
 		if(padre != null){
 			this.initOwner(padre);

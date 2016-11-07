@@ -66,4 +66,8 @@ public class PresentadorVentanas {
 		e.printStackTrace();
 		return new VentanaErrorExcepcionInesperada();
 	}
+
+	public VentanaEsperaBaseDeDatos presentarEsperaBaseDeDatos(Window w) {
+		return new VentanaEsperaBaseDeDatos(w);
+	}
 }

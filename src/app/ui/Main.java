@@ -26,8 +26,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import app.logica.CoordinadorJavaFX;
 import app.ui.componentes.IconoAplicacion;
-import app.ui.componentes.VentanaEsperaBaseDeDatos;
 import app.ui.componentes.ventanas.PresentadorVentanas;
+import app.ui.componentes.ventanas.VentanaEsperaBaseDeDatos;
 import app.ui.controladores.OlimpoController;
 import app.ui.controladores.WindowTitleController;
 import javafx.application.Application;
@@ -80,7 +80,7 @@ public class Main extends Application {
 
 	private void iniciarHibernate() {
 		//Crear ventana de espera
-		VentanaEsperaBaseDeDatos ventanaEspera = new VentanaEsperaBaseDeDatos(primaryStage.getOwner());
+		VentanaEsperaBaseDeDatos ventanaEspera = presentador.presentarEsperaBaseDeDatos(primaryStage.getOwner());
 
 		//Crear tarea para iniciar hibernate y el coordinador de la aplicacion
 		Task<Boolean> task = new Task<Boolean>() {

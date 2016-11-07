@@ -17,7 +17,6 @@
  */
 package app.ui.componentes.ventanas;
 
-import javafx.scene.control.Alert;
 import javafx.stage.Window;
 
 /**
@@ -25,7 +24,7 @@ import javafx.stage.Window;
  *
  * @author Acosta - Gioria - Moretti - Rebechi
  */
-public class VentanaErrorExcepcion extends Alert {
+public class VentanaErrorExcepcion extends CustomAlert {
 
 	/**
 	 * Constructor. Genera parte de la ventana
