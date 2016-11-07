@@ -28,7 +28,7 @@ public interface InmuebleService {
 
 	public void modificarInmueble(Inmueble inmueble) throws PersistenciaException;
 
-	ArrayList<Inmueble> listarInmuebles() throws PersistenciaException;
+	public ArrayList<Inmueble> listarInmuebles() throws PersistenciaException;
 
 	public Inmueble obtenerInmueble(Integer id) throws PersistenciaException;
 

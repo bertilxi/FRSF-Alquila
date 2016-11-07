@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
-import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Direccion;
 import app.datos.entidades.TipoDocumento;
 
@@ -200,21 +199,23 @@ public class ValidadorFormato {
 		return pat.matcher(localidad).matches();
 	}
 
-	public Boolean validarDoublePositivo(Double numero) {
-		if(numero == null){
+	public Boolean validarDoublePositivo(Double numeroDouble) {
+		if(numeroDouble == null){
 			return false;
 		}
-		if(numero < 0){
+		if(numeroDouble < 0){
 			return false;
 		}
 		return true;
 	}
 
-	public Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
-		if(datosEdificio == null){
+	public Boolean validarEnteroPositivo(Integer numeroInteger) {
+		if(numeroInteger == null){
 			return false;
 		}
-
+		if(numeroInteger < 0){
+			return false;
+		}
 		return true;
 	}
 }

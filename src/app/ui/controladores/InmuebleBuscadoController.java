@@ -20,7 +20,6 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Cliente;
@@ -208,22 +207,41 @@ public class InmuebleBuscadoController extends OlimpoController {
 	 */
 	@FXML
 	private void acceptAction() {
+		Double supeficieMinima = null;
+		Integer antiguedadMaxima = null;
+		Integer dormitoriosMinimos = null;
+		Integer bañosMinimos = null;
+		Double precioMaximo = null;
+
 		StringBuffer errores = new StringBuffer("");
 
-		Pattern pat = Pattern.compile("[0-9]{1,30}");
-		if(!pat.matcher(textFieldSuperficie.getText().trim()).matches()){
-			errores.append("Superficie incorrecta. Introduzca solo números\n");
+		try {
+			supeficieMinima = Double.valueOf(textFieldSuperficie.getText().trim());
+		} catch (Exception e) {
+			errores.append("Superficie incorrecta. Introduzca solo números y un punto para decimales.\n");
 		}
-		if(!pat.matcher(textFieldPrecio.getText().trim()).matches()){
-			errores.append("Precio incorrecto. Introduzca solo números\n");
+
+		try {
+			precioMaximo = Double.valueOf(textFieldPrecio.getText().trim());
+		} catch (Exception e) {
+			errores.append("Precio incorrecto. Introduzca solo números y un punto para decimales.\n");
 		}
-		if(!pat.matcher(textFieldAntiguedad.getText().trim()).matches()){
+
+		try {
+			antiguedadMaxima = Integer.valueOf(textFieldAntiguedad.getText().trim());
+		} catch (Exception e) {
 			errores.append("Antigüedad incorrecta. Introduzca solo números\n");
 		}
-		if(!pat.matcher(textFieldDormitorios.getText().trim()).matches()){
+
+		try {
+			dormitoriosMinimos = Integer.valueOf(textFieldDormitorios.getText().trim());
+		} catch (Exception e) {
 			errores.append("Dormitorios incorrecto. Introduzca solo números\n");
 		}
-		if(!pat.matcher(textFieldBaños.getText().trim()).matches()){
+
+		try {
+			bañosMinimos = Integer.valueOf(textFieldBaños.getText().trim());
+		} catch (Exception e) {
 			errores.append("Baños incorrecto. Introduzca solo números\n");
 		}
 
@@ -231,13 +249,6 @@ public class InmuebleBuscadoController extends OlimpoController {
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
 		}
 		else{
-
-			Double supeficieMinima = Double.valueOf(textFieldSuperficie.getText().trim());
-			Integer antiguedadMaxima = Integer.valueOf(textFieldAntiguedad.getText().trim());
-			Integer dormitoriosMinimos = Integer.valueOf(textFieldDormitorios.getText().trim());
-			Integer bañosMinimos = Integer.valueOf(textFieldBaños.getText().trim());
-			Double precioMaximo = Double.valueOf(textFieldPrecio.getText().trim());
-
 			Boolean propiedadHorizontal = checkBoxPropiedadHorizontal.isSelected();
 			Boolean garage = checkBoxGarage.isSelected();
 			Boolean patio = checkBoxPatio.isSelected();
