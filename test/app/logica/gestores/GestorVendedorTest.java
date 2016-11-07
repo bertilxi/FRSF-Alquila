@@ -125,12 +125,12 @@ public class GestorVendedorTest {
 		DatosLogin datosCaracteresRaros = new DatosLogin(tipoDocumento, "ñúïÒ", contrasenia.toCharArray());
 
 		return new Object[] {
-				new Object[] { datosCorrectos, new ResultadoAutenticacion(), vendedorCorrecto, null }, //prueba ingreso correcto
-				new Object[] { datosTipoDocumentoVacio, new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), vendedorCorrecto, null }, //prueba TipoDocumento vacio, ingreso incorrecto
-				new Object[] { datosNumeroDocumentoVacio, new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), vendedorCorrecto, null }, //prueba numero de documento vacio, ingreso incorrecto
-				new Object[] { datosContraseniaVacia, new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), vendedorCorrecto, null }, //prueba Contraseña vacia, ingreso incorrecto
-				new Object[] { datosCorrectos, new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null, null }, //prueba un ingreso incorrecto
-				new Object[] { datosCaracteresRaros, new ResultadoAutenticacion(ErrorAutenticacion.Datos_Incorrectos), null, null }, //prueba un ingreso incorrecto con caracteres UTF8
+				new Object[] { datosCorrectos, new ResultadoAutenticacion(vendedorCorrecto), vendedorCorrecto, null }, //prueba ingreso correcto
+				new Object[] { datosTipoDocumentoVacio, new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), vendedorCorrecto, null }, //prueba TipoDocumento vacio, ingreso incorrecto
+				new Object[] { datosNumeroDocumentoVacio, new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), vendedorCorrecto, null }, //prueba numero de documento vacio, ingreso incorrecto
+				new Object[] { datosContraseniaVacia, new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), vendedorCorrecto, null }, //prueba Contraseña vacia, ingreso incorrecto
+				new Object[] { datosCorrectos, new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null, null }, //prueba un ingreso incorrecto
+				new Object[] { datosCaracteresRaros, new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null, null }, //prueba un ingreso incorrecto con caracteres UTF8
 				new Object[] { datosCorrectos, null, null, new ObjNotFoundException("Error de persistencia. Test.", new Exception()) }, //Prueba una excepcion de persistencia
 				new Object[] { datosCorrectos, null, null, new Exception() } //Prueba una excepcion desconocida
 		};
@@ -195,7 +195,7 @@ public class GestorVendedorTest {
 		ResultadoCrearVendedor resultadoCrearVendedor = gestorVendedor.crearVendedor(vendedor);
 
 		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
-		assertEquals(resultadoCrearVendedorEsperado.getErrores(), resultadoCrearVendedor.getErrores());
+		assertEquals(resultadoCrearVendedorEsperado, resultadoCrearVendedor);
 		verify(validadorFormatoMock).validarNombre(vendedor.getNombre());
 		verify(validadorFormatoMock).validarApellido(vendedor.getApellido());
 		verify(validadorFormatoMock).validarDocumento(vendedor.getTipoDocumento(), vendedor.getNumeroDocumento());

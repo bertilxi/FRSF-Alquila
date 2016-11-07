@@ -36,4 +36,27 @@ public class ResultadoAutenticacion extends Resultado<ErrorAutenticacion> {
 	public Vendedor getVendedorLogueado() {
 		return vendedorLogueado;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj){
+			return true;
+		}
+		if(!super.equals(obj)){
+			return false;
+		}
+		if(getClass() != obj.getClass()){
+			return false;
+		}
+		ResultadoAutenticacion other = (ResultadoAutenticacion) obj;
+		if(vendedorLogueado == null){
+			if(other.vendedorLogueado != null){
+				return false;
+			}
+		}
+		else if(!vendedorLogueado.equals(other.vendedorLogueado)){
+			return false;
+		}
+		return true;
+	}
 }
