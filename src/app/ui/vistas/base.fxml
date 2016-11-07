@@ -21,6 +21,7 @@
 -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToggleButton?>
@@ -31,7 +32,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.BaseController">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.BaseController">
     <children>
         <VBox fx:id="panelGeneral" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="sidebar" HBox.hgrow="ALWAYS">
             <children>
@@ -50,36 +51,54 @@
                   <ToggleButton fx:id="toggleButtonDatosVendedor" mnemonicParsing="false" onAction="#verMisDatos" styleClass="toggle-button-vendedor" />
                   <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Mis datos" />
                </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </VBox>
                 <VBox alignment="CENTER">
                     <children>
                         <ToggleButton fx:id="toggleButtonClientes" mnemonicParsing="false" onAction="#verClientes" styleClass="toggle-button-cliente" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Clientes" />
                     </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
                         <ToggleButton fx:id="toggleButtonInmuebles" mnemonicParsing="false" onAction="#verInmuebles" styleClass="toggle-button-inmueble" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Inmuebles" />
                     </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </VBox>
                 <VBox alignment="CENTER">
                     <children>
                         <ToggleButton fx:id="toggleButtonPropietarios" mnemonicParsing="false" onAction="#verPropietarios" styleClass="toggle-button-propietario" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Propietarios" />
                     </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </VBox>
                 <VBox fx:id="panelVendedores" alignment="CENTER">
                     <children>
                         <ToggleButton fx:id="toggleButtonVendedores" mnemonicParsing="false" onAction="#verVendedores" styleClass="toggle-button-vendedor" />
                         <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Vendedores" />
                     </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </VBox>
             <VBox alignment="CENTER">
                <children>
                   <ToggleButton fx:id="toggleButtonSalir" mnemonicParsing="false" onAction="#salir" styleClass="toggle-button-salir" />
                   <Label alignment="CENTER" prefHeight="16.0" prefWidth="119.0" styleClass="label-white" text="Salir" />
                </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </VBox>
             </children>
             <HBox.margin>

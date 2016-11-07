@@ -198,4 +198,14 @@ public class ValidadorFormato {
 		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,50}");
 		return pat.matcher(localidad).matches();
 	}
+
+	public Boolean validarDoublePositivo(Double numero) {
+		if(numero == null){
+			return false;
+		}
+		if(numero < 0){
+			return false;
+		}
+		return true;
+	}
 }
