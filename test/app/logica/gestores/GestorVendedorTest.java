@@ -1,6 +1,7 @@
 package app.logica.gestores;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -187,7 +188,7 @@ public class GestorVendedorTest {
 		when(validadorFormatoMock.validarNombre(vendedor.getNombre())).thenReturn(resValNombre);
 		when(validadorFormatoMock.validarApellido(vendedor.getApellido())).thenReturn(resValApellido);
 		when(validadorFormatoMock.validarDocumento(vendedor.getTipoDocumento(), vendedor.getNumeroDocumento())).thenReturn(resValDocumento);
-		when(vendedorServiceMock.obtenerVendedor(filtro)).thenReturn(resObtenerVendedor);
+		when(vendedorServiceMock.obtenerVendedor(any())).thenReturn(resObtenerVendedor);
 		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
 		doNothing().when(vendedorServiceMock).guardarVendedor(vendedor); //Para métodos void la sintaxis es distinta
 
