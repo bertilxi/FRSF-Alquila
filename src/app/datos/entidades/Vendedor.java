@@ -146,8 +146,9 @@ public class Vendedor {
 		return root;
 	}
 
-	public void setRoot(Boolean root) {
+	public Vendedor setRoot(Boolean root) {
 		this.root = root;
+		return this;
 	}
 
 	public TipoDocumento getTipoDocumento() {
