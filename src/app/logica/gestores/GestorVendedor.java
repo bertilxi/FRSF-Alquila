@@ -43,6 +43,9 @@ import app.logica.resultados.ResultadoEliminarVendedor.ErrorEliminarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
 
+/**
+ * Clase que se encarga de la lógica de negocios correspondientes a vendedores
+ */
 @Service
 public class GestorVendedor {
 
@@ -92,6 +95,19 @@ public class GestorVendedor {
 		return new ResultadoAutenticacion(vendedorLogueado, errores.toArray(new ErrorAutenticacion[0]));
 	}
 
+	/**
+	 * Se encarga de validar los datos de un vendedor a crear y, en caso de que no haya errores,
+	 *  delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * @param vendedor
+	 * 			vendedor a crear
+	 * @return un resultado informando errores correspondientes en caso de que los haya
+	 *
+	 * @throws PersistenciaException
+	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 * @throws GestionException
+	 * 			se lanza una excepción EntidadExistenteConEstadoBaja cuando se encuentra que ya existe un vendedor con la misma identificación pero tiene estado BAJA
+	 */
 	public ResultadoCrearVendedor crearVendedor(Vendedor vendedor) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearVendedor> errores = new ArrayList<>();
 
@@ -130,6 +146,17 @@ public class GestorVendedor {
 		return new ResultadoCrearVendedor(errores.toArray(new ErrorCrearVendedor[0]));
 	}
 
+	/**
+	 * Se encarga de validar los datos de un vendedor a modificar y, en caso de que no haya errores,
+	 *  delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * @param vendedor
+	 * 			vendedor a modificar
+	 * @return un resultado informando errores correspondientes en caso de que los haya
+	 *
+	 * @throws PersistenciaException
+	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
 	public ResultadoModificarVendedor modificarVendedor(Vendedor vendedor) throws PersistenciaException {
 		ArrayList<ErrorModificarVendedor> errores = new ArrayList<>();
 
@@ -165,6 +192,17 @@ public class GestorVendedor {
 		return new ResultadoModificarVendedor(errores.toArray(new ErrorModificarVendedor[0]));
 	}
 
+	/**
+	 * Se encarga de validar que exista el vendedor a eliminar, se setea el estado en BAJA y,
+	 *  en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * @param vendedor
+	 * 			vendedor a eliminar
+	 * @return un resultado informando errores correspondientes en caso de que los haya
+	 *
+	 * @throws PersistenciaException
+	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
 	public ResultadoEliminarVendedor eliminarVendedor(Vendedor vendedor) throws PersistenciaException {
 		ArrayList<ErrorEliminarVendedor> errores = new ArrayList<>();
 
@@ -187,10 +225,29 @@ public class GestorVendedor {
 		return new ResultadoEliminarVendedor(errores.toArray(new ErrorEliminarVendedor[0]));
 	}
 
+	/**
+	 * Obtiene el listado de vendedores solicitándola a la capa de acceso a datos
+	 *
+	 * @return el listado de vendedores solicitados
+	 *
+	 * @throws PersistenciaException
+	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
 	public ArrayList<Vendedor> obtenerVendedores() throws PersistenciaException {
 		return persistidorVendedor.listarVendedores();
 	}
 
+	/**
+	 * Obtiene un vendedor en base a su tipo y número de documento solicitándolo a la capa de acceso a datos
+	 *
+	 * @param vendedor
+	 * 			vendedor buscado
+	 *
+	 * @return el vendedor solicitado
+	 *
+	 * @throws PersistenciaException
+	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
 	public Vendedor obtenerVendedor(Vendedor vendedor) throws PersistenciaException {
 		return persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento()));
 	}
