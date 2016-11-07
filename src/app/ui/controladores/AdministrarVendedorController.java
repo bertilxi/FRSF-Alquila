@@ -93,7 +93,7 @@ public class AdministrarVendedorController extends OlimpoController {
 		if(vendedor == null){
 			return;
 		}
-		ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista);
+		ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVista);
 		modificarVendedorController.setVendedor(vendedor);
 	}
 
