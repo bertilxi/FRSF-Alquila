@@ -17,30 +17,19 @@
  */
 package app.ui.componentes;
 
-import javafx.geometry.Pos;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
-import javafx.stage.StageStyle;
-import javafx.stage.Window;
+import javafx.scene.image.Image;
 
-public class VentanaEsperaBaseDeDatos extends Dialog<Void> {
+/**
+ * Representa el �cono de la aplicaci�n
+ *
+ * @author Acosta - Gioria - Moretti - Rebechi
+ */
+public class IconoAnimadoEspera extends Image {
 
-	protected VentanaEsperaBaseDeDatos() {
-		this(null);
-	}
-
-	public VentanaEsperaBaseDeDatos(Window padre) {
-		super();
-		this.initStyle(StageStyle.UNDECORATED);
-		if(padre != null){
-			this.initOwner(padre);
-		}
-		this.setGraphic(new ImageView(new IconoAnimadoEspera()));
-		this.setContentText("Esperando a la base de datos...");
-		this.setTitle("Esperando");
-		((Label) this.getDialogPane().getChildren().get(1)).setAlignment(Pos.CENTER);
-		((Label) this.getDialogPane().getChildren().get(1)).setFont(new Font(20));
+	/**
+	 * Constructor. Genera la imagen del �cono
+	 */
+	public IconoAnimadoEspera() {
+		super("file:src/res/img/icono_256.gif");
 	}
 }

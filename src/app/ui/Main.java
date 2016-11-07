@@ -103,26 +103,7 @@ public class Main extends Application {
 				(event) -> {
 					ventanaEspera.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 					ventanaEspera.hide();
-
-					//Crear primera ventana
-					Platform.runLater(() -> {
-						try{
-							FXMLLoader loader = new FXMLLoader();
-							loader.setLocation(getClass().getResource(WindowTitleController.URLVista));
-
-							Parent root = loader.load();
-							Scene scene = new Scene(root);
-
-							OlimpoController controller = loader.getController();
-							controller.setCoordinador(coordinador).setStage(primaryStage).setPresentador(presentador);
-
-							primaryStage.setScene(scene);
-							primaryStage.show();
-						} catch(IOException e){
-							e.printStackTrace();
-							Platform.exit();
-						}
-					});
+					crearPrimeraVentana();
 				});
 
 		//Si falla, informa al usuario del error y cierra la aplicacion
@@ -145,6 +126,27 @@ public class Main extends Application {
 		Thread hiloHibernate = new Thread(task);
 		hiloHibernate.setDaemon(false);
 		hiloHibernate.start();
+	}
+
+	private void crearPrimeraVentana() {
+		Platform.runLater(() -> {
+			try{
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource(WindowTitleController.URLVista));
+
+				Parent root = loader.load();
+				Scene scene = new Scene(root);
+
+				OlimpoController controller = loader.getController();
+				controller.setCoordinador(coordinador).setStage(primaryStage).setPresentador(presentador);
+
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch(IOException e){
+				e.printStackTrace();
+				Platform.exit();
+			}
+		});
 	}
 
 	private void verParametros(List<String> raw) {
