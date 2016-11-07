@@ -29,6 +29,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+/**
+ * Controlador de la vista para modificar un cliente
+ */
 public class ModificarClienteController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/modificarCliente.fxml";
@@ -50,6 +53,12 @@ public class ModificarClienteController extends OlimpoController {
 
 	private Cliente clienteEnModificacion;
 
+	/**
+	 * Setea los campos con los datos del cliente pasado por parámetro.
+	 *
+	 * @param clienteEnModificacion
+	 * 			cliente del que se obtienen los datos.
+	 */
 	public void setClienteEnModificacion(Cliente clienteEnModificacion) {
 		this.clienteEnModificacion = clienteEnModificacion;
 		textFieldNombre.setText(clienteEnModificacion.getNombre());
@@ -59,6 +68,12 @@ public class ModificarClienteController extends OlimpoController {
 		comboBoxTipoDocumento.setValue(clienteEnModificacion.getTipoDocumento());
 	}
 
+	/**
+	 * Acción que se ejecuta al apretar el botón aceptar.
+	 *
+	 * Valida que se hayan insertado datos, los carga al cliente y deriva la operación a capa lógica.
+	 * Si la capa lógica retorna errores, se muestran al usuario.
+	 */
 	@FXML
 	private void acceptAction() {
 
@@ -130,12 +145,20 @@ public class ModificarClienteController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón cargar inmueble.
+	 * Se pasa a la pantalla de inmueble buscado
+	 */
 	@FXML
 	private void cargarInmueble() {
 		InmuebleBuscadoController controlador = (InmuebleBuscadoController) cambiarmeAScene(InmuebleBuscadoController.URLVista);
 		controlador.setCliente(clienteEnModificacion);
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón cancelar.
+	 * Se vuelve a la pantalla administrar cliente.
+	 */
 	@FXML
 	private void cancelAction() {
 		cambiarmeAScene(AdministrarClienteController.URLVista);

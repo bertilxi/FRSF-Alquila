@@ -75,4 +75,9 @@ public class ValidadorFormatoTest {
 	public void validarDireccionTest(Direccion direccion, boolean esperado) {
 		assertEquals(esperado, new ValidadorFormato().validarDireccion(direccion));
 	}
+
+	@Test
+	public void validarNombreNuloTest() {
+		assertEquals(false, new ValidadorFormato().validarNombre(null));
+	}
 }

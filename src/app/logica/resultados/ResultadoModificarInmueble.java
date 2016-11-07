@@ -26,6 +26,16 @@ public class ResultadoModificarInmueble extends Resultado<ErrorModificarInmueble
 	}
 
 	public enum ErrorModificarInmueble {
-
+		Fecha_Vacia,
+		Propietario_Inexistente,
+		Formato_Direccion_Incorrecto,
+		Precio_Vacio,
+		Precio_Incorrecto,
+		Fondo_Incorrecto,
+		Frente_Incorrecto,
+		Superficie_Incorrecta,
+		Tipo_Vacio,
+		Datos_Edificio_Incorrectos,
+		Inmueble_Inexistente
 	}
 }

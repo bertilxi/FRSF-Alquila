@@ -38,6 +38,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
+/**
+ * Controlador de la vista para modificar un propietario
+ */
 public class ModificarPropietarioController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/modificarPropietario.fxml";
@@ -73,6 +76,12 @@ public class ModificarPropietarioController extends OlimpoController {
 
 	private Propietario propietarioEnModificacion;
 
+	/**
+	 * Setea los campos con los datos del propietario pasado por parámetro.
+	 *
+	 * @param propietarioEnModificacion
+	 * 			propietario del que se obtienen los datos.
+	 */
 	public void setPropietarioEnModificacion(Propietario propietarioEnModificacion) {
 		Platform.runLater(() -> {
 			this.propietarioEnModificacion = propietarioEnModificacion;
@@ -93,6 +102,12 @@ public class ModificarPropietarioController extends OlimpoController {
 		});
 	}
 
+	/**
+	 * Acción que se ejecuta al apretar el botón aceptar.
+	 *
+	 * Valida que se hayan insertado datos, los carga al propietario y deriva la operación a capa lógica.
+	 * Si la capa lógica retorna errores, se muestran al usuario.
+	 */
 	@FXML
 	public void acceptAction() {
 
@@ -202,6 +217,10 @@ public class ModificarPropietarioController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón cancelar.
+	 * Se vuelve a la pantalla administrar propietario.
+	 */
 	@FXML
 	public void cancelAction() {
 		cambiarmeAScene(AdministrarPropietarioController.URLVista);
@@ -228,6 +247,8 @@ public class ModificarPropietarioController extends OlimpoController {
 		comboBoxLocalidad.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarBarriosYCalles(newValue));
 
+		//se setean los converters para cuando se ingrese un item no existente a través
+		//del editor de texto de los comboBox editables
 		comboBoxPais.setConverter(new StringConverter<Pais>() {
 
 			@Override
@@ -367,6 +388,8 @@ public class ModificarPropietarioController extends OlimpoController {
 			}
 		});
 
+		//Cuando el foco sale de los comboBox que estaban siendo editados
+		//el texto ingresado se convierte en un item y se lo selecciona
 		comboBoxPais.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
@@ -418,6 +441,13 @@ public class ModificarPropietarioController extends OlimpoController {
 		});
 	}
 
+	/**
+	 * Cuando varía la seleccion del comboBox de provincias, se actualiza el comboBox de localidades.
+	 * También se delega la tarea de vaciar los comboBox de barrios y calles
+	 *
+	 * @param provincia
+	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
 	private void actualizarLocalidades(Provincia provincia) {
 		comboBoxLocalidad.getItems().clear();
 		if(provincia != null && provincia.getId() != null){
@@ -430,6 +460,13 @@ public class ModificarPropietarioController extends OlimpoController {
 		actualizarBarriosYCalles(null);
 	}
 
+	/**
+	 * Cuando varía la seleccion del comboBox de países, se actualiza el comboBox de provincias.
+	 * También se delega la tarea de vaciar el comboBox de localidades
+	 *
+	 * @param pais
+	 * 			país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
 	private void actualizarProvincias(Pais pais) {
 		comboBoxProvincia.getItems().clear();
 		if(pais != null && pais.getId() != null){
@@ -442,6 +479,12 @@ public class ModificarPropietarioController extends OlimpoController {
 		actualizarLocalidades(null);
 	}
 
+	/**
+	 * Cuando varía la seleccion del comboBox de localidades, se actualizan los comboBox de barrios y calles.
+	 *
+	 * @param loc
+	 * 			localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
 	private void actualizarBarriosYCalles(Localidad loc) {
 		comboBoxBarrio.getItems().clear();
 		comboBoxCalle.getItems().clear();

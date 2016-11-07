@@ -86,4 +86,10 @@ public class InmuebleServiceImpl implements InmuebleService {
 		return inmuebles;
 	}
 
+	@Override
+	public Inmueble obtenerInmueble(Integer id) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

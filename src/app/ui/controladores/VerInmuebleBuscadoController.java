@@ -31,6 +31,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Controlador de la vista para ver los datos del inmueble buscado por un cliente
+ */
 public class VerInmuebleBuscadoController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/verInmuebleBuscado.fxml";
 
@@ -93,6 +96,12 @@ public class VerInmuebleBuscadoController extends OlimpoController {
 	@FXML
 	private Label labelPavimento;
 
+	/**
+	 * Se setean los campos con los datos del inmueble
+	 *
+	 * @param inmueble
+	 * 			inmueble del que se obtienen los datos
+	 */
 	public void setInmueble(InmuebleBuscado inmueble) {
 		Platform.runLater(() -> {
 			labelAguaCaliente.setText((inmueble.getAguaCaliente()) ? ("Si") : ("No"));
@@ -148,6 +157,10 @@ public class VerInmuebleBuscadoController extends OlimpoController {
 		});
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón atrás.
+	 * Se vuelve a la pantalla administrar cliente.
+	 */
 	@FXML
 	private void handleAtras() {
 		cambiarmeAScene(AdministrarClienteController.URLVista);

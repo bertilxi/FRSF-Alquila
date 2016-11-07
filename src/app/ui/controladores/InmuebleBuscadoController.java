@@ -40,6 +40,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+/**
+ * Controlador de la vista inmueble buscado.
+ * Se utiliza para crear un nuevo inmueble buscado o modificar uno existente
+ */
 public class InmuebleBuscadoController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/inmuebleBuscado.fxml";
@@ -130,6 +134,13 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	private ArrayList<Barrio> listaBarriosSeleccionados;
 
+	/**
+	 * Setea el cliente pasado por parámetro y, si posee un inmueble buscado,
+	 *  se cargan los campos con los datos.
+	 *
+	 * @param cliente
+	 * 			cliente del que se obtienen los datos
+	 */
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 		InmuebleBuscado inmueble = cliente.getInmuebleBuscado();
@@ -187,6 +198,14 @@ public class InmuebleBuscadoController extends OlimpoController {
 		});
 	}
 
+	/**
+	 * Acción que se ejecuta al apretar el botón aceptar.
+	 *
+	 * Valida que se hayan insertado datos y los carga al inmueble buscado.
+	 * Si el cliente no posee inmueble buscado se crea uno, sino, se modifica el existente.
+	 *
+	 * Al finalizar regresa a la pantalla correspondiente, ya sea alta cliente o modificar cliente.
+	 */
 	@FXML
 	private void acceptAction() {
 		StringBuffer errores = new StringBuffer("");
@@ -313,6 +332,10 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón cancelar.
+	 * Se vuelve a la pantalla correspondiente, ya sea alta cliente o modificar cliente.
+	 */
 	@FXML
 	private void cancelAction() {
 		if(alta){
@@ -362,6 +385,10 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 	}
 
+	/**
+	 * Agrega una localidad a la lista de localidades seleccionadas, es decir, las localidades
+	 *  en las que se desea buscar un inmueble
+	 */
 	@FXML
 	private void handleAgregarLocalidad() {
 		if(comboBoxLocalidad.getSelectionModel().getSelectedItem() != null && !listaLocalidadesSeleccionadas.contains(comboBoxLocalidad.getSelectionModel().getSelectedItem())){
@@ -371,6 +398,13 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Quita una localidad de la lista de localidades seleccionadas, es decir, las localidades
+	 *  en las que se desea buscar un inmueble.
+	 *
+	 * Si había barrios pertenecientes a esa localidad en la lista de barrios deseados,
+	 *  se quitan de dicha lista.
+	 */
 	@FXML
 	private void handleQuitarLocalidad() {
 		if(tablaLocalidades.getSelectionModel().getSelectedItem() != null){
@@ -387,6 +421,10 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Agrega un barrio a la lista de barrios seleccionados, es decir, los barrios
+	 *  en los que se desea buscar un inmueble
+	 */
 	@FXML
 	private void handleAgregarBarrio() {
 		if(comboBoxBarrio.getSelectionModel().getSelectedItem() != null && !listaBarriosSeleccionados.contains(comboBoxBarrio.getSelectionModel().getSelectedItem())){
@@ -396,6 +434,10 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Quita un barrio de la lista de barrios seleccionados, es decir, los barrios
+	 *  en loss que se desea buscar un inmueble.
+	 */
 	@FXML
 	private void handleQuitarBarrio() {
 		if(tablaBarrios.getSelectionModel().getSelectedItem() != null){
@@ -405,6 +447,13 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Habilita/deshabilita la opción de quitar un barrio de la lista de barrios seleccionados
+	 *  según si hay uno seleccionado en la tabla o no.
+	 *
+	 * @param bar
+	 * 			barrio seleccionado en la tabla. Si no hay ninguno seleccionado, es <code>null</code>
+	 */
 	private void BarrioSeleccionadoTabla(Barrio bar) {
 		if(bar == null){
 			botonQuitarBarrio.setDisable(true);
@@ -414,6 +463,14 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Habilita/deshabilita la opción de quitar una localidad de la lista de localidades seleccionadas
+	 *  según si hay una seleccionado en la tabla o no.
+	 *  También actualiza el comboBox de barrios según la localidad seleccionada de la tabla
+	 *
+	 * @param loc
+	 * 			localidad seleccionada en la tabla. Si no hay ninguna seleccionada, es <code>null</code>
+	 */
 	private void localidadSeleccionadaTabla(Localidad loc) {
 		if (loc==null) {
 			comboBoxBarrio.getItems().clear();
@@ -430,6 +487,13 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Habilita/deshabilita la opción de agregar un barrio a la lista de barrios seleccionados
+	 *  según si hay uno seleccionado en el comboBox o no.
+	 *
+	 * @param bar
+	 * 			barrio seleccionado en el comboBox. Si no hay ninguno seleccionado, es <code>null</code>
+	 */
 	private void BarrioSeleccionadoCombo(Barrio bar) {
 		if(bar == null){
 			botonAgregarBarrio.setDisable(true);
@@ -439,6 +503,13 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Habilita/deshabilita la opción de agregar una localidad a la lista de localidades seleccionadas
+	 *  según si hay una seleccionada en el comboBox o no.
+	 *
+	 * @param loc
+	 * 			localidad seleccionada en el comboBox. Si no hay ninguna seleccionada, es <code>null</code>
+	 */
 	private void localidadSeleccionadaCombo(Localidad loc) {
 		if(loc == null){
 			botonAgregarLocalidad.setDisable(true);
@@ -448,6 +519,12 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Cuando varía la seleccion del comboBox de provincias, se actualiza el comboBox de localidades.
+	 *
+	 * @param provincia
+	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
 	private void actualizarLocalidades(Provincia provincia) {
 		comboBoxLocalidad.getItems().clear();
 		if(provincia != null){
@@ -459,6 +536,13 @@ public class InmuebleBuscadoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Cuando varía la seleccion del comboBox de países, se actualiza el comboBox de provincias.
+	 * También se delega la tarea de vaciar el comboBox de localidades
+	 *
+	 * @param pais
+	 * 			país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
 	private void actualizarProvincias(Pais pais) {
 		comboBoxProvincia.getItems().clear();
 		if(pais != null){
@@ -468,5 +552,6 @@ public class InmuebleBuscadoController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
+		actualizarLocalidades(null);
 	}
 }

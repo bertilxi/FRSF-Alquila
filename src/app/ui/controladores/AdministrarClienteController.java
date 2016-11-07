@@ -101,7 +101,8 @@ public class AdministrarClienteController extends OlimpoController {
 	}
 
 	/**
-	 * acción que se ejecuta al presionar el botón ver inmueble
+	 * Acción que se ejecuta al presionar el botón ver inmueble
+	 * Se pasa a la pantalla inmueble buscado
 	 */
 	@FXML
 	private void handleVerInmuebleBuscado() {
@@ -113,7 +114,8 @@ public class AdministrarClienteController extends OlimpoController {
 	}
 
 	/**
-	 * acción que se ejecuta al presionar el botón agregar
+	 * Acción que se ejecuta al presionar el botón agregar
+	 * Se pasa a la pantalla alta cliente
 	 */
 	@FXML
 	private void handleAgregar() {
@@ -121,6 +123,10 @@ public class AdministrarClienteController extends OlimpoController {
 		controlador.setCliente(null);
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón modificar.
+	 * Se pasa a la pantalla modificar cliente
+	 */
 	@FXML
 	private void handleModificar() {
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
@@ -131,7 +137,8 @@ public class AdministrarClienteController extends OlimpoController {
 	}
 
 	/**
-	 * acción que se ejecuta al presionar el botón eliminar
+	 * Acción que se ejecuta al presionar el botón eliminar
+	 * Se muestra una ventana emergente para confirmar la operación
 	 */
 	@FXML
 	private void handleEliminar() {
