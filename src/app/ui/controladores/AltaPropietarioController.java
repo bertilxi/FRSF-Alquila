@@ -228,9 +228,11 @@ public class AltaPropietarioController extends OlimpoController {
 		}
 
 		//se selecciona por defecto a argentina en el combo box país
-		comboBoxPais.getSelectionModel().selectFirst();
-		while(!comboBoxPais.getSelectionModel().getSelectedItem().getNombre().equals("Argentina")){
-			comboBoxPais.getSelectionModel().selectNext();
+		for(Pais p: comboBoxPais.getItems()) {
+			if(p.getNombre().equals("Argentina")) {
+				comboBoxPais.getSelectionModel().select(p);
+				break;
+			}
 		}
 		actualizarProvincias(comboBoxPais.getSelectionModel().getSelectedItem());
 

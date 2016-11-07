@@ -26,7 +26,7 @@ public class ResultadoEliminarInmueble extends Resultado<ErrorEliminarInmueble> 
 	}
 
 	public enum ErrorEliminarInmueble {
-
+		No_Existe_Inmueble
 	}
 
 }

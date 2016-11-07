@@ -19,6 +19,8 @@ package app.datos.servicios.implementacion;
 
 import java.util.ArrayList;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import app.datos.entidades.Inmueble;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.InmuebleService;
 import app.excepciones.ConsultaException;
+import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
@@ -88,8 +91,16 @@ public class InmuebleServiceImpl implements InmuebleService {
 
 	@Override
 	public Inmueble obtenerInmueble(Integer id) throws PersistenciaException {
-		// TODO Auto-generated method stub
-		return null;
+		Inmueble inmueble = null;
+		Session session = getSessionFactory().getCurrentSession();
+		try {
+			inmueble = session.get(Inmueble.class, id);
+		} catch (EntityNotFoundException e) {
+			throw new ObjNotFoundException("obtener",e);
+		} catch (Exception e) {
+			throw new ConsultaException(e);
+		}
+		return inmueble;
 	}
 
 }
