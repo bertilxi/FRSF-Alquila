@@ -21,7 +21,6 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-@SuppressWarnings("unused") //TODO quitar
 public class GestorClienteTest {
 
 	private static ValidadorFormato validadorMock;
