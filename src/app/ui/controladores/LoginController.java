@@ -54,7 +54,7 @@ public class LoginController extends OlimpoController {
 
 	@FXML
 	public void registrar() {
-		cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
+		cambiarmeAScene(AltaVendedorController.URLVista, URLVista, true);
 	}
 
 	@FXML
@@ -66,7 +66,7 @@ public class LoginController extends OlimpoController {
 	 */
 	public ResultadoControlador ingresar() {
 		//TODO borrar para activar login
-		BaseController siguientePantallaa = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista);
+		BaseController siguientePantallaa = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista, true);
 		siguientePantallaa.formatearConVendedor(new Vendedor().setRoot(true));
 		if(true){
 			return null;
@@ -118,7 +118,7 @@ public class LoginController extends OlimpoController {
 			}
 		}
 		else{
-			BaseController siguientePantalla = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista);
+			BaseController siguientePantalla = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista, true);
 			siguientePantalla.formatearConVendedor(resultado.getVendedorLogueado());
 		}
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
@@ -134,6 +134,8 @@ public class LoginController extends OlimpoController {
 		} catch(Exception e){
 			presentador.presentarExcepcionInesperada(e, stage);
 		}
+
+		stage.centerOnScreen();
 	}
 
 }

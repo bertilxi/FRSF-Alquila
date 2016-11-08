@@ -26,7 +26,16 @@ public class ResultadoCrearInmueble extends Resultado<ErrorCrearInmueble> {
 	}
 
 	public enum ErrorCrearInmueble {
-
+		Fecha_Vacia,
+		Propietario_Vacio,
+		Propietario_Inexistente,
+		Formato_Direccion_Incorrecto,
+		Precio_Incorrecto,
+		Fondo_Incorrecto,
+		Frente_Incorrecto,
+		Superficie_Incorrecta,
+		Tipo_Vacio,
+		Datos_Edificio_Incorrectos
 	}
 
 }

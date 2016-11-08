@@ -30,6 +30,9 @@ public class FormateadorString {
 	 * @return string de entrada con la primera letra en mayúscula
 	 */
 	public String primeraMayuscula(String entrada) {
+		if(entrada == null){
+			return null;
+		}
 		switch(entrada.length()) {
 		// Los strings vacíos se retornan como están.
 		case 0:

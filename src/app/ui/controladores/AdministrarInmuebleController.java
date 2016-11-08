@@ -97,7 +97,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 	@FXML
 	public void agregar() {
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista);
-		nuevaPantalla.formatearNuevoInmueble();
 	}
 
 	@FXML

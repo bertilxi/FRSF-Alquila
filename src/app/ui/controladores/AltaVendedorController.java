@@ -29,7 +29,6 @@ import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
-import app.ui.componentes.Toast;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,6 +37,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * Controlador de la vista que crea un vendedor
+ */
 public class AltaVendedorController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/altaVendedor.fxml";
@@ -61,6 +63,12 @@ public class AltaVendedorController extends OlimpoController {
 
 	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
+	/**
+	 * Acción que se ejecuta al apretar el botón aceptar.
+	 *
+	 * Valida que se hayan insertado datos, los carga al vendedor y deriva la operación a capa lógica.
+	 * Si la capa lógica retorna errores, éstos se muestran al usuario.
+	 */
 	public void acceptAction() throws PersistenciaException, GestionException {
 
 		StringBuilder error = new StringBuilder("");
@@ -134,12 +142,8 @@ public class AltaVendedorController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
-					String toastMsg = "Vendedor creado con éxito";
-					int toastMsgTime = 3500; //3.5 seconds
-					int fadeInTime = 500; //0.5 seconds
-					int fadeOutTime = 500; //0.5 seconds
-					Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
-					cambiarmeAScene(URLVistaRetorno);
+					presentador.presentarToast("Se ha creado un vendedor", stage);
+					salir();
 				}
 
 			} catch(PersistenciaException e){
@@ -159,8 +163,27 @@ public class AltaVendedorController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón cancelar.
+	 * Se vuelve a la pantalla desde la que se llamó a AltaVendedor.
+	 */
 	public void cancelAction(ActionEvent event) {
-		cambiarmeAScene(URLVistaRetorno);
+		salir();
+	}
+
+	@Override
+	public void salir() {
+		if(URLVistaRetorno != null){
+			if(URLVistaRetorno.equals(LoginController.URLVista)){
+				cambiarmeAScene(URLVistaRetorno, true);
+			}
+			else{
+				cambiarmeAScene(URLVistaRetorno);
+			}
+		}
+		else{
+			super.salir();
+		}
 	}
 
 	@Override

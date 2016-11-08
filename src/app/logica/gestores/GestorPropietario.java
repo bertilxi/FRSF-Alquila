@@ -39,6 +39,9 @@ import app.logica.resultados.ResultadoEliminarPropietario.ErrorEliminarPropietar
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
 
+/**
+ * Clase que se encarga de la lógica de negocios correspondiente a propietarios
+ */
 @Service
 public class GestorPropietario {
 
@@ -51,17 +54,25 @@ public class GestorPropietario {
 	@Resource
 	protected GestorDatos gestorDatos;
 
+	/**
+	 * Se encarga de validar los datos de un propietario a crear y, en caso de que no haya errores,
+	 * delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * @param propietario
+	 *            propietario a crear
+	 * @return un resultado informando errores correspondientes en caso de que los haya
+	 *
+	 * @throws PersistenciaException
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 * @throws GestionException
+	 *             se lanza una excepción EntidadExistenteConEstadoBaja cuando se encuentra que ya existe un propietario con la misma identificación pero tiene estado BAJA
+	 */
 	public ResultadoCrearPropietario crearPropietario(Propietario propietario) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearPropietario> errores = new ArrayList<>();
 
 		validarDatosCrearPropietario(propietario, errores);
 
-		Propietario propietarioAuxiliar;
-		try{
-			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
-		} catch(PersistenciaException e){
-			throw e;
-		}
+		Propietario propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
 
 		if(null != propietarioAuxiliar){
 			if(propietarioAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
@@ -86,6 +97,14 @@ public class GestorPropietario {
 		return new ResultadoCrearPropietario(errores.toArray(new ErrorCrearPropietario[0]));
 	}
 
+	/**
+	 * Método auxiliar que encapsula la validación de los formatos de los atributos del propietario a crear
+	 * 
+	 * @param propietario
+	 *            propietario a validar
+	 * @param errores
+	 *            lista de errores encontrados
+	 */
 	private void validarDatosCrearPropietario(Propietario propietario, ArrayList<ErrorCrearPropietario> errores) {
 		if(!validador.validarNombre(propietario.getNombre())){
 			errores.add(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
@@ -112,17 +131,24 @@ public class GestorPropietario {
 		}
 	}
 
+	/**
+	 * Se encarga de validar los datos de un propietario a modificar y, en caso de que no haya errores,
+	 * delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * @param propietario
+	 *            propietario a modificar
+	 * @return un resultado informando errores correspondientes en caso de que los haya
+	 *
+	 * @throws PersistenciaException
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
 	public ResultadoModificarPropietario modificarPropietario(Propietario propietario) throws PersistenciaException {
 		ArrayList<ErrorModificarPropietario> errores = new ArrayList<>();
 
 		validarDatosModificarPropietario(propietario, errores);
 
 		Propietario propietarioAuxiliar;
-		try{
-			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
-		} catch(PersistenciaException e){
-			throw e;
-		}
+		propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
 		if(null != propietarioAuxiliar && !propietario.equals(propietarioAuxiliar)){
 			errores.add(ErrorModificarPropietario.Ya_Existe_Propietario);
 		}
@@ -141,6 +167,14 @@ public class GestorPropietario {
 		return new ResultadoModificarPropietario(errores.toArray(new ErrorModificarPropietario[0]));
 	}
 
+	/**
+	 * Método auxiliar que encapsula la validación de los formatos de los atributos del propietario a modificar
+	 * 
+	 * @param propietario
+	 *            propietario a validar
+	 * @param errores
+	 *            lista de errores encontrados
+	 */
 	private void validarDatosModificarPropietario(Propietario propietario, ArrayList<ErrorModificarPropietario> errores) {
 		if(!validador.validarNombre(propietario.getNombre())){
 			errores.add(ErrorModificarPropietario.Formato_Nombre_Incorrecto);
@@ -167,15 +201,22 @@ public class GestorPropietario {
 		}
 	}
 
+	/**
+	 * Se encarga de validar que exista el propietario a eliminar, se setea el estado en BAJA y,
+	 * en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * @param propietario
+	 *            propietario a eliminar
+	 * @return un resultado informando errores correspondientes en caso de que los haya
+	 *
+	 * @throws PersistenciaException
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
 	public ResultadoEliminarPropietario eliminarPropietario(Propietario propietario) throws PersistenciaException {
 		ArrayList<ErrorEliminarPropietario> errores = new ArrayList<>();
 
 		Propietario propietarioAuxiliar;
-		try{
-			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
-		} catch(PersistenciaException e){
-			throw e;
-		}
+		propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
 
 		if(null == propietarioAuxiliar){
 			errores.add(ErrorEliminarPropietario.No_Existe_Propietario);
@@ -195,17 +236,33 @@ public class GestorPropietario {
 		return new ResultadoEliminarPropietario(errores.toArray(new ErrorEliminarPropietario[0]));
 	}
 
+	/**
+	 * Obtiene el listado de propietarios solicitándolo a la capa de acceso a datos
+	 *
+	 * @return el listado de propietarios solicitado
+	 *
+	 * @throws PersistenciaException
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
 	public ArrayList<Propietario> obtenerPropietarios() throws PersistenciaException {
 		return persistidorPropietario.listarPropietarios();
 	}
 
+	/**
+	 * Obtiene un propietario en base a su tipo y número de documento solicitándolo a la capa de acceso a datos
+	 *
+	 * @param filtro
+	 *            filtro que contiene el tipo y número de documento del propietario buscado
+	 *
+	 * @return el propietario solicitado
+	 *
+	 * @throws PersistenciaException
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
+
 	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException {
 		Propietario propietarioAuxiliar;
-		try{
-			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(filtro.getTipoDocumento(), filtro.getDocumento()));
-		} catch(PersistenciaException e){
-			throw e;
-		}
+		propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(filtro.getTipoDocumento(), filtro.getDocumento()));
 		return propietarioAuxiliar;
 	}
 }

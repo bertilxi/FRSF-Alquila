@@ -17,8 +17,13 @@
  */
 package app.ui.controladores;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
 
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
@@ -33,11 +38,15 @@ import app.ui.controladores.resultado.ResultadoControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * Controlador de la vista que crea, modifica o muestra un inmueble
@@ -158,9 +167,20 @@ public class NMVInmuebleController extends OlimpoController {
 	@FXML
 	private Pane pantalla2;
 
+	@FXML
+	private Pane panelFotos;
+
+	@FXML
+	private ImageView imagenSeleccionada;
+
+	@FXML
+	private Button btQuitarFoto;
+
 	private StringProperty titulo1 = new SimpleStringProperty();
 
 	private StringProperty titulo2 = new SimpleStringProperty();
+
+	private Inmueble inmueble;
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
@@ -176,12 +196,69 @@ public class NMVInmuebleController extends OlimpoController {
 
 	@FXML
 	public void agregarFoto() {
+		File imagen = solicitarArchivo();
+		if(imagen == null){
+			return;
+		}
 
+		try{
+			final ImageView imageView = new ImageView(imagen.toURI().toURL().toExternalForm());
+			imageView.setPreserveRatio(true);
+			imageView.setFitHeight(100);
+			imageView.setOnMouseClicked((event) -> {
+				cambiarImagen(imageView);
+			});
+			panelFotos.getChildren().add(imageView);
+		} catch(MalformedURLException e){
+			presentador.presentarExcepcionInesperada(e, stage);
+		}
+	}
+
+	private void cambiarImagen(ImageView imageView) {
+		if(imagenSeleccionada != null){
+			imagenSeleccionada.setOpacity(1);
+			if(imagenSeleccionada.equals(imageView)){
+				imagenSeleccionada = null;
+				btQuitarFoto.setDisable(true);
+				return;
+			}
+		}
+		btQuitarFoto.setDisable(false);
+		imagenSeleccionada = imageView;
+		imagenSeleccionada.setOpacity(0.5);
+	}
+
+	private File solicitarArchivo() {
+		File retorno = null;
+		String tipos = "(";
+		ArrayList<String> tiposFiltro = new ArrayList<>();
+		for(String formato: ImageIO.getReaderFormatNames()){
+			tipos += "*." + formato + ";";
+			tiposFiltro.add("*." + formato);
+		}
+		tipos = tipos.substring(0, tipos.length() - 1);
+		tipos += ")";
+
+		ExtensionFilter filtro = new ExtensionFilter("Archivo de imágen " + tipos, tiposFiltro);
+
+		FileChooser archivoSeleccionado = new FileChooser();
+		archivoSeleccionado.getExtensionFilters().add(filtro);
+
+		retorno = archivoSeleccionado.showOpenDialog(stage);
+		if(retorno != null){
+			String nombreArchivo = retorno.toString();
+			retorno = new File(nombreArchivo);
+		}
+		return retorno;
 	}
 
 	@FXML
 	public void quitarFoto() {
-
+		panelFotos.getChildren().remove(imagenSeleccionada);
+		imagenSeleccionada = null;
+		if(panelFotos.getChildren().isEmpty()){
+			btQuitarFoto.setDisable(true);
+		}
 	}
 
 	@FXML
@@ -230,10 +307,6 @@ public class NMVInmuebleController extends OlimpoController {
 	 */
 	private ResultadoControlador modificarInmueble() {
 		return null;
-	}
-
-	public void formatearNuevoInmueble() {
-
 	}
 
 	public void formatearModificarInmueble(Inmueble inmueble) {

@@ -44,18 +44,23 @@ public class ScenographyChanger {
 		this.background = background;
 	}
 
-	public OlimpoController cambiarScenography(String URLVistaACambiar) {
+	public OlimpoController cambiarScenography(String URLVistaACambiar, boolean useSceneSize) {
 		try{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLVistaACambiar));
 			Pane newScenography = (Pane) loader.load();
-
+			
 			background.getChildren().clear();
 			background.getChildren().add(newScenography);
-			background.resize(newScenography.getWidth(), newScenography.getHeight());
-			
-			stage.sizeToScene();
-			stage.centerOnScreen();
+
+			if(useSceneSize){
+				background.resize(newScenography.getWidth(), newScenography.getHeight());
+				stage.sizeToScene();
+			}
+			else{
+				background.resize(stage.getWidth(),stage.getHeight());
+				newScenography.resize(background.getWidth(), background.getHeight());
+			}
 
 			OlimpoController controller = loader.getController();
 
@@ -66,5 +71,9 @@ public class ScenographyChanger {
 			presentadorVentanas.presentarExcepcionInesperada(e, stage);
 			return null;
 		}
+	}
+	
+	public OlimpoController cambiarScenography(String URLVistaACambiar){
+		return cambiarScenography(URLVistaACambiar,false);
 	}
 }

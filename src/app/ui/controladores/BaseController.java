@@ -76,9 +76,10 @@ public class BaseController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
-		//Primera pantalla a mostrar
 		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
-		cambiarScene(background, ventanaInicio);
+
+		//Primera pantalla a mostrar
+		cambiarScene(background, ventanaInicio, true);
 		InicioController.hacerAlInicializar = () -> {
 			toggleGroupSidebar.getToggles().forEach(t -> {
 				t.setSelected(false);
@@ -93,6 +94,8 @@ public class BaseController extends OlimpoController {
 		toggleButtonVendedores.setToggleGroup(toggleGroupSidebar);
 		toggleButtonSalir.setToggleGroup(toggleGroupSidebar);
 		addAlwaysOneSelectedSupport(toggleGroupSidebar);
+
+		stage.centerOnScreen();
 	}
 
 	private void addAlwaysOneSelectedSupport(final ToggleGroup toggleGroup) {
@@ -144,6 +147,12 @@ public class BaseController extends OlimpoController {
 	@FXML
 	public void verPropietarios() {
 		cambiarScene(background, AdministrarPropietarioController.URLVista);
+	}
+
+	@FXML
+	@Override
+	public void salir() {
+		cambiarmeAScene(URLVistaRetorno, true);
 	}
 
 	public void formatearConVendedor(Vendedor vendedor) {

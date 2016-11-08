@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import app.comun.ValidadorFormato;
@@ -32,15 +31,18 @@ import app.datos.entidades.Estado;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.InmuebleService;
-import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
+import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
 import app.logica.resultados.ResultadoModificarInmueble;
 import app.logica.resultados.ResultadoModificarInmueble.ErrorModificarInmueble;
 
 @Service
+/**
+ * Gestor que implementa la capa lógica del ABM Inmueble y funciones asociadas a un inmueble.
+ */
 public class GestorInmueble {
 
 	@Resource
@@ -55,8 +57,66 @@ public class GestorInmueble {
 	@Resource
 	protected ValidadorFormato validador;
 
-	public ResultadoCrearInmueble crearInmueble(Inmueble inmbueble) throws PersistenciaException, GestionException {
-		throw new NotYetImplementedException();
+	/**
+	 * Método para crear un inmueble. Primero se validan las reglas de negocia y luego se persiste.
+	 * Pertenece a la taskcard 14 de la iteración 1 y a la historia 3
+	 *
+	 * @param inmueble
+	 *            a guardar
+	 * @return resultado de la operación
+	 * @throws PersistenciaException
+	 *             si falló al persistir
+	 */
+	public ResultadoCrearInmueble crearInmueble(Inmueble inmueble) throws PersistenciaException {
+		ArrayList<ErrorCrearInmueble> errores = new ArrayList<>();
+
+		if(inmueble.getFechaCarga() == null){
+			errores.add(ErrorCrearInmueble.Fecha_Vacia);
+		}
+
+		if(inmueble.getPropietario() != null){
+			Propietario propietario = gestorPropietario.obtenerPropietario(new FiltroPropietario(inmueble.getPropietario().getTipoDocumento().getTipo(), inmueble.getPropietario().getNumeroDocumento()));
+			if(propietario == null){
+				errores.add(ErrorCrearInmueble.Propietario_Inexistente);
+			}
+		}
+		else{
+			errores.add(ErrorCrearInmueble.Propietario_Vacio);
+		}
+
+		if(inmueble.getPrecio() != null && !validador.validarDoublePositivo(inmueble.getPrecio())){
+			errores.add(ErrorCrearInmueble.Precio_Incorrecto);
+		}
+
+		if(inmueble.getFondo() != null && !validador.validarDoublePositivo(inmueble.getFondo())){
+			errores.add(ErrorCrearInmueble.Fondo_Incorrecto);
+		}
+
+		if(inmueble.getFrente() != null && !validador.validarDoublePositivo(inmueble.getFrente())){
+			errores.add(ErrorCrearInmueble.Frente_Incorrecto);
+		}
+
+		if(inmueble.getSuperficie() != null && !validador.validarDoublePositivo(inmueble.getSuperficie())){
+			errores.add(ErrorCrearInmueble.Superficie_Incorrecta);
+		}
+
+		if(inmueble.getTipo() == null){
+			errores.add(ErrorCrearInmueble.Tipo_Vacio);
+		}
+
+		if(!validador.validarDireccion(inmueble.getDireccion())){
+			errores.add(ErrorCrearInmueble.Formato_Direccion_Incorrecto);
+		}
+
+		if(!validarDatosEdificio(inmueble.getDatosEdificio())){
+			errores.add(ErrorCrearInmueble.Datos_Edificio_Incorrectos);
+		}
+
+		if(errores.isEmpty()){
+			persistidorInmueble.guardarInmueble(inmueble);
+		}
+
+		return new ResultadoCrearInmueble(errores.toArray(new ErrorCrearInmueble[0]));
 	}
 
 	/**
@@ -86,16 +146,11 @@ public class GestorInmueble {
 			}
 		}
 		else{
-			errores.add(ErrorModificarInmueble.Propietario_Inexistente);
+			errores.add(ErrorModificarInmueble.Propietario_Vacio);
 		}
 
-		if(inmueble.getPrecio() == null){
-			errores.add(ErrorModificarInmueble.Precio_Vacio);
-		}
-		else{
-			if(!validador.validarDoublePositivo(inmueble.getPrecio())){
-				errores.add(ErrorModificarInmueble.Precio_Incorrecto);
-			}
+		if(inmueble.getPrecio() != null && !validador.validarDoublePositivo(inmueble.getPrecio())){
+			errores.add(ErrorModificarInmueble.Precio_Incorrecto);
 		}
 
 		if(inmueble.getFondo() != null && !validador.validarDoublePositivo(inmueble.getFondo())){
@@ -179,7 +234,7 @@ public class GestorInmueble {
 		return persistidorInmueble.listarInmuebles();
 	}
 
-	public Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
+	private Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
 		if(datosEdificio == null){
 			return false;
 		}

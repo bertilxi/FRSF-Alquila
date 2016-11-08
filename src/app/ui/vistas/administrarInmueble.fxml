@@ -31,7 +31,7 @@ Vista de administración de inmuebles que se encarga de manejar el listado y la 
 Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
  -->
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarInmuebleController">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarInmuebleController">
    <children>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" HBox.hgrow="ALWAYS">
          <children>
@@ -47,7 +47,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
          <children>
             <Button fx:id="btVerMas" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#verMas" text="Ver más" />
             <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />

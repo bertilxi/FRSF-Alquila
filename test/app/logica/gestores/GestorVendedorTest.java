@@ -27,7 +27,6 @@ import app.datos.entidades.Estado;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.datos.servicios.VendedorService;
-import app.datos.servicios.mock.VendedorServiceMock;
 import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoAutenticacion;
@@ -43,6 +42,7 @@ import junitparams.Parameters;
  */
 public class GestorVendedorTest {
 
+	//Mock del encriptador a utilizar
 	private static EncriptadorPassword encriptadorMock = Mockito.mock(EncriptadorPassword.class);
 
 	@Test
@@ -62,7 +62,36 @@ public class GestorVendedorTest {
 	 */
 	public void testAutenticarVendedor(DatosLogin datos, ResultadoAutenticacion resultadoLogica, Vendedor vendedor, Throwable excepcion) throws Exception {
 		//Creamos el soporte de la prueba
-		VendedorService vendedorServiceMock = new VendedorServiceMock(vendedor, excepcion);
+		VendedorService vendedorServiceMock = new VendedorService() {
+
+			@Override
+			public void guardarVendedor(Vendedor vendedor) throws PersistenciaException {
+			}
+
+			@Override
+			public void modificarVendedor(Vendedor vendedor) throws PersistenciaException {
+			}
+
+			@Override
+			public Vendedor obtenerVendedor(FiltroVendedor filtro) throws PersistenciaException {
+				if(vendedor != null){
+					return vendedor;
+				}
+				if(excepcion == null){
+					return null;
+				}
+				if(excepcion instanceof PersistenciaException){
+					throw (PersistenciaException) excepcion;
+				}
+				new Integer("asd");
+				return null;
+			}
+
+			@Override
+			public ArrayList<Vendedor> listarVendedores() throws PersistenciaException {
+				return null;
+			}
+		};
 		GestorVendedor gestorVendedor = new GestorVendedor() {
 			{
 				this.persistidorVendedor = vendedorServiceMock;

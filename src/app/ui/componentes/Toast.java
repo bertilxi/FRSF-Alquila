@@ -10,28 +10,43 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 public final class Toast {
-	public static void makeText(Stage ownerStage, String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay) {
+	public static void makeText(Window padre, String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay) {
 		Stage toastStage = new Stage();
-		toastStage.initOwner(ownerStage);
+		toastStage.initOwner(padre);
 		toastStage.setResizable(false);
 		toastStage.initStyle(StageStyle.TRANSPARENT);
 
 		Text text = new Text(toastMsg);
-		text.setFont(Font.font("Verdana", 40));
+		text.setFont(Font.font("Verdana", 20));
 		text.setFill(Color.RED);
 
 		StackPane root = new StackPane(text);
-		root.setStyle("-fx-background-radius: 20; -fx-background-color: rgba(0, 0, 0, 0.2); -fx-padding: 50px;");
+		root.setStyle("-fx-background-radius: 20; -fx-background-color: rgba(0, 0, 0, 0.2); -fx-padding: 30px;");
 		root.setOpacity(0);
 
 		Scene scene = new Scene(root);
 		scene.setFill(Color.TRANSPARENT);
 		toastStage.setScene(scene);
-		toastStage.setX(ownerStage.getX() + ownerStage.getWidth() - (scene.getWindow().getWidth() / 200));
-		toastStage.setY(ownerStage.getY() + ownerStage.getHeight() - 200 - root.getHeight());
+
+		final double midX = (padre.getX() + padre.getWidth() / 2);
+		final double midY = (padre.getY() + padre.getHeight());
+
+		toastStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+			if(newValue.intValue() > 1){
+				toastStage.setX(midX - newValue.intValue() / 2);
+			}
+		});
+
+		toastStage.heightProperty().addListener((observable, oldValue, newValue) -> {
+			if(newValue.intValue() > 1){
+				toastStage.setY(midY - newValue.intValue());
+			}
+		});
+
 		toastStage.show();
 
 		Timeline fadeInTimeline = new Timeline();

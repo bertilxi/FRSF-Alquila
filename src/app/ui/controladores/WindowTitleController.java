@@ -35,6 +35,6 @@ public class WindowTitleController extends OlimpoController {
 	public void inicializar(URL location, ResourceBundle resources) {
 		//Primera pantalla a mostrar
 		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
-		cambiarScene(background, LoginController.URLVista);
+		cambiarScene(background, LoginController.URLVista, true);
 	}
 }
