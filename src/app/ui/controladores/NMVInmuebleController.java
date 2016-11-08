@@ -196,36 +196,35 @@ public class NMVInmuebleController extends OlimpoController {
 		});
 		titulo1.set("Nuevo inmueble");
 		atras();
-		
+
 		try{
 			cbPropietario.getItems().addAll(coordinador.obtenerPropietarios());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		
+
 		try{
 			cbTipoInmueble.getItems().addAll(coordinador.obtenerTiposInmueble());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		
+
 		cbOrientacion.getItems().addAll(OrientacionStr.values());
-		
+
 		try{
 			cbPais.getItems().addAll(coordinador.obtenerPaises());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		
+
 		//se selecciona por defecto a argentina en el combo box país
-		for(Pais p: cbPais.getItems()) {
-			if(p.getNombre().equals("Argentina")) {
+		for(Pais p: cbPais.getItems()){
+			if(p.getNombre().equals("Argentina")){
 				cbPais.getSelectionModel().select(p);
 				break;
 			}
 		}
 		actualizarProvincias(cbPais.getSelectionModel().getSelectedItem());
-
 
 		cbPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
@@ -427,13 +426,13 @@ public class NMVInmuebleController extends OlimpoController {
 			}
 		});
 	}
-	
+
 	/**
 	 * Cuando varía la seleccion del comboBox de provincias, se actualiza el comboBox de localidades.
 	 * También se delega la tarea de vaciar los comboBox de barrios y calles
 	 *
 	 * @param provincia
-	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarLocalidades(Provincia provincia) {
 		cbLocalidad.getItems().clear();
@@ -452,7 +451,7 @@ public class NMVInmuebleController extends OlimpoController {
 	 * También se delega la tarea de vaciar el comboBox de localidades
 	 *
 	 * @param pais
-	 * 			país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarProvincias(Pais pais) {
 		cbProvincia.getItems().clear();
@@ -470,7 +469,7 @@ public class NMVInmuebleController extends OlimpoController {
 	 * Cuando varía la seleccion del comboBox de localidades, se actualizan los comboBox de barrios y calles.
 	 *
 	 * @param loc
-	 * 			localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarBarriosYCalles(Localidad loc) {
 		cbBarrio.getItems().clear();
@@ -486,7 +485,6 @@ public class NMVInmuebleController extends OlimpoController {
 		cbBarrio.getEditor().clear();
 		cbCalle.getEditor().clear();
 	}
-	
 
 	@FXML
 	public void agregarFoto() {
@@ -550,9 +548,7 @@ public class NMVInmuebleController extends OlimpoController {
 	public void quitarFoto() {
 		panelFotos.getChildren().remove(imagenSeleccionada);
 		imagenSeleccionada = null;
-		if(panelFotos.getChildren().isEmpty()){
-			btQuitarFoto.setDisable(true);
-		}
+		btQuitarFoto.setDisable(true);
 	}
 
 	@FXML
@@ -590,7 +586,7 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador crearInmueble() {
-		
+
 		return null;
 	}
 
