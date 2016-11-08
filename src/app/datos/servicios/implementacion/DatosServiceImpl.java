@@ -29,6 +29,7 @@ import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
+import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
@@ -185,6 +186,23 @@ public class DatosServiceImpl implements DatosService {
 			throw new ConsultaException(e);
 		}
 		return calles;
+	}
+
+	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
+	public ArrayList<Orientacion> obtenerOrientaciones() throws PersistenciaException {
+		ArrayList<Orientacion> orientaciones = new ArrayList<>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			for(Object o: session.getNamedQuery("obtenerOrientaciones").list()){
+				if(o instanceof Orientacion){
+					orientaciones.add((Orientacion) o);
+				}
+			}
+		} catch(Exception e){
+			throw new ConsultaException(e);
+		}
+		return orientaciones;
 	}
 
 }

@@ -164,10 +164,10 @@ public class ModificarVendedorController extends OlimpoController {
 					 */
 					salir();
 					if(esAltaNuevamente){
-						presentador.presentarToast("Se ha dado de alta el vendedor con éxito", stage, 20);
+						presentador.presentarToast("Se ha dado de alta el vendedor con éxito", stage);
 					}
 					else{
-						presentador.presentarToast("Se ha modificado el vendedor con éxito", stage, 20);
+						presentador.presentarToast("Se ha modificado el vendedor con éxito", stage);
 					}
 
 				}

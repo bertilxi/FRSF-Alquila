@@ -78,4 +78,8 @@ public class PresentadorVentanas {
 		int fadeOutTime = 500; //0.5 seconds
 		Toast.makeText(padre, mensaje, toastMsgTime, fadeInTime, fadeOutTime, ajusteHeight);
 	}
+
+	public void presentarToast(String mensaje, Window padre) {
+		presentarToast(mensaje, padre, 20);
+	}
 }

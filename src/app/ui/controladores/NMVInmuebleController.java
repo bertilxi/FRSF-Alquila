@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 
 import app.datos.clases.EstadoStr;
-import app.datos.clases.OrientacionStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.DatosEdificio;
@@ -44,10 +43,9 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import app.ui.controladores.resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -114,7 +112,7 @@ public class NMVInmuebleController extends OlimpoController {
 	private ComboBox<Localidad> cbLocalidad;
 
 	@FXML
-	private ComboBox<OrientacionStr> cbOrientacion;
+	private ComboBox<Orientacion> cbOrientacion;
 
 	@FXML
 	private ComboBox<Pais> cbPais;
@@ -207,30 +205,19 @@ public class NMVInmuebleController extends OlimpoController {
 		});
 		titulo1.set("Nuevo inmueble");
 		atras();
-		
+
 		try{
 			cbPropietario.getItems().addAll(coordinador.obtenerPropietarios());
-		} catch(PersistenciaException e){
-			presentador.presentarExcepcion(e, stage);
-		}
-		
-		try{
 			cbTipoInmueble.getItems().addAll(coordinador.obtenerTiposInmueble());
-		} catch(PersistenciaException e){
-			presentador.presentarExcepcion(e, stage);
-		}
-		
-		cbOrientacion.getItems().addAll(OrientacionStr.values());
-		
-		try{
+			cbOrientacion.getItems().addAll(coordinador.obtenerOrientaciones());
 			cbPais.getItems().addAll(coordinador.obtenerPaises());
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-		
+
 		//se selecciona por defecto a argentina en el combo box país
-		for(Pais p: cbPais.getItems()) {
-			if(p.getNombre().equals("Argentina")) {
+		for(Pais p: cbPais.getItems()){
+			if(p.getNombre().equals("Argentina")){
 				cbPais.getSelectionModel().select(p);
 				break;
 			}
@@ -396,57 +383,6 @@ public class NMVInmuebleController extends OlimpoController {
 			}
 		});
 
-		//Cuando el foco sale de los comboBox que estaban siendo editados
-		//el texto ingresado se convierte en un item y se lo selecciona
-		cbPais.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
-				if(!newPropertyValue){
-					cbPais.getSelectionModel().select(cbPais.getConverter().fromString(cbPais.getEditor().getText()));
-
-				}
-			}
-		});
-
-		cbProvincia.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
-				if(!newPropertyValue){
-					cbProvincia.getSelectionModel().select(cbProvincia.getConverter().fromString(cbProvincia.getEditor().getText()));
-
-				}
-			}
-		});
-
-		cbLocalidad.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
-				if(!newPropertyValue){
-					cbLocalidad.getSelectionModel().select(cbLocalidad.getConverter().fromString(cbLocalidad.getEditor().getText()));
-
-				}
-			}
-		});
-
-		cbBarrio.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
-				if(!newPropertyValue){
-					cbBarrio.getSelectionModel().select(cbBarrio.getConverter().fromString(cbBarrio.getEditor().getText()));
-
-				}
-			}
-		});
-
-		cbCalle.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
-				if(!newPropertyValue){
-					cbCalle.getSelectionModel().select(cbCalle.getConverter().fromString(cbCalle.getEditor().getText()));
-
-				}
-			}
-		});
 	}
 
 	/**
@@ -608,39 +544,38 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador crearInmueble() {
+		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
 		ResultadoCrearInmueble resultado;
 		StringBuffer erroresBfr = new StringBuffer();
-		
-		inmueble = new Inmueble();
-		
+		Inmueble inmueble = new Inmueble();
+
+		//Toma de datos de la vista
 		DatosEdificio datos = new DatosEdificio()
 				.setSuperficie(Double.parseDouble(tfSuperficieEdificio.getText()))
 				.setAntiguedad(Integer.parseInt(tfAntiguedad.getText()))
 				.setDormitorios(Integer.parseInt(tfDormitorios.getText()))
 				.setBaños(Integer.parseInt(tfBaños.getText()))
-				.setPropiedadHorizontal(cbPropiedadHorizontal.selectedProperty().getValue())
-				.setGaraje(cbGarage.selectedProperty().getValue())
-				.setPatio(cbPatio.selectedProperty().getValue())
-				.setPiscina(cbPiscina.selectedProperty().getValue())
-				.setAguaCorriente(cbAguaCorriente.selectedProperty().getValue())
-				.setCloacas(cbCloaca.selectedProperty().getValue())
-				.setGasNatural(cbGasNatural.selectedProperty().getValue())
-				.setAguaCaliente(cbAguaCaliente.selectedProperty().getValue())
-				.setTelefono(cbTelefono.selectedProperty().getValue())
-				.setLavadero(cbLavadero.selectedProperty().getValue())
-				.setPavimento(cbPavimento.selectedProperty().getValue())
+				.setPropiedadHorizontal(cbPropiedadHorizontal.isSelected())
+				.setGaraje(cbGarage.isSelected())
+				.setPatio(cbPatio.isSelected())
+				.setPiscina(cbPiscina.isSelected())
+				.setAguaCorriente(cbAguaCorriente.isSelected())
+				.setCloacas(cbCloaca.isSelected())
+				.setGasNatural(cbGasNatural.isSelected())
+				.setAguaCaliente(cbAguaCaliente.isSelected())
+				.setTelefono(cbTelefono.isSelected())
+				.setLavadero(cbLavadero.isSelected())
+				.setPavimento(cbPavimento.isSelected())
 				.setInmueble(inmueble);
-		
-		//TODO persistir la provincia y/o localidad nueva
-		
+
 		Localidad localidad = cbLocalidad.getValue();
 		Barrio barrio = cbBarrio.getValue();
 		Calle calle = cbCalle.getValue();
 		Date fechaCarga = new Date();
-		OrientacionStr orientacion = cbOrientacion.getValue();
+		Orientacion orientacion = cbOrientacion.getValue();
 		Propietario propietario = cbPropietario.getValue();
 		TipoInmueble tipo = cbTipoInmueble.getValue();
-		
+
 		Direccion direccion = new Direccion()
 				.setLocalidad(localidad)
 				.setCalle(calle)
@@ -649,31 +584,30 @@ public class NMVInmuebleController extends OlimpoController {
 				.setDepartamento(tfDepartamento.getText())
 				.setOtros(tfOtros.getText())
 				.setPiso(tfPiso.getText());
-		
+
 		inmueble.setDatosEdificio(datos)
 				.setFechaCarga(fechaCarga)
 				.setEstado(new Estado(EstadoStr.ALTA))
 				.setDireccion(direccion)
 				.setTipo(tipo)
-				.setOrientacion(new Orientacion(orientacion))
+				.setOrientacion(orientacion)
 				.setPropietario(propietario)
 				.setPrecio(Double.parseDouble(tfPrecioVenta.getText()))
 				.setFrente(Double.parseDouble(tfFrente.getText()))
 				.setFondo(Double.parseDouble(tfFondo.getText()))
 				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
 				.setObservaciones(taObservaciones.getText());
-				
-		//TODO poner el retorno correcto de las excepciones
+
 		try{
 			resultado = coordinador.crearInmueble(inmueble);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
-			return null;
+			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
 		} catch(Exception e){
 			presentador.presentarExcepcionInesperada(e, stage);
-			return null;
+			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
-		
+
 		if(resultado.hayErrores()){
 			for(ErrorCrearInmueble err: resultado.getErrores()){
 				switch(err) {
@@ -709,13 +643,15 @@ public class NMVInmuebleController extends OlimpoController {
 					break;
 				}
 			}
+			erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
 			cambiarmeAScene(AdministrarInmuebleController.URLVista);
+			presentador.presentarToast("Se ha creado el vendedor con éxito", stage);
 		}
-		
-		return null;
+
+		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 	}
 
 	/**

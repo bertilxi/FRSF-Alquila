@@ -28,6 +28,7 @@ import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
+import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
@@ -81,5 +82,9 @@ public class GestorDatos {
 		ArrayList<Calle> lista = persistidorDatos.obtenerCallesDe(localidad);
 		Collections.sort(lista);
 		return lista;
+	}
+
+	public ArrayList<Orientacion> obtenerOrientaciones() throws PersistenciaException {
+		return persistidorDatos.obtenerOrientaciones();
 	}
 }
