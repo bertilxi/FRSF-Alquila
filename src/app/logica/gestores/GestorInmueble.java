@@ -81,16 +81,11 @@ public class GestorInmueble {
 			}
 		}
 		else{
-			errores.add(ErrorCrearInmueble.Propietario_Inexistente);
+			errores.add(ErrorCrearInmueble.Propietario_Vacio);
 		}
 
-		if(inmueble.getPrecio() == null){
-			errores.add(ErrorCrearInmueble.Precio_Vacio);
-		}
-		else{
-			if(!validador.validarDoublePositivo(inmueble.getPrecio())){
-				errores.add(ErrorCrearInmueble.Precio_Incorrecto);
-			}
+		if(inmueble.getPrecio() != null && !validador.validarDoublePositivo(inmueble.getPrecio())){
+			errores.add(ErrorCrearInmueble.Precio_Incorrecto);
 		}
 
 		if(inmueble.getFondo() != null && !validador.validarDoublePositivo(inmueble.getFondo())){
@@ -138,16 +133,11 @@ public class GestorInmueble {
 			}
 		}
 		else{
-			errores.add(ErrorModificarInmueble.Propietario_Inexistente);
+			errores.add(ErrorModificarInmueble.Propietario_Vacio);
 		}
 
-		if(inmueble.getPrecio() == null){
-			errores.add(ErrorModificarInmueble.Precio_Vacio);
-		}
-		else{
-			if(!validador.validarDoublePositivo(inmueble.getPrecio())){
-				errores.add(ErrorModificarInmueble.Precio_Incorrecto);
-			}
+		if(inmueble.getPrecio() != null && !validador.validarDoublePositivo(inmueble.getPrecio())){
+			errores.add(ErrorModificarInmueble.Precio_Incorrecto);
 		}
 
 		if(inmueble.getFondo() != null && !validador.validarDoublePositivo(inmueble.getFondo())){
