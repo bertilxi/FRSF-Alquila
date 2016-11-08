@@ -14,18 +14,18 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 
 public final class Toast {
-	public static void makeText(Window padre, String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay) {
+	public static void makeText(Window padre, String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay, int ajusteHeight) {
 		Stage toastStage = new Stage();
 		toastStage.initOwner(padre);
 		toastStage.setResizable(false);
 		toastStage.initStyle(StageStyle.TRANSPARENT);
 
 		Text text = new Text(toastMsg);
-		text.setFont(Font.font("Verdana", 20));
-		text.setFill(Color.RED);
+		text.setFont(Font.font("Verdana", 15));
+		text.setFill(Color.WHITE);
 
 		StackPane root = new StackPane(text);
-		root.setStyle("-fx-background-radius: 20; -fx-background-color: rgba(0, 0, 0, 0.2); -fx-padding: 30px;");
+		root.setStyle("-fx-background-radius: 15; -fx-background-color: rgba(0, 0, 0, 0.5); -fx-padding: 14px;");
 		root.setOpacity(0);
 
 		Scene scene = new Scene(root);
@@ -43,7 +43,7 @@ public final class Toast {
 
 		toastStage.heightProperty().addListener((observable, oldValue, newValue) -> {
 			if(newValue.intValue() > 1){
-				toastStage.setY(midY - newValue.intValue());
+				toastStage.setY(midY - newValue.intValue() - ajusteHeight);
 			}
 		});
 

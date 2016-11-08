@@ -142,6 +142,7 @@ public class AdministrarVendedorController extends OlimpoController {
 				}
 				else{
 					tablaVendedores.getItems().remove(vendedor);
+					presentador.presentarToast("Se ha eliminado al vendedor " + vendedor.getNombre() + " con éxito", stage, 20);
 				}
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);

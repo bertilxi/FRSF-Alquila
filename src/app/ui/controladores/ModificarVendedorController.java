@@ -72,6 +72,8 @@ public class ModificarVendedorController extends OlimpoController {
 
 	private Vendedor vendedor;
 
+	private Boolean esAltaNuevamente = false;
+
 	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
 	/**
@@ -156,8 +158,18 @@ public class ModificarVendedorController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
-					presentador.presentarToast("Se ha modificado el vendedor", stage);
-					cambiarmeAScene(URLVistaRetorno);
+					/*
+					 * primero sale, y después presenta el Toast
+					 * para saber en que posición colocarlo según el tamaño de la ventana padre (puede ser Login o administrar vendedor)
+					 */
+					salir();
+					if(esAltaNuevamente){
+						presentador.presentarToast("Se ha dado de alta el vendedor con éxito", stage, 20);
+					}
+					else{
+						presentador.presentarToast("Se ha modificado el vendedor con éxito", stage, 20);
+					}
+
 				}
 
 			} catch(PersistenciaException e){
@@ -202,6 +214,21 @@ public class ModificarVendedorController extends OlimpoController {
 	}
 
 	@Override
+	public void salir() {
+		if(URLVistaRetorno != null){
+			if(URLVistaRetorno.equals(LoginController.URLVista)){
+				cambiarmeAScene(URLVistaRetorno, true);
+			}
+			else{
+				cambiarmeAScene(URLVistaRetorno);
+			}
+		}
+		else{
+			super.salir();
+		}
+	}
+
+	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		try{
 			comboBoxTipoDocumento.getItems().addAll(coordinador.obtenerTiposDeDocumento());
@@ -230,5 +257,9 @@ public class ModificarVendedorController extends OlimpoController {
 		textFieldApellido.setText(vendedor.getApellido());
 		textFieldNumeroDocumento.setText(vendedor.getNumeroDocumento());
 		comboBoxTipoDocumento.getSelectionModel().select(vendedor.getTipoDocumento());
+	}
+
+	public void setAltaVendedor() {
+		this.esAltaNuevamente = true;
 	}
 }

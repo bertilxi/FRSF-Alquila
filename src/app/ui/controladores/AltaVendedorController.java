@@ -142,7 +142,7 @@ public class AltaVendedorController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
-					presentador.presentarToast("Se ha creado un vendedor", stage);
+					presentador.presentarToast("Se ha creado el vendedor con éxito", stage, 20);
 					salir();
 				}
 
@@ -150,11 +150,12 @@ public class AltaVendedorController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
-					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor ya existía anteriormente pero fue dado de baja. ¿Desea continuar?", stage);
+					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor está dado de baja. Si continúa podrá darlo de alta nuevamente. ¿Desea continuar?", stage);
 					if(ventana.acepta()){
 						vendedor = coordinador.obtenerVendedor(vendedor);
-						ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, AdministrarVendedorController.URLVista);
+						ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVistaRetorno);
 						modificarVendedorController.setVendedor(vendedor);
+						modificarVendedorController.setAltaVendedor();
 					}
 				}
 			} catch(Exception e){
