@@ -162,6 +162,8 @@ public class NMVInmuebleController extends OlimpoController {
 
 	private StringProperty titulo2 = new SimpleStringProperty();
 
+	private Inmueble inmueble;
+
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
 		titulo1.addListener((observable, oldValue, newValue) -> {
@@ -230,10 +232,6 @@ public class NMVInmuebleController extends OlimpoController {
 	 */
 	private ResultadoControlador modificarInmueble() {
 		return null;
-	}
-
-	public void formatearNuevoInmueble() {
-
 	}
 
 	public void formatearModificarInmueble(Inmueble inmueble) {

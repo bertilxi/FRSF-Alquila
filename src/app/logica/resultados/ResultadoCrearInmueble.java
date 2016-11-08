@@ -35,7 +35,7 @@ public class ResultadoCrearInmueble extends Resultado<ErrorCrearInmueble> {
 		Frente_Incorrecto,
 		Superficie_Incorrecta,
 		Tipo_Vacio,
-		Datos_Edificio_Incorrectos,
+		Datos_Edificio_Incorrectos
 	}
 
 }

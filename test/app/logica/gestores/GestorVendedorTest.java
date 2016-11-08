@@ -42,6 +42,7 @@ import junitparams.Parameters;
  */
 public class GestorVendedorTest {
 
+	//Mock del encriptador a utilizar
 	private static EncriptadorPassword encriptadorMock = Mockito.mock(EncriptadorPassword.class);
 
 	@Test
