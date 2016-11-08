@@ -36,6 +36,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * Controlador de la vista para modificar un vendedor
+ */
 public class ModificarVendedorController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/modificarVendedor.fxml";
@@ -71,6 +74,12 @@ public class ModificarVendedorController extends OlimpoController {
 
 	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
+	/**
+	 * Acción que se ejecuta al apretar el botón aceptar.
+	 *
+	 * Valida que se hayan insertado datos, los carga al vendedor y deriva la operación a capa lógica.
+	 * Si la capa lógica retorna errores, éstos se muestran al usuario.
+	 */
 	public void acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
@@ -160,10 +169,19 @@ public class ModificarVendedorController extends OlimpoController {
 
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón cancelar.
+	 * Se vuelve a la pantalla desde la que se llamó a ModificarVendedor.
+	 */
 	public void cancelAction(ActionEvent event) {
 		cambiarmeAScene(URLVistaRetorno);
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el checkBox de cambiar de contraseña.
+	 * Si está seleccionado se habilitan los campos para cambiar la contraseña,
+	 * si no, se deshabilitan.
+	 */
 	public void checkBoxAction() {
 		if(checkBoxCambiarContraseña.isSelected()){
 			labelContraseñaAntigua.setDisable(false);
@@ -199,6 +217,12 @@ public class ModificarVendedorController extends OlimpoController {
 		checkBoxCambiarContraseña.setSelected(false);
 	}
 
+	/**
+	 * Setea los campos con los datos del vendedor pasado por parámetro.
+	 *
+	 * @param vendedor
+	 *            vendedor del que se obtienen los datos.
+	 */
 	public void setVendedor(Vendedor vendedor) {
 		this.setTitulo("Modificar vendedor");
 		this.vendedor = vendedor;
