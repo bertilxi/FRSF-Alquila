@@ -30,6 +30,7 @@ import app.datos.entidades.Calle;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
+import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
@@ -177,5 +178,9 @@ public class CoordinadorJavaFX {
 
 	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException {
 		return gestorPropietario.obtenerPropietario(filtro);
+	}
+
+	public ArrayList<Orientacion> obtenerOrientaciones() throws PersistenciaException {
+		return gestorDatos.obtenerOrientaciones();
 	}
 }

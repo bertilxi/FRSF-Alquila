@@ -142,7 +142,7 @@ public class AltaVendedorController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
-					presentador.presentarToast("Se ha creado el vendedor con éxito", stage, 20);
+					presentador.presentarToast("Se ha creado el vendedor con éxito", stage);
 					salir();
 				}
 
