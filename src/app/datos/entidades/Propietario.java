@@ -43,6 +43,9 @@ import app.comun.FormateadorString;
 		@NamedQuery(name = "obtenerPropietario", query = "SELECT p FROM Propietario p WHERE p.numeroDocumento = :documento AND p.tipoDocumento.tipo = :tipoDocumento") })
 @Entity
 @Table(name = "propietario", uniqueConstraints = @UniqueConstraint(name = "propietario_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
+/**
+ * Entidad que modela a un propietario
+ */
 public class Propietario {
 
 	@Id
