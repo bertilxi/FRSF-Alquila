@@ -127,7 +127,7 @@ public class CoordinadorJavaFX {
 		return gestorPropietario.obtenerPropietarios();
 	}
 
-	public ResultadoCrearInmueble crearInmueble(Inmueble inmbueble) throws PersistenciaException, GestionException {
+	public ResultadoCrearInmueble crearInmueble(Inmueble inmbueble) throws PersistenciaException {
 		return gestorInmueble.crearInmueble(inmbueble);
 	}
 

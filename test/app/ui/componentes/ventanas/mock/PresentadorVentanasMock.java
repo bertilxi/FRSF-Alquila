@@ -13,7 +13,7 @@ public class PresentadorVentanasMock extends PresentadorVentanas {
 	Boolean acepta;
 
 	public PresentadorVentanasMock() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public PresentadorVentanasMock(Boolean acepta) {
