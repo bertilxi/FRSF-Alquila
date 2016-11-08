@@ -48,7 +48,17 @@ public class EncriptadorPassword {
 	 * @return String
 	 */
 	public String encriptar(char[] palabra, String sal) {
-		return new String(hashPassword(palabra, (sal + SAL_GLOBAL).getBytes(), ITERATIONS, KEY_LENGTH));
+		return bytesToString(hashPassword(palabra, (sal + SAL_GLOBAL).getBytes(), ITERATIONS, KEY_LENGTH));
+	}
+
+	public String bytesToString(byte[] data) {
+		String dataOut = "";
+		for(int i = 0; i < data.length; i++){
+			if(data[i] != 0x00){
+				dataOut += (char) data[i];
+			}
+		}
+		return dataOut;
 	}
 
 	private byte[] hashPassword(final char[] password, final byte[] salt, final int iterations, final int keyLength) {
@@ -57,7 +67,7 @@ public class EncriptadorPassword {
 			PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, keyLength);
 			SecretKey key = skf.generateSecret(spec);
 			byte[] res = key.getEncoded();
-			Arrays.fill(password, '\u0000'); // clear sensitive data
+			Arrays.fill(password, '\u0012'); // clear sensitive data
 			return res;
 		} catch(NoSuchAlgorithmException | InvalidKeySpecException e){
 			throw new RuntimeException(e);
@@ -73,6 +83,6 @@ public class EncriptadorPassword {
 		SecureRandom random = new SecureRandom();
 		byte bytes[] = new byte[20];
 		random.nextBytes(bytes);
-		return new String(bytes);
+		return bytesToString(bytes);
 	}
 }
