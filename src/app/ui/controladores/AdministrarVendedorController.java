@@ -32,6 +32,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Controlador de la vista que lista y administra los propietarios
+ * Permite la creación, modificación y eliminación de vendedores
+ */
 public class AdministrarVendedorController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarVendedor.fxml";
@@ -73,6 +77,12 @@ public class AdministrarVendedorController extends OlimpoController {
 				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}
 
+	/**
+	 * Habilita o deshabilita botones según si hay un vendedor seleccionado o no
+	 *
+	 * @param vendedor
+	 *            vendedor seleccionado. Si no hay vendedor seleccionado, es <code>null</code>
+	 */
 	private void habilitarBotones(Vendedor vendedor) {
 		if(vendedor == null){
 			botonModificar.setDisable(true);
@@ -84,10 +94,18 @@ public class AdministrarVendedorController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón agregar
+	 * Se pasa a la pantalla alta vendedor
+	 */
 	public void agregarAction(ActionEvent event) {
 		cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón modificar
+	 * Se pasa a la pantalla modificar vendedor
+	 */
 	public void modificarAction(ActionEvent event) {
 		Vendedor vendedor = tablaVendedores.getSelectionModel().getSelectedItem();
 		if(vendedor == null){
@@ -97,6 +115,10 @@ public class AdministrarVendedorController extends OlimpoController {
 		modificarVendedorController.setVendedor(vendedor);
 	}
 
+	/**
+	 * Acción que se ejecuta al presionar el botón eliminar
+	 * Se muestra una ventana emergente para confirmar la operación
+	 */
 	public void eliminarAction(ActionEvent event) {
 		Vendedor vendedor = tablaVendedores.getSelectionModel().getSelectedItem();
 		if(vendedor == null){
