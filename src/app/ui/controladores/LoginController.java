@@ -54,7 +54,7 @@ public class LoginController extends OlimpoController {
 
 	@FXML
 	public void registrar() {
-		cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
+		cambiarmeAScene(AltaVendedorController.URLVista, URLVista, true);
 	}
 
 	@FXML

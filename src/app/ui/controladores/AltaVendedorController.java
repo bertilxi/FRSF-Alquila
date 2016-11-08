@@ -143,7 +143,7 @@ public class AltaVendedorController extends OlimpoController {
 				}
 				else{
 					presentador.presentarToast("Se ha creado un vendedor", stage);
-					cambiarmeAScene(URLVistaRetorno);
+					salir();
 				}
 
 			} catch(PersistenciaException e){
@@ -168,7 +168,22 @@ public class AltaVendedorController extends OlimpoController {
 	 * Se vuelve a la pantalla desde la que se llamó a AltaVendedor.
 	 */
 	public void cancelAction(ActionEvent event) {
-		cambiarmeAScene(URLVistaRetorno);
+		salir();
+	}
+
+	@Override
+	public void salir() {
+		if(URLVistaRetorno != null){
+			if(URLVistaRetorno.equals(LoginController.URLVista)){
+				cambiarmeAScene(URLVistaRetorno, true);
+			}
+			else{
+				cambiarmeAScene(URLVistaRetorno);
+			}
+		}
+		else{
+			super.salir();
+		}
 	}
 
 	@Override
