@@ -21,20 +21,28 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import app.datos.clases.EstadoStr;
 import app.datos.clases.OrientacionStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
+import app.datos.entidades.DatosEdificio;
+import app.datos.entidades.Direccion;
+import app.datos.entidades.Estado;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
+import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoInmueble;
 import app.excepciones.PersistenciaException;
+import app.logica.resultados.ResultadoCrearInmueble;
+import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import app.ui.controladores.resultado.ResultadoControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -46,11 +54,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.StringConverter;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 /**
  * Controlador de la vista que crea, modifica o muestra un inmueble
@@ -225,7 +236,17 @@ public class NMVInmuebleController extends OlimpoController {
 			}
 		}
 		actualizarProvincias(cbPais.getSelectionModel().getSelectedItem());
-
+		final TextFormatter<Integer> formatterInteger = new TextFormatter<>(new IntegerStringConverter());
+		final TextFormatter<Double> formatterDouble = new TextFormatter<>(new DoubleStringConverter());
+		tfAntiguedad.setTextFormatter(formatterInteger);
+		tfBaños.setTextFormatter(formatterInteger);
+		tfAltura.setTextFormatter(formatterInteger);
+		tfDormitorios.setTextFormatter(formatterInteger);
+		tfSuperficieEdificio.setTextFormatter(formatterDouble);
+		tfFondo.setTextFormatter(formatterDouble);
+		tfFrente.setTextFormatter(formatterDouble);
+		tfSuperficie.setTextFormatter(formatterDouble);
+		tfPrecioVenta.setTextFormatter(formatterDouble);
 
 		cbPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
@@ -590,6 +611,112 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador crearInmueble() {
+		ResultadoCrearInmueble resultado;
+		StringBuffer erroresBfr = new StringBuffer();
+		
+		inmueble = new Inmueble();
+		
+		DatosEdificio datos = new DatosEdificio()
+				.setSuperficie(Double.parseDouble(tfSuperficieEdificio.getText()))
+				.setAntiguedad(Integer.parseInt(tfAntiguedad.getText()))
+				.setDormitorios(Integer.parseInt(tfDormitorios.getText()))
+				.setBaños(Integer.parseInt(tfBaños.getText()))
+				.setPropiedadHorizontal(cbPropiedadHorizontal.selectedProperty().getValue())
+				.setGaraje(cbGarage.selectedProperty().getValue())
+				.setPatio(cbPatio.selectedProperty().getValue())
+				.setPiscina(cbPiscina.selectedProperty().getValue())
+				.setAguaCorriente(cbAguaCorriente.selectedProperty().getValue())
+				.setCloacas(cbCloaca.selectedProperty().getValue())
+				.setGasNatural(cbGasNatural.selectedProperty().getValue())
+				.setAguaCaliente(cbAguaCaliente.selectedProperty().getValue())
+				.setTelefono(cbTelefono.selectedProperty().getValue())
+				.setLavadero(cbLavadero.selectedProperty().getValue())
+				.setPavimento(cbPavimento.selectedProperty().getValue())
+				.setInmueble(inmueble);
+		
+		//TODO persistir la provincia y/o localidad nueva
+		
+		Localidad localidad = cbLocalidad.getValue();
+		Barrio barrio = cbBarrio.getValue();
+		Calle calle = cbCalle.getValue();
+		Date fechaCarga = new Date();
+		OrientacionStr orientacion = cbOrientacion.getValue();
+		Propietario propietario = cbPropietario.getValue();
+		TipoInmueble tipo = cbTipoInmueble.getValue();
+		
+		Direccion direccion = new Direccion()
+				.setLocalidad(localidad)
+				.setCalle(calle)
+				.setNumero(tfAltura.getText())
+				.setBarrio(barrio)
+				.setDepartamento(tfDepartamento.getText())
+				.setOtros(tfOtros.getText())
+				.setPiso(tfPiso.getText());
+		
+		inmueble.setDatosEdificio(datos)
+				.setFechaCarga(fechaCarga)
+				.setEstado(new Estado(EstadoStr.ALTA))
+				.setDireccion(direccion)
+				.setTipo(tipo)
+				.setOrientacion(new Orientacion(orientacion))
+				.setPropietario(propietario)
+				.setPrecio(Double.parseDouble(tfPrecioVenta.getText()))
+				.setFrente(Double.parseDouble(tfFrente.getText()))
+				.setFondo(Double.parseDouble(tfFondo.getText()))
+				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
+				.setObservaciones(taObservaciones.getText());
+				
+		//TODO poner el retorno correcto de las excepciones
+		try{
+			resultado = coordinador.crearInmueble(inmueble);
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+			return null;
+		} catch(Exception e){
+			presentador.presentarExcepcionInesperada(e, stage);
+			return null;
+		}
+		
+		if(resultado.hayErrores()){
+			for(ErrorCrearInmueble err: resultado.getErrores()){
+				switch(err) {
+				case Fecha_Vacia:
+					erroresBfr.append("Fecha no ingresada.\n");
+					break;
+				case Fondo_Incorrecto:
+					erroresBfr.append("Formato del campo Fondo incorrecto.\n");
+					break;
+				case Formato_Direccion_Incorrecto:
+					erroresBfr.append("Formato de dirección incorrecto.\n");
+					break;
+				case Frente_Incorrecto:
+					erroresBfr.append("Formato del campo Frente incorrecto.\n");
+					break;
+				case Precio_Incorrecto:
+					erroresBfr.append("Formato de precio incorrecto.\n");
+					break;
+				case Propietario_Inexistente:
+					erroresBfr.append("El propietario seleccionado no existe en el sistema.\n");
+					break;
+				case Propietario_Vacio:
+					erroresBfr.append("Elija el propietario.\n");
+					break;
+				case Superficie_Incorrecta:
+					erroresBfr.append("Formato superficie de Inmueble incorrecto.\n");
+					break;
+				case Tipo_Vacio:
+					erroresBfr.append("Elija el tipo de Inmueble.\n");
+					break;
+				case Datos_Edificio_Incorrectos:
+					erroresBfr.append("Formato de los datos de edificio incorrectos.\n");
+					break;
+				}
+			}
+			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);
+		}
+		else{
+			cambiarmeAScene(AdministrarInmuebleController.URLVista);
+		}
 		
 		return null;
 	}
