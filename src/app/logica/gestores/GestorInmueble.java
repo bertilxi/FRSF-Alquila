@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import app.comun.ValidadorFormato;
@@ -35,6 +34,7 @@ import app.datos.servicios.InmuebleService;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
+import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
 import app.logica.resultados.ResultadoModificarInmueble;
@@ -55,8 +55,61 @@ public class GestorInmueble {
 	@Resource
 	protected ValidadorFormato validador;
 
-	public ResultadoCrearInmueble crearInmueble(Inmueble inmbueble) throws PersistenciaException, GestionException {
-		throw new NotYetImplementedException();
+	public ResultadoCrearInmueble crearInmueble(Inmueble inmueble) throws PersistenciaException, GestionException {
+		ArrayList<ErrorCrearInmueble> errores = new ArrayList<>();
+
+		if(inmueble.getFechaCarga() == null){
+			errores.add(ErrorCrearInmueble.Fecha_Vacia);
+		}
+
+		if(inmueble.getPropietario() != null){
+			Propietario propietario = gestorPropietario.obtenerPropietario(new FiltroPropietario(inmueble.getPropietario().getTipoDocumento().getTipo(), inmueble.getPropietario().getNumeroDocumento()));
+			if(propietario == null){
+				errores.add(ErrorCrearInmueble.Propietario_Inexistente);
+			}
+		}
+		else{
+			errores.add(ErrorCrearInmueble.Propietario_Inexistente);
+		}
+
+		if(inmueble.getPrecio() == null){
+			errores.add(ErrorCrearInmueble.Precio_Vacio);
+		}
+		else{
+			if(!validador.validarDoublePositivo(inmueble.getPrecio())){
+				errores.add(ErrorCrearInmueble.Precio_Incorrecto);
+			}
+		}
+
+		if(inmueble.getFondo() != null && !validador.validarDoublePositivo(inmueble.getFondo())){
+			errores.add(ErrorCrearInmueble.Fondo_Incorrecto);
+		}
+
+		if(inmueble.getFrente() != null && !validador.validarDoublePositivo(inmueble.getFrente())){
+			errores.add(ErrorCrearInmueble.Frente_Incorrecto);
+		}
+
+		if(inmueble.getSuperficie() != null && !validador.validarDoublePositivo(inmueble.getSuperficie())){
+			errores.add(ErrorCrearInmueble.Superficie_Incorrecta);
+		}
+
+		if(inmueble.getTipo() == null){
+			errores.add(ErrorCrearInmueble.Tipo_Vacio);
+		}
+
+		if(!validador.validarDireccion(inmueble.getDireccion())){
+			errores.add(ErrorCrearInmueble.Formato_Direccion_Incorrecto);
+		}
+
+		if(!validarDatosEdificio(inmueble.getDatosEdificio())){
+			errores.add(ErrorCrearInmueble.Datos_Edificio_Incorrectos);
+		}
+
+		if(errores.isEmpty()){
+			persistidorInmueble.modificarInmueble(inmueble);
+		}
+
+		return new ResultadoCrearInmueble(errores.toArray(new ErrorCrearInmueble[0]));
 	}
 
 	public ResultadoModificarInmueble modificarInmueble(Inmueble inmueble) throws PersistenciaException {
@@ -123,14 +176,14 @@ public class GestorInmueble {
 
 	/**
 	 * Se encarga de validar que exista el inmueble a eliminar, se setea el estado en BAJA y,
-	 *  en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
+	 * en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
 	 *
 	 * @param inmueble
-	 * 			inmueble a eliminar
+	 *            inmueble a eliminar
 	 * @return un resultado informando errores correspondientes en caso de que los haya
 	 *
 	 * @throws PersistenciaException
-	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoEliminarInmueble eliminarInmueble(Inmueble inmueble) throws PersistenciaException {
 		ArrayList<ErrorEliminarInmueble> errores = new ArrayList<>();
@@ -160,13 +213,13 @@ public class GestorInmueble {
 	 * @return el listado de inmuebles solicitados
 	 *
 	 * @throws PersistenciaException
-	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ArrayList<Inmueble> obtenerInmuebles() throws PersistenciaException {
 		return persistidorInmueble.listarInmuebles();
 	}
 
-	public Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
+	private Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
 		if(datosEdificio == null){
 			return false;
 		}

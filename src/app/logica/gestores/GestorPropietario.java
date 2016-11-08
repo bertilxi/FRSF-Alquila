@@ -56,12 +56,7 @@ public class GestorPropietario {
 
 		validarDatosCrearPropietario(propietario, errores);
 
-		Propietario propietarioAuxiliar;
-		try{
-			propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
-		} catch(PersistenciaException e){
-			throw e;
-		}
+		Propietario propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
 
 		if(null != propietarioAuxiliar){
 			if(propietarioAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
