@@ -45,7 +45,7 @@ public class Vendedor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; //ID
+	protected Integer id; //ID
 
 	@Column(name = "nombre", length = 30, nullable = false)
 	private String nombre;

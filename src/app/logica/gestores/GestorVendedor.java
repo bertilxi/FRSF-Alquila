@@ -173,7 +173,9 @@ public class GestorVendedor {
 		}
 
 		Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento()));
-		if(null != vendedorAuxiliar && !vendedor.equals(vendedorAuxiliar)){
+		if(vendedorAuxiliar == null) {
+			errores.add(ErrorModificarVendedor.El_Vendedor_No_Existe);
+		} else if(!vendedor.equals(vendedorAuxiliar)){
 			errores.add(ErrorModificarVendedor.Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo);
 		}
 

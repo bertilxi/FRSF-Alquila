@@ -31,6 +31,7 @@ public class ResultadoModificarCliente extends Resultado<ErrorModificarCliente>{
 		Formato_Apellido_Incorrecto,
 		Formato_Telefono_Incorrecto,
 		Formato_Documento_Incorrecto,
-		Otro_Cliente_Posee_Mismo_Documento_Y_Tipo
+		Otro_Cliente_Posee_Mismo_Documento_Y_Tipo,
+		El_Cliente_No_Existe
 	}
 }
