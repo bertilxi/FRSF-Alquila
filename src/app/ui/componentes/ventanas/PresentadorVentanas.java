@@ -17,6 +17,7 @@
  */
 package app.ui.componentes.ventanas;
 
+import app.ui.componentes.Toast;
 import javafx.stage.Window;
 
 public class PresentadorVentanas {
@@ -69,5 +70,12 @@ public class PresentadorVentanas {
 
 	public VentanaEsperaBaseDeDatos presentarEsperaBaseDeDatos(Window w) {
 		return new VentanaEsperaBaseDeDatos(w);
+	}
+
+	public void presentarToast(String mensaje, Window padre) {
+		int toastMsgTime = 3500; //3.5 seconds
+		int fadeInTime = 700; //0.7 seconds
+		int fadeOutTime = 500; //0.5 seconds
+		Toast.makeText(padre, mensaje, toastMsgTime, fadeInTime, fadeOutTime);
 	}
 }

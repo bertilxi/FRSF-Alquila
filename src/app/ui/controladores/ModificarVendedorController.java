@@ -147,6 +147,7 @@ public class ModificarVendedorController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
+					presentador.presentarToast("Se ha modificado el vendedor", stage);
 					cambiarmeAScene(URLVistaRetorno);
 				}
 
