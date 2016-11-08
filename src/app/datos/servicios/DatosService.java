@@ -23,6 +23,7 @@ import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Localidad;
+import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
@@ -47,4 +48,5 @@ public interface DatosService {
 
 	public ArrayList<Calle> obtenerCallesDe(Localidad localidad) throws PersistenciaException;
 
+	public ArrayList<Orientacion> obtenerOrientaciones() throws PersistenciaException;
 }

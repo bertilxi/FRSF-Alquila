@@ -24,10 +24,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import app.datos.clases.OrientacionStr;
 
+@NamedQuery(name = "obtenerOrientaciones", query = "SELECT o FROM Orientacion o")
 @Entity
 @Table(name = "orientacion")
 /*
@@ -40,7 +42,7 @@ public class Orientacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; //ID
 
-	@Column(name = "orientacion_enum")
+	@Column(name = "orientacion_enum", length = 10)
 	@Enumerated(EnumType.STRING)
 	private OrientacionStr orientacion;
 
