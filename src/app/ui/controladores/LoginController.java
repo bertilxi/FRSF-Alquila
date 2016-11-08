@@ -134,6 +134,8 @@ public class LoginController extends OlimpoController {
 		} catch(Exception e){
 			presentador.presentarExcepcionInesperada(e, stage);
 		}
+
+		stage.centerOnScreen();
 	}
 
 }

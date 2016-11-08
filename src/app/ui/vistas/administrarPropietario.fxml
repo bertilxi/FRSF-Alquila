@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 
     Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
@@ -18,15 +19,16 @@
     along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
 
 -->
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarPropietarioController">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarPropietarioController">
    <children>
-      <VBox alignment="CENTER" styleClass="grid-pane" HBox.hgrow="ALWAYS">
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" HBox.hgrow="ALWAYS">
          <children>
             <TableView fx:id="tablaPropietarios" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
               <columns>
@@ -41,7 +43,7 @@
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
          <children>
             <Button fx:id="botonVer" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVer" text="Ver más" />
             <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleAgregar" text="Agregar" />
