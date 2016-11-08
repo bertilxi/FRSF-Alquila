@@ -35,6 +35,10 @@ import app.excepciones.ConsultaException;
 import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
+/**
+ * Implementación con hibernate de la interface que define los métodos de persistencia de un propietario
+ * Pertenece a la taskcard 10 de la iteración 1 y a la historia de usuario 2
+ */
 @Repository
 public class PropietarioServiceImpl implements PropietarioService {
 

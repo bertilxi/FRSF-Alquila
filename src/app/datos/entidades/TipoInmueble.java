@@ -32,6 +32,10 @@ import app.datos.clases.TipoInmuebleStr;
 @NamedQuery(name = "obtenerTiposDeInmueble", query = "SELECT t FROM TipoInmueble t")
 @Entity
 @Table(name = "tipo_inmueble")
+/*
+ * Entidad que modela el tipo de un inmueble.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class TipoInmueble {
 
 	@Id

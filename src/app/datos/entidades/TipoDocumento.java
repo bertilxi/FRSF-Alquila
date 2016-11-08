@@ -32,6 +32,10 @@ import app.datos.clases.TipoDocumentoStr;
 @NamedQuery(name = "obtenerTiposDeDocumento", query = "SELECT t FROM TipoDocumento t")
 @Entity
 @Table(name = "tipo_documento")
+/*
+ * Entidad que modela el tipo de un documento.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class TipoDocumento {
 
 	@Id

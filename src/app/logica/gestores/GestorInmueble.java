@@ -59,6 +59,19 @@ public class GestorInmueble {
 		throw new NotYetImplementedException();
 	}
 
+	/**
+	 * Método que se encarga de la modificación de los datos de un inmueble.
+	 * Se validan todos los datos correspondientes al inmueble, corroborando los que son obligatorios.
+	 * Se valida que exista el inmueble en la base de datos y en caso de que no haya errores, delega el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * @param inmueble
+	 *            inmueble a modificar.
+	 *
+	 * @return un resultado informando errores correspondientes en caso de que los haya.
+	 *
+	 * @throws PersistenciaException
+	 *             Se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos.
+	 */
 	public ResultadoModificarInmueble modificarInmueble(Inmueble inmueble) throws PersistenciaException {
 		ArrayList<ErrorModificarInmueble> errores = new ArrayList<>();
 
@@ -123,14 +136,14 @@ public class GestorInmueble {
 
 	/**
 	 * Se encarga de validar que exista el inmueble a eliminar, se setea el estado en BAJA y,
-	 *  en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
+	 * en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
 	 *
 	 * @param inmueble
-	 * 			inmueble a eliminar
+	 *            inmueble a eliminar
 	 * @return un resultado informando errores correspondientes en caso de que los haya
 	 *
 	 * @throws PersistenciaException
-	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoEliminarInmueble eliminarInmueble(Inmueble inmueble) throws PersistenciaException {
 		ArrayList<ErrorEliminarInmueble> errores = new ArrayList<>();
@@ -160,7 +173,7 @@ public class GestorInmueble {
 	 * @return el listado de inmuebles solicitados
 	 *
 	 * @throws PersistenciaException
-	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ArrayList<Inmueble> obtenerInmuebles() throws PersistenciaException {
 		return persistidorInmueble.listarInmuebles();

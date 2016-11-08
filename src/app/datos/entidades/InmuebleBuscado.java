@@ -36,6 +36,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "inmueble_buscado")
+/*
+ * Entidad que modela la busqueda de un inmueble, según las características que posee.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class InmuebleBuscado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -98,6 +102,7 @@ public class InmuebleBuscado implements Serializable {
 	private Boolean telefono;
 
 	//Relaciones
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inmueble_buscado_localidad", joinColumns = @JoinColumn(name = "idlocalidad"), foreignKey = @ForeignKey(name = "inmueble_buscado_localidad_idlocalidadfk"), inverseJoinColumns = @JoinColumn(name = "idinmueblebuscado"), inverseForeignKey = @ForeignKey(name = "inmueble_buscado_inmueble_idinmueblefk"))
 	private Set<Localidad> localidades;

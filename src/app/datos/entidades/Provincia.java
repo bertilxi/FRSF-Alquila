@@ -34,6 +34,10 @@ import javax.persistence.UniqueConstraint;
 @NamedQuery(name = "obtenerProvinciasDe", query = "SELECT p FROM Provincia p WHERE pais=:pa")
 @Entity
 @Table(name = "provincia", uniqueConstraints = @UniqueConstraint(name = "provincia_nombre_idpais_uk", columnNames = { "nombre", "idpais" }))
+/*
+ * Entidad que modela una provincia.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class Provincia implements Comparable<Provincia> {
 
 	@Id

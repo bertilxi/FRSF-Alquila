@@ -34,7 +34,11 @@ import javax.persistence.UniqueConstraint;
 @NamedQuery(name = "obtenerBarriosDe", query = "SELECT b FROM Barrio b WHERE localidad=:loc")
 @Entity
 @Table(name = "barrio", uniqueConstraints = @UniqueConstraint(name = "barrio_nombre_idlocalidad_uk", columnNames = { "nombre", "idlocalidad" }))
-public class Barrio implements Comparable<Barrio>{
+/**
+ * Entidad que modela un barrio
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
+public class Barrio implements Comparable<Barrio> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +48,7 @@ public class Barrio implements Comparable<Barrio>{
 	private String nombre;
 
 	//Relaciones
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idlocalidad", referencedColumnName = "id", foreignKey = @ForeignKey(name = "barrio_idlocalidad_fk"), nullable = false)
 	private Localidad localidad;

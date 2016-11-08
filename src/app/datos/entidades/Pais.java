@@ -28,6 +28,10 @@ import javax.persistence.Table;
 @NamedQuery(name = "obtenerPaises", query = "SELECT p FROM Pais p")
 @Entity
 @Table(name = "pais")
+/*
+ * Entidad que modela un país.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class Pais implements Comparable<Pais> {
 
 	@Id

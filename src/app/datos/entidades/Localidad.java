@@ -34,6 +34,10 @@ import javax.persistence.UniqueConstraint;
 @NamedQuery(name = "obtenerLocalidadesDe", query = "SELECT l FROM Localidad l WHERE provincia=:prov")
 @Entity
 @Table(name = "localidad", uniqueConstraints = @UniqueConstraint(name = "localidad_nombre_idprovincia_uk", columnNames = { "nombre", "idprovincia" }))
+/*
+ * Entidad que modela una localidad.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class Localidad implements Comparable<Localidad> {
 
 	@Id
@@ -44,6 +48,7 @@ public class Localidad implements Comparable<Localidad> {
 	private String nombre;
 
 	//Relaciones
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idprovincia", referencedColumnName = "id", foreignKey = @ForeignKey(name = "localidad_idprovincia_fk"), nullable = false)
 	private Provincia provincia;

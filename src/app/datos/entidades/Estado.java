@@ -32,6 +32,10 @@ import app.datos.clases.EstadoStr;
 @NamedQuery(name = "obtenerEstados", query = "SELECT e FROM Estado e")
 @Entity
 @Table(name = "estado")
+/*
+ * Entidad que modela los estados por los cuales pueden pasar las clases principales del sistema.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class Estado {
 
 	@Id

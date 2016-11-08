@@ -35,6 +35,11 @@ import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
+/**
+ * Implementación con hibernate de la interface que define los métodos de persistencia de un inmueble
+ * Pertenece a la taskcard 15 de la iteración 1 y a la historia de usuario 3
+ */
+
 @Repository
 public class InmuebleServiceImpl implements InmuebleService {
 
@@ -93,11 +98,11 @@ public class InmuebleServiceImpl implements InmuebleService {
 	public Inmueble obtenerInmueble(Integer id) throws PersistenciaException {
 		Inmueble inmueble = null;
 		Session session = getSessionFactory().getCurrentSession();
-		try {
+		try{
 			inmueble = session.get(Inmueble.class, id);
-		} catch (EntityNotFoundException e) {
-			throw new ObjNotFoundException("obtener",e);
-		} catch (Exception e) {
+		} catch(EntityNotFoundException e){
+			throw new ObjNotFoundException("obtener", e);
+		} catch(Exception e){
 			throw new ConsultaException(e);
 		}
 		return inmueble;

@@ -31,6 +31,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "direccion")
+/*
+ * Entidad que modela una direccion.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class Direccion {
 
 	@Id
@@ -50,6 +54,7 @@ public class Direccion {
 	private String otros;
 
 	//Relaciones
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idcalle", referencedColumnName = "id", foreignKey = @ForeignKey(name = "direccion_idcalle_fk"))
 	private Calle calle;

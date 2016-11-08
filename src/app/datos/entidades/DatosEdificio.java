@@ -32,6 +32,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "datos_edificio")
+/*
+ * Entidad que modela los datos que tiene un inmueble.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class DatosEdificio implements Serializable {
 
 	private static final long serialVersionUID = 1L;

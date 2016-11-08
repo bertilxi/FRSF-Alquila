@@ -34,7 +34,11 @@ import javax.persistence.UniqueConstraint;
 @NamedQuery(name = "obtenerCallesDe", query = "SELECT c FROM Calle c WHERE localidad=:loc")
 @Entity
 @Table(name = "calle", uniqueConstraints = @UniqueConstraint(name = "calle_nombre_idlocalidad_uk", columnNames = { "nombre", "idlocalidad" }))
-public class Calle implements Comparable<Calle>{
+/*
+ * Entidad que modela una calle.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
+public class Calle implements Comparable<Calle> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +48,7 @@ public class Calle implements Comparable<Calle>{
 	private String nombre;
 
 	//Relaciones
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idlocalidad", referencedColumnName = "id", foreignKey = @ForeignKey(name = "calle_idlocalidad_fk"), nullable = false)
 	private Localidad localidad;

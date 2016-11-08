@@ -30,6 +30,10 @@ import app.datos.clases.OrientacionStr;
 
 @Entity
 @Table(name = "orientacion")
+/*
+ * Entidad que modela la orientacion física que tiene un inmueble.
+ * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
+ */
 public class Orientacion {
 
 	@Id
