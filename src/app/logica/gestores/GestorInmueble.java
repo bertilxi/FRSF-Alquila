@@ -31,7 +31,6 @@ import app.datos.entidades.Estado;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.InmuebleService;
-import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
@@ -41,6 +40,9 @@ import app.logica.resultados.ResultadoModificarInmueble;
 import app.logica.resultados.ResultadoModificarInmueble.ErrorModificarInmueble;
 
 @Service
+/**
+ * Gestor que implementa la capa lógica del ABM Inmueble y funciones asociadas a un inmueble.
+ */
 public class GestorInmueble {
 
 	@Resource
@@ -55,7 +57,17 @@ public class GestorInmueble {
 	@Resource
 	protected ValidadorFormato validador;
 
-	public ResultadoCrearInmueble crearInmueble(Inmueble inmueble) throws PersistenciaException, GestionException {
+	/**
+	 * Método para crear un inmueble. Primero se validan las reglas de negocia y luego se persiste.
+	 * Pertenece a la taskcard 14 de la iteración 1 y a la historia 3
+	 *
+	 * @param inmueble
+	 *            a guardar
+	 * @return resultado de la operación
+	 * @throws PersistenciaException
+	 *             si falló al persistir
+	 */
+	public ResultadoCrearInmueble crearInmueble(Inmueble inmueble) throws PersistenciaException {
 		ArrayList<ErrorCrearInmueble> errores = new ArrayList<>();
 
 		if(inmueble.getFechaCarga() == null){
@@ -106,7 +118,7 @@ public class GestorInmueble {
 		}
 
 		if(errores.isEmpty()){
-			persistidorInmueble.modificarInmueble(inmueble);
+			persistidorInmueble.guardarInmueble(inmueble);
 		}
 
 		return new ResultadoCrearInmueble(errores.toArray(new ErrorCrearInmueble[0]));
