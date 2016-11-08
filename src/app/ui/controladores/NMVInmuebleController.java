@@ -25,18 +25,21 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import app.datos.clases.OrientacionStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
-import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoInmueble;
+import app.excepciones.PersistenciaException;
 import app.ui.controladores.resultado.ResultadoControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -47,6 +50,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.StringConverter;
 
 /**
  * Controlador de la vista que crea, modifica o muestra un inmueble
@@ -99,7 +103,7 @@ public class NMVInmuebleController extends OlimpoController {
 	private ComboBox<Localidad> cbLocalidad;
 
 	@FXML
-	private ComboBox<Orientacion> cbOrientacion;
+	private ComboBox<OrientacionStr> cbOrientacion;
 
 	@FXML
 	private ComboBox<Pais> cbPais;
@@ -192,7 +196,297 @@ public class NMVInmuebleController extends OlimpoController {
 		});
 		titulo1.set("Nuevo inmueble");
 		atras();
+		
+		try{
+			cbPropietario.getItems().addAll(coordinador.obtenerPropietarios());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		}
+		
+		try{
+			cbTipoInmueble.getItems().addAll(coordinador.obtenerTiposInmueble());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		}
+		
+		cbOrientacion.getItems().addAll(OrientacionStr.values());
+		
+		try{
+			cbPais.getItems().addAll(coordinador.obtenerPaises());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		}
+		
+		//se selecciona por defecto a argentina en el combo box país
+		for(Pais p: cbPais.getItems()) {
+			if(p.getNombre().equals("Argentina")) {
+				cbPais.getSelectionModel().select(p);
+				break;
+			}
+		}
+		actualizarProvincias(cbPais.getSelectionModel().getSelectedItem());
+
+
+		cbPais.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
+		cbProvincia.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
+		cbLocalidad.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarBarriosYCalles(newValue));
+
+		//se setean los converters para cuando se ingrese un item no existente a través
+		//del editor de texto de los comboBox editables
+		cbPais.setConverter(new StringConverter<Pais>() {
+
+			@Override
+			public String toString(Pais object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Pais fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Pais pais: cbPais.getItems()){
+					if(nombre.equals(pais.getNombre())){
+						return pais;
+					}
+				}
+				Pais pais = new Pais();
+				pais.setNombre(nombre);
+				return pais;
+			}
+		});
+
+		cbProvincia.setConverter(new StringConverter<Provincia>() {
+
+			@Override
+			public String toString(Provincia object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Provincia fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Provincia prov: cbProvincia.getItems()){
+					if(nombre.equals(prov.getNombre())){
+						return prov;
+					}
+				}
+				Provincia prov = new Provincia();
+				prov.setNombre(nombre);
+				prov.setPais(cbPais.getValue());
+				return prov;
+			}
+		});
+
+		cbLocalidad.setConverter(new StringConverter<Localidad>() {
+
+			@Override
+			public String toString(Localidad object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Localidad fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Localidad loc: cbLocalidad.getItems()){
+					if(nombre.equals(loc.getNombre())){
+						return loc;
+					}
+				}
+				Localidad loc = new Localidad();
+				loc.setNombre(nombre);
+				loc.setProvincia(cbProvincia.getValue());
+				return loc;
+			}
+		});
+
+		cbBarrio.setConverter(new StringConverter<Barrio>() {
+
+			@Override
+			public String toString(Barrio object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Barrio fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Barrio bar: cbBarrio.getItems()){
+					if(nombre.equals(bar.getNombre())){
+						return bar;
+					}
+				}
+				Barrio bar = new Barrio();
+				bar.setNombre(nombre);
+				bar.setLocalidad(cbLocalidad.getValue());
+				return bar;
+			}
+		});
+
+		cbCalle.setConverter(new StringConverter<Calle>() {
+
+			@Override
+			public String toString(Calle object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Calle fromString(String nombre) {
+				nombre = nombre.trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Calle cal: cbCalle.getItems()){
+					if(nombre.equals(cal.getNombre())){
+						return cal;
+					}
+				}
+				Calle cal = new Calle();
+				cal.setNombre(nombre);
+				cal.setLocalidad(cbLocalidad.getValue());
+				return cal;
+			}
+		});
+
+		//Cuando el foco sale de los comboBox que estaban siendo editados
+		//el texto ingresado se convierte en un item y se lo selecciona
+		cbPais.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					cbPais.getSelectionModel().select(cbPais.getConverter().fromString(cbPais.getEditor().getText()));
+
+				}
+			}
+		});
+
+		cbProvincia.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					cbProvincia.getSelectionModel().select(cbProvincia.getConverter().fromString(cbProvincia.getEditor().getText()));
+
+				}
+			}
+		});
+
+		cbLocalidad.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					cbLocalidad.getSelectionModel().select(cbLocalidad.getConverter().fromString(cbLocalidad.getEditor().getText()));
+
+				}
+			}
+		});
+
+		cbBarrio.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					cbBarrio.getSelectionModel().select(cbBarrio.getConverter().fromString(cbBarrio.getEditor().getText()));
+
+				}
+			}
+		});
+
+		cbCalle.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					cbCalle.getSelectionModel().select(cbCalle.getConverter().fromString(cbCalle.getEditor().getText()));
+
+				}
+			}
+		});
 	}
+	
+	/**
+	 * Cuando varía la seleccion del comboBox de provincias, se actualiza el comboBox de localidades.
+	 * También se delega la tarea de vaciar los comboBox de barrios y calles
+	 *
+	 * @param provincia
+	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
+	private void actualizarLocalidades(Provincia provincia) {
+		cbLocalidad.getItems().clear();
+		if(provincia != null && provincia.getId() != null){
+			try{
+				cbLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+		actualizarBarriosYCalles(null);
+	}
+
+	/**
+	 * Cuando varía la seleccion del comboBox de países, se actualiza el comboBox de provincias.
+	 * También se delega la tarea de vaciar el comboBox de localidades
+	 *
+	 * @param pais
+	 * 			país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
+	private void actualizarProvincias(Pais pais) {
+		cbProvincia.getItems().clear();
+		if(pais != null && pais.getId() != null){
+			try{
+				cbProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+		actualizarLocalidades(null);
+	}
+
+	/**
+	 * Cuando varía la seleccion del comboBox de localidades, se actualizan los comboBox de barrios y calles.
+	 *
+	 * @param loc
+	 * 			localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
+	private void actualizarBarriosYCalles(Localidad loc) {
+		cbBarrio.getItems().clear();
+		cbCalle.getItems().clear();
+		if(loc != null && loc.getId() != null){
+			try{
+				cbBarrio.getItems().addAll(coordinador.obtenerBarriosDe(loc));
+				cbCalle.getItems().addAll(coordinador.obtenerCallesDe(loc));
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+		cbBarrio.getEditor().clear();
+		cbCalle.getEditor().clear();
+	}
+	
 
 	@FXML
 	public void agregarFoto() {
@@ -296,6 +590,7 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador crearInmueble() {
+		
 		return null;
 	}
 
