@@ -59,6 +59,8 @@ public class VerPropietarioController extends OlimpoController{
 	private TextField textFieldCalle;
 	@FXML
 	private TextField textFieldBarrio;
+	@FXML
+	private TextField textFieldOtros;
 
 	/**
 	 * Setea los campos con los datos del propietario pasado por parámetro.
@@ -81,6 +83,7 @@ public class VerPropietarioController extends OlimpoController{
 		textFieldProvincia.setText(propietario.getDireccion().getLocalidad().getProvincia().getNombre());
 		textFieldTelefono.setText(propietario.getTelefono());
 		textFieldTipoDeDocumento.setText(propietario.getTipoDocumento().toString());
+		textFieldOtros.setText(propietario.getDireccion().getOtros());
 	}
 
 	/**
