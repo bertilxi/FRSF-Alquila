@@ -135,9 +135,11 @@ public class AltaVendedorControllerTest {
 			}
 		};
 
+		//Se corre el test en el hilo de JavaFX
 		try{
 			corredorTestEnJavaFXThread.apply(test, null).evaluate();
 		} catch(Throwable e){
+			//Si el test falla, el corredor lanza una excepción, hay que capturarla y hacer que JUnit falle, mostrando la causa del fallo
 			fail(e.getMessage());
 		}
 		;
