@@ -2694,4 +2694,11 @@ INSERT INTO tipo_inmueble VALUES (4,'TERRENO');
 INSERT INTO tipo_inmueble VALUES (5,'QUINTA');
 INSERT INTO tipo_inmueble VALUES (6,'GALPON');
 
-
+INSERT INTO orientacion VALUES (1,'NORTE');
+INSERT INTO orientacion VALUES (2,'SUR');
+INSERT INTO orientacion VALUES (3,'ESTE');
+INSERT INTO orientacion VALUES (4,'OESTE');
+INSERT INTO orientacion VALUES (5,'NORESTE');
+INSERT INTO orientacion VALUES (6,'NOROESTE');
+INSERT INTO orientacion VALUES (7,'SURESTE');
+INSERT INTO orientacion VALUES (8,'SUROESTE');

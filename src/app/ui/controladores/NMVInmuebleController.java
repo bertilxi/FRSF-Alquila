@@ -17,8 +17,10 @@
  */
 package app.ui.controladores;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -197,7 +200,7 @@ public class NMVInmuebleController extends OlimpoController {
 	private ScrollPane scrollFotos;
 
 	@FXML
-	private Map<ImageView, File> archivosImagenes = new HashMap<>();
+	private Map<ImageView, File> archivosImagenesNuevas = new HashMap<>();
 
 	@FXML
 	private ImageView imagenSeleccionada;
@@ -479,7 +482,7 @@ public class NMVInmuebleController extends OlimpoController {
 				seleccionarImagen(imageView);
 			});
 			panelFotos.getChildren().add(imageView);
-			archivosImagenes.put(imageView, imagen);
+			archivosImagenesNuevas.put(imageView, imagen);
 		} catch(MalformedURLException e){
 			presentador.presentarExcepcionInesperada(e, stage);
 		}
@@ -619,7 +622,7 @@ public class NMVInmuebleController extends OlimpoController {
 		for(Node nodo: panelFotos.getChildren()){
 			if(nodo instanceof ImageView){
 				ImageView imagen = (ImageView) nodo;
-				File file = archivosImagenes.get(imagen);
+				File file = archivosImagenesNuevas.get(imagen);
 				byte[] bFile = new byte[(int) file.length()];
 
 				try{
@@ -673,6 +676,9 @@ public class NMVInmuebleController extends OlimpoController {
 					break;
 				case Frente_Incorrecto:
 					erroresBfr.append("Formato del campo Frente incorrecto.\n");
+					break;
+				case Precio_Vacio:
+					erroresBfr.append("Precio no ingresado.\n");
 					break;
 				case Precio_Incorrecto:
 					erroresBfr.append("Formato de precio incorrecto.\n");
@@ -811,6 +817,17 @@ public class NMVInmuebleController extends OlimpoController {
 		tfSuperficie.setText(inmueble.getSuperficie().toString());
 		tfSuperficieEdificio.setText(inmueble.getDatosEdificio().getSuperficie().toString());
 
+		for(Imagen imagen: inmueble.getFotos()){
+			byte[] imagenRaw = imagen.getArchivo();
+			InputStream in = new ByteArrayInputStream(imagenRaw);
+			final ImageView imageView = new ImageView(new Image(in));
+			imageView.setPreserveRatio(true);
+			imageView.setFitHeight(100);
+			imageView.setOnMouseClicked((event) -> {
+				seleccionarImagen(imageView);
+			});
+			panelFotos.getChildren().add(imageView);
+		}
 	}
 
 	@FXML

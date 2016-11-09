@@ -104,4 +104,9 @@ public class Orientacion {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return orientacion.toString();
+	}
 }
