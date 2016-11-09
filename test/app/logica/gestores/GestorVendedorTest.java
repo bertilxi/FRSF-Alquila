@@ -228,8 +228,8 @@ public class GestorVendedorTest {
 
 		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
 		assertEquals(resultadoCrearVendedorEsperado, resultadoCrearVendedor);
-		if(guardar.equals(1)) {
-			assertEquals(EstadoStr.ALTA,vendedor.getEstado().getEstado());
+		if(guardar.equals(1)){
+			assertEquals(EstadoStr.ALTA, vendedor.getEstado().getEstado());
 		}
 		verify(validadorFormatoMock).validarNombre(vendedor.getNombre());
 		verify(validadorFormatoMock).validarApellido(vendedor.getApellido());
@@ -266,13 +266,13 @@ public class GestorVendedorTest {
 
 			{
 				this.setId(1)
-					.setNombre("Juan")
-					.setApellido("Pérez")
-					.setNumeroDocumento("12345678")
-					.setTipoDocumento(doc)
-					.setSalt("abcd")
-					.setPassword("1234")
-					.setEstado(est);
+						.setNombre("Juan")
+						.setApellido("Pérez")
+						.setNumeroDocumento("12345678")
+						.setTipoDocumento(doc)
+						.setSalt("abcd")
+						.setPassword("1234")
+						.setEstado(est);
 			}
 		};
 
@@ -285,12 +285,12 @@ public class GestorVendedorTest {
 
 			{
 				this.setId(2)
-					.setNombre("Juan")
-					.setApellido("Pérez")
-					.setNumeroDocumento("12345678")
-					.setTipoDocumento(doc)
-					.setSalt("abcd")
-					.setPassword("1234");
+						.setNombre("Juan")
+						.setApellido("Pérez")
+						.setNumeroDocumento("12345678")
+						.setTipoDocumento(doc)
+						.setSalt("abcd")
+						.setPassword("1234");
 			}
 		};
 
@@ -338,8 +338,8 @@ public class GestorVendedorTest {
 
 		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
 		assertEquals(resultadoModificarVendedorEsperado, resultadoModificarVendedor);
-		if(modificar.equals(1)) {
-			assertEquals(EstadoStr.ALTA,vendedorM.getEstado().getEstado());
+		if(modificar.equals(1)){
+			assertEquals(EstadoStr.ALTA, vendedorM.getEstado().getEstado());
 		}
 		verify(validadorFormatoMock).validarNombre(vendedorM.getNombre());
 		verify(validadorFormatoMock).validarApellido(vendedorM.getApellido());
@@ -358,7 +358,7 @@ public class GestorVendedorTest {
 	private static final ResultadoModificarVendedor resultadoModificarYaExiste =
 			new ResultadoModificarVendedor(ErrorModificarVendedor.Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo);
 
-	private Vendedor vendedorE;
+	private static Vendedor vendedorE;
 
 	protected Object[] parametersForTestEliminarVendedor() {
 		//Se carga vendedor con datos básicos solo para evitar punteros nulos
@@ -377,8 +377,8 @@ public class GestorVendedorTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] {vendedorE, 1, resultadoCorrectoEliminar },
-				new Object[] {null, 0, resultadoEliminarNoExisteVendedor },
+				new Object[] { vendedorE, 1, resultadoCorrectoEliminar },
+				new Object[] { null, 0, resultadoEliminarNoExisteVendedor },
 		};
 	}
 
@@ -410,8 +410,8 @@ public class GestorVendedorTest {
 
 		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
 		assertEquals(resultadoEliminarVendedorEsperado, resultadoEliminarVendedor);
-		if(eliminar.equals(1)) {
-			assertEquals(EstadoStr.BAJA,vendedorE.getEstado().getEstado());
+		if(eliminar.equals(1)){
+			assertEquals(EstadoStr.BAJA, vendedorE.getEstado().getEstado());
 		}
 		verify(gestorDatosMock, times(eliminar)).obtenerEstados();
 		verify(vendedorServiceMock, times(eliminar)).modificarVendedor(vendedorE);
