@@ -141,7 +141,7 @@ public class GestorCliente {
 		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
 				cliente.getNumeroDocumento()));
 
-		if(null != clienteAuxiliar && !cliente.equals(clienteAuxiliar)){
+		if(clienteAuxiliar != null && !cliente.equals(clienteAuxiliar)){
 			errores.add(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 		}
 

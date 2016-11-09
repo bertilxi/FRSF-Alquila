@@ -33,6 +33,8 @@ import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
+import app.logica.resultados.ResultadoModificarVendedor;
+import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -167,7 +169,6 @@ public class GestorVendedorTest {
 	}
 
 	private static Vendedor vendedor;
-	private static FiltroVendedor filtro;
 
 	protected Object[] parametersForTestCrearVendedor() {
 		//Se carga vendedor con datos básicos solo para evitar punteros nulos
@@ -180,7 +181,6 @@ public class GestorVendedorTest {
 				.setTipoDocumento(doc)
 				.setSalt("abcd")
 				.setPassword("1234");
-		filtro = new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento());
 
 		//Parámetros de JUnitParams
 		return new Object[] {
@@ -243,4 +243,110 @@ public class GestorVendedorTest {
 			new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Documento_Incorrecto);
 	private static final ResultadoCrearVendedor resultadoCrearYaExiste =
 			new ResultadoCrearVendedor(ErrorCrearVendedor.Ya_Existe_Vendedor);
+
+	private static Vendedor vendedorM;
+	private static Vendedor vendedorM2;
+
+	protected Object[] parametersForTestModificarVendedor() {
+		//Se carga vendedor con datos básicos solo para evitar punteros nulos
+		//Las validaciones se hacen en el validador, por lo que se setean luego en los mocks los valores esperados
+		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
+		Estado est = new Estado(EstadoStr.ALTA);
+		vendedorM = new Vendedor() {
+
+			public Vendedor setId(Integer id) {
+				this.id = id;
+				return this;
+			}
+
+			{
+				this.setId(1)
+					.setNombre("Juan")
+					.setApellido("Pérez")
+					.setNumeroDocumento("12345678")
+					.setTipoDocumento(doc)
+					.setSalt("abcd")
+					.setPassword("1234")
+					.setEstado(est);
+			}
+		};
+
+		vendedorM2 = new Vendedor() {
+
+			public Vendedor setId(Integer id) {
+				this.id = id;
+				return this;
+			}
+
+			{
+				this.setId(2)
+					.setNombre("Juan")
+					.setApellido("Pérez")
+					.setNumeroDocumento("12345678")
+					.setTipoDocumento(doc)
+					.setSalt("abcd")
+					.setPassword("1234");
+			}
+		};
+
+		//Parámetros de JUnitParams
+		return new Object[] {
+				new Object[] { true, true, true, vendedorM, 1, resultadoCorrectoModificar },
+				new Object[] { false, true, true, vendedorM, 0, resultadoModificarNombreIncorrecto },
+				new Object[] { true, false, true, vendedorM, 0, resultadoModificarApellidoIncorrecto },
+				new Object[] { true, true, false, vendedorM, 0, resultadoModificarDocumentoIncorrecto },
+				new Object[] { false, false, true, vendedorM, 0, new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Nombre_Incorrecto, ErrorModificarVendedor.Formato_Apellido_Incorrecto) },
+				new Object[] { true, true, true, vendedorM2, 0, resultadoModificarYaExiste }
+		};
+	}
+
+	@Test
+	@Parameters
+	public void testModificarVendedor(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Vendedor resObtenerVendedor, Integer modificar, ResultadoModificarVendedor resultadoModificarVendedorEsperado) throws Exception {
+		//Inicialización de los mocks
+		VendedorService vendedorServiceMock = mock(VendedorService.class);
+		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
+		GestorDatos gestorDatosMock = mock(GestorDatos.class);
+
+		//Clase anónima necesaria para inyectar dependencias hasta que funcione Spring
+		GestorVendedor gestorVendedor = new GestorVendedor() {
+			{
+				this.persistidorVendedor = vendedorServiceMock;
+				this.validador = validadorFormatoMock;
+				this.gestorDatos = gestorDatosMock;
+			}
+		};
+
+		ArrayList<Estado> estados = new ArrayList<>();
+		estados.add(new Estado(EstadoStr.ALTA));
+
+		//Setear valores esperados a los mocks
+		when(validadorFormatoMock.validarNombre(vendedorM.getNombre())).thenReturn(resValNombre);
+		when(validadorFormatoMock.validarApellido(vendedorM.getApellido())).thenReturn(resValApellido);
+		when(validadorFormatoMock.validarDocumento(vendedorM.getTipoDocumento(), vendedor.getNumeroDocumento())).thenReturn(resValDocumento);
+		when(vendedorServiceMock.obtenerVendedor(any())).thenReturn(resObtenerVendedor);
+		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
+		doNothing().when(vendedorServiceMock).modificarVendedor(vendedorM); //Para métodos void la sintaxis es distinta
+
+		//Llamar al método a testear
+		ResultadoModificarVendedor resultadoModificarVendedor = gestorVendedor.modificarVendedor(vendedorM);
+
+		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
+		assertEquals(resultadoModificarVendedorEsperado, resultadoModificarVendedor);
+		verify(validadorFormatoMock).validarNombre(vendedorM.getNombre());
+		verify(validadorFormatoMock).validarApellido(vendedorM.getApellido());
+		verify(validadorFormatoMock).validarDocumento(vendedorM.getTipoDocumento(), vendedorM.getNumeroDocumento());
+		verify(vendedorServiceMock, times(modificar)).modificarVendedor(vendedorM);
+	}
+
+	//Para modificarPropietario
+	private static final ResultadoModificarVendedor resultadoCorrectoModificar = new ResultadoModificarVendedor();
+	private static final ResultadoModificarVendedor resultadoModificarNombreIncorrecto =
+			new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Nombre_Incorrecto);
+	private static final ResultadoModificarVendedor resultadoModificarApellidoIncorrecto =
+			new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Apellido_Incorrecto);
+	private static final ResultadoModificarVendedor resultadoModificarDocumentoIncorrecto =
+			new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Documento_Incorrecto);
+	private static final ResultadoModificarVendedor resultadoModificarYaExiste =
+			new ResultadoModificarVendedor(ErrorModificarVendedor.Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo);
 }

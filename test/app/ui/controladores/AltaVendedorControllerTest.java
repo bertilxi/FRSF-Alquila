@@ -1,5 +1,10 @@
 package app.ui.controladores;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -17,6 +22,7 @@ import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
+import app.ui.componentes.ventanas.PresentadorVentanas;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -27,7 +33,8 @@ public class AltaVendedorControllerTest {
 	@Parameters
 	public void testCrearVendedor(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String contraseña, String contraseña2, ResultadoCrearVendedor resultadoCrearVendedorEsperado, Integer llamaACrearVendedor, Throwable excepcion) throws Exception {
 
-		CoordinadorJavaFX coordinadorMock = Mockito.mock(CoordinadorJavaFX.class);
+		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
+		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
 
 		Vendedor vendedor = new Vendedor()
 				.setNombre(nombre)
@@ -39,8 +46,9 @@ public class AltaVendedorControllerTest {
 		ArrayList<TipoDocumento> tipos = new ArrayList<>();
 		tipos.add(tipoDocumento);
 
-		Mockito.when(coordinadorMock.crearVendedor(vendedor)).thenReturn(resultadoCrearVendedorEsperado);
-		Mockito.when(coordinadorMock.obtenerTiposDeDocumento()).thenReturn(tipos);
+		doNothing().when(presentadorVentanasMock).presentarError(any(), any(), any());
+		when(coordinadorMock.crearVendedor(vendedor)).thenReturn(resultadoCrearVendedorEsperado);
+		when(coordinadorMock.obtenerTiposDeDocumento()).thenReturn(tipos);
 
 		AltaVendedorController altaVendedorController = new AltaVendedorController() {
 			@Override
@@ -61,7 +69,7 @@ public class AltaVendedorControllerTest {
 		};
 
 		ControladorTest corredorTestEnJavaFXThread = new ControladorTest(AltaVendedorController.URLVista, altaVendedorController);
-
+		altaVendedorController.setStage(corredorTestEnJavaFXThread.getStagePrueba());
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
