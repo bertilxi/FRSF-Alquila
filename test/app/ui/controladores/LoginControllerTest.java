@@ -77,17 +77,7 @@ public class LoginControllerTest {
 			};
 
 			@Override
-			protected OlimpoController cambiarmeAScene(String URLVistaACambiar) {
-				return new BaseController() {
-					@Override
-					public void formatearConVendedor(Vendedor vendedor) {
-						assertEquals(vendedorRetorno, vendedor);
-					}
-				};
-			}
-
-			@Override
-			protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
+			protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno, Boolean useSceneSize) {
 				return new BaseController() {
 					@Override
 					public void formatearConVendedor(Vendedor vendedor) {
