@@ -137,7 +137,7 @@ public class AdministrarVendedorController extends OlimpoController {
 							break;
 						}
 					}
-					presentador.presentarError("No se pudo eliminar el propietario", stringErrores.toString(), stage);
+					presentador.presentarError("No se pudo eliminar el vendedor", stringErrores.toString(), stage);
 
 				}
 				else{
