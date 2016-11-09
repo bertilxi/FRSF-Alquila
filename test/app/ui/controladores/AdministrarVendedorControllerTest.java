@@ -23,6 +23,7 @@ import javafx.event.Event;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
 public class AdministrarVendedorControllerTest {
@@ -65,20 +66,14 @@ public class AdministrarVendedorControllerTest {
 	}
 
 	@Test
-	public void testModificarVendedor() throws Throwable {
+	@Parameters
+	public void testModificarVendedor(ArrayList<Vendedor> listaVendedores, Integer llamaAModificar, String urlModificarVendedor) throws Throwable {
 
 		ScenographyChanger scenographyChangerMock = mock(ScenographyChanger.class);
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 		ModificarVendedorController modificarVendedorControllerMock = mock(ModificarVendedorController.class);
 
-		Vendedor vendedor = new Vendedor()
-				.setNombre("Juan")
-				.setApellido("Perez")
-				.setNumeroDocumento("1234");
-		ArrayList<Vendedor> lista = new ArrayList<Vendedor>();
-		lista.add(vendedor);
-
-		when(coordinadorMock.obtenerVendedores()).thenReturn(lista);
+		when(coordinadorMock.obtenerVendedores()).thenReturn(listaVendedores);
 		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarVendedorControllerMock);
 
 		AdministrarVendedorController administrarVendedorController = new AdministrarVendedorController() {
@@ -88,7 +83,7 @@ public class AdministrarVendedorControllerTest {
 				this.coordinador = coordinadorMock;
 				this.setScenographyChanger(scenographyChangerMock);
 				super.inicializar(location, resources);
-				this.tablaVendedores.getSelectionModel().select(vendedor);
+				this.tablaVendedores.getSelectionModel().select(0);
 			}
 
 			@Override
@@ -104,12 +99,28 @@ public class AdministrarVendedorControllerTest {
 			@Override
 			public void evaluate() throws Throwable {
 				administrarVendedorController.modificarAction(null);
-				Mockito.verify(scenographyChangerMock, times(1)).cambiarScenography(ModificarVendedorController.URLVista, false);
+				Mockito.verify(scenographyChangerMock, times(llamaAModificar)).cambiarScenography(urlModificarVendedor, false);
 			}
 		};
 
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
 
+	}
+
+	protected Object[] parametersForTestModificarVendedor() {
+		Vendedor vendedor = new Vendedor()
+				.setNombre("Juan")
+				.setApellido("Perez")
+				.setNumeroDocumento("1234");
+
+		ArrayList<Vendedor> listaVendedores = new ArrayList<>();
+		ArrayList<Vendedor> listaVendedoresVacia = new ArrayList<>();
+		listaVendedores.add(vendedor);
+
+		return new Object[] {
+				new Object[] { listaVendedores, 1, ModificarVendedorController.URLVista },
+				new Object[] { listaVendedoresVacia, 0, ModificarVendedorController.URLVista }
+		};
 	}
 
 	@Test

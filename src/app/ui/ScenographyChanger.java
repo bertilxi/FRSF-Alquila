@@ -56,6 +56,7 @@ public class ScenographyChanger {
 			if(useSceneSize){
 				background.resize(newScenography.getWidth(), newScenography.getHeight());
 				stage.sizeToScene();
+				stage.centerOnScreen();
 			}
 			else{
 				background.resize(stage.getWidth(), stage.getHeight());
