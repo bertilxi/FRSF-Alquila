@@ -99,7 +99,7 @@ public class AdministrarVendedorController extends OlimpoController {
 	 * Se pasa a la pantalla alta vendedor
 	 */
 	public void agregarAction(ActionEvent event) {
-		cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
+		//cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class AdministrarVendedorController extends OlimpoController {
 							break;
 						}
 					}
-					presentador.presentarError("No se pudo eliminar el propietario", stringErrores.toString(), stage);
+					presentador.presentarError("No se pudo eliminar el vendedor", stringErrores.toString(), stage);
 
 				}
 				else{
