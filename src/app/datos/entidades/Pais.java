@@ -25,6 +25,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import app.comun.FormateadorString;
+
 @NamedQuery(name = "obtenerPaises", query = "SELECT p FROM Pais p")
 @Entity
 @Table(name = "pais")
@@ -109,7 +111,7 @@ public class Pais implements Comparable<Pais> {
 
 	@Override
 	public String toString() {
-		return nombre;
+		return new FormateadorString().primeraMayuscula(nombre);
 	}
 
 	@Override

@@ -242,8 +242,15 @@ public class NMVInmuebleController extends OlimpoController {
 
 		//se selecciona por defecto a argentina en el combo box país
 		for(Pais p: cbPais.getItems()){
-			if(p.getNombre().equals("Argentina")){
+			if(p.getNombre().equals("argentina")){
 				cbPais.getSelectionModel().select(p);
+				break;
+			}
+		}
+		//se selecciona por defecto a santa fe en el combo box provincia
+		for(Provincia pr: cbProvincia.getItems()){
+			if(pr.getNombre().equals("santa fe")){
+				cbProvincia.getSelectionModel().select(pr);
 				break;
 			}
 		}
@@ -279,7 +286,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 			@Override
 			public Pais fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -306,7 +313,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 			@Override
 			public Provincia fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -334,7 +341,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 			@Override
 			public Localidad fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -362,7 +369,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 			@Override
 			public Barrio fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -390,7 +397,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 			@Override
 			public Calle fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -611,11 +618,11 @@ public class NMVInmuebleController extends OlimpoController {
 		Direccion direccion = new Direccion()
 				.setLocalidad(localidad)
 				.setCalle(calle)
-				.setNumero(tfAltura.getText())
+				.setNumero(tfAltura.getText().toLowerCase().trim())
 				.setBarrio(barrio)
-				.setDepartamento(tfDepartamento.getText())
-				.setOtros(tfOtros.getText())
-				.setPiso(tfPiso.getText());
+				.setDepartamento(tfDepartamento.getText().toLowerCase().trim())
+				.setOtros(tfOtros.getText().toLowerCase().trim())
+				.setPiso(tfPiso.getText().toLowerCase().trim());
 
 		//Guardar fotos
 		ArrayList<Imagen> fotos = new ArrayList<>();
@@ -649,7 +656,7 @@ public class NMVInmuebleController extends OlimpoController {
 				.setFrente(Double.parseDouble(tfFrente.getText()))
 				.setFondo(Double.parseDouble(tfFondo.getText()))
 				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
-				.setObservaciones(taObservaciones.getText())
+				.setObservaciones(taObservaciones.getText().toLowerCase().trim())
 				.getFotos().addAll(fotos);
 
 		try{

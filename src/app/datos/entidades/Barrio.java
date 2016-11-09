@@ -31,6 +31,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import app.comun.FormateadorString;
+
 @NamedQuery(name = "obtenerBarriosDe", query = "SELECT b FROM Barrio b WHERE localidad=:loc")
 @Entity
 @Table(name = "barrio", uniqueConstraints = @UniqueConstraint(name = "barrio_nombre_idlocalidad_uk", columnNames = { "nombre", "idlocalidad" }))
@@ -137,7 +139,7 @@ public class Barrio implements Comparable<Barrio> {
 
 	@Override
 	public String toString() {
-		return nombre;
+		return new FormateadorString().primeraMayuscula(nombre);
 	}
 
 	@Override
