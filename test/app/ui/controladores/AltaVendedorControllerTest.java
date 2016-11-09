@@ -1,5 +1,7 @@
 package app.ui.controladores;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -40,6 +42,8 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class AltaVendedorControllerTest {
 
+	static private Integer llamaACambiarSceneReal;
+
 	@Test
 	@Parameters
 	public void testCrearVendedor(String nombre,
@@ -58,6 +62,7 @@ public class AltaVendedorControllerTest {
 			Integer llamaACambiarScene)
 			throws Throwable {
 		//Se crean los mocks necesarios
+		llamaACambiarSceneReal = 0;
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
 		VentanaError ventanaErrorMock = mock(VentanaError.class);
@@ -112,6 +117,10 @@ public class AltaVendedorControllerTest {
 
 			@Override
 			protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
+				if(!URLVistaACambiar.equals(ModificarVendedorController.URLVista)){
+					fail();
+				}
+				llamaACambiarSceneReal++;
 				return new ModificarVendedorController() {
 					@Override
 					public void inicializar(URL location, ResourceBundle resources) {
@@ -148,6 +157,7 @@ public class AltaVendedorControllerTest {
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarError)).presentarError(eq("Revise sus campos"), any(), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcion)).presentarExcepcion(eq(excepcion), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcionInesperada)).presentarExcepcionInesperada(eq(excepcion), any());
+				assertEquals(llamaACambiarSceneReal, llamaACambiarScene);
 			}
 		};
 
