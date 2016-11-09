@@ -64,19 +64,26 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                           <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
                       </rowConstraints>
                       <children>
+                  <Label text="Código" GridPane.columnIndex="1" />
                   <TextField fx:id="tfCodigo" disable="true" editable="false" layoutX="565.0" layoutY="20.0" maxHeight="1000.0" maxWidth="1000.0" promptText="Código" GridPane.columnIndex="2" />
+                  <Label text="Fecha de carga" GridPane.columnIndex="4" />
                           <TextField fx:id="tfFechaCarga" disable="true" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Fecha de carga" GridPane.columnIndex="5" />
-                          <ComboBox fx:id="cbTipoInmueble" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de inmueble*" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Label text="País" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <ComboBox fx:id="cbPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="País*" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Provincia" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                           <ComboBox fx:id="cbProvincia" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Provincia*" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Label text="Localidad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                           <ComboBox fx:id="cbLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Localidad*" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <ComboBox fx:id="cbBarrio" editable="true" layoutX="565.0" layoutY="64.0" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio*" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label text="Calle" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                   <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
                      <children>
                         <ComboBox fx:id="cbCalle" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="100.0" promptText="Calle*" HBox.hgrow="ALWAYS" />
                                 <TextField fx:id="tfAltura" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="70.0" promptText="Altura*" HBox.hgrow="NEVER" />
                      </children>
                   </HBox>
+                  <Label text="Barrio" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="cbBarrio" editable="true" layoutX="565.0" layoutY="64.0" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Barrio*" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label text="Piso/Dpto/Otros" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                   <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
                      <children>
                                 <TextField fx:id="tfPiso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Piso" HBox.hgrow="ALWAYS" />
@@ -84,21 +91,14 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                                 <TextField fx:id="tfOtros" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Otros" />
                      </children>
                   </HBox>
-                          <ComboBox fx:id="cbOrientacion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Orientación" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                  <ComboBox fx:id="cbPropietario" layoutX="119.0" layoutY="195.0" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Propietario*" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                          <TextField fx:id="tfPrecioVenta" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Precio de venta" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                  <Label text="Código" GridPane.columnIndex="1" />
-                  <Label text="País" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Localidad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Barrio" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="Tipo de inmueble" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Propietario" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label text="Fecha de carga" GridPane.columnIndex="4" />
-                  <Label text="Provincia" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <Label text="Calle" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <Label text="Piso/Dpto/Otros" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                          <ComboBox fx:id="cbTipoInmueble" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Tipo de inmueble*" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <Label text="Orientación" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                          <ComboBox fx:id="cbOrientacion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Orientación" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                  <Label text="Propietario" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="cbPropietario" layoutX="119.0" layoutY="195.0" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Propietario*" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <Label text="Precio de venta" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                          <TextField fx:id="tfPrecioVenta" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Precio de venta*" GridPane.columnIndex="5" GridPane.rowIndex="5" />
                       </children>
                       <padding>
                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -132,6 +132,15 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                                 <TextField fx:id="tfSuperficie" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="30.0" promptText="Superficie en metros^2" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
+                  <ScrollPane fx:id="scrollFotos" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-pane-tile-pane" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <content>
+                        <FlowPane fx:id="panelFotos" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="tile-pane" vgap="10.0">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </FlowPane>
+                     </content>
+                  </ScrollPane>
                           <Button fx:id="btAgregarFoto" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#agregarFoto" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Agregar Foto" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets />
@@ -142,15 +151,6 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <ScrollPane fx:id="scrollFotos" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-pane-tile-pane" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <content>
-                        <FlowPane fx:id="panelFotos" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="tile-pane" vgap="10.0">
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </FlowPane>
-                     </content>
-                  </ScrollPane>
                       <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="4">
                           <children>
                         <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#siguiente" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Siguiente">
@@ -195,9 +195,13 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                   <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
+                  <Label text="Superficie del edificio" GridPane.columnIndex="1" />
                   <TextField fx:id="tfSuperficieEdificio" layoutX="571.0" layoutY="68.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Superficie del edificio" GridPane.columnIndex="2" />
+                  <Label text="Antiguiedad" GridPane.columnIndex="4" />
                   <TextField fx:id="tfAntiguedad" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Antiguedad" GridPane.columnIndex="5" />
+                  <Label text="Cantidad de dormitorios" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="tfDormitorios" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Cantidad de dormitorios" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Cantidad de baños" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                   <TextField fx:id="tfBaños" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Cantidad de baños" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <CheckBox fx:id="cbPropiedadHorizontal" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Propiedad horizontal" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                   <CheckBox fx:id="cbGarage" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" text="Tiene garage" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2" />
@@ -226,10 +230,6 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                         <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
-                  <Label text="Superficie del edificio" GridPane.columnIndex="1" />
-                  <Label text="Cantidad de dormitorios" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Antiguiedad" GridPane.columnIndex="4" />
-                  <Label text="Cantidad de baños" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>

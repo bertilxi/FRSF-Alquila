@@ -787,10 +787,11 @@ public class NMVInmuebleController extends OlimpoController {
 
 		//Toma de datos de la vista
 		DatosEdificio datos = new DatosEdificio()
-				.setSuperficie(Double.parseDouble(tfSuperficieEdificio.getText()))
-				.setAntiguedad(Integer.parseInt(tfAntiguedad.getText()))
-				.setDormitorios(Integer.parseInt(tfDormitorios.getText()))
-				.setBaños(Integer.parseInt(tfBaños.getText()))
+				.setSuperficie((!tfSuperficieEdificio.getText().isEmpty()) ? (Double.parseDouble(tfSuperficieEdificio.getText())) : (null))
+				.setAntiguedad((!tfAntiguedad.getText().isEmpty()) ? (Integer.parseInt(tfAntiguedad.getText())) : (null))
+				.setDormitorios((!tfDormitorios.getText().isEmpty()) ? (Integer.parseInt(tfDormitorios.getText())) : (null))
+				.setBaños((!tfBaños.getText().isEmpty()) ? (Integer.parseInt(tfBaños.getText())) : (null))
+
 				.setPropiedadHorizontal(cbPropiedadHorizontal.isSelected())
 				.setGaraje(cbGarage.isSelected())
 				.setPatio(cbPatio.isSelected())
@@ -847,10 +848,12 @@ public class NMVInmuebleController extends OlimpoController {
 				.setTipo(tipo)
 				.setOrientacion(orientacion)
 				.setPropietario(propietario)
-				.setPrecio(Double.parseDouble(tfPrecioVenta.getText()))
-				.setFrente(Double.parseDouble(tfFrente.getText()))
-				.setFondo(Double.parseDouble(tfFondo.getText()))
-				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
+
+				.setPrecio((!tfPrecioVenta.getText().isEmpty()) ? (Double.parseDouble(tfPrecioVenta.getText())) : (null))
+				.setFrente((!tfFrente.getText().isEmpty()) ? (Double.parseDouble(tfFrente.getText())) : (null))
+				.setFondo((!tfFondo.getText().isEmpty()) ? (Double.parseDouble(tfFondo.getText())) : (null))
+				.setSuperficie((!tfSuperficie.getText().isEmpty()) ? (Double.parseDouble(tfSuperficie.getText())) : (null))
+
 				.setObservaciones(taObservaciones.getText())
 				.getFotos().addAll(fotos);
 
@@ -1015,19 +1018,21 @@ public class NMVInmuebleController extends OlimpoController {
 		taObservaciones.setText(inmueble.getObservaciones());
 
 		tfAltura.setText(inmueble.getDireccion().getNumero());
-		tfAntiguedad.setText(inmueble.getDatosEdificio().getAntiguedad().toString());
-		tfBaños.setText(inmueble.getDatosEdificio().getBaños().toString());
-		tfCodigo.setText(inmueble.getId().toString());
+
+		tfAntiguedad.setText((inmueble.getDatosEdificio().getAntiguedad() != null) ? (inmueble.getDatosEdificio().getAntiguedad().toString()) : (""));
+		tfBaños.setText((inmueble.getDatosEdificio().getBaños() != null) ? (inmueble.getDatosEdificio().getBaños().toString()) : (""));
+		tfCodigo.setText((inmueble.getId() != null) ? (inmueble.getId().toString()) : (""));
+		tfDormitorios.setText((inmueble.getDatosEdificio().getDormitorios() != null) ? (inmueble.getDatosEdificio().getDormitorios().toString()) : (""));
+		tfFondo.setText((inmueble.getFondo() != null) ? (inmueble.getFondo().toString()) : (""));
+		tfFrente.setText((inmueble.getFrente() != null) ? (inmueble.getFrente().toString()) : (""));
+		tfPrecioVenta.setText((inmueble.getPrecio() != null) ? (inmueble.getPrecio().toString()) : (""));
+		tfSuperficie.setText((inmueble.getSuperficie() != null) ? (inmueble.getSuperficie().toString()) : (""));
+		tfSuperficieEdificio.setText((inmueble.getDatosEdificio().getSuperficie() != null) ? (inmueble.getDatosEdificio().getSuperficie().toString()) : (""));
+
 		tfDepartamento.setText(inmueble.getDireccion().getDepartamento());
-		tfDormitorios.setText(inmueble.getDatosEdificio().getDormitorios().toString());
 		tfFechaCarga.setText(conversorFechas.diaMesYAnioToString(inmueble.getFechaCarga()));
-		tfFondo.setText(inmueble.getFondo().toString());
-		tfFrente.setText(inmueble.getFrente().toString());
 		tfOtros.setText(inmueble.getDireccion().getOtros());
 		tfPiso.setText(inmueble.getDireccion().getPiso());
-		tfPrecioVenta.setText(inmueble.getPrecio().toString());
-		tfSuperficie.setText(inmueble.getSuperficie().toString());
-		tfSuperficieEdificio.setText(inmueble.getDatosEdificio().getSuperficie().toString());
 
 		for(Imagen imagen: inmueble.getFotos()){
 			byte[] imagenRaw = imagen.getArchivo();
