@@ -225,7 +225,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 	private StringProperty titulo2 = new SimpleStringProperty();
 
-	private Inmueble inmueble;
+	protected Inmueble inmueble;
 
 	private ConversorFechas conversorFechas = new ConversorFechas();
 
@@ -866,43 +866,54 @@ public class NMVInmuebleController extends OlimpoController {
 				switch(err) {
 				case Fecha_Vacia:
 					erroresBfr.append("Fecha no ingresada.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Fondo_Incorrecto:
 					erroresBfr.append("Formato del campo Fondo incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Formato_Direccion_Incorrecto:
 					erroresBfr.append("Formato de dirección incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Frente_Incorrecto:
 					erroresBfr.append("Formato del campo Frente incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Precio_Vacio:
 					erroresBfr.append("Precio no ingresado.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Precio_Incorrecto:
 					erroresBfr.append("Formato de precio incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Propietario_Inexistente:
 					erroresBfr.append("El propietario seleccionado no existe en el sistema.\n");
+					erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
 					break;
 				case Propietario_Vacio:
 					erroresBfr.append("Elija el propietario.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Superficie_Incorrecta:
 					erroresBfr.append("Formato superficie de Inmueble incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Tipo_Vacio:
 					erroresBfr.append("Elija el tipo de Inmueble.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Datos_Edificio_Incorrectos:
 					erroresBfr.append("Formato de los datos de edificio incorrectos.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Inmueble_Inexistente:
 					erroresBfr.append("El inmueble ya no existe en el sistema");
+					erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
 					break;
 				}
 			}
-			erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 			presentador.presentarError("No se pudo modificar el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
