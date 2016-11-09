@@ -28,7 +28,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import app.datos.entidades.Inmueble;
-import app.datos.entidades.Propietario;
 import app.datos.servicios.InmuebleService;
 import app.excepciones.ConsultaException;
 import app.excepciones.ObjNotFoundException;
@@ -84,7 +83,7 @@ public class InmuebleServiceImpl implements InmuebleService {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
 			for(Object o: session.getNamedQuery("obtenerInmuebles").list()){
-				if(o instanceof Propietario){
+				if(o instanceof Inmueble){
 					inmuebles.add((Inmueble) o);
 				}
 			}

@@ -50,6 +50,7 @@ import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -257,7 +258,6 @@ public class NMVInmuebleController extends OlimpoController {
 		actualizarProvincias(cbPais.getSelectionModel().getSelectedItem());
 		tfAntiguedad.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfBaños.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
-		tfAltura.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfDormitorios.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfSuperficieEdificio.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
 		tfFondo.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
@@ -692,7 +692,7 @@ public class NMVInmuebleController extends OlimpoController {
 				.setFrente(Double.parseDouble(tfFrente.getText()))
 				.setFondo(Double.parseDouble(tfFondo.getText()))
 				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
-				.setObservaciones(taObservaciones.getText().toLowerCase().trim())
+				.setObservaciones(taObservaciones.getText())
 				.getFotos().addAll(fotos);
 
 		try{
@@ -766,13 +766,19 @@ public class NMVInmuebleController extends OlimpoController {
 
 	public void formatearModificarInmueble(Inmueble inmueble) {
 		this.inmueble = inmueble;
-		cargarDatos();
+		Platform.runLater(() -> {
+			titulo1.set("Modificar inmueble");
+			cargarDatos();
+		});
 	}
 
 	public void formatearVerInmueble(Inmueble inmueble) {
 		this.inmueble = inmueble;
-		cargarDatos();
-		deshabilitarCampos();
+		Platform.runLater(() -> {
+			titulo1.set("Ver inmueble");
+			cargarDatos();
+			deshabilitarCampos();
+		});
 	}
 
 	private void deshabilitarCampos() {
@@ -834,6 +840,7 @@ public class NMVInmuebleController extends OlimpoController {
 		cbPropiedadHorizontal.setSelected(inmueble.getDatosEdificio().getPropiedadHorizontal());
 		cbTelefono.setSelected(inmueble.getDatosEdificio().getTelefono());
 
+		cbPais.getSelectionModel().select(null);
 		cbPais.getSelectionModel().select(inmueble.getDireccion().getLocalidad().getProvincia().getPais());
 		cbProvincia.getSelectionModel().select(inmueble.getDireccion().getLocalidad().getProvincia());
 		cbLocalidad.getSelectionModel().select(inmueble.getDireccion().getLocalidad());

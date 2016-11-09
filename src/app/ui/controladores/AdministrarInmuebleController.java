@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Inmueble;
+import app.excepciones.PersistenciaException;
 import app.ui.controladores.resultado.ResultadoControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -92,6 +93,12 @@ public class AdministrarInmuebleController extends OlimpoController {
 			}
 			return new SimpleStringProperty("<Sin propietario>");
 		});
+
+		try{
+			tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		}
 	}
 
 	@FXML

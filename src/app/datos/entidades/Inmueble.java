@@ -82,7 +82,7 @@ public class Inmueble {
 	@JoinColumn(name = "idorientacion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idorientacion_fk"))
 	private Orientacion orientacion;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "iddireccion", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_iddireccion_fk"), nullable = false, unique = true)
 	private Direccion direccion;
 

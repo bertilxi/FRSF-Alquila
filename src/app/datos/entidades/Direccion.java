@@ -248,6 +248,6 @@ public class Direccion {
 
 	@Override
 	public String toString() {
-		return localidad + " - Barrio: " + barrio + " - " + calle + numero + " - " + piso + departamento + otros;
+		return localidad + " - Barrio: " + barrio + " - " + calle + " " + numero + " - " + piso + " " + departamento + " " + otros;
 	}
 }

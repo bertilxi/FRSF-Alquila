@@ -116,6 +116,13 @@ public class GestorInmueble {
 		}
 
 		if(errores.isEmpty()){
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.ALTA)){
+					inmueble.setEstado(e);
+					break;
+				}
+			}
 			persistidorInmueble.guardarInmueble(inmueble);
 		}
 
