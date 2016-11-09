@@ -33,6 +33,8 @@ import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
+import app.logica.resultados.ResultadoEliminarVendedor;
+import app.logica.resultados.ResultadoEliminarVendedor.ErrorEliminarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
 import junitparams.JUnitParamsRunner;
@@ -226,6 +228,9 @@ public class GestorVendedorTest {
 
 		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
 		assertEquals(resultadoCrearVendedorEsperado, resultadoCrearVendedor);
+		if(guardar.equals(1)) {
+			assertEquals(EstadoStr.ALTA,vendedor.getEstado().getEstado());
+		}
 		verify(validadorFormatoMock).validarNombre(vendedor.getNombre());
 		verify(validadorFormatoMock).validarApellido(vendedor.getApellido());
 		verify(validadorFormatoMock).validarDocumento(vendedor.getTipoDocumento(), vendedor.getNumeroDocumento());
@@ -333,6 +338,9 @@ public class GestorVendedorTest {
 
 		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
 		assertEquals(resultadoModificarVendedorEsperado, resultadoModificarVendedor);
+		if(modificar.equals(1)) {
+			assertEquals(EstadoStr.ALTA,vendedorM.getEstado().getEstado());
+		}
 		verify(validadorFormatoMock).validarNombre(vendedorM.getNombre());
 		verify(validadorFormatoMock).validarApellido(vendedorM.getApellido());
 		verify(validadorFormatoMock).validarDocumento(vendedorM.getTipoDocumento(), vendedorM.getNumeroDocumento());
@@ -349,4 +357,69 @@ public class GestorVendedorTest {
 			new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Documento_Incorrecto);
 	private static final ResultadoModificarVendedor resultadoModificarYaExiste =
 			new ResultadoModificarVendedor(ErrorModificarVendedor.Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo);
+
+	private Vendedor vendedorE;
+
+	protected Object[] parametersForTestEliminarVendedor() {
+		//Se carga vendedor con datos básicos solo para evitar punteros nulos
+		//Las validaciones se hacen en el validador, por lo que se setean luego en los mocks los valores esperados
+		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
+		Estado est = new Estado(EstadoStr.ALTA);
+		vendedorE = new Vendedor();
+
+		vendedorE.setNombre("Juan")
+				.setApellido("Pérez")
+				.setNumeroDocumento("12345678")
+				.setTipoDocumento(doc)
+				.setSalt("abcd")
+				.setPassword("1234")
+				.setEstado(est);
+
+		//Parámetros de JUnitParams
+		return new Object[] {
+				new Object[] {vendedorE, 1, resultadoCorrectoEliminar },
+				new Object[] {null, 0, resultadoEliminarNoExisteVendedor },
+		};
+	}
+
+	@Test
+	@Parameters
+	public void testEliminarVendedor(Vendedor resObtenerVendedor, Integer eliminar, ResultadoEliminarVendedor resultadoEliminarVendedorEsperado) throws Exception {
+		//Inicialización de los mocks
+		VendedorService vendedorServiceMock = mock(VendedorService.class);
+		GestorDatos gestorDatosMock = mock(GestorDatos.class);
+
+		//Clase anónima necesaria para inyectar dependencias hasta que funcione Spring
+		GestorVendedor gestorVendedor = new GestorVendedor() {
+			{
+				this.persistidorVendedor = vendedorServiceMock;
+				this.gestorDatos = gestorDatosMock;
+			}
+		};
+
+		ArrayList<Estado> estados = new ArrayList<>();
+		estados.add(new Estado(EstadoStr.BAJA));
+
+		//Setear valores esperados a los mocks
+		when(vendedorServiceMock.obtenerVendedor(any())).thenReturn(resObtenerVendedor);
+		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
+		doNothing().when(vendedorServiceMock).modificarVendedor(vendedorE); //Para métodos void la sintaxis es distinta
+
+		//Llamar al método a testear
+		ResultadoEliminarVendedor resultadoEliminarVendedor = gestorVendedor.eliminarVendedor(vendedorE);
+
+		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
+		assertEquals(resultadoEliminarVendedorEsperado, resultadoEliminarVendedor);
+		if(eliminar.equals(1)) {
+			assertEquals(EstadoStr.BAJA,vendedorE.getEstado().getEstado());
+		}
+		verify(gestorDatosMock, times(eliminar)).obtenerEstados();
+		verify(vendedorServiceMock, times(eliminar)).modificarVendedor(vendedorE);
+	}
+
+	//Para modificarPropietario
+	private static final ResultadoEliminarVendedor resultadoCorrectoEliminar = new ResultadoEliminarVendedor();
+	private static final ResultadoEliminarVendedor resultadoEliminarNoExisteVendedor =
+			new ResultadoEliminarVendedor(ErrorEliminarVendedor.No_Existe_Vendedor);
+
 }
