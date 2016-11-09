@@ -26,9 +26,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -73,7 +75,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.StringConverter;
-import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
@@ -266,11 +267,11 @@ public class NMVInmuebleController extends OlimpoController {
 		tfAntiguedad.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfBaños.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfDormitorios.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
-		tfSuperficieEdificio.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
-		tfFondo.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
-		tfFrente.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
-		tfSuperficie.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
-		tfPrecioVenta.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
+		tfSuperficieEdificio.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
+		tfFondo.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
+		tfFrente.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
+		tfSuperficie.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
+		tfPrecioVenta.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
 
 		cbPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
@@ -626,7 +627,7 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador crearInmueble() {
-		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
+		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoCrearInmueble resultado;
 		StringBuffer erroresBfr = new StringBuffer();
 		Inmueble inmueble = new Inmueble();
@@ -717,40 +718,50 @@ public class NMVInmuebleController extends OlimpoController {
 				switch(err) {
 				case Fecha_Vacia:
 					erroresBfr.append("Fecha no ingresada.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Fondo_Incorrecto:
 					erroresBfr.append("Formato del campo Fondo incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Formato_Direccion_Incorrecto:
 					erroresBfr.append("Formato de dirección incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Frente_Incorrecto:
 					erroresBfr.append("Formato del campo Frente incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Precio_Vacio:
 					erroresBfr.append("Precio no ingresado.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Precio_Incorrecto:
 					erroresBfr.append("Formato de precio incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Propietario_Inexistente:
 					erroresBfr.append("El propietario seleccionado no existe en el sistema.\n");
+					erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
 					break;
 				case Propietario_Vacio:
 					erroresBfr.append("Elija el propietario.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Superficie_Incorrecta:
 					erroresBfr.append("Formato superficie de Inmueble incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Tipo_Vacio:
 					erroresBfr.append("Elija el tipo de Inmueble.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Datos_Edificio_Incorrectos:
 					erroresBfr.append("Formato de los datos de edificio incorrectos.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				}
 			}
-			erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);
 		}
 		else{

@@ -22,13 +22,16 @@ import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoInmueble;
+import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoCrearInmueble;
+import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import app.logica.resultados.ResultadoModificarInmueble;
 import app.ui.componentes.ventanas.PresentadorVentanas;
 import app.ui.componentes.ventanas.mock.PresentadorVentanasMock;
 import app.ui.controladores.resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -68,6 +71,7 @@ public class NMVInmuebleControllerTest {
 			ResultadoControlador resultadoControlador,
 			ResultadoCrearInmueble resultadoLogica,
 			Throwable excepcion) throws Exception {
+
 		CoordinadorJavaFX coordinadorMock = new CoordinadorJavaFX() {
 			@Override
 			public ResultadoCrearInmueble crearInmueble(Inmueble inmueble) throws PersistenciaException {
@@ -249,15 +253,93 @@ public class NMVInmuebleControllerTest {
 		Boolean lavadero = true;
 		Boolean pavimento = false;
 		String observaciones = "";
-		ResultadoControlador resultadoControlador = new ResultadoControlador();
 
-		ResultadoCrearInmueble resultadoLogica = new ResultadoCrearInmueble();
-		Throwable excepcion = new Exception();
+		ResultadoControlador resultadoControladorCorrecto = new ResultadoControlador();
+		ResultadoCrearInmueble resultadoLogicaCorrecto = new ResultadoCrearInmueble();
+
+		ResultadoControlador resultadoControladorDatosIncorrectos = new ResultadoControlador(ErrorControlador.Datos_Incorrectos);
+		ResultadoControlador resultadoControladorCamposVacios = new ResultadoControlador(ErrorControlador.Campos_Vacios);
+		ResultadoControlador resultadoControladorEntidadNoEncontrada = new ResultadoControlador(ErrorControlador.Entidad_No_Encontrada);
+		ResultadoControlador resultadoControladorDatosIncorrectosYCamposVacios = new ResultadoControlador(ErrorControlador.Campos_Vacios, ErrorControlador.Datos_Incorrectos);
+		ResultadoControlador resultadoControladorErrorPersistencia = new ResultadoControlador(ErrorControlador.Error_Persistencia);
+		ResultadoControlador resultadoControladorErrorDesconocido = new ResultadoControlador(ErrorControlador.Error_Desconocido);
+
+		ResultadoCrearInmueble resultadoLogicaDatosEdificioIncorrectos = new ResultadoCrearInmueble(ErrorCrearInmueble.Datos_Edificio_Incorrectos);
+		ResultadoCrearInmueble resultadoLogicaFechaVacia = new ResultadoCrearInmueble(ErrorCrearInmueble.Fecha_Vacia);
+		ResultadoCrearInmueble resultadoLogicaFondoIncorrecto = new ResultadoCrearInmueble(ErrorCrearInmueble.Fondo_Incorrecto);
+		ResultadoCrearInmueble resultadoLogicaFormatoDireccionIncorrecto = new ResultadoCrearInmueble(ErrorCrearInmueble.Formato_Direccion_Incorrecto);
+		ResultadoCrearInmueble resultadoLogicaFrenteIncorrecto = new ResultadoCrearInmueble(ErrorCrearInmueble.Frente_Incorrecto);
+		ResultadoCrearInmueble resultadoLogicaPrecioIncorrecto = new ResultadoCrearInmueble(ErrorCrearInmueble.Precio_Incorrecto);
+		ResultadoCrearInmueble resultadoLogicaPrecioVacio = new ResultadoCrearInmueble(ErrorCrearInmueble.Precio_Vacio);
+		ResultadoCrearInmueble resultadoLogicaPropietarioInexistente = new ResultadoCrearInmueble(ErrorCrearInmueble.Propietario_Inexistente);
+		ResultadoCrearInmueble resultadoLogicaPropietarioVacio = new ResultadoCrearInmueble(ErrorCrearInmueble.Propietario_Vacio);
+		ResultadoCrearInmueble resultadoLogicaSuperficieIncorrecta = new ResultadoCrearInmueble(ErrorCrearInmueble.Superficie_Incorrecta);
+		ResultadoCrearInmueble resultadoLogicaTipoVacio = new ResultadoCrearInmueble(ErrorCrearInmueble.Tipo_Vacio);
+		ResultadoCrearInmueble resultadoLogicaTipoVacioYSuperficieIncorrecta = new ResultadoCrearInmueble(ErrorCrearInmueble.Tipo_Vacio, ErrorCrearInmueble.Superficie_Incorrecta);
+
+		Throwable excepcionPersistencia = new ObjNotFoundException("", new Exception());
+		Throwable excepcionInesperada = new Exception();
 
 		return new Object[] {
 				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
 						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
-						teléfono, lavadero, pavimento, observaciones, resultadoControlador, resultadoLogica, excepcion } //test Todo correcto
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test Todo correcto
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorDatosIncorrectos, resultadoLogicaDatosEdificioIncorrectos, null }, //test Datos de edificio incorrectos
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorCamposVacios, resultadoLogicaFechaVacia, null }, //test fecha vacía
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorDatosIncorrectos, resultadoLogicaFondoIncorrecto, null }, //test formato de fondo incorrecto
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorDatosIncorrectos, resultadoLogicaFormatoDireccionIncorrecto, null }, //test formato de dirección incorrecto
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorDatosIncorrectos, resultadoLogicaFrenteIncorrecto, null }, //test formato de frente incorrecto
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorDatosIncorrectos, resultadoLogicaPrecioIncorrecto, null }, //test formato de precio incorrecto
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorCamposVacios, resultadoLogicaPrecioVacio, null }, //test precio vacío
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorEntidadNoEncontrada, resultadoLogicaPropietarioInexistente, null }, //test Propietario seleccionado inexistente en el sistema
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorCamposVacios, resultadoLogicaPropietarioVacio, null }, //test propietario vacío
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorDatosIncorrectos, resultadoLogicaSuperficieIncorrecta, null }, //test formato de superficie de inmueble incorrecto
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorCamposVacios, resultadoLogicaTipoVacio, null }, //test tipo de inmueble vacío
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorDatosIncorrectosYCamposVacios, resultadoLogicaTipoVacioYSuperficieIncorrecta, null }, //test tipo de inmueble vacío y formato de superficie de inmueble incorrecto
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorErrorPersistencia, null, excepcionPersistencia }, //test excepción de persistencia
+
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControladorErrorDesconocido, null, excepcionInesperada } //test escepción inesperada
 		};
 	}
 
