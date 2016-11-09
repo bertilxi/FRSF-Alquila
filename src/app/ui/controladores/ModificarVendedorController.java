@@ -44,19 +44,19 @@ public class ModificarVendedorController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/modificarVendedor.fxml";
 
 	@FXML
-	private TextField textFieldNombre;
+	protected TextField textFieldNombre;
 	@FXML
-	private TextField textFieldApellido;
+	protected TextField textFieldApellido;
 	@FXML
-	private TextField textFieldNumeroDocumento;
+	protected TextField textFieldNumeroDocumento;
 	@FXML
-	private PasswordField passwordFieldContraseñaAntigua;
+	protected PasswordField passwordFieldContraseñaAntigua;
 	@FXML
-	private PasswordField passwordFieldContraseñaNueva;
+	protected PasswordField passwordFieldContraseñaNueva;
 	@FXML
-	private PasswordField passwordFieldRepiteContraseña;
+	protected PasswordField passwordFieldRepiteContraseña;
 	@FXML
-	private CheckBox checkBoxCambiarContraseña;
+	protected CheckBox checkBoxCambiarContraseña;
 	@FXML
 	private Label labelContraseñaAntigua;
 	@FXML
@@ -64,7 +64,7 @@ public class ModificarVendedorController extends OlimpoController {
 	@FXML
 	private Label labelRepiteContraseña;
 	@FXML
-	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
+	protected ComboBox<TipoDocumento> comboBoxTipoDocumento;
 	@FXML
 	private Button acceptButton;
 	@FXML
@@ -74,7 +74,7 @@ public class ModificarVendedorController extends OlimpoController {
 
 	private Boolean esAltaNuevamente = false;
 
-	private EncriptadorPassword encriptador = new EncriptadorPassword();
+	protected EncriptadorPassword encriptador = new EncriptadorPassword();
 
 	/**
 	 * Acción que se ejecuta al apretar el botón aceptar.
