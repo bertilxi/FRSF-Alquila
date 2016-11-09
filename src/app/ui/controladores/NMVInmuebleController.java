@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -73,6 +74,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 /**
  * Controlador de la vista que crea, modifica o muestra un inmueble
@@ -261,11 +263,11 @@ public class NMVInmuebleController extends OlimpoController {
 		tfAntiguedad.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfBaños.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfDormitorios.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
-		tfSuperficieEdificio.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
-		tfFondo.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
-		tfFrente.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
-		tfSuperficie.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
-		tfPrecioVenta.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
+		tfSuperficieEdificio.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
+		tfFondo.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
+		tfFrente.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
+		tfSuperficie.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
+		tfPrecioVenta.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
 
 		cbPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
