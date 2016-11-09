@@ -413,6 +413,42 @@ public class NMVInmuebleController extends OlimpoController {
 			}
 		});
 
+		//Cuando el foco sale de los comboBox que estaban siendo editados
+		//el texto ingresado se convierte en un item y se lo selecciona
+		cbPais.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+			if(!newPropertyValue){
+				cbPais.getSelectionModel().select(cbPais.getConverter().fromString(cbPais.getEditor().getText()));
+
+			}
+		});
+
+		cbProvincia.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+			if(!newPropertyValue){
+				cbProvincia.getSelectionModel().select(cbProvincia.getConverter().fromString(cbProvincia.getEditor().getText()));
+
+			}
+		});
+
+		cbLocalidad.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+			if(!newPropertyValue){
+				cbLocalidad.getSelectionModel().select(cbLocalidad.getConverter().fromString(cbLocalidad.getEditor().getText()));
+
+			}
+		});
+
+		cbBarrio.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+			if(!newPropertyValue){
+				cbBarrio.getSelectionModel().select(cbBarrio.getConverter().fromString(cbBarrio.getEditor().getText()));
+
+			}
+		});
+
+		cbCalle.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+			if(!newPropertyValue){
+				cbCalle.getSelectionModel().select(cbCalle.getConverter().fromString(cbCalle.getEditor().getText()));
+
+			}
+		});
 	}
 
 	/**
