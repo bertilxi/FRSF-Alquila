@@ -160,6 +160,8 @@ public class AdministrarClienteController extends OlimpoController {
 					}
 					presentador.presentarError("No se pudo eliminar el cliente", stringErrores.toString(), stage);
 
+				} else {
+					presentador.presentarToast("Se ha eliminado el cliente con éxito", stage);
 				}
 				tablaClientes.getItems().clear();
 				tablaClientes.getItems().addAll(coordinador.obtenerClientes());

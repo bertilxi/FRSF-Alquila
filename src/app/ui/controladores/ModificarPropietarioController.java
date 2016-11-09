@@ -214,6 +214,7 @@ public class ModificarPropietarioController extends OlimpoController {
 					presentador.presentarError("No se pudo modificar el propietario", stringErrores.toString(), stage);
 				}
 				else{
+					presentador.presentarToast("Se ha modificado el propietario con éxito", stage);
 					cambiarmeAScene(AdministrarPropietarioController.URLVista);
 				}
 			} catch(PersistenciaException e){

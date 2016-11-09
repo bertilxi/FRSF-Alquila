@@ -191,6 +191,7 @@ public class AltaPropietarioController extends OlimpoController {
 					presentador.presentarError("No se pudo crear el propietario", stringErrores.toString(), stage);
 				}
 				else{
+					presentador.presentarToast("Se ha creado el propietario con éxito", stage);
 					cambiarmeAScene(AdministrarPropietarioController.URLVista);
 				}
 			} catch(GestionException e){

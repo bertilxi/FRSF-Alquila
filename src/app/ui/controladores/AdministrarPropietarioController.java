@@ -159,6 +159,8 @@ public class AdministrarPropietarioController extends OlimpoController {
 					}
 					presentador.presentarError("No se pudo eliminar el propietario", stringErrores.toString(), stage);
 
+				} else {
+					presentador.presentarToast("Se ha eliminado el propietario con éxito", stage);
 				}
 				tablaPropietarios.getItems().clear();
 				tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());

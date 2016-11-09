@@ -137,6 +137,7 @@ public class ModificarClienteController extends OlimpoController {
 					presentador.presentarError("No se pudo modificar el cliente", stringErrores.toString(), stage);
 				}
 				else{
+					presentador.presentarToast("Se ha modificado el cliente con éxito", stage);
 					cambiarmeAScene(AdministrarClienteController.URLVista);
 				}
 			} catch(PersistenciaException e){
