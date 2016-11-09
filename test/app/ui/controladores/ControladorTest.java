@@ -36,7 +36,7 @@ public class ControladorTest implements TestRule {
 	private static Semaphore s = new Semaphore(0);
 
 	//Inicia el hilo de JavaFX e inyecta la vista en el cotrolador
-	public <T> ControladorTest(String direccionURLVista, T controladorAProbar) {
+	public <T> ControladorTest(String direccionURLVista, OlimpoController controladorAProbar) {
 		try{
 			//Iniciar el hilo de JavaFX
 			if(!javaFXThread.isAlive()){
@@ -51,6 +51,7 @@ public class ControladorTest implements TestRule {
 				if(claseControlador != null && !claseControlador.isInstance(controladorAProbar)){
 					throw new IllegalArgumentException("¡Instancia del controlador inválida, esperada una instancia de la clase '" + claseControlador.getName() + "'!");
 				}
+				controladorAProbar.setStage(stagePrueba);
 				return controladorAProbar;
 			});
 
@@ -67,6 +68,7 @@ public class ControladorTest implements TestRule {
 			@Override
 			public void evaluate() throws Throwable {
 				FutureTask<Throwable> future = new FutureTask<>(() -> {
+
 					try{
 						statement.evaluate();
 						return null;
