@@ -1,7 +1,5 @@
 package app.ui.controladores;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -22,12 +20,11 @@ import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
-import app.excepciones.GestionException;
-import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
+import app.ui.ScenographyChanger;
 import app.ui.componentes.ventanas.PresentadorVentanas;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import app.ui.componentes.ventanas.VentanaError;
@@ -41,8 +38,6 @@ import junitparams.Parameters;
  */
 @RunWith(JUnitParamsRunner.class)
 public class AltaVendedorControllerTest {
-
-	static private Integer llamaACambiarSceneReal;
 
 	@Test
 	@Parameters
@@ -62,13 +57,14 @@ public class AltaVendedorControllerTest {
 			Integer llamaACambiarScene)
 			throws Throwable {
 		//Se crean los mocks necesarios
-		llamaACambiarSceneReal = 0;
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
 		VentanaError ventanaErrorMock = mock(VentanaError.class);
 		VentanaErrorExcepcion ventanaErrorExcepcionMock = mock(VentanaErrorExcepcion.class);
 		VentanaErrorExcepcionInesperada ventanaErrorExcepcionInesperadaMock = mock(VentanaErrorExcepcionInesperada.class);
 		VentanaConfirmacion ventanaConfirmacionMock = mock(VentanaConfirmacion.class);
+		ScenographyChanger scenographyChangerMock = mock(ScenographyChanger.class);
+		ModificarVendedorController modificarVendedorControllerMock = mock(ModificarVendedorController.class);
 
 		//Se setea lo que deben devolver los mocks cuando son invocados por la clase a probar
 		when(presentadorVentanasMock.presentarError(any(), any(), any())).thenReturn(ventanaErrorMock);
@@ -76,6 +72,7 @@ public class AltaVendedorControllerTest {
 		when(presentadorVentanasMock.presentarExcepcionInesperada(any(), any())).thenReturn(ventanaErrorExcepcionInesperadaMock);
 		when(presentadorVentanasMock.presentarConfirmacion(any(), any(), any())).thenReturn(ventanaConfirmacionMock);
 		when(ventanaConfirmacionMock.acepta()).thenReturn(aceptarVentanaConfirmacion);
+		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarVendedorControllerMock);
 		doNothing().when(presentadorVentanasMock).presentarToast(any(), any());
 
 		Vendedor vendedor = new Vendedor()
@@ -100,11 +97,12 @@ public class AltaVendedorControllerTest {
 				this.coordinador = coordinadorMock;
 				this.presentador = new PresentadorVentanas();
 				this.presentador = presentadorVentanasMock;
+				setScenographyChanger(scenographyChangerMock);
 				super.inicializar(location, resources);
 			}
 
 			@Override
-			public void acceptAction() throws PersistenciaException, GestionException {
+			public void acceptAction() {
 				this.coordinador = coordinadorMock;
 				this.textFieldNombre.setText(nombre);
 				this.textFieldApellido.setText(apellido);
@@ -114,29 +112,6 @@ public class AltaVendedorControllerTest {
 				this.passwordFieldRepiteContraseña.setText(contraseña);
 				super.acceptAction();
 			};
-
-			@Override
-			protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
-				if(!URLVistaACambiar.equals(ModificarVendedorController.URLVista)){
-					fail();
-				}
-				llamaACambiarSceneReal++;
-				return new ModificarVendedorController() {
-					@Override
-					public void inicializar(URL location, ResourceBundle resources) {
-
-					}
-
-					@Override
-					public void setVendedor(Vendedor vendedor) {
-
-					}
-
-					@Override
-					public void setAltaVendedor() {
-					}
-				};
-			}
 
 			@Override
 			protected void setTitulo(String titulo) {
@@ -157,7 +132,7 @@ public class AltaVendedorControllerTest {
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarError)).presentarError(eq("Revise sus campos"), any(), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcion)).presentarExcepcion(eq(excepcion), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcionInesperada)).presentarExcepcionInesperada(eq(excepcion), any());
-				assertEquals(llamaACambiarSceneReal, llamaACambiarScene);
+				Mockito.verify(scenographyChangerMock, times(llamaACambiarScene)).cambiarScenography(ModificarVendedorController.URLVista, false);
 			}
 		};
 

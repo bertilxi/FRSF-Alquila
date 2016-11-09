@@ -25,7 +25,6 @@ import app.comun.EncriptadorPassword;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.Vendedor;
 import app.excepciones.EntidadExistenteConEstadoBajaException;
-import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
@@ -69,7 +68,7 @@ public class AltaVendedorController extends OlimpoController {
 	 * Valida que se hayan insertado datos, los carga al vendedor y deriva la operación a capa lógica.
 	 * Si la capa lógica retorna errores, éstos se muestran al usuario.
 	 */
-	public void acceptAction() throws PersistenciaException, GestionException {
+	public void acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -151,7 +150,11 @@ public class AltaVendedorController extends OlimpoController {
 			} catch(EntidadExistenteConEstadoBajaException e){
 				VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor está dado de baja. Si continúa podrá darlo de alta nuevamente. ¿Desea continuar?", stage);
 				if(ventana.acepta()){
-					vendedor = coordinador.obtenerVendedor(vendedor);
+					try{
+						vendedor = coordinador.obtenerVendedor(vendedor);
+					} catch(PersistenciaException e1){
+						presentador.presentarExcepcion(e1, stage);
+					}
 					ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVistaRetorno);
 					modificarVendedorController.setVendedor(vendedor);
 					modificarVendedorController.setAltaVendedor();

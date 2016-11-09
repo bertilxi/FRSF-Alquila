@@ -111,25 +111,6 @@ public class ModificarVendedorControllerTest {
 			};
 
 			@Override
-			protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
-				return new ModificarVendedorController() {
-					@Override
-					public void inicializar(URL location, ResourceBundle resources) {
-
-					}
-
-					@Override
-					public void setVendedor(Vendedor vendedor) {
-
-					}
-
-					@Override
-					public void setAltaVendedor() {
-					}
-				};
-			}
-
-			@Override
 			protected void setTitulo(String titulo) {
 
 			}
