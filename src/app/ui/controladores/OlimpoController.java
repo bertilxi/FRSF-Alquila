@@ -37,7 +37,7 @@ public abstract class OlimpoController implements Initializable {
 	protected Stage stage;
 	protected CoordinadorJavaFX coordinador;
 	protected PresentadorVentanas presentador;
-	private ScenographyChanger parentScenographyChanger;
+	protected ScenographyChanger parentScenographyChanger;
 	private Map<Node, ScenographyChanger> myScenographyChangers = new HashMap<>();
 	protected String URLVistaRetorno;
 
@@ -103,7 +103,7 @@ public abstract class OlimpoController implements Initializable {
 	}
 
 	@Override
-	public final void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(() -> {
 			inicializar(location, resources);
 		});
