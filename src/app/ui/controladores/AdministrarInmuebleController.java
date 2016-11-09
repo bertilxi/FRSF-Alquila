@@ -176,6 +176,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		else{
 			presentador.presentarToast("Se ha eliminado el inmueble con éxito", stage);
+			tablaInmuebles.getItems().remove(inmueble);
 		}
 
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));

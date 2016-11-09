@@ -634,10 +634,11 @@ public class NMVInmuebleController extends OlimpoController {
 
 		//Toma de datos de la vista
 		DatosEdificio datos = new DatosEdificio()
-				.setSuperficie(Double.parseDouble(tfSuperficieEdificio.getText()))
-				.setAntiguedad(Integer.parseInt(tfAntiguedad.getText()))
-				.setDormitorios(Integer.parseInt(tfDormitorios.getText()))
-				.setBaños(Integer.parseInt(tfBaños.getText()))
+				.setSuperficie((!tfSuperficieEdificio.getText().isEmpty()) ? (Double.parseDouble(tfSuperficieEdificio.getText())) : (null))
+				.setAntiguedad((!tfAntiguedad.getText().isEmpty()) ? (Integer.parseInt(tfAntiguedad.getText())) : (null))
+				.setDormitorios((!tfDormitorios.getText().isEmpty()) ? (Integer.parseInt(tfDormitorios.getText())) : (null))
+				.setBaños((!tfBaños.getText().isEmpty()) ? (Integer.parseInt(tfBaños.getText())) : (null))
+
 				.setPropiedadHorizontal(cbPropiedadHorizontal.isSelected())
 				.setGaraje(cbGarage.isSelected())
 				.setPatio(cbPatio.isSelected())
@@ -696,10 +697,12 @@ public class NMVInmuebleController extends OlimpoController {
 				.setTipo(tipo)
 				.setOrientacion(orientacion)
 				.setPropietario(propietario)
-				.setPrecio(Double.parseDouble(tfPrecioVenta.getText()))
-				.setFrente(Double.parseDouble(tfFrente.getText()))
-				.setFondo(Double.parseDouble(tfFondo.getText()))
-				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
+
+				.setPrecio((!tfPrecioVenta.getText().isEmpty()) ? (Double.parseDouble(tfPrecioVenta.getText())) : (null))
+				.setFrente((!tfFrente.getText().isEmpty()) ? (Double.parseDouble(tfFrente.getText())) : (null))
+				.setFondo((!tfFondo.getText().isEmpty()) ? (Double.parseDouble(tfFondo.getText())) : (null))
+				.setSuperficie((!tfSuperficie.getText().isEmpty()) ? (Double.parseDouble(tfSuperficie.getText())) : (null))
+
 				.setObservaciones(taObservaciones.getText())
 				.getFotos().addAll(fotos);
 
