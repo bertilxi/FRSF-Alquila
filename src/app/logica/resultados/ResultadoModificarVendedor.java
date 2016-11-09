@@ -30,7 +30,6 @@ public class ResultadoModificarVendedor extends Resultado<ErrorModificarVendedor
 		Formato_Nombre_Incorrecto,
 		Formato_Apellido_Incorrecto,
 		Formato_Documento_Incorrecto,
-		Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo,
-		El_Vendedor_No_Existe
+		Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo
 	}
 }

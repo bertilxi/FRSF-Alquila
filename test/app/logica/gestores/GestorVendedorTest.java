@@ -296,8 +296,7 @@ public class GestorVendedorTest {
 				new Object[] { true, false, true, vendedorM, 0, resultadoModificarApellidoIncorrecto },
 				new Object[] { true, true, false, vendedorM, 0, resultadoModificarDocumentoIncorrecto },
 				new Object[] { false, false, true, vendedorM, 0, new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Nombre_Incorrecto, ErrorModificarVendedor.Formato_Apellido_Incorrecto) },
-				new Object[] { true, true, true, vendedorM2, 0, resultadoModificarYaExiste },
-				new Object[] {true, true, true, null, 0, resultadoModificarNoExiste }
+				new Object[] { true, true, true, vendedorM2, 0, resultadoModificarYaExiste }
 		};
 	}
 
@@ -350,6 +349,4 @@ public class GestorVendedorTest {
 			new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Documento_Incorrecto);
 	private static final ResultadoModificarVendedor resultadoModificarYaExiste =
 			new ResultadoModificarVendedor(ErrorModificarVendedor.Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo);
-	private static final ResultadoModificarVendedor resultadoModificarNoExiste =
-			new ResultadoModificarVendedor(ErrorModificarVendedor.El_Vendedor_No_Existe);
 }
