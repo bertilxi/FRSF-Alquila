@@ -48,6 +48,8 @@ import app.datos.entidades.TipoInmueble;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
+import app.logica.resultados.ResultadoModificarInmueble;
+import app.logica.resultados.ResultadoModificarInmueble.ErrorModificarInmueble;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.application.Platform;
@@ -761,7 +763,139 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador modificarInmueble() {
-		return null;
+		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
+		ResultadoModificarInmueble resultado;
+		StringBuffer erroresBfr = new StringBuffer();
+
+		//Toma de datos de la vista
+		DatosEdificio datos = new DatosEdificio()
+				.setSuperficie(Double.parseDouble(tfSuperficieEdificio.getText()))
+				.setAntiguedad(Integer.parseInt(tfAntiguedad.getText()))
+				.setDormitorios(Integer.parseInt(tfDormitorios.getText()))
+				.setBaños(Integer.parseInt(tfBaños.getText()))
+				.setPropiedadHorizontal(cbPropiedadHorizontal.isSelected())
+				.setGaraje(cbGarage.isSelected())
+				.setPatio(cbPatio.isSelected())
+				.setPiscina(cbPiscina.isSelected())
+				.setAguaCorriente(cbAguaCorriente.isSelected())
+				.setCloacas(cbCloaca.isSelected())
+				.setGasNatural(cbGasNatural.isSelected())
+				.setAguaCaliente(cbAguaCaliente.isSelected())
+				.setTelefono(cbTelefono.isSelected())
+				.setLavadero(cbLavadero.isSelected())
+				.setPavimento(cbPavimento.isSelected())
+				.setInmueble(inmueble);
+
+		Localidad localidad = cbLocalidad.getValue();
+		Barrio barrio = cbBarrio.getValue();
+		Calle calle = cbCalle.getValue();
+		Orientacion orientacion = cbOrientacion.getValue();
+		Propietario propietario = cbPropietario.getValue();
+		TipoInmueble tipo = cbTipoInmueble.getValue();
+
+		Direccion direccion = new Direccion()
+				.setLocalidad(localidad)
+				.setCalle(calle)
+				.setNumero(tfAltura.getText().toLowerCase().trim())
+				.setBarrio(barrio)
+				.setDepartamento(tfDepartamento.getText().toLowerCase().trim())
+				.setOtros(tfOtros.getText().toLowerCase().trim())
+				.setPiso(tfPiso.getText().toLowerCase().trim());
+
+		//Guardar fotos
+		ArrayList<Imagen> fotos = new ArrayList<>();
+		for(Node nodo: panelFotos.getChildren()){
+			if(nodo instanceof ImageView){
+				ImageView imagen = (ImageView) nodo;
+				File file = archivosImagenesNuevas.get(imagen);
+				byte[] bFile = new byte[(int) file.length()];
+
+				try{
+					FileInputStream fileInputStream = new FileInputStream(file);
+					//convert file into array of bytes
+					fileInputStream.read(bFile);
+					fileInputStream.close();
+				} catch(Exception e){
+					presentador.presentarExcepcion(e, stage);
+					return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+				}
+				fotos.add((Imagen) new Imagen().setArchivo(bFile));
+			}
+		}
+
+		inmueble.setDatosEdificio(datos)
+				.setEstado(new Estado(EstadoStr.ALTA))
+				.setDireccion(direccion)
+				.setTipo(tipo)
+				.setOrientacion(orientacion)
+				.setPropietario(propietario)
+				.setPrecio(Double.parseDouble(tfPrecioVenta.getText()))
+				.setFrente(Double.parseDouble(tfFrente.getText()))
+				.setFondo(Double.parseDouble(tfFondo.getText()))
+				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
+				.setObservaciones(taObservaciones.getText())
+				.getFotos().addAll(fotos);
+
+		try{
+			resultado = coordinador.modificarInmueble(inmueble);
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
+		} catch(Exception e){
+			presentador.presentarExcepcionInesperada(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+		}
+
+		if(resultado.hayErrores()){
+			for(ErrorModificarInmueble err: resultado.getErrores()){
+				switch(err) {
+				case Fecha_Vacia:
+					erroresBfr.append("Fecha no ingresada.\n");
+					break;
+				case Fondo_Incorrecto:
+					erroresBfr.append("Formato del campo Fondo incorrecto.\n");
+					break;
+				case Formato_Direccion_Incorrecto:
+					erroresBfr.append("Formato de dirección incorrecto.\n");
+					break;
+				case Frente_Incorrecto:
+					erroresBfr.append("Formato del campo Frente incorrecto.\n");
+					break;
+				case Precio_Vacio:
+					erroresBfr.append("Precio no ingresado.\n");
+					break;
+				case Precio_Incorrecto:
+					erroresBfr.append("Formato de precio incorrecto.\n");
+					break;
+				case Propietario_Inexistente:
+					erroresBfr.append("El propietario seleccionado no existe en el sistema.\n");
+					break;
+				case Propietario_Vacio:
+					erroresBfr.append("Elija el propietario.\n");
+					break;
+				case Superficie_Incorrecta:
+					erroresBfr.append("Formato superficie de Inmueble incorrecto.\n");
+					break;
+				case Tipo_Vacio:
+					erroresBfr.append("Elija el tipo de Inmueble.\n");
+					break;
+				case Datos_Edificio_Incorrectos:
+					erroresBfr.append("Formato de los datos de edificio incorrectos.\n");
+					break;
+				case Inmueble_Inexistente:
+					erroresBfr.append("El inmueble ya no existe en el sistema");
+					break;
+				}
+			}
+			erroresControlador.add(ErrorControlador.Datos_Incorrectos);
+			presentador.presentarError("No se pudo modificar el inmueble", erroresBfr.toString(), stage);
+		}
+		else{
+			cambiarmeAScene(AdministrarInmuebleController.URLVista);
+			presentador.presentarToast("Se ha modificado el vendedor con éxito", stage);
+		}
+
+		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0])); 
 	}
 
 	public void formatearModificarInmueble(Inmueble inmueble) {

@@ -73,16 +73,18 @@ public class Calle implements Comparable<Calle> {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public Calle setNombre(String nombre) {
 		this.nombre = nombre;
+		return this;
 	}
 
 	public Localidad getLocalidad() {
 		return localidad;
 	}
 
-	public void setLocalidad(Localidad localidad) {
+	public Calle setLocalidad(Localidad localidad) {
 		this.localidad = localidad;
+		return this;
 	}
 
 	@Override

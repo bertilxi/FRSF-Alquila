@@ -63,8 +63,9 @@ public class Orientacion {
 		return orientacion;
 	}
 
-	public void setOrientacion(OrientacionStr orientacion) {
+	public Orientacion setOrientacion(OrientacionStr orientacion) {
 		this.orientacion = orientacion;
+		return this;
 	}
 
 	@Override

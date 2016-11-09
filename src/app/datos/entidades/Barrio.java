@@ -73,16 +73,18 @@ public class Barrio implements Comparable<Barrio> {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public Barrio setNombre(String nombre) {
 		this.nombre = nombre;
+		return this;
 	}
 
 	public Localidad getLocalidad() {
 		return localidad;
 	}
 
-	public void setLocalidad(Localidad localidad) {
+	public Barrio setLocalidad(Localidad localidad) {
 		this.localidad = localidad;
+		return this;
 	}
 
 	@Override

@@ -63,8 +63,9 @@ public class TipoInmueble {
 		return tipo;
 	}
 
-	public void setTipo(TipoInmuebleStr tipo) {
+	public TipoInmueble setTipo(TipoInmuebleStr tipo) {
 		this.tipo = tipo;
+		return this;
 	}
 
 	@Override
