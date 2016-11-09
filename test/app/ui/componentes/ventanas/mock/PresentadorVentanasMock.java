@@ -5,6 +5,7 @@ import app.ui.componentes.ventanas.VentanaConfirmacion;
 import app.ui.componentes.ventanas.VentanaError;
 import app.ui.componentes.ventanas.VentanaErrorExcepcion;
 import app.ui.componentes.ventanas.VentanaErrorExcepcionInesperada;
+import app.ui.componentes.ventanas.VentanaEsperaBaseDeDatos;
 import app.ui.componentes.ventanas.VentanaInformacion;
 import javafx.stage.Window;
 
@@ -22,11 +23,7 @@ public class PresentadorVentanasMock extends PresentadorVentanas {
 
 	@Override
 	public VentanaConfirmacion presentarConfirmacion(String titulo, String mensaje, Window padre) {
-		return new VentanaConfirmacion(titulo, mensaje, padre) {
-			{
-
-			}
-
+		return new VentanaConfirmacion(titulo, mensaje) {
 			@Override
 			public Boolean acepta() {
 				return acepta;
@@ -37,10 +34,6 @@ public class PresentadorVentanasMock extends PresentadorVentanas {
 	@Override
 	public VentanaConfirmacion presentarConfirmacion(String titulo, String mensaje) {
 		return new VentanaConfirmacion(titulo, mensaje) {
-			{
-
-			}
-
 			@Override
 			public Boolean acepta() {
 				return acepta;
@@ -86,5 +79,20 @@ public class PresentadorVentanasMock extends PresentadorVentanas {
 	@Override
 	public VentanaErrorExcepcionInesperada presentarExcepcionInesperada(Exception e) {
 		return null;
+	}
+
+	@Override
+	public VentanaEsperaBaseDeDatos presentarEsperaBaseDeDatos(Window w) {
+		return null;
+	}
+
+	@Override
+	public void presentarToast(String mensaje, Window padre) {
+
+	}
+
+	@Override
+	public void presentarToast(String mensaje, Window padre, int ajusteHeight) {
+
 	}
 }

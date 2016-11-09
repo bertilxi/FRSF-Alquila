@@ -26,9 +26,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -73,7 +75,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.StringConverter;
-import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
@@ -224,7 +225,7 @@ public class NMVInmuebleController extends OlimpoController {
 
 	private StringProperty titulo2 = new SimpleStringProperty();
 
-	private Inmueble inmueble;
+	protected Inmueble inmueble;
 
 	private ConversorFechas conversorFechas = new ConversorFechas();
 
@@ -266,11 +267,11 @@ public class NMVInmuebleController extends OlimpoController {
 		tfAntiguedad.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfBaños.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
 		tfDormitorios.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
-		tfSuperficieEdificio.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
-		tfFondo.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
-		tfFrente.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
-		tfSuperficie.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
-		tfPrecioVenta.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US,"###.##")));
+		tfSuperficieEdificio.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
+		tfFondo.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
+		tfFrente.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
+		tfSuperficie.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
+		tfPrecioVenta.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###.##")));
 
 		cbPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
@@ -626,17 +627,18 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador crearInmueble() {
-		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
+		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoCrearInmueble resultado;
 		StringBuffer erroresBfr = new StringBuffer();
 		Inmueble inmueble = new Inmueble();
 
 		//Toma de datos de la vista
 		DatosEdificio datos = new DatosEdificio()
-				.setSuperficie(Double.parseDouble(tfSuperficieEdificio.getText()))
-				.setAntiguedad(Integer.parseInt(tfAntiguedad.getText()))
-				.setDormitorios(Integer.parseInt(tfDormitorios.getText()))
-				.setBaños(Integer.parseInt(tfBaños.getText()))
+				.setSuperficie((!tfSuperficieEdificio.getText().isEmpty()) ? (Double.parseDouble(tfSuperficieEdificio.getText())) : (null))
+				.setAntiguedad((!tfAntiguedad.getText().isEmpty()) ? (Integer.parseInt(tfAntiguedad.getText())) : (null))
+				.setDormitorios((!tfDormitorios.getText().isEmpty()) ? (Integer.parseInt(tfDormitorios.getText())) : (null))
+				.setBaños((!tfBaños.getText().isEmpty()) ? (Integer.parseInt(tfBaños.getText())) : (null))
+
 				.setPropiedadHorizontal(cbPropiedadHorizontal.isSelected())
 				.setGaraje(cbGarage.isSelected())
 				.setPatio(cbPatio.isSelected())
@@ -695,10 +697,12 @@ public class NMVInmuebleController extends OlimpoController {
 				.setTipo(tipo)
 				.setOrientacion(orientacion)
 				.setPropietario(propietario)
-				.setPrecio(Double.parseDouble(tfPrecioVenta.getText()))
-				.setFrente(Double.parseDouble(tfFrente.getText()))
-				.setFondo(Double.parseDouble(tfFondo.getText()))
-				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
+
+				.setPrecio((!tfPrecioVenta.getText().isEmpty()) ? (Double.parseDouble(tfPrecioVenta.getText())) : (null))
+				.setFrente((!tfFrente.getText().isEmpty()) ? (Double.parseDouble(tfFrente.getText())) : (null))
+				.setFondo((!tfFondo.getText().isEmpty()) ? (Double.parseDouble(tfFondo.getText())) : (null))
+				.setSuperficie((!tfSuperficie.getText().isEmpty()) ? (Double.parseDouble(tfSuperficie.getText())) : (null))
+
 				.setObservaciones(taObservaciones.getText())
 				.getFotos().addAll(fotos);
 
@@ -717,40 +721,50 @@ public class NMVInmuebleController extends OlimpoController {
 				switch(err) {
 				case Fecha_Vacia:
 					erroresBfr.append("Fecha no ingresada.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Fondo_Incorrecto:
 					erroresBfr.append("Formato del campo Fondo incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Formato_Direccion_Incorrecto:
 					erroresBfr.append("Formato de dirección incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Frente_Incorrecto:
 					erroresBfr.append("Formato del campo Frente incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Precio_Vacio:
 					erroresBfr.append("Precio no ingresado.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Precio_Incorrecto:
 					erroresBfr.append("Formato de precio incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Propietario_Inexistente:
 					erroresBfr.append("El propietario seleccionado no existe en el sistema.\n");
+					erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
 					break;
 				case Propietario_Vacio:
 					erroresBfr.append("Elija el propietario.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Superficie_Incorrecta:
 					erroresBfr.append("Formato superficie de Inmueble incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Tipo_Vacio:
 					erroresBfr.append("Elija el tipo de Inmueble.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Datos_Edificio_Incorrectos:
 					erroresBfr.append("Formato de los datos de edificio incorrectos.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				}
 			}
-			erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
@@ -773,10 +787,11 @@ public class NMVInmuebleController extends OlimpoController {
 
 		//Toma de datos de la vista
 		DatosEdificio datos = new DatosEdificio()
-				.setSuperficie(Double.parseDouble(tfSuperficieEdificio.getText()))
-				.setAntiguedad(Integer.parseInt(tfAntiguedad.getText()))
-				.setDormitorios(Integer.parseInt(tfDormitorios.getText()))
-				.setBaños(Integer.parseInt(tfBaños.getText()))
+				.setSuperficie((!tfSuperficieEdificio.getText().isEmpty()) ? (Double.parseDouble(tfSuperficieEdificio.getText())) : (null))
+				.setAntiguedad((!tfAntiguedad.getText().isEmpty()) ? (Integer.parseInt(tfAntiguedad.getText())) : (null))
+				.setDormitorios((!tfDormitorios.getText().isEmpty()) ? (Integer.parseInt(tfDormitorios.getText())) : (null))
+				.setBaños((!tfBaños.getText().isEmpty()) ? (Integer.parseInt(tfBaños.getText())) : (null))
+
 				.setPropiedadHorizontal(cbPropiedadHorizontal.isSelected())
 				.setGaraje(cbGarage.isSelected())
 				.setPatio(cbPatio.isSelected())
@@ -833,10 +848,12 @@ public class NMVInmuebleController extends OlimpoController {
 				.setTipo(tipo)
 				.setOrientacion(orientacion)
 				.setPropietario(propietario)
-				.setPrecio(Double.parseDouble(tfPrecioVenta.getText()))
-				.setFrente(Double.parseDouble(tfFrente.getText()))
-				.setFondo(Double.parseDouble(tfFondo.getText()))
-				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
+
+				.setPrecio((!tfPrecioVenta.getText().isEmpty()) ? (Double.parseDouble(tfPrecioVenta.getText())) : (null))
+				.setFrente((!tfFrente.getText().isEmpty()) ? (Double.parseDouble(tfFrente.getText())) : (null))
+				.setFondo((!tfFondo.getText().isEmpty()) ? (Double.parseDouble(tfFondo.getText())) : (null))
+				.setSuperficie((!tfSuperficie.getText().isEmpty()) ? (Double.parseDouble(tfSuperficie.getText())) : (null))
+
 				.setObservaciones(taObservaciones.getText())
 				.getFotos().addAll(fotos);
 
@@ -855,43 +872,54 @@ public class NMVInmuebleController extends OlimpoController {
 				switch(err) {
 				case Fecha_Vacia:
 					erroresBfr.append("Fecha no ingresada.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Fondo_Incorrecto:
 					erroresBfr.append("Formato del campo Fondo incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Formato_Direccion_Incorrecto:
 					erroresBfr.append("Formato de dirección incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Frente_Incorrecto:
 					erroresBfr.append("Formato del campo Frente incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Precio_Vacio:
 					erroresBfr.append("Precio no ingresado.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Precio_Incorrecto:
 					erroresBfr.append("Formato de precio incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Propietario_Inexistente:
 					erroresBfr.append("El propietario seleccionado no existe en el sistema.\n");
+					erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
 					break;
 				case Propietario_Vacio:
 					erroresBfr.append("Elija el propietario.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Superficie_Incorrecta:
 					erroresBfr.append("Formato superficie de Inmueble incorrecto.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Tipo_Vacio:
 					erroresBfr.append("Elija el tipo de Inmueble.\n");
+					erroresControlador.add(ErrorControlador.Campos_Vacios);
 					break;
 				case Datos_Edificio_Incorrectos:
 					erroresBfr.append("Formato de los datos de edificio incorrectos.\n");
+					erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 					break;
 				case Inmueble_Inexistente:
 					erroresBfr.append("El inmueble ya no existe en el sistema");
+					erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
 					break;
 				}
 			}
-			erroresControlador.add(ErrorControlador.Datos_Incorrectos);
 			presentador.presentarError("No se pudo modificar el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
@@ -990,19 +1018,21 @@ public class NMVInmuebleController extends OlimpoController {
 		taObservaciones.setText(inmueble.getObservaciones());
 
 		tfAltura.setText(inmueble.getDireccion().getNumero());
-		tfAntiguedad.setText(inmueble.getDatosEdificio().getAntiguedad().toString());
-		tfBaños.setText(inmueble.getDatosEdificio().getBaños().toString());
-		tfCodigo.setText(inmueble.getId().toString());
+
+		tfAntiguedad.setText((inmueble.getDatosEdificio().getAntiguedad() != null) ? (inmueble.getDatosEdificio().getAntiguedad().toString()) : (""));
+		tfBaños.setText((inmueble.getDatosEdificio().getBaños() != null) ? (inmueble.getDatosEdificio().getBaños().toString()) : (""));
+		tfCodigo.setText((inmueble.getId() != null) ? (inmueble.getId().toString()) : (""));
+		tfDormitorios.setText((inmueble.getDatosEdificio().getDormitorios() != null) ? (inmueble.getDatosEdificio().getDormitorios().toString()) : (""));
+		tfFondo.setText((inmueble.getFondo() != null) ? (inmueble.getFondo().toString()) : (""));
+		tfFrente.setText((inmueble.getFrente() != null) ? (inmueble.getFrente().toString()) : (""));
+		tfPrecioVenta.setText((inmueble.getPrecio() != null) ? (inmueble.getPrecio().toString()) : (""));
+		tfSuperficie.setText((inmueble.getSuperficie() != null) ? (inmueble.getSuperficie().toString()) : (""));
+		tfSuperficieEdificio.setText((inmueble.getDatosEdificio().getSuperficie() != null) ? (inmueble.getDatosEdificio().getSuperficie().toString()) : (""));
+
 		tfDepartamento.setText(inmueble.getDireccion().getDepartamento());
-		tfDormitorios.setText(inmueble.getDatosEdificio().getDormitorios().toString());
 		tfFechaCarga.setText(conversorFechas.diaMesYAnioToString(inmueble.getFechaCarga()));
-		tfFondo.setText(inmueble.getFondo().toString());
-		tfFrente.setText(inmueble.getFrente().toString());
 		tfOtros.setText(inmueble.getDireccion().getOtros());
 		tfPiso.setText(inmueble.getDireccion().getPiso());
-		tfPrecioVenta.setText(inmueble.getPrecio().toString());
-		tfSuperficie.setText(inmueble.getSuperficie().toString());
-		tfSuperficieEdificio.setText(inmueble.getDatosEdificio().getSuperficie().toString());
 
 		for(Imagen imagen: inmueble.getFotos()){
 			byte[] imagenRaw = imagen.getArchivo();

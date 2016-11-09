@@ -94,6 +94,7 @@ public class InmuebleServiceImpl implements InmuebleService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = PersistenciaException.class)
 	public Inmueble obtenerInmueble(Integer id) throws PersistenciaException {
 		Inmueble inmueble = null;
 		Session session = getSessionFactory().getCurrentSession();

@@ -25,6 +25,7 @@ import app.datos.entidades.Inmueble;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
@@ -42,7 +43,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/administrarInmueble.fxml";
 
 	@FXML
-	private TableView<Inmueble> tablaInmuebles;
+	protected TableView<Inmueble> tablaInmuebles;
 
 	@FXML
 	private TableColumn<Inmueble, String> columnaTipoInmueble;
@@ -145,9 +146,12 @@ public class AdministrarInmuebleController extends OlimpoController {
 		//Toma de datos de la vista
 		Inmueble inmueble = tablaInmuebles.getSelectionModel().getSelectedItem();
 		if(inmueble == null){
-			return null;
+			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
-
+		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar inmueble", "Está a punto de eliminar a el inmueble.\n ¿Está seguro que desea hacerlo?", this.stage);
+		if(!ventana.acepta()){
+			return new ResultadoControlador();
+		}
 		try{
 			resultado = coordinador.eliminarInmueble(inmueble);
 		} catch(PersistenciaException e){
@@ -172,6 +176,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		else{
 			presentador.presentarToast("Se ha eliminado el inmueble con éxito", stage);
+			tablaInmuebles.getItems().remove(inmueble);
 		}
 
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
