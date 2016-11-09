@@ -28,10 +28,10 @@ import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
-@RunWith(JUnitParamsRunner.class)
 /**
  * Este test prueba los métodos de la clase GestorInmueble
  */
+@RunWith(JUnitParamsRunner.class)
 public class GestorInmuebleTest {
 
 	@Test

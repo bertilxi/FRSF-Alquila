@@ -1,15 +1,18 @@
 package app.ui.controladores;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import app.datos.entidades.Inmueble;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.ui.controladores.resultado.ResultadoControlador;
+import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 /**
  * Este test prueba los métodos de la clase AdministrarInmuebleController
  */
+@RunWith(JUnitParamsRunner.class)
 public class AdministrarInmuebleControllerTest {
 
 	@Test
@@ -24,7 +27,7 @@ public class AdministrarInmuebleControllerTest {
 	 *
 	 * @return parámetros de prueba
 	 */
-	protected Object[] parametersForTestIngresar() {
+	protected Object[] parametersForTestEliminarInmueble() {
 		Inmueble inmueble = new Inmueble();
 		Boolean acepta = true;
 		ResultadoControlador resultadoControlador = new ResultadoControlador();
