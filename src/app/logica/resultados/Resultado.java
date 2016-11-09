@@ -19,6 +19,7 @@ package app.logica.resultados;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public abstract class Resultado<T> {
@@ -63,7 +64,7 @@ public abstract class Resultado<T> {
 				return false;
 			}
 		}
-		else if(!errores.equals(other.errores)){
+		else if(other.errores != null && !new HashSet<>(errores).equals(new HashSet<>(other.errores))){
 			return false;
 		}
 		return true;
