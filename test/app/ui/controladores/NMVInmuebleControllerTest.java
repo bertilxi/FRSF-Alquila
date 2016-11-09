@@ -43,7 +43,40 @@ public class NMVInmuebleControllerTest {
 
 	@Test
 	@Parameters
-	//Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	//
+	/**
+	 *
+	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 *
+	 * @param propietario
+	 * @param direccion
+	 * @param tipoInmueble
+	 * @param precio
+	 * @param orientacion
+	 * @param frente
+	 * @param fondo
+	 * @param superficie
+	 * @param propiedadHorizontal
+	 * @param superficieEdificio
+	 * @param antigüedadEdificio
+	 * @param dormitorios
+	 * @param baños
+	 * @param garaje
+	 * @param patio
+	 * @param piscina
+	 * @param aguaCorriente
+	 * @param cloacas
+	 * @param gasNatural
+	 * @param aguaCaliente
+	 * @param teléfono
+	 * @param lavadero
+	 * @param pavimento
+	 * @param observaciones
+	 * @param resultadoControlador
+	 * @param resultadoLogica
+	 * @param excepcion
+	 * @throws Exception
+	 */
 	public void testCrearInmueble(Propietario propietario,
 			Direccion direccion,
 			TipoInmueble tipoInmueble,
@@ -345,7 +378,39 @@ public class NMVInmuebleControllerTest {
 
 	@Test
 	@Parameters
-	//Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	/**
+	 *
+	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 *
+	 * @param propietario
+	 * @param direccion
+	 * @param tipoInmueble
+	 * @param precio
+	 * @param orientacion
+	 * @param frente
+	 * @param fondo
+	 * @param superficie
+	 * @param propiedadHorizontal
+	 * @param superficieEdificio
+	 * @param antigüedadEdificio
+	 * @param dormitorios
+	 * @param baños
+	 * @param garaje
+	 * @param patio
+	 * @param piscina
+	 * @param aguaCorriente
+	 * @param cloacas
+	 * @param gasNatural
+	 * @param aguaCaliente
+	 * @param teléfono
+	 * @param lavadero
+	 * @param pavimento
+	 * @param observaciones
+	 * @param resultadoControlador
+	 * @param resultadoLogica
+	 * @param excepcion
+	 * @throws Exception
+	 */
 	public void testModificarInmueble(Propietario propietario,
 			Direccion direccion,
 			TipoInmueble tipoInmueble,
@@ -561,8 +626,6 @@ public class NMVInmuebleControllerTest {
 		String observaciones = "";
 
 		ResultadoControlador resultadoControladorCorrecto = new ResultadoControlador();
-		ResultadoModificarInmueble resultadoLogicaCorrecto = new ResultadoModificarInmueble();
-
 		ResultadoControlador resultadoControladorDatosIncorrectos = new ResultadoControlador(ErrorControlador.Datos_Incorrectos);
 		ResultadoControlador resultadoControladorCamposVacios = new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		ResultadoControlador resultadoControladorEntidadNoEncontrada = new ResultadoControlador(ErrorControlador.Entidad_No_Encontrada);
@@ -570,6 +633,7 @@ public class NMVInmuebleControllerTest {
 		ResultadoControlador resultadoControladorErrorPersistencia = new ResultadoControlador(ErrorControlador.Error_Persistencia);
 		ResultadoControlador resultadoControladorErrorDesconocido = new ResultadoControlador(ErrorControlador.Error_Desconocido);
 
+		ResultadoModificarInmueble resultadoLogicaCorrecto = new ResultadoModificarInmueble();
 		ResultadoModificarInmueble resultadoLogicaDatosEdificioIncorrectos = new ResultadoModificarInmueble(ErrorModificarInmueble.Datos_Edificio_Incorrectos);
 		ResultadoModificarInmueble resultadoLogicaFechaVacia = new ResultadoModificarInmueble(ErrorModificarInmueble.Fecha_Vacia);
 		ResultadoModificarInmueble resultadoLogicaFondoIncorrecto = new ResultadoModificarInmueble(ErrorModificarInmueble.Fondo_Incorrecto);

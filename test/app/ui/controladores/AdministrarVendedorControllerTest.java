@@ -36,13 +36,8 @@ public class AdministrarVendedorControllerTest {
 		AdministrarVendedorController administrarVendedorController = new AdministrarVendedorController() {
 
 			@Override
-			public void initialize(URL location, ResourceBundle resources) {
-				inicializar(location, resources);
-			}
-
-			@Override
 			public void inicializar(URL location, ResourceBundle resources) {
-				this.parentScenographyChanger = scenographyChangerMock;
+				setScenographyChanger(scenographyChangerMock);
 			}
 		};
 

@@ -23,11 +23,7 @@ public class PresentadorVentanasMock extends PresentadorVentanas {
 
 	@Override
 	public VentanaConfirmacion presentarConfirmacion(String titulo, String mensaje, Window padre) {
-		return new VentanaConfirmacion(titulo, mensaje, padre) {
-			{
-
-			}
-
+		return new VentanaConfirmacion(titulo, mensaje) {
 			@Override
 			public Boolean acepta() {
 				return acepta;
@@ -38,10 +34,6 @@ public class PresentadorVentanasMock extends PresentadorVentanas {
 	@Override
 	public VentanaConfirmacion presentarConfirmacion(String titulo, String mensaje) {
 		return new VentanaConfirmacion(titulo, mensaje) {
-			{
-
-			}
-
 			@Override
 			public Boolean acepta() {
 				return acepta;
