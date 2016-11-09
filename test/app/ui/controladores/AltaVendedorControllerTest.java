@@ -1,6 +1,7 @@
 package app.ui.controladores;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -116,6 +117,9 @@ public class AltaVendedorControllerTest {
 
 			@Override
 			protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
+				if(!URLVistaACambiar.equals(ModificarVendedorController.URLVista)){
+					fail();
+				}
 				llamaACambiarSceneReal++;
 				return new ModificarVendedorController() {
 					@Override
