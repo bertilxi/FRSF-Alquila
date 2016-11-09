@@ -752,7 +752,6 @@ public class NMVInmuebleController extends OlimpoController {
 			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
-			cambiarmeAScene(AdministrarInmuebleController.URLVista);
 			presentador.presentarToast("Se ha creado el inmueble con éxito", stage);
 		}
 
@@ -894,7 +893,6 @@ public class NMVInmuebleController extends OlimpoController {
 			presentador.presentarError("No se pudo modificar el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
-			cambiarmeAScene(AdministrarInmuebleController.URLVista);
 			presentador.presentarToast("Se ha modificado el inmueble con éxito", stage);
 		}
 

@@ -64,7 +64,6 @@ public class NMVInmuebleControllerTest {
 			Boolean teléfono,
 			Boolean lavadero,
 			Boolean pavimento,
-			ArrayList<Imagen> fotos,
 			String observaciones,
 			ResultadoControlador resultadoControlador,
 			ResultadoCrearInmueble resultadoLogica,
@@ -218,14 +217,16 @@ public class NMVInmuebleControllerTest {
 	 */
 	protected Object[] parametersForTestCrearInmueble() {
 		Propietario propietario = new Propietario();
-		Provincia provincia = new Provincia();
-		Localidad localidad = new Localidad();
-		Barrio barrio = new Barrio();
-		Calle calle = new Calle();
+		Pais pais = new Pais();
+		Provincia provincia = new Provincia().setPais(pais);
+		Localidad localidad = new Localidad().setProvincia(provincia);
+		Barrio barrio = new Barrio().setLocalidad(localidad);
+		Calle calle = new Calle().setLocalidad(localidad);
 		String numero = "1234";
 		String piso = "2";
 		String departamento = "2";
 		String otros = "";
+		Direccion direccion = new Direccion().setBarrio(barrio).setCalle(calle).setDepartamento(departamento).setLocalidad(localidad).setNumero(numero).setOtros(otros).setPiso(piso);
 		TipoInmueble tipoInmueble = new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO);
 		Double precio = 2.5;
 		Orientacion orientacion = new Orientacion(OrientacionStr.NORTE);
@@ -247,16 +248,16 @@ public class NMVInmuebleControllerTest {
 		Boolean teléfono = true;
 		Boolean lavadero = true;
 		Boolean pavimento = false;
-		ArrayList<Imagen> fotos = new ArrayList<>();
 		String observaciones = "";
 		ResultadoControlador resultadoControlador = new ResultadoControlador();
+
 		ResultadoCrearInmueble resultadoLogica = new ResultadoCrearInmueble();
 		Throwable excepcion = new Exception();
 
 		return new Object[] {
-				new Object[] { propietario, provincia, localidad, barrio, calle, numero, piso, departamento, otros, tipoInmueble, precio, orientacion, frente, fondo, superficie,
-						propiedadHorizontal, superficieEdificio, antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
-						teléfono, lavadero, pavimento, fotos, observaciones, resultadoControlador, resultadoLogica, excepcion }
+				new Object[] { propietario, direccion, tipoInmueble, precio, orientacion, frente, fondo, superficie, propiedadHorizontal, superficieEdificio,
+						antigüedadEdificio, dormitorios, baños, garaje, patio, piscina, aguaCorriente, cloacas, gasNatural, aguaCaliente,
+						teléfono, lavadero, pavimento, observaciones, resultadoControlador, resultadoLogica, excepcion } //test Todo correcto
 		};
 	}
 
