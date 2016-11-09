@@ -45,7 +45,7 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer id; //ID
+	protected Integer id; //ID
 
 	@Column(name = "nombre", length = 100, nullable = true)
 	private String nombre;

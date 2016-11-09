@@ -238,7 +238,7 @@ public class GestorVendedorTest {
 		verify(vendedorServiceMock, times(guardar)).guardarVendedor(vendedor);
 	}
 
-	//Para crearPropietario
+	//Para crear vendedor
 	private static final ResultadoCrearVendedor resultadoCorrecto = new ResultadoCrearVendedor();
 	private static final ResultadoCrearVendedor resultadoCrearNombreIncorrecto =
 			new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Nombre_Incorrecto);
@@ -347,7 +347,7 @@ public class GestorVendedorTest {
 		verify(vendedorServiceMock, times(modificar)).modificarVendedor(vendedorM);
 	}
 
-	//Para modificarPropietario
+	//Para modificar Vendedor
 	private static final ResultadoModificarVendedor resultadoCorrectoModificar = new ResultadoModificarVendedor();
 	private static final ResultadoModificarVendedor resultadoModificarNombreIncorrecto =
 			new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Nombre_Incorrecto);
@@ -417,7 +417,7 @@ public class GestorVendedorTest {
 		verify(vendedorServiceMock, times(eliminar)).modificarVendedor(vendedorE);
 	}
 
-	//Para modificarPropietario
+	//Para eliminar vendedor
 	private static final ResultadoEliminarVendedor resultadoCorrectoEliminar = new ResultadoEliminarVendedor();
 	private static final ResultadoEliminarVendedor resultadoEliminarNoExisteVendedor =
 			new ResultadoEliminarVendedor(ErrorEliminarVendedor.No_Existe_Vendedor);

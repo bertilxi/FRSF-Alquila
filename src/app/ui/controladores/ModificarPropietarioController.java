@@ -62,6 +62,8 @@ public class ModificarPropietarioController extends OlimpoController {
 	@FXML
 	private TextField textFieldCorreoElectronico;
 	@FXML
+	private TextField textFieldOtros;
+	@FXML
 	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
 	@FXML
 	private ComboBox<Pais> comboBoxPais;
@@ -93,6 +95,7 @@ public class ModificarPropietarioController extends OlimpoController {
 			textFieldDepartamento.setText(propietarioEnModificacion.getDireccion().getDepartamento());
 			textFieldCorreoElectronico.setText(propietarioEnModificacion.getEmail());
 			textFieldTelefono.setText(propietarioEnModificacion.getTelefono());
+			textFieldOtros.setText(propietarioEnModificacion.getDireccion().getOtros());
 			comboBoxPais.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia().getPais());
 			comboBoxProvincia.setValue(propietarioEnModificacion.getDireccion().getLocalidad().getProvincia());
 			comboBoxLocalidad.setValue(propietarioEnModificacion.getDireccion().getLocalidad());
@@ -121,6 +124,7 @@ public class ModificarPropietarioController extends OlimpoController {
 		String departamento = textFieldDepartamento.getText().trim();
 		String telefono = textFieldTelefono.getText().trim();
 		String correoElectronico = textFieldCorreoElectronico.getText().trim();
+		String otros = textFieldOtros.getText().trim();
 
 		Localidad localidad = comboBoxLocalidad.getValue();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
@@ -168,7 +172,8 @@ public class ModificarPropietarioController extends OlimpoController {
 					.setBarrio(barrio)
 					.setPiso(piso)
 					.setDepartamento(departamento)
-					.setLocalidad(localidad);
+					.setLocalidad(localidad)
+					.setOtros(otros);
 
 			propietarioEnModificacion.setNombre(nombre)
 					.setApellido(apellido)
