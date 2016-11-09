@@ -99,7 +99,7 @@ public class AdministrarVendedorController extends OlimpoController {
 	 * Se pasa a la pantalla alta vendedor
 	 */
 	public void agregarAction(ActionEvent event) {
-		//cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
+		cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
 	}
 
 	/**
