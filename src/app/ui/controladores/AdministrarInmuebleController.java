@@ -18,11 +18,15 @@
 package app.ui.controladores;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Inmueble;
 import app.excepciones.PersistenciaException;
+import app.logica.resultados.ResultadoEliminarInmueble;
+import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
 import app.ui.controladores.resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -103,7 +107,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 
 	@FXML
 	public void agregar() {
-		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista);
+		cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 	}
 
 	@FXML
@@ -112,7 +116,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		if(inmueble == null){
 			return;
 		}
-		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista);
+		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 		nuevaPantalla.formatearModificarInmueble(inmueble);
 	}
 
@@ -122,7 +126,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		if(inmueble == null){
 			return;
 		}
-		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista);
+		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 		nuevaPantalla.formatearVerInmueble(inmueble);
 	}
 
@@ -134,7 +138,43 @@ public class AdministrarInmuebleController extends OlimpoController {
 	 */
 	@FXML
 	public ResultadoControlador eliminarInmueble() {
-		return null;
+		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
+		ResultadoEliminarInmueble resultado;
+		StringBuffer erroresBfr = new StringBuffer();
+
+		//Toma de datos de la vista
+		Inmueble inmueble = tablaInmuebles.getSelectionModel().getSelectedItem();
+		if(inmueble == null){
+			return null;
+		}
+
+		try{
+			resultado = coordinador.eliminarInmueble(inmueble);
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
+		} catch(Exception e){
+			presentador.presentarExcepcionInesperada(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+		}
+
+		if(resultado.hayErrores()){
+			for(ErrorEliminarInmueble err: resultado.getErrores()){
+				switch(err) {
+				case No_Existe_Inmueble:
+					erroresBfr.append("El inmueble no existe.\n");
+
+					erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
+					break;
+				}
+			}
+			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);
+		}
+		else{
+			presentador.presentarToast("Se ha eliminado el inmueble con éxito", stage);
+		}
+
+		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 	}
 
 }

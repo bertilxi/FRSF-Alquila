@@ -32,6 +32,7 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import app.comun.ConversorFechas;
 import app.datos.clases.EstadoStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
@@ -85,106 +86,106 @@ public class NMVInmuebleController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/NMVInmueble.fxml";
 
 	@FXML
-	private CheckBox cbAguaCaliente;
+	protected CheckBox cbAguaCaliente;
 
 	@FXML
-	private CheckBox cbAguaCorriente;
+	protected CheckBox cbAguaCorriente;
 
 	@FXML
-	private CheckBox cbCloaca;
+	protected CheckBox cbCloaca;
 
 	@FXML
-	private CheckBox cbGarage;
+	protected CheckBox cbGarage;
 
 	@FXML
-	private CheckBox cbGasNatural;
+	protected CheckBox cbGasNatural;
 
 	@FXML
-	private CheckBox cbLavadero;
+	protected CheckBox cbLavadero;
 
 	@FXML
-	private CheckBox cbPatio;
+	protected CheckBox cbPatio;
 
 	@FXML
-	private CheckBox cbPavimento;
+	protected CheckBox cbPavimento;
 
 	@FXML
-	private CheckBox cbPiscina;
+	protected CheckBox cbPiscina;
 
 	@FXML
-	private CheckBox cbPropiedadHorizontal;
+	protected CheckBox cbPropiedadHorizontal;
 
 	@FXML
-	private CheckBox cbTelefono;
+	protected CheckBox cbTelefono;
 
 	@FXML
-	private ComboBox<Barrio> cbBarrio;
+	protected ComboBox<Barrio> cbBarrio;
 
 	@FXML
-	private ComboBox<Calle> cbCalle;
+	protected ComboBox<Calle> cbCalle;
 
 	@FXML
-	private ComboBox<Localidad> cbLocalidad;
+	protected ComboBox<Localidad> cbLocalidad;
 
 	@FXML
-	private ComboBox<Orientacion> cbOrientacion;
+	protected ComboBox<Orientacion> cbOrientacion;
 
 	@FXML
-	private ComboBox<Pais> cbPais;
+	protected ComboBox<Pais> cbPais;
 
 	@FXML
-	private ComboBox<Propietario> cbPropietario;
+	protected ComboBox<Propietario> cbPropietario;
 
 	@FXML
-	private ComboBox<Provincia> cbProvincia;
+	protected ComboBox<Provincia> cbProvincia;
 
 	@FXML
-	private ComboBox<TipoInmueble> cbTipoInmueble;
+	protected ComboBox<TipoInmueble> cbTipoInmueble;
 
 	@FXML
-	private TextArea taObservaciones;
+	protected TextArea taObservaciones;
 
 	@FXML
-	private TextField tfAltura;
+	protected TextField tfAltura;
 
 	@FXML
-	private TextField tfAntiguedad;
+	protected TextField tfAntiguedad;
 
 	@FXML
-	private TextField tfBaños;
+	protected TextField tfBaños;
 
 	@FXML
-	private TextField tfCodigo;
+	protected TextField tfCodigo;
 
 	@FXML
-	private TextField tfDepartamento;
+	protected TextField tfDepartamento;
 
 	@FXML
-	private TextField tfDormitorios;
+	protected TextField tfDormitorios;
 
 	@FXML
-	private TextField tfFechaCarga;
+	protected TextField tfFechaCarga;
 
 	@FXML
-	private TextField tfFondo;
+	protected TextField tfFondo;
 
 	@FXML
-	private TextField tfFrente;
+	protected TextField tfFrente;
 
 	@FXML
-	private TextField tfOtros;
+	protected TextField tfOtros;
 
 	@FXML
-	private TextField tfPiso;
+	protected TextField tfPiso;
 
 	@FXML
-	private TextField tfPrecioVenta;
+	protected TextField tfPrecioVenta;
 
 	@FXML
-	private TextField tfSuperficie;
+	protected TextField tfSuperficie;
 
 	@FXML
-	private TextField tfSuperficieEdificio;
+	protected TextField tfSuperficieEdificio;
 
 	@FXML
 	private Pane padre;
@@ -224,6 +225,8 @@ public class NMVInmuebleController extends OlimpoController {
 	private StringProperty titulo2 = new SimpleStringProperty();
 
 	private Inmueble inmueble;
+
+	private ConversorFechas conversorFechas = new ConversorFechas();
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
@@ -752,7 +755,7 @@ public class NMVInmuebleController extends OlimpoController {
 		}
 		else{
 			cambiarmeAScene(AdministrarInmuebleController.URLVista);
-			presentador.presentarToast("Se ha creado el vendedor con éxito", stage);
+			presentador.presentarToast("Se ha creado el inmueble con éxito", stage);
 		}
 
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
@@ -894,10 +897,10 @@ public class NMVInmuebleController extends OlimpoController {
 		}
 		else{
 			cambiarmeAScene(AdministrarInmuebleController.URLVista);
-			presentador.presentarToast("Se ha modificado el vendedor con éxito", stage);
+			presentador.presentarToast("Se ha modificado el inmueble con éxito", stage);
 		}
 
-		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0])); 
+		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 	}
 
 	public void formatearModificarInmueble(Inmueble inmueble) {
@@ -994,7 +997,7 @@ public class NMVInmuebleController extends OlimpoController {
 		tfCodigo.setText(inmueble.getId().toString());
 		tfDepartamento.setText(inmueble.getDireccion().getDepartamento());
 		tfDormitorios.setText(inmueble.getDatosEdificio().getDormitorios().toString());
-		tfFechaCarga.setText(inmueble.getFechaCarga().toString());
+		tfFechaCarga.setText(conversorFechas.diaMesYAnioToString(inmueble.getFechaCarga()));
 		tfFondo.setText(inmueble.getFondo().toString());
 		tfFrente.setText(inmueble.getFrente().toString());
 		tfOtros.setText(inmueble.getDireccion().getOtros());

@@ -44,12 +44,12 @@ public class ScenographyChanger {
 		this.background = background;
 	}
 
-	public OlimpoController cambiarScenography(String URLVistaACambiar, boolean useSceneSize) {
+	public OlimpoController cambiarScenography(String URLVistaACambiar, Boolean useSceneSize) {
 		try{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLVistaACambiar));
 			Pane newScenography = (Pane) loader.load();
-			
+
 			background.getChildren().clear();
 			background.getChildren().add(newScenography);
 
@@ -58,7 +58,7 @@ public class ScenographyChanger {
 				stage.sizeToScene();
 			}
 			else{
-				background.resize(stage.getWidth(),stage.getHeight());
+				background.resize(stage.getWidth(), stage.getHeight());
 				newScenography.resize(background.getWidth(), background.getHeight());
 			}
 
@@ -72,8 +72,8 @@ public class ScenographyChanger {
 			return null;
 		}
 	}
-	
-	public OlimpoController cambiarScenography(String URLVistaACambiar){
-		return cambiarScenography(URLVistaACambiar,false);
+
+	public OlimpoController cambiarScenography(String URLVistaACambiar) {
+		return cambiarScenography(URLVistaACambiar, false);
 	}
 }

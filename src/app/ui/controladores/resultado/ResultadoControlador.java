@@ -26,6 +26,6 @@ public class ResultadoControlador extends Resultado<ErrorControlador> {
 	}
 
 	public enum ErrorControlador {
-		Datos_Incorrectos, Campos_Vacios, Error_Persistencia, Error_Desconocido
+		Datos_Incorrectos, Campos_Vacios, Error_Persistencia, Error_Desconocido, Entidad_No_Encontrada
 	}
 }
