@@ -245,17 +245,15 @@ public class NMVInmuebleController extends OlimpoController {
 			}
 		}
 		actualizarProvincias(cbPais.getSelectionModel().getSelectedItem());
-		final TextFormatter<Integer> formatterInteger = new TextFormatter<>(new IntegerStringConverter());
-		final TextFormatter<Double> formatterDouble = new TextFormatter<>(new DoubleStringConverter());
-		tfAntiguedad.setTextFormatter(formatterInteger);
-		tfBaños.setTextFormatter(formatterInteger);
-		tfAltura.setTextFormatter(formatterInteger);
-		tfDormitorios.setTextFormatter(formatterInteger);
-		tfSuperficieEdificio.setTextFormatter(formatterDouble);
-		tfFondo.setTextFormatter(formatterDouble);
-		tfFrente.setTextFormatter(formatterDouble);
-		tfSuperficie.setTextFormatter(formatterDouble);
-		tfPrecioVenta.setTextFormatter(formatterDouble);
+		tfAntiguedad.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
+		tfBaños.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
+		tfAltura.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
+		tfDormitorios.setTextFormatter(new TextFormatter<>(new IntegerStringConverter()));
+		tfSuperficieEdificio.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
+		tfFondo.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
+		tfFrente.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
+		tfSuperficie.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
+		tfPrecioVenta.setTextFormatter(new TextFormatter<>(new DoubleStringConverter()));
 
 		cbPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));

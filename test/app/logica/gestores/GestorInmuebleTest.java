@@ -89,7 +89,6 @@ public class GestorInmuebleTest {
 			@Override
 			public void evaluate() throws Throwable {
 				if(resultado != null){
-					ResultadoCrearInmueble asd = gestorInmueble.crearInmueble(inmueble);
 					assertEquals(resultado, gestorInmueble.crearInmueble(inmueble));
 				}
 				else{
@@ -137,22 +136,32 @@ public class GestorInmuebleTest {
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
-				.setTipo(new TipoInmueble());
+				.setTipo(new TipoInmueble())
+				.setPrecio(20000.0);
 
 		Inmueble inmuebleSinFecha = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setPropietario(propietario)
-				.setTipo(new TipoInmueble());
+				.setTipo(new TipoInmueble())
+				.setPrecio(20000.0);
 
 		Inmueble inmuebleSinPropietario = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
-				.setTipo(new TipoInmueble());
+				.setTipo(new TipoInmueble())
+				.setPrecio(20000.0);
 
 		Inmueble inmuebleSinTipo = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
-				.setPropietario(propietario);
+				.setPropietario(propietario)
+				.setPrecio(20000.0);
+
+		Inmueble inmuebleSinPrecio = new Inmueble()
+				.setDatosEdificio(datosCorrectos)
+				.setFechaCarga(new Date())
+				.setPropietario(propietario)
+				.setTipo(new TipoInmueble());
 
 		Inmueble inmueblePrecioIncorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
@@ -166,27 +175,31 @@ public class GestorInmuebleTest {
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setFrente(-34.0);
+				.setFrente(-34.0)
+				.setPrecio(20000.0);
 
 		Inmueble inmuebleFondoIncorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setFondo(-4.9);
+				.setFondo(-4.9)
+				.setPrecio(20000.0);
 
 		Inmueble inmuebleSuperficieIncorrecta = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setSuperficie(-9.993434);
+				.setSuperficie(-9.993434)
+				.setPrecio(20000.0);
 
 		Inmueble inmuebleDatosEdificioIncorrectos = new Inmueble()
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setDatosEdificio(new DatosEdificio());
+				.setDatosEdificio(new DatosEdificio())
+				.setPrecio(20000.0);
 
 		ValidadorFormato validadorCorrecto = new ValidadorFormatoMock();
 		ValidadorFormato validadorFormatoDireccionIncorrecto = new ValidadorFormatoMock() {
@@ -198,6 +211,9 @@ public class GestorInmuebleTest {
 		ValidadorFormato validadorDoubleIncorrecto = new ValidadorFormatoMock() {
 			@Override
 			public Boolean validarDoublePositivo(Double numeroDouble) {
+				if(numeroDouble.equals(20000.0)){
+					return true;
+				}
 				return false;
 			}
 		};
@@ -207,6 +223,7 @@ public class GestorInmuebleTest {
 				new Object[] { inmuebleSinFecha, new ResultadoCrearInmueble(ErrorCrearInmueble.Fecha_Vacia), validadorCorrecto, propietario, null }, //inmueble sin fecha de carga
 				new Object[] { inmuebleSinPropietario, new ResultadoCrearInmueble(ErrorCrearInmueble.Propietario_Vacio), validadorCorrecto, propietario, null }, //inmueble sin propietario
 				new Object[] { inmuebleSinTipo, new ResultadoCrearInmueble(ErrorCrearInmueble.Tipo_Vacio), validadorCorrecto, propietario, null }, //inmueble sin TipoInmueble
+				new Object[] { inmuebleSinPrecio, new ResultadoCrearInmueble(ErrorCrearInmueble.Precio_Vacio), validadorCorrecto, propietario, null }, //inmueble sin precio
 				new Object[] { inmuebleCorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Formato_Direccion_Incorrecto), validadorFormatoDireccionIncorrecto, propietario, null }, //inmueble con formato de direccion incorrecta
 				new Object[] { inmueblePrecioIncorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Precio_Incorrecto), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de precio incorrecto
 				new Object[] { inmuebleFrenteIncorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Frente_Incorrecto), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de frente incorrecto

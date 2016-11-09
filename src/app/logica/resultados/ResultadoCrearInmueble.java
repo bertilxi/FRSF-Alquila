@@ -30,6 +30,7 @@ public class ResultadoCrearInmueble extends Resultado<ErrorCrearInmueble> {
 		Propietario_Vacio,
 		Propietario_Inexistente,
 		Formato_Direccion_Incorrecto,
+		Precio_Vacio,
 		Precio_Incorrecto,
 		Fondo_Incorrecto,
 		Frente_Incorrecto,

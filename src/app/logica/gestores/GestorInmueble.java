@@ -84,7 +84,10 @@ public class GestorInmueble {
 			errores.add(ErrorCrearInmueble.Propietario_Vacio);
 		}
 
-		if(inmueble.getPrecio() != null && !validador.validarDoublePositivo(inmueble.getPrecio())){
+		if(inmueble.getPrecio() == null){
+			errores.add(ErrorCrearInmueble.Precio_Vacio);
+		}
+		else if(!validador.validarDoublePositivo(inmueble.getPrecio())){
 			errores.add(ErrorCrearInmueble.Precio_Incorrecto);
 		}
 
@@ -149,7 +152,10 @@ public class GestorInmueble {
 			errores.add(ErrorModificarInmueble.Propietario_Vacio);
 		}
 
-		if(inmueble.getPrecio() != null && !validador.validarDoublePositivo(inmueble.getPrecio())){
+		if(inmueble.getPrecio() == null){
+			errores.add(ErrorModificarInmueble.Precio_Vacio);
+		}
+		if(!validador.validarDoublePositivo(inmueble.getPrecio())){
 			errores.add(ErrorModificarInmueble.Precio_Incorrecto);
 		}
 
