@@ -104,7 +104,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                       </padding>
                   </GridPane>
-                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" VBox.vgrow="SOMETIMES">
+                  <GridPane fx:id="gridFotos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" VBox.vgrow="SOMETIMES">
                       <columnConstraints>
                           <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
                   <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="1000.0" />
@@ -132,7 +132,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                                 <TextField fx:id="tfSuperficie" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="30.0" promptText="Superficie en metros^2" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
-                          <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#agregarFoto" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Agregar Foto" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                          <Button fx:id="btAgregarFoto" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#agregarFoto" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Agregar Foto" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -142,7 +142,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-pane-tile-pane" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <ScrollPane fx:id="scrollFotos" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-pane-tile-pane" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <content>
                         <FlowPane fx:id="panelFotos" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="10.0">
                            <padding>
@@ -218,7 +218,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                   </Button>
                   <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="9">
                      <children>
-                        <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#aceptar" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS">
+                        <Button fx:id="btAceptar" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#aceptar" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
