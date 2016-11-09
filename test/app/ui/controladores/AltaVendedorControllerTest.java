@@ -34,6 +34,9 @@ import app.ui.componentes.ventanas.VentanaErrorExcepcionInesperada;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
+/**
+ * Test para el controlador de la vista Alta Vendedor
+ */
 @RunWith(JUnitParamsRunner.class)
 public class AltaVendedorControllerTest {
 
@@ -52,8 +55,9 @@ public class AltaVendedorControllerTest {
 			Integer llamaACrearVendedor,
 			Exception excepcion,
 			Boolean aceptarVentanaConfirmacion,
-			Integer llamaACambiarScene) throws Throwable {
-
+			Integer llamaACambiarScene)
+			throws Throwable {
+		//Se crean los mocks necesarios
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
 		VentanaError ventanaErrorMock = mock(VentanaError.class);
@@ -61,28 +65,30 @@ public class AltaVendedorControllerTest {
 		VentanaErrorExcepcionInesperada ventanaErrorExcepcionInesperadaMock = mock(VentanaErrorExcepcionInesperada.class);
 		VentanaConfirmacion ventanaConfirmacionMock = mock(VentanaConfirmacion.class);
 
-		Vendedor vendedor = new Vendedor()
-				.setNombre(nombre)
-				.setApellido(apellido)
-				.setTipoDocumento(tipoDocumento)
-				.setNumeroDocumento(numeroDocumento)
-				.setPassword(contraseña);
-
-		ArrayList<TipoDocumento> tipos = new ArrayList<>();
-		tipos.add(tipoDocumento);
-
+		//Se setea lo que deben devolver los mocks cuando son invocados por la clase a probar
 		when(presentadorVentanasMock.presentarError(any(), any(), any())).thenReturn(ventanaErrorMock);
 		when(presentadorVentanasMock.presentarExcepcion(any(), any())).thenReturn(ventanaErrorExcepcionMock);
 		when(presentadorVentanasMock.presentarExcepcionInesperada(any(), any())).thenReturn(ventanaErrorExcepcionInesperadaMock);
 		when(presentadorVentanasMock.presentarConfirmacion(any(), any(), any())).thenReturn(ventanaConfirmacionMock);
 		when(ventanaConfirmacionMock.acepta()).thenReturn(aceptarVentanaConfirmacion);
 		doNothing().when(presentadorVentanasMock).presentarToast(any(), any());
+
+		Vendedor vendedor = new Vendedor()
+				.setNombre(nombre)
+				.setApellido(apellido)
+				.setTipoDocumento(tipoDocumento)
+				.setNumeroDocumento(numeroDocumento)
+				.setPassword(contraseña);
 		when(coordinadorMock.crearVendedor(vendedor)).thenReturn(resultadoCrearVendedorEsperado);
 		if(excepcion != null){
 			when(coordinadorMock.crearVendedor(vendedor)).thenThrow(excepcion);
 		}
+
+		ArrayList<TipoDocumento> tipos = new ArrayList<>();
+		tipos.add(tipoDocumento);
 		when(coordinadorMock.obtenerTiposDeDocumento()).thenReturn(tipos);
 
+		//Controlador a probar, se sobreescriben algunos métodos para setear los mocks y setear los datos que ingresaría el usuario en la vista
 		AltaVendedorController altaVendedorController = new AltaVendedorController() {
 			@Override
 			public void inicializar(URL location, ResourceBundle resources) {
@@ -115,11 +121,14 @@ public class AltaVendedorControllerTest {
 			}
 		};
 
+		//Los controladores de las vistas deben correrse en un thread de JavaFX
 		ControladorTest corredorTestEnJavaFXThread = new ControladorTest(AltaVendedorController.URLVista, altaVendedorController);
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
+				//Método a probar
 				altaVendedorController.acceptAction();
+				//Se hacen las verificaciones pertinentes para comprobar que el controlador se comporte adecuadamente
 				Mockito.verify(coordinadorMock).obtenerTiposDeDocumento();
 				Mockito.verify(coordinadorMock, times(llamaACrearVendedor)).crearVendedor(any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarError)).presentarError(eq("Revise sus campos"), any(), any());
@@ -128,9 +137,21 @@ public class AltaVendedorControllerTest {
 			}
 		};
 
+		//Se corre el test en el hilo de JavaFX
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
 	}
 
+	/**
+	 * Parámetros para el test
+	 *
+	 * @return
+	 * 		Objeto con:
+	 *         nombre, apellido, tipo de documento, número de documento, contraseña, repite contraseña,
+	 *         resultado al crear vendedor devuelto por el mock del coordinador, veces que se debería llamar a mostrar un error,
+	 *         veces que se debería llamar a mostrar una excepción, veces que se debería llamar a mostrar una excepción inesperada,
+	 *         veces que se debería llamar a guardar un vendedor, excepción lanzada por el mock del coordinador,
+	 *         booleano que simula el aceptar o cancelar de la ventana de confirmación, veces que se debería llamar a cambiar scene
+	 */
 	protected Object[] parametersForTestCrearVendedor() {
 		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
 		return new Object[] {
@@ -147,7 +168,7 @@ public class AltaVendedorControllerTest {
 		};
 	}
 
-	//Para crearVendedor
+	//Resultados crearVendedor
 	private static final ResultadoCrearVendedor resultadoCorrecto = new ResultadoCrearVendedor();
 	private static final ResultadoCrearVendedor resultadoCrearNombreIncorrecto =
 			new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Nombre_Incorrecto);
