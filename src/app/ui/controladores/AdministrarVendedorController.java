@@ -41,7 +41,7 @@ public class AdministrarVendedorController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/administrarVendedor.fxml";
 
 	@FXML
-	private TableView<Vendedor> tablaVendedores;
+	protected TableView<Vendedor> tablaVendedores;
 	@FXML
 	private TableColumn<Vendedor, String> columnaNumeroDocumento;
 	@FXML
