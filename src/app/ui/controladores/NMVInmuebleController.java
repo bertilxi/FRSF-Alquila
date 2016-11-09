@@ -18,10 +18,13 @@
 package app.ui.controladores;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -32,6 +35,7 @@ import app.datos.entidades.Calle;
 import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Direccion;
 import app.datos.entidades.Estado;
+import app.datos.entidades.Imagen;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Orientacion;
@@ -47,13 +51,16 @@ import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -184,10 +191,25 @@ public class NMVInmuebleController extends OlimpoController {
 	private Pane panelFotos;
 
 	@FXML
+	private GridPane gridFotos;
+
+	@FXML
+	private ScrollPane scrollFotos;
+
+	@FXML
+	private Map<ImageView, File> archivosImagenes = new HashMap<>();
+
+	@FXML
 	private ImageView imagenSeleccionada;
 
 	@FXML
 	private Button btQuitarFoto;
+
+	@FXML
+	private Button btAgregarFoto;
+
+	@FXML
+	private Button btAceptar;
 
 	private StringProperty titulo1 = new SimpleStringProperty();
 
@@ -456,15 +478,16 @@ public class NMVInmuebleController extends OlimpoController {
 			imageView.setPreserveRatio(true);
 			imageView.setFitHeight(100);
 			imageView.setOnMouseClicked((event) -> {
-				cambiarImagen(imageView);
+				seleccionarImagen(imageView);
 			});
 			panelFotos.getChildren().add(imageView);
+			archivosImagenes.put(imageView, imagen);
 		} catch(MalformedURLException e){
 			presentador.presentarExcepcionInesperada(e, stage);
 		}
 	}
 
-	private void cambiarImagen(ImageView imageView) {
+	private void seleccionarImagen(ImageView imageView) {
 		if(imagenSeleccionada != null){
 			imagenSeleccionada.setOpacity(1);
 			if(imagenSeleccionada.equals(imageView)){
@@ -532,9 +555,17 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	public ResultadoControlador aceptar() {
-		crearInmueble();
-		modificarInmueble();
-		return null;
+		ResultadoControlador resultado;
+		if(inmueble == null){
+			resultado = crearInmueble();
+		}
+		else{
+			resultado = modificarInmueble();
+		}
+		if(!resultado.hayErrores()){
+			salir();
+		}
+		return resultado;
 	}
 
 	/**
@@ -585,6 +616,27 @@ public class NMVInmuebleController extends OlimpoController {
 				.setOtros(tfOtros.getText())
 				.setPiso(tfPiso.getText());
 
+		//Guardar fotos
+		ArrayList<Imagen> fotos = new ArrayList<>();
+		for(Node nodo: panelFotos.getChildren()){
+			if(nodo instanceof ImageView){
+				ImageView imagen = (ImageView) nodo;
+				File file = archivosImagenes.get(imagen);
+				byte[] bFile = new byte[(int) file.length()];
+
+				try{
+					FileInputStream fileInputStream = new FileInputStream(file);
+					//convert file into array of bytes
+					fileInputStream.read(bFile);
+					fileInputStream.close();
+				} catch(Exception e){
+					presentador.presentarExcepcion(e, stage);
+					return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+				}
+				fotos.add((Imagen) new Imagen().setArchivo(bFile));
+			}
+		}
+
 		inmueble.setDatosEdificio(datos)
 				.setFechaCarga(fechaCarga)
 				.setEstado(new Estado(EstadoStr.ALTA))
@@ -596,7 +648,8 @@ public class NMVInmuebleController extends OlimpoController {
 				.setFrente(Double.parseDouble(tfFrente.getText()))
 				.setFondo(Double.parseDouble(tfFondo.getText()))
 				.setSuperficie(Double.parseDouble(tfSuperficie.getText()))
-				.setObservaciones(taObservaciones.getText());
+				.setObservaciones(taObservaciones.getText())
+				.getFotos().addAll(fotos);
 
 		try{
 			resultado = coordinador.crearInmueble(inmueble);
@@ -665,10 +718,100 @@ public class NMVInmuebleController extends OlimpoController {
 	}
 
 	public void formatearModificarInmueble(Inmueble inmueble) {
-
+		this.inmueble = inmueble;
+		cargarDatos();
 	}
 
 	public void formatearVerInmueble(Inmueble inmueble) {
+		this.inmueble = inmueble;
+		cargarDatos();
+		deshabilitarCampos();
+	}
+
+	private void deshabilitarCampos() {
+		cbAguaCaliente.setDisable(true);
+		cbAguaCorriente.setDisable(true);
+		cbCloaca.setDisable(true);
+		cbGarage.setDisable(true);
+		cbGasNatural.setDisable(true);
+		cbLavadero.setDisable(true);
+		cbPatio.setDisable(true);
+		cbPavimento.setDisable(true);
+		cbPiscina.setDisable(true);
+		cbPropiedadHorizontal.setDisable(true);
+		cbTelefono.setDisable(true);
+
+		cbBarrio.setDisable(true);
+		cbCalle.setDisable(true);
+		cbLocalidad.setDisable(true);
+		cbOrientacion.setDisable(true);
+		cbPais.setDisable(true);
+		cbPropietario.setDisable(true);
+		cbProvincia.setDisable(true);
+		cbTipoInmueble.setDisable(true);
+
+		taObservaciones.setEditable(false);
+
+		tfAltura.setEditable(false);
+		tfAntiguedad.setEditable(false);
+		tfBaños.setEditable(false);
+		tfCodigo.setEditable(false);
+		tfDepartamento.setEditable(false);
+		tfDormitorios.setEditable(false);
+		tfFechaCarga.setEditable(false);
+		tfFondo.setEditable(false);
+		tfFrente.setEditable(false);
+		tfOtros.setEditable(false);
+		tfPiso.setEditable(false);
+		tfPrecioVenta.setEditable(false);
+		tfSuperficie.setEditable(false);
+		tfSuperficieEdificio.setEditable(false);
+
+		btAceptar.setVisible(false);
+		btAgregarFoto.setVisible(false);
+		btQuitarFoto.setVisible(false);
+
+		GridPane.setColumnSpan(scrollFotos, GridPane.getColumnSpan(scrollFotos) + 1);
+	}
+
+	private void cargarDatos() {
+		cbAguaCaliente.setSelected(inmueble.getDatosEdificio().getAguaCaliente());
+		cbAguaCorriente.setSelected(inmueble.getDatosEdificio().getAguaCorriente());
+		cbCloaca.setSelected(inmueble.getDatosEdificio().getCloacas());
+		cbGarage.setSelected(inmueble.getDatosEdificio().getGaraje());
+		cbGasNatural.setSelected(inmueble.getDatosEdificio().getGasNatural());
+		cbLavadero.setSelected(inmueble.getDatosEdificio().getLavadero());
+		cbPatio.setSelected(inmueble.getDatosEdificio().getPatio());
+		cbPavimento.setSelected(inmueble.getDatosEdificio().getPavimento());
+		cbPiscina.setSelected(inmueble.getDatosEdificio().getPiscina());
+		cbPropiedadHorizontal.setSelected(inmueble.getDatosEdificio().getPropiedadHorizontal());
+		cbTelefono.setSelected(inmueble.getDatosEdificio().getTelefono());
+
+		cbPais.getSelectionModel().select(inmueble.getDireccion().getLocalidad().getProvincia().getPais());
+		cbProvincia.getSelectionModel().select(inmueble.getDireccion().getLocalidad().getProvincia());
+		cbLocalidad.getSelectionModel().select(inmueble.getDireccion().getLocalidad());
+		cbBarrio.getSelectionModel().select(inmueble.getDireccion().getBarrio());
+		cbCalle.getSelectionModel().select(inmueble.getDireccion().getCalle());
+		cbOrientacion.getSelectionModel().select(inmueble.getOrientacion());
+		cbPropietario.getSelectionModel().select(inmueble.getPropietario());
+		cbTipoInmueble.getSelectionModel().select(inmueble.getTipo());
+
+		taObservaciones.setText(inmueble.getObservaciones());
+
+		tfAltura.setText(inmueble.getDireccion().getNumero());
+		tfAntiguedad.setText(inmueble.getDatosEdificio().getAntiguedad().toString());
+		tfBaños.setText(inmueble.getDatosEdificio().getBaños().toString());
+		tfCodigo.setText(inmueble.getId().toString());
+		tfDepartamento.setText(inmueble.getDireccion().getDepartamento());
+		tfDormitorios.setText(inmueble.getDatosEdificio().getDormitorios().toString());
+		tfFechaCarga.setText(inmueble.getFechaCarga().toString());
+		tfFondo.setText(inmueble.getFondo().toString());
+		tfFrente.setText(inmueble.getFrente().toString());
+		tfOtros.setText(inmueble.getDireccion().getOtros());
+		tfPiso.setText(inmueble.getDireccion().getPiso());
+		tfPrecioVenta.setText(inmueble.getPrecio().toString());
+		tfSuperficie.setText(inmueble.getSuperficie().toString());
+		tfSuperficieEdificio.setText(inmueble.getDatosEdificio().getSuperficie().toString());
 
 	}
 

@@ -180,6 +180,10 @@ public class ValidadorFormato {
 			}
 		}
 
+		if(!direccion.getBarrio().getLocalidad().equals(direccion.getLocalidad()) || !direccion.getCalle().getLocalidad().equals(direccion.getLocalidad())){
+			return false;
+		}
+
 		return true;
 	}
 
