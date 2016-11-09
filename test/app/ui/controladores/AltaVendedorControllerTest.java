@@ -1,6 +1,5 @@
 package app.ui.controladores;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -27,7 +26,6 @@ import app.excepciones.SaveUpdateException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
-import app.ui.ScenographyChanger;
 import app.ui.componentes.ventanas.PresentadorVentanas;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import app.ui.componentes.ventanas.VentanaError;
@@ -54,7 +52,7 @@ public class AltaVendedorControllerTest {
 			Integer llamaACrearVendedor,
 			Exception excepcion,
 			Boolean aceptarVentanaConfirmacion,
-			Integer llamaACambiarScene) throws Exception {
+			Integer llamaACambiarScene) throws Throwable {
 
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
@@ -62,8 +60,6 @@ public class AltaVendedorControllerTest {
 		VentanaErrorExcepcion ventanaErrorExcepcionMock = mock(VentanaErrorExcepcion.class);
 		VentanaErrorExcepcionInesperada ventanaErrorExcepcionInesperadaMock = mock(VentanaErrorExcepcionInesperada.class);
 		VentanaConfirmacion ventanaConfirmacionMock = mock(VentanaConfirmacion.class);
-		ScenographyChanger scenographyChangerMock = mock(ScenographyChanger.class);
-		ModificarVendedorController modificarVendedorControllerMock = mock(ModificarVendedorController.class);
 
 		Vendedor vendedor = new Vendedor()
 				.setNombre(nombre)
@@ -80,7 +76,6 @@ public class AltaVendedorControllerTest {
 		when(presentadorVentanasMock.presentarExcepcionInesperada(any(), any())).thenReturn(ventanaErrorExcepcionInesperadaMock);
 		when(presentadorVentanasMock.presentarConfirmacion(any(), any(), any())).thenReturn(ventanaConfirmacionMock);
 		when(ventanaConfirmacionMock.acepta()).thenReturn(aceptarVentanaConfirmacion);
-		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarVendedorControllerMock);
 		doNothing().when(presentadorVentanasMock).presentarToast(any(), any());
 		when(coordinadorMock.crearVendedor(vendedor)).thenReturn(resultadoCrearVendedorEsperado);
 		if(excepcion != null){
@@ -90,16 +85,10 @@ public class AltaVendedorControllerTest {
 
 		AltaVendedorController altaVendedorController = new AltaVendedorController() {
 			@Override
-			public void initialize(URL location, ResourceBundle resources) {
-				inicializar(location, resources);
-			}
-
-			@Override
 			public void inicializar(URL location, ResourceBundle resources) {
 				this.coordinador = coordinadorMock;
 				this.presentador = new PresentadorVentanas();
 				this.presentador = presentadorVentanasMock;
-				this.parentScenographyChanger = scenographyChangerMock;
 				super.inicializar(location, resources);
 			}
 
@@ -114,6 +103,16 @@ public class AltaVendedorControllerTest {
 				this.passwordFieldRepiteContraseña.setText(contraseña);
 				super.acceptAction();
 			};
+
+			@Override
+			protected void revivirVendedor(Vendedor vendedor) {
+
+			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
+			}
 		};
 
 		ControladorTest corredorTestEnJavaFXThread = new ControladorTest(AltaVendedorController.URLVista, altaVendedorController);
@@ -126,17 +125,10 @@ public class AltaVendedorControllerTest {
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarError)).presentarError(eq("Revise sus campos"), any(), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcion)).presentarExcepcion(eq(excepcion), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcionInesperada)).presentarExcepcionInesperada(eq(excepcion), any());
-				Mockito.verify(scenographyChangerMock, times(llamaACambiarScene)).cambiarScenography(ModificarVendedorController.URLVista, false);
 			}
 		};
 
-		try{
-			corredorTestEnJavaFXThread.apply(test, null).evaluate();
-		} catch(Throwable e){
-			fail(e.getMessage());
-		}
-		;
-
+		corredorTestEnJavaFXThread.apply(test, null).evaluate();
 	}
 
 	protected Object[] parametersForTestCrearVendedor() {
