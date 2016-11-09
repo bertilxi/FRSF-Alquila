@@ -18,6 +18,7 @@
 package app.ui.controladores;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Propietario;
@@ -25,6 +26,8 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarPropietario;
 import app.logica.resultados.ResultadoEliminarPropietario.ErrorEliminarPropietario;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
+import app.ui.controladores.resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -39,7 +42,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/administrarPropietario.fxml";
 
 	@FXML
-	private TableView<Propietario> tablaPropietarios;
+	protected TableView<Propietario> tablaPropietarios;
 
 	@FXML
 	private TableColumn<Propietario, String> columnaNumeroDocumento;
@@ -140,12 +143,16 @@ public class AdministrarPropietarioController extends OlimpoController {
 	 * Se muestra una ventana emergente para confirmar la operación
 	 */
 	@FXML
-	private void handleEliminar() {
+	protected ResultadoControlador handleEliminar() {
+		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
+
 		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){
-			return;
+			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar propietario", "Está a punto de eliminar al propietario.\n ¿Está seguro que desea hacerlo?", this.stage);
-		if(ventana.acepta()){
+		if(!ventana.acepta()){
+			return new ResultadoControlador();
+		}
 			try{
 				ResultadoEliminarPropietario resultado = coordinador.eliminarPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
 				if(resultado.hayErrores()){
@@ -154,6 +161,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 						switch(err) {
 						case No_Existe_Propietario:
 							stringErrores.append("No existe el propietario que desea eliminar.\n");
+							erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
 							break;
 						}
 					}
@@ -164,9 +172,13 @@ public class AdministrarPropietarioController extends OlimpoController {
 				}
 				tablaPropietarios.getItems().clear();
 				tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());
+				return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
+				return new ResultadoControlador(ErrorControlador.Error_Persistencia);
+			} catch(Exception e) {
+				presentador.presentarExcepcionInesperada(e, stage);
+				return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 			}
 		}
 	}
-}

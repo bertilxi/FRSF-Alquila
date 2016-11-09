@@ -18,6 +18,7 @@
 package app.ui.controladores;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
@@ -25,6 +26,8 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarCliente;
 import app.logica.resultados.ResultadoEliminarCliente.ErrorEliminarCliente;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
+import app.ui.controladores.resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -39,7 +42,7 @@ public class AdministrarClienteController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/administrarCliente.fxml";
 
 	@FXML
-	private TableView<Cliente> tablaClientes;
+	protected TableView<Cliente> tablaClientes;
 
 	@FXML
 	private TableColumn<Cliente, String> columnaNumeroDocumento;
@@ -141,33 +144,42 @@ public class AdministrarClienteController extends OlimpoController {
 	 * Se muestra una ventana emergente para confirmar la operación
 	 */
 	@FXML
-	private void handleEliminar() {
+	protected ResultadoControlador handleEliminar() {
+		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
+
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
-			return;
+			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar cliente", "Está a punto de eliminar al cliente.\n ¿Está seguro que desea hacerlo?", this.stage);
-		if(ventana.acepta()){
-			try{
-				ResultadoEliminarCliente resultado = coordinador.eliminarCliente(tablaClientes.getSelectionModel().getSelectedItem());
-				if(resultado.hayErrores()){
-					StringBuilder stringErrores = new StringBuilder();
-					for(ErrorEliminarCliente err: resultado.getErrores()){
-						switch(err) {
-						case No_Existe_Cliente:
-							stringErrores.append("No existe el cliente que desea eliminar.\n");
-							break;
-						}
+		if(!ventana.acepta()){
+			return new ResultadoControlador();
+		}
+		try{
+			ResultadoEliminarCliente resultado = coordinador.eliminarCliente(tablaClientes.getSelectionModel().getSelectedItem());
+			if(resultado.hayErrores()){
+				StringBuilder stringErrores = new StringBuilder();
+				for(ErrorEliminarCliente err: resultado.getErrores()){
+					switch(err) {
+					case No_Existe_Cliente:
+						stringErrores.append("No existe el cliente que desea eliminar.\n");
+						erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
+						break;
 					}
-					presentador.presentarError("No se pudo eliminar el cliente", stringErrores.toString(), stage);
-
-				} else {
-					presentador.presentarToast("Se ha eliminado el cliente con éxito", stage);
 				}
-				tablaClientes.getItems().clear();
-				tablaClientes.getItems().addAll(coordinador.obtenerClientes());
-			} catch(PersistenciaException e){
-				presentador.presentarExcepcion(e, stage);
+				presentador.presentarError("No se pudo eliminar el cliente", stringErrores.toString(), stage);
+
+			} else {
+				presentador.presentarToast("Se ha eliminado el cliente con éxito", stage);
 			}
+			tablaClientes.getItems().clear();
+			tablaClientes.getItems().addAll(coordinador.obtenerClientes());
+			return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
+		} catch(Exception e) {
+			presentador.presentarExcepcionInesperada(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 	}
 }
