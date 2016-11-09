@@ -843,7 +843,6 @@ public class NMVInmuebleController extends OlimpoController {
 		}
 
 		inmueble.setDatosEdificio(datos)
-				.setEstado(new Estado(EstadoStr.ALTA))
 				.setDireccion(direccion)
 				.setTipo(tipo)
 				.setOrientacion(orientacion)

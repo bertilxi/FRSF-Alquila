@@ -58,6 +58,7 @@ public class DatosServiceImpl implements DatosService {
 		ArrayList<Localidad> localidades = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
+			session.update(provincia);
 			for(Object o: session.getNamedQuery("obtenerLocalidadesDe").setParameter("prov", provincia).list()){
 				if(o instanceof Localidad){
 					localidades.add((Localidad) o);
@@ -75,6 +76,7 @@ public class DatosServiceImpl implements DatosService {
 		ArrayList<Provincia> provincias = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
+			session.update(pais);
 			for(Object o: session.getNamedQuery("obtenerProvinciasDe").setParameter("pa", pais).list()){
 				if(o instanceof Provincia){
 					provincias.add((Provincia) o);
@@ -160,6 +162,7 @@ public class DatosServiceImpl implements DatosService {
 		ArrayList<Barrio> barrios = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
+			session.update(localidad);
 			for(Object o: session.getNamedQuery("obtenerBarriosDe").setParameter("loc", localidad).list()){
 				if(o instanceof Barrio){
 					barrios.add((Barrio) o);
@@ -177,7 +180,8 @@ public class DatosServiceImpl implements DatosService {
 		ArrayList<Calle> calles = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
-			for(Object o: session.getNamedQuery("obtenerCallesDe").setParameter("loc",localidad).list()){
+			session.update(localidad);
+			for(Object o: session.getNamedQuery("obtenerCallesDe").setParameter("loc", localidad).list()){
 				if(o instanceof Calle){
 					calles.add((Calle) o);
 				}
