@@ -261,7 +261,7 @@ public class ModificarPropietarioController extends OlimpoController {
 
 			@Override
 			public Pais fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -288,7 +288,7 @@ public class ModificarPropietarioController extends OlimpoController {
 
 			@Override
 			public Provincia fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -316,7 +316,7 @@ public class ModificarPropietarioController extends OlimpoController {
 
 			@Override
 			public Localidad fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -344,7 +344,7 @@ public class ModificarPropietarioController extends OlimpoController {
 
 			@Override
 			public Barrio fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
@@ -372,7 +372,7 @@ public class ModificarPropietarioController extends OlimpoController {
 
 			@Override
 			public Calle fromString(String nombre) {
-				nombre = nombre.trim();
+				nombre = nombre.toLowerCase().trim();
 				if(nombre.isEmpty()){
 					return null;
 				}
