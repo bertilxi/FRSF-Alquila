@@ -294,7 +294,7 @@ public class GestorInmueble {
 		return persistidorInmueble.listarInmuebles();
 	}
 
-	private Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
+	protected Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
 		if(datosEdificio == null){
 			return false;
 		}
