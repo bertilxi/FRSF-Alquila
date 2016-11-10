@@ -30,6 +30,7 @@ import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Estado;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Propietario;
+import app.datos.servicios.HistorialService;
 import app.datos.servicios.InmuebleService;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
@@ -56,6 +57,9 @@ public class GestorInmueble {
 
 	@Resource
 	protected ValidadorFormato validador;
+
+	@Resource
+	protected HistorialService persistidorHistorial;
 
 	/**
 	 * Método para crear un inmueble. Primero se validan las reglas de negocia y luego se persiste.
@@ -196,6 +200,8 @@ public class GestorInmueble {
 		}
 
 		if(errores.isEmpty()){
+			//TODO hacer historial con los datos de inmuebleAuxiliar y persistirlo
+
 			persistidorInmueble.modificarInmueble(inmueble);
 		}
 
