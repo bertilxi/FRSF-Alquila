@@ -270,7 +270,7 @@ INSERT INTO pais VALUES (251,'yemen');
 INSERT INTO pais VALUES (252,'yibuti'); 
 INSERT INTO pais VALUES (253,'zambia'); 
 INSERT INTO pais VALUES (254,'zimbabue'); 
-
+ALTER SEQUENCE pais_id_seq RESTART WITH 255;
 
 INSERT INTO provincia VALUES (1,'buenos aires' ,1); 
 INSERT INTO provincia VALUES (2,'catamarca',1); 
@@ -295,9 +295,7 @@ INSERT INTO provincia VALUES (20,'santa fé',1);
 INSERT INTO provincia VALUES (21,'santiago del estero',1); 
 INSERT INTO provincia VALUES (22,'tierra del fuego',1); 
 INSERT INTO provincia VALUES (23,'tucumán',1); 
-
-
-
+ALTER SEQUENCE provincia_id_seq RESTART WITH 24;
 
 INSERT INTO localidad (id,idprovincia,nombre) VALUES (nextval('localidad_id_seq'),1, '25 de mayo' );
 INSERT INTO localidad (id,idprovincia,nombre) VALUES (nextval('localidad_id_seq'),1, '3 de febrero' );
@@ -2677,28 +2675,28 @@ INSERT INTO localidad (id,idprovincia,nombre) VALUES (nextval('localidad_id_seq'
 INSERT INTO localidad (id,idprovincia,nombre) VALUES (nextval('localidad_id_seq'),23, 'yerba buena (s)' );
 
 
-INSERT INTO estado VALUES (1,'ALTA');
-INSERT INTO estado VALUES (2,'BAJA');
+INSERT INTO estado VALUES (nextval('estado_id_seq'),'ALTA');
+INSERT INTO estado VALUES (nextval('estado_id_seq'),'BAJA');
 
 
-INSERT INTO tipo_documento VALUES (1,'DNI');
-INSERT INTO tipo_documento VALUES (2,'LC');
-INSERT INTO tipo_documento VALUES (3,'LE');
-INSERT INTO tipo_documento VALUES (4,'PASAPORTE');
-INSERT INTO tipo_documento VALUES (5,'CEDULA_EXTRANJERA');
+INSERT INTO tipo_documento VALUES (nextval('tipo_documento_id_seq'),'DNI');
+INSERT INTO tipo_documento VALUES (nextval('tipo_documento_id_seq'),'LC');
+INSERT INTO tipo_documento VALUES (nextval('tipo_documento_id_seq'),'LE');
+INSERT INTO tipo_documento VALUES (nextval('tipo_documento_id_seq'),'PASAPORTE');
+INSERT INTO tipo_documento VALUES (nextval('tipo_documento_id_seq'),'CEDULA_EXTRANJERA');
 
-INSERT INTO tipo_inmueble VALUES (1,'LOCAL');
-INSERT INTO tipo_inmueble VALUES (2,'CASA');
-INSERT INTO tipo_inmueble VALUES (3,'DEPARTAMENTO');
-INSERT INTO tipo_inmueble VALUES (4,'TERRENO');
-INSERT INTO tipo_inmueble VALUES (5,'QUINTA');
-INSERT INTO tipo_inmueble VALUES (6,'GALPON');
+INSERT INTO tipo_inmueble VALUES (nextval('tipo_inmueble_id_seq'),'LOCAL');
+INSERT INTO tipo_inmueble VALUES (nextval('tipo_inmueble_id_seq'),'CASA');
+INSERT INTO tipo_inmueble VALUES (nextval('tipo_inmueble_id_seq'),'DEPARTAMENTO');
+INSERT INTO tipo_inmueble VALUES (nextval('tipo_inmueble_id_seq'),'TERRENO');
+INSERT INTO tipo_inmueble VALUES (nextval('tipo_inmueble_id_seq'),'QUINTA');
+INSERT INTO tipo_inmueble VALUES (nextval('tipo_inmueble_id_seq'),'GALPON');
 
-INSERT INTO orientacion VALUES (1,'NORTE');
-INSERT INTO orientacion VALUES (2,'SUR');
-INSERT INTO orientacion VALUES (3,'ESTE');
-INSERT INTO orientacion VALUES (4,'OESTE');
-INSERT INTO orientacion VALUES (5,'NORESTE');
-INSERT INTO orientacion VALUES (6,'NOROESTE');
-INSERT INTO orientacion VALUES (7,'SURESTE');
-INSERT INTO orientacion VALUES (8,'SUROESTE');
+INSERT INTO orientacion VALUES (nextval('orientacion_id_seq'),'NORTE');
+INSERT INTO orientacion VALUES (nextval('orientacion_id_seq'),'SUR');
+INSERT INTO orientacion VALUES (nextval('orientacion_id_seq'),'ESTE');
+INSERT INTO orientacion VALUES (nextval('orientacion_id_seq'),'OESTE');
+INSERT INTO orientacion VALUES (nextval('orientacion_id_seq'),'NORESTE');
+INSERT INTO orientacion VALUES (nextval('orientacion_id_seq'),'NOROESTE');
+INSERT INTO orientacion VALUES (nextval('orientacion_id_seq'),'SURESTE');
+INSERT INTO orientacion VALUES (nextval('orientacion_id_seq'),'SUROESTE');
