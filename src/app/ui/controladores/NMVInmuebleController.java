@@ -210,6 +210,9 @@ public class NMVInmuebleController extends OlimpoController {
 	private Map<ImageView, File> archivosImagenesNuevas = new HashMap<>();
 
 	@FXML
+	private Map<ImageView, Imagen> archivosImagenesPreExistentes = new HashMap<>();
+
+	@FXML
 	private ImageView imagenSeleccionada;
 
 	@FXML
@@ -580,6 +583,9 @@ public class NMVInmuebleController extends OlimpoController {
 	@FXML
 	public void quitarFoto() {
 		panelFotos.getChildren().remove(imagenSeleccionada);
+		if(archivosImagenesPreExistentes.get(imagenSeleccionada) != null){
+			archivosImagenesPreExistentes.remove(imagenSeleccionada);
+		}
 		imagenSeleccionada = null;
 		btQuitarFoto.setDisable(true);
 	}
@@ -675,18 +681,20 @@ public class NMVInmuebleController extends OlimpoController {
 			if(nodo instanceof ImageView){
 				ImageView imagen = (ImageView) nodo;
 				File file = archivosImagenesNuevas.get(imagen);
-				byte[] bFile = new byte[(int) file.length()];
+				if(file != null){
+					byte[] bFile = new byte[(int) file.length()];
 
-				try{
-					FileInputStream fileInputStream = new FileInputStream(file);
-					//convert file into array of bytes
-					fileInputStream.read(bFile);
-					fileInputStream.close();
-				} catch(Exception e){
-					presentador.presentarExcepcion(e, stage);
-					return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+					try{
+						FileInputStream fileInputStream = new FileInputStream(file);
+						//convert file into array of bytes
+						fileInputStream.read(bFile);
+						fileInputStream.close();
+					} catch(Exception e){
+						presentador.presentarExcepcion(e, stage);
+						return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+					}
+					fotos.add((Imagen) new Imagen().setArchivo(bFile));
 				}
-				fotos.add((Imagen) new Imagen().setArchivo(bFile));
 			}
 		}
 
@@ -821,27 +829,34 @@ public class NMVInmuebleController extends OlimpoController {
 				.setOtros(tfOtros.getText().toLowerCase().trim())
 				.setPiso(tfPiso.getText().toLowerCase().trim());
 
+		//Fotos eliminadas
+		ArrayList<Imagen> imagenesEliminadas = new ArrayList<>(inmueble.getFotos());
+		imagenesEliminadas.removeAll(archivosImagenesPreExistentes.values());
+
 		//Guardar fotos
 		ArrayList<Imagen> fotos = new ArrayList<>();
 		for(Node nodo: panelFotos.getChildren()){
 			if(nodo instanceof ImageView){
 				ImageView imagen = (ImageView) nodo;
 				File file = archivosImagenesNuevas.get(imagen);
-				byte[] bFile = new byte[(int) file.length()];
+				if(file != null){
+					byte[] bFile = new byte[(int) file.length()];
 
-				try{
-					FileInputStream fileInputStream = new FileInputStream(file);
-					//convert file into array of bytes
-					fileInputStream.read(bFile);
-					fileInputStream.close();
-				} catch(Exception e){
-					presentador.presentarExcepcion(e, stage);
-					return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+					try{
+						FileInputStream fileInputStream = new FileInputStream(file);
+						//convert file into array of bytes
+						fileInputStream.read(bFile);
+						fileInputStream.close();
+					} catch(Exception e){
+						presentador.presentarExcepcion(e, stage);
+						return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+					}
+					fotos.add((Imagen) new Imagen().setArchivo(bFile));
 				}
-				fotos.add((Imagen) new Imagen().setArchivo(bFile));
 			}
 		}
 
+		inmueble.getFotos().removeAll(imagenesEliminadas);
 		inmueble.setDatosEdificio(datos)
 				.setDireccion(direccion)
 				.setTipo(tipo)
@@ -1043,6 +1058,7 @@ public class NMVInmuebleController extends OlimpoController {
 				seleccionarImagen(imageView);
 			});
 			panelFotos.getChildren().add(imageView);
+			archivosImagenesPreExistentes.put(imageView, imagen);
 		}
 	}
 
