@@ -18,6 +18,7 @@
 package app.logica.gestores;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -28,6 +29,8 @@ import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Estado;
+import app.datos.entidades.HistorialDatosEdificio;
+import app.datos.entidades.HistorialInmueble;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Propietario;
 import app.datos.servicios.HistorialService;
@@ -200,7 +203,44 @@ public class GestorInmueble {
 		}
 
 		if(errores.isEmpty()){
-			//TODO hacer historial con los datos de inmuebleAuxiliar y persistirlo
+			HistorialInmueble historialInmuebleAuxiliar = new HistorialInmueble();
+
+			DatosEdificio datosEdificioAuxiliar = inmuebleAuxiliar.getDatosEdificio();
+			HistorialDatosEdificio historialDatosEdificioAuxiliar = new HistorialDatosEdificio()
+					.setAguaCaliente(datosEdificioAuxiliar.getAguaCaliente())
+					.setAguaCorriente(datosEdificioAuxiliar.getAguaCaliente())
+					.setAntiguedad(datosEdificioAuxiliar.getAntiguedad())
+					.setBaños(datosEdificioAuxiliar.getBaños())
+					.setCloacas(datosEdificioAuxiliar.getCloacas())
+					.setDormitorios(datosEdificioAuxiliar.getDormitorios())
+					.setGaraje(datosEdificioAuxiliar.getGaraje())
+					.setGasNatural(datosEdificioAuxiliar.getGasNatural())
+					.setLavadero(datosEdificioAuxiliar.getLavadero())
+					.setPatio(datosEdificioAuxiliar.getPatio())
+					.setPavimento(datosEdificioAuxiliar.getPavimento())
+					.setPiscina(datosEdificioAuxiliar.getPiscina())
+					.setPropiedadHorizontal(datosEdificioAuxiliar.getPropiedadHorizontal())
+					.setSuperficie(datosEdificioAuxiliar.getSuperficie())
+					.setTelefono(datosEdificioAuxiliar.getTelefono())
+					.setDatosEdificio(datosEdificioAuxiliar)
+					.setHistorialInmueble(historialInmuebleAuxiliar);
+
+			historialInmuebleAuxiliar
+					.setDireccion(inmuebleAuxiliar.getDireccion())
+					.setEstado(inmuebleAuxiliar.getEstado())
+					.setFechaCarga(inmuebleAuxiliar.getFechaCarga())
+					.setFechaYHoraCambio(new Date())
+					.setFondo(inmuebleAuxiliar.getFondo())
+					.setFrente(inmuebleAuxiliar.getFrente())
+					.setObservaciones(inmuebleAuxiliar.getObservaciones())
+					.setOrientacion(inmuebleAuxiliar.getOrientacion())
+					.setPrecio(inmuebleAuxiliar.getPrecio())
+					.setPropietario(inmuebleAuxiliar.getPropietario())
+					.setSuperficie(inmuebleAuxiliar.getSuperficie())
+					.setTipo(inmuebleAuxiliar.getTipo())
+					.setInmueble(inmuebleAuxiliar)
+					.setHistorialDatosEdificio(historialDatosEdificioAuxiliar);
+			persistidorHistorial.guardarHistorialInmueble(historialInmuebleAuxiliar);
 
 			persistidorInmueble.modificarInmueble(inmueble);
 		}
