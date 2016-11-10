@@ -239,7 +239,8 @@ public class GestorInmueble {
 					.setSuperficie(inmuebleAuxiliar.getSuperficie())
 					.setTipo(inmuebleAuxiliar.getTipo())
 					.setInmueble(inmuebleAuxiliar)
-					.setHistorialDatosEdificio(historialDatosEdificioAuxiliar);
+					.setHistorialDatosEdificio(historialDatosEdificioAuxiliar)
+					.getFotos().addAll(inmuebleAuxiliar.getFotos());
 			persistidorHistorial.guardarHistorialInmueble(historialInmuebleAuxiliar);
 
 			persistidorInmueble.modificarInmueble(inmueble);
