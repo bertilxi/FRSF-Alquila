@@ -32,7 +32,6 @@ public class AdministrarClienteControllerTest {
 	@Parameters
 	/**
 	 *
-	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
 	 *
 	 * @param cliente
 	 * @param acepta
@@ -92,7 +91,7 @@ public class AdministrarClienteControllerTest {
 	}
 
 	/**
-	 * Método que devuelve los parámetros para probar el método bajaCliente()
+	 * Método que devuelve los parámetros para probar el método eliminarCliente()
 	 *
 	 * @return parámetros de prueba
 	 */

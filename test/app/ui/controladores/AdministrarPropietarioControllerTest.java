@@ -31,7 +31,6 @@ public class AdministrarPropietarioControllerTest {
 	@Parameters
 	/**
 	 *
-	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
 	 *
 	 * @param propietario
 	 * @param acepta
@@ -91,7 +90,7 @@ public class AdministrarPropietarioControllerTest {
 	}
 
 	/**
-	 * Método que devuelve los parámetros para probar el método bajaPropietario()
+	 * Método que devuelve los parámetros para probar el método eliminarPropietario()
 	 *
 	 * @return parámetros de prueba
 	 */
