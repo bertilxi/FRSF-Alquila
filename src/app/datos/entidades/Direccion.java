@@ -82,6 +82,18 @@ public class Direccion {
 		this.localidad = localidad;
 	}
 
+	public Direccion(String numero, String piso, String departamento, Calle calle, Barrio barrio,
+			Localidad localidad, String otros) {
+		super();
+		this.numero = numero;
+		this.piso = piso;
+		this.departamento = departamento;
+		this.calle = calle;
+		this.barrio = barrio;
+		this.localidad = localidad;
+		this.otros = otros;
+	}
+
 	public Integer getId() {
 		return id;
 	}

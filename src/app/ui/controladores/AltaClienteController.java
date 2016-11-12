@@ -54,7 +54,7 @@ public class AltaClienteController extends OlimpoController {
 	@FXML
 	protected TextField textFieldTelefono;
 
-	private Cliente cliente;
+	protected Cliente cliente;
 
 	/**
 	 * Setea los campos con los datos del cliente pasado por parámetro. Si no se pasa ninguno se lo crea
@@ -146,7 +146,7 @@ public class AltaClienteController extends OlimpoController {
 							break;
 						}
 					}
-					presentador.presentarError("No se pudo crear el cliente", stringErrores.toString(), stage);
+					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				}
 				else{
 					presentador.presentarToast("Se ha creado el cliente con éxito", stage);
