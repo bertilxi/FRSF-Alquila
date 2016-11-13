@@ -29,7 +29,6 @@ import app.ui.componentes.ventanas.PresentadorVentanas;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import app.ui.componentes.ventanas.VentanaError;
 import app.ui.componentes.ventanas.VentanaErrorExcepcion;
-import app.ui.componentes.ventanas.VentanaErrorExcepcionInesperada;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -55,14 +54,12 @@ public class ModificarClienteControllerTest {
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
 		VentanaError ventanaErrorMock = mock(VentanaError.class);
 		VentanaErrorExcepcion ventanaErrorExcepcionMock = mock(VentanaErrorExcepcion.class);
-		VentanaErrorExcepcionInesperada ventanaErrorExcepcionInesperadaMock = mock(VentanaErrorExcepcionInesperada.class);
 		VentanaConfirmacion ventanaConfirmacionMock = mock(VentanaConfirmacion.class);
 		ScenographyChanger scenographyChangerMock = mock(ScenographyChanger.class);
 		ModificarClienteController modificarClienteControllerMock = mock(ModificarClienteController.class);
 
 		when(presentadorVentanasMock.presentarError(any(), any(), any())).thenReturn(ventanaErrorMock);
 		when(presentadorVentanasMock.presentarExcepcion(any(), any())).thenReturn(ventanaErrorExcepcionMock);
-		when(presentadorVentanasMock.presentarExcepcionInesperada(any(), any())).thenReturn(ventanaErrorExcepcionInesperadaMock);
 		when(presentadorVentanasMock.presentarConfirmacion(any(), any(), any())).thenReturn(ventanaConfirmacionMock);
 		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarClienteControllerMock);
 		doNothing().when(modificarClienteControllerMock).setClienteEnModificacion(any());
