@@ -96,7 +96,6 @@ public class AltaClienteControllerTest {
 			@Override
 			public void inicializar(URL location, ResourceBundle resources) {
 				this.coordinador = coordinadorMock;
-				this.presentador = new PresentadorVentanas();
 				this.presentador = presentadorVentanasMock;
 				setScenographyChanger(scenographyChangerMock);
 				super.inicializar(location, resources);
@@ -104,7 +103,6 @@ public class AltaClienteControllerTest {
 
 			@Override
 			public void acceptAction() {
-				this.coordinador = coordinadorMock;
 				this.textFieldNombre.setText(nombre);
 				this.textFieldApellido.setText(apellido);
 				this.comboBoxTipoDocumento.getSelectionModel().select(tipoDocumento);

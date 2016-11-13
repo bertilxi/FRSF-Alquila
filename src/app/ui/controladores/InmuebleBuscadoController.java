@@ -79,59 +79,59 @@ public class InmuebleBuscadoController extends OlimpoController {
 	private Button botonQuitarBarrio;
 
 	@FXML
-	private CheckBox checkBoxLocal;
+	protected CheckBox checkBoxLocal;
 	@FXML
-	private CheckBox checkBoxCasa;
+	protected CheckBox checkBoxCasa;
 	@FXML
-	private CheckBox checkBoxDepartamento;
+	protected CheckBox checkBoxDepartamento;
 	@FXML
-	private CheckBox checkBoxTerreno;
+	protected CheckBox checkBoxTerreno;
 	@FXML
-	private CheckBox checkBoxGalpon;
+	protected CheckBox checkBoxGalpon;
 	@FXML
-	private CheckBox checkBoxQuinta;
+	protected CheckBox checkBoxQuinta;
 
 	@FXML
-	private TextField textFieldSuperficie;
+	protected TextField textFieldSuperficie;
 	@FXML
-	private TextField textFieldAntiguedad;
+	protected TextField textFieldAntiguedad;
 	@FXML
-	private TextField textFieldDormitorios;
+	protected TextField textFieldDormitorios;
 	@FXML
-	private TextField textFieldBaños;
+	protected TextField textFieldBaños;
 	@FXML
-	private TextField textFieldPrecio;
+	protected TextField textFieldPrecio;
 
 	@FXML
-	private CheckBox checkBoxPropiedadHorizontal;
+	protected CheckBox checkBoxPropiedadHorizontal;
 	@FXML
-	private CheckBox checkBoxGarage;
+	protected CheckBox checkBoxGarage;
 	@FXML
-	private CheckBox checkBoxPatio;
+	protected CheckBox checkBoxPatio;
 	@FXML
-	private CheckBox checkBoxPiscina;
+	protected CheckBox checkBoxPiscina;
 	@FXML
-	private CheckBox checkBoxAguaCorriente;
+	protected CheckBox checkBoxAguaCorriente;
 	@FXML
-	private CheckBox checkBoxCloaca;
+	protected CheckBox checkBoxCloaca;
 	@FXML
-	private CheckBox checkBoxGasNatural;
+	protected CheckBox checkBoxGasNatural;
 	@FXML
-	private CheckBox checkBoxAguaCaliente;
+	protected CheckBox checkBoxAguaCaliente;
 	@FXML
-	private CheckBox checkBoxTelefono;
+	protected CheckBox checkBoxTelefono;
 	@FXML
-	private CheckBox checkBoxLavadero;
+	protected CheckBox checkBoxLavadero;
 	@FXML
-	private CheckBox checkBoxPavimento;
+	protected CheckBox checkBoxPavimento;
 
-	private Boolean alta;
+	protected Boolean alta;
 
-	private Cliente cliente;
+	protected Cliente cliente;
 
-	private ArrayList<Localidad> listaLocalidadesSeleccionadas;
+	protected ArrayList<Localidad> listaLocalidadesSeleccionadas;
 
-	private ArrayList<Barrio> listaBarriosSeleccionados;
+	protected ArrayList<Barrio> listaBarriosSeleccionados;
 
 	/**
 	 * Setea el cliente pasado por parámetro y, si posee un inmueble buscado,
@@ -206,7 +206,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 	 * Al finalizar regresa a la pantalla correspondiente, ya sea alta cliente o modificar cliente.
 	 */
 	@FXML
-	private void acceptAction() {
+	protected void acceptAction() {
 		Double supeficieMinima = null;
 		Integer antiguedadMaxima = null;
 		Integer dormitoriosMinimos = null;
@@ -291,7 +291,9 @@ public class InmuebleBuscadoController extends OlimpoController {
 					.setLavadero(lavadero)
 					.setPavimento(pavimento);
 
+			inmuebleBuscado.getLocalidades().clear();
 			inmuebleBuscado.getLocalidades().addAll(listaLocalidadesSeleccionadas);
+			inmuebleBuscado.getBarrios().clear();
 			inmuebleBuscado.getBarrios().addAll(listaBarriosSeleccionados);
 
 			try{
@@ -338,7 +340,8 @@ public class InmuebleBuscadoController extends OlimpoController {
 				controlador.setCliente(cliente);
 			}
 			else{
-				cambiarmeAScene(ModificarClienteController.URLVista);
+				ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
+				controlador.setClienteEnModificacion(cliente);
 			}
 		}
 	}
