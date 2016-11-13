@@ -67,6 +67,11 @@ public class AdministrarPropietarioControllerTest {
 				tablaPropietarios.getSelectionModel().select(propietario);
 				return super.handleEliminar();
 			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
+			}
 		};
 		administrarPropietarioController.setCoordinador(coordinadorMock);
 		administrarPropietarioController.setPresentador(presentadorMock);

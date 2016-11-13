@@ -68,6 +68,11 @@ public class AdministrarClienteControllerTest {
 				tablaClientes.getSelectionModel().select(cliente);
 				return super.handleEliminar();
 			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
+			}
 		};
 		administrarClienteController.setCoordinador(coordinadorMock);
 		administrarClienteController.setPresentador(presentadorMock);
