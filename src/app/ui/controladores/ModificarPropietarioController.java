@@ -46,37 +46,37 @@ public class ModificarPropietarioController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/modificarPropietario.fxml";
 
 	@FXML
-	private TextField textFieldNombre;
+	protected TextField textFieldNombre;
 	@FXML
-	private TextField textFieldApellido;
+	protected TextField textFieldApellido;
 	@FXML
-	private TextField textFieldNumeroDocumento;
+	protected TextField textFieldNumeroDocumento;
 	@FXML
-	private TextField textFieldAlturaCalle;
+	protected TextField textFieldAlturaCalle;
 	@FXML
-	private TextField textFieldPiso;
+	protected TextField textFieldPiso;
 	@FXML
-	private TextField textFieldDepartamento;
+	protected TextField textFieldDepartamento;
 	@FXML
-	private TextField textFieldTelefono;
+	protected TextField textFieldTelefono;
 	@FXML
-	private TextField textFieldCorreoElectronico;
+	protected TextField textFieldCorreoElectronico;
 	@FXML
-	private TextField textFieldOtros;
+	protected TextField textFieldOtros;
 	@FXML
-	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
+	protected ComboBox<TipoDocumento> comboBoxTipoDocumento;
 	@FXML
-	private ComboBox<Pais> comboBoxPais;
+	protected ComboBox<Pais> comboBoxPais;
 	@FXML
-	private ComboBox<Provincia> comboBoxProvincia;
+	protected ComboBox<Provincia> comboBoxProvincia;
 	@FXML
-	private ComboBox<Localidad> comboBoxLocalidad;
+	protected ComboBox<Localidad> comboBoxLocalidad;
 	@FXML
-	private ComboBox<Calle> comboBoxCalle;
+	protected ComboBox<Calle> comboBoxCalle;
 	@FXML
-	private ComboBox<Barrio> comboBoxBarrio;
+	protected ComboBox<Barrio> comboBoxBarrio;
 
-	private Propietario propietarioEnModificacion;
+	protected Propietario propietarioEnModificacion;
 
 	/**
 	 * Setea los campos con los datos del propietario pasado por parámetro.
@@ -211,7 +211,7 @@ public class ModificarPropietarioController extends OlimpoController {
 							break;
 						}
 					}
-					presentador.presentarError("No se pudo modificar el propietario", stringErrores.toString(), stage);
+					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				}
 				else{
 					presentador.presentarToast("Se ha modificado el propietario con éxito", stage);

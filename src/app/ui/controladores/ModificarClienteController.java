@@ -37,21 +37,21 @@ public class ModificarClienteController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/modificarCliente.fxml";
 
 	@FXML
-	private TextField textFieldNombre;
+	protected TextField textFieldNombre;
 
 	@FXML
-	private TextField textFieldApellido;
+	protected TextField textFieldApellido;
 
 	@FXML
-	private ComboBox<TipoDocumento> comboBoxTipoDocumento;
+	protected ComboBox<TipoDocumento> comboBoxTipoDocumento;
 
 	@FXML
-	private TextField textFieldNumeroDocumento;
+	protected TextField textFieldNumeroDocumento;
 
 	@FXML
-	private TextField textFieldTelefono;
+	protected TextField textFieldTelefono;
 
-	private Cliente clienteEnModificacion;
+	protected Cliente clienteEnModificacion;
 
 	/**
 	 * Setea los campos con los datos del cliente pasado por parámetro.
@@ -75,7 +75,7 @@ public class ModificarClienteController extends OlimpoController {
 	 * Si la capa lógica retorna errores, se muestran al usuario.
 	 */
 	@FXML
-	private void acceptAction() {
+	protected void acceptAction() {
 
 		StringBuilder error = new StringBuilder("");
 
@@ -134,7 +134,7 @@ public class ModificarClienteController extends OlimpoController {
 							break;
 						}
 					}
-					presentador.presentarError("No se pudo modificar el cliente", stringErrores.toString(), stage);
+					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				}
 				else{
 					presentador.presentarToast("Se ha modificado el cliente con éxito", stage);
