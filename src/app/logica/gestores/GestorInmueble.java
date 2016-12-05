@@ -19,6 +19,8 @@ package app.logica.gestores;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -75,7 +77,7 @@ public class GestorInmueble {
 	 *             si falló al persistir
 	 */
 	public ResultadoCrearInmueble crearInmueble(Inmueble inmueble) throws PersistenciaException {
-		ArrayList<ErrorCrearInmueble> errores = new ArrayList<>();
+		Set<ErrorCrearInmueble> errores = new HashSet<>();
 
 		if(inmueble.getFechaCarga() == null){
 			errores.add(ErrorCrearInmueble.Fecha_Vacia);
@@ -115,6 +117,9 @@ public class GestorInmueble {
 		}
 
 		if(!validador.validarDireccion(inmueble.getDireccion())){
+			errores.add(ErrorCrearInmueble.Formato_Direccion_Incorrecto);
+		}
+		if(inmueble.getDireccion() == null || inmueble.getDireccion().getBarrio() == null || inmueble.getDireccion().getBarrio().getLocalidad() == null || inmueble.getDireccion().getLocalidad() == null || inmueble.getDireccion().getCalle() == null || inmueble.getDireccion().getCalle().getLocalidad() == null){
 			errores.add(ErrorCrearInmueble.Formato_Direccion_Incorrecto);
 		}
 
