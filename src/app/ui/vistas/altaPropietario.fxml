@@ -31,7 +31,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaPropietarioController">
+<HBox prefHeight="650.0" prefWidth="1000.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaPropietarioController">
     <VBox HBox.hgrow="ALWAYS">
         <GridPane alignment="CENTER" hgap="15.0" styleClass="grid-pane" stylesheets="@../estilos/style.css" vgap="10.0" VBox.vgrow="SOMETIMES">
             <columnConstraints>
