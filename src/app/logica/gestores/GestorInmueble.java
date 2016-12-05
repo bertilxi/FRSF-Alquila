@@ -119,7 +119,7 @@ public class GestorInmueble {
 		if(!validador.validarDireccion(inmueble.getDireccion())){
 			errores.add(ErrorCrearInmueble.Formato_Direccion_Incorrecto);
 		}
-		if(inmueble.getDireccion() == null || inmueble.getDireccion().getBarrio() == null || inmueble.getDireccion().getBarrio().getLocalidad() == null || inmueble.getDireccion().getLocalidad() == null || inmueble.getDireccion().getCalle() == null || inmueble.getDireccion().getCalle().getLocalidad() == null){
+		if(inmueble.getDireccion() == null || inmueble.getDireccion().getBarrio() == null || inmueble.getDireccion().getBarrio().getLocalidad() == null || inmueble.getDireccion().getLocalidad() == null || inmueble.getDireccion().getLocalidad().getProvincia() == null || inmueble.getDireccion().getLocalidad().getProvincia().getPais() == null || inmueble.getDireccion().getCalle() == null || inmueble.getDireccion().getCalle().getLocalidad() == null){
 			errores.add(ErrorCrearInmueble.Formato_Direccion_Incorrecto);
 		}
 
