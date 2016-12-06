@@ -53,10 +53,10 @@ public class Cliente {
 	@Column(name = "apellido", length = 100, nullable = true)
 	private String apellido;
 
-	@Column(name = "numerodocumento", length = 20, nullable = true)
+	@Column(name = "numerodocumento", length = 30, nullable = true)
 	private String numeroDocumento;
 
-	@Column(name = "telefono", length = 20)
+	@Column(name = "telefono", length = 30)
 	private String telefono;
 
 	//Relaciones
