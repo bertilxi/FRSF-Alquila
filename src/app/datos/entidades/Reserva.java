@@ -35,6 +35,10 @@ import javax.persistence.Table;
 @NamedQueries(value = { @NamedQuery(name = "obtenerReservasCliente", query = "SELECT r FROM Reserva r WHERE r.estado.estado = 'ALTA' AND r.cliente = :cliente"), @NamedQuery(name = "obtenerReservasInmueble", query = "SELECT r FROM Reserva r WHERE r.estado.estado = 'ALTA' AND r.inmueble = :inmueble")})
 @Entity
 @Table(name = "reserva")
+/**
+ * Entidad que modela una reserva
+ * Pertenece a la taskcard 28 de la iteración 2 y a la historia 7
+ */
 public class Reserva {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

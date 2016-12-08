@@ -101,6 +101,9 @@ public class Inmueble {
 	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	private DatosEdificio datosEdificio;
 
+	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+	private Venta venta;
+	
 	public Inmueble() {
 		super();
 		fotos = new HashSet<>();

@@ -17,6 +17,9 @@
  */
 package app.datos.entidades;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,8 +32,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @NamedQueries(value = { @NamedQuery(name = "obtenerClientes", query = "SELECT c FROM Cliente c WHERE c.estado.estado = 'ALTA'"), @NamedQuery(name = "obtenerCliente", query = "SELECT c FROM Cliente c WHERE c.numeroDocumento = :documento AND c.tipoDocumento.tipo = :tipoDocumento") })
@@ -71,9 +76,14 @@ public class Cliente {
 
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	private InmuebleBuscado inmuebleBuscado;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
+	@Transient
+	private Set<Venta> ventas;
 
 	public Cliente() {
 		super();
+		this.ventas = new HashSet<>();
 	}
 
 	public Cliente(String nombre, String apellido, String numeroDocumento, String telefono, Estado estado, TipoDocumento tipoDocumento, InmuebleBuscado inmuebleBuscado) {
@@ -151,6 +161,15 @@ public class Cliente {
 
 	public Cliente setInmuebleBuscado(InmuebleBuscado inmuebleBuscado) {
 		this.inmuebleBuscado = inmuebleBuscado;
+		return this;
+	}
+	
+	public Set<Venta> getVentas() {
+		return ventas;
+	}
+
+	public Cliente setVentas(Set<Venta> ventas) {
+		this.ventas = ventas;
 		return this;
 	}
 

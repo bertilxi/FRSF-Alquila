@@ -84,10 +84,15 @@ public class Propietario {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "propietario_idestado_fk"), nullable = false)
 	private Estado estado;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "propietario")
+	@Transient
+	private Set<Venta> ventas;
 
 	public Propietario() {
 		super();
 		this.inmuebles = new HashSet<>();
+		this.ventas = new HashSet<>();
 	}
 
 	public Propietario(Integer id, String nombre, String apellido, String numeroDocumento, String telefono, String email, TipoDocumento tipoDocumento, Direccion direccion) {
@@ -181,6 +186,20 @@ public class Propietario {
 		this.estado = estado;
 	}
 
+	public Set<Venta> getVentas() {
+		return ventas;
+	}
+
+	public Propietario setVentas(Set<Venta> ventas) {
+		this.ventas = ventas;
+		return this;
+	}
+
+	public Propietario setInmuebles(Set<Inmueble> inmuebles) {
+		this.inmuebles = inmuebles;
+		return this;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
