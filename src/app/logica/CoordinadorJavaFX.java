@@ -34,6 +34,7 @@ import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
+import app.datos.entidades.Reserva;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
 import app.datos.entidades.Vendedor;
@@ -43,11 +44,13 @@ import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorInmueble;
 import app.logica.gestores.GestorPropietario;
+import app.logica.gestores.GestorReserva;
 import app.logica.gestores.GestorVendedor;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearPropietario;
+import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoEliminarCliente;
 import app.logica.resultados.ResultadoEliminarInmueble;
@@ -75,6 +78,9 @@ public class CoordinadorJavaFX {
 
 	@Resource
 	GestorDatos gestorDatos;
+	
+	@Resource
+	GestorReserva gestorReserva;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin login) throws PersistenciaException {
 		return gestorVendedor.autenticarVendedor(login);
@@ -182,5 +188,9 @@ public class CoordinadorJavaFX {
 
 	public ArrayList<Orientacion> obtenerOrientaciones() throws PersistenciaException {
 		return gestorDatos.obtenerOrientaciones();
+	}
+
+	public ResultadoCrearReserva crearReserva(Reserva reserva) throws PersistenciaException  {
+		return gestorReserva.crearReserva(reserva);
 	}
 }
