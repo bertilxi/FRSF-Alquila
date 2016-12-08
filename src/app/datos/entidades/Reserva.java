@@ -19,36 +19,71 @@ package app.datos.entidades;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@NamedQueries(value = { @NamedQuery(name = "obtenerReservasCliente", query = "SELECT r FROM Reserva r WHERE r.estado.estado = 'ALTA' AND r.cliente = :cliente"), @NamedQuery(name = "obtenerReservasInmueble", query = "SELECT r FROM Reserva r WHERE r.estado.estado = 'ALTA' AND r.inmueble = :inmueble")})
 @Entity
 @Table(name = "reserva")
 public class Reserva {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id; //ID
+	
+	@Column(name = "importe", nullable = false)
 	private Double importe;
+	
+	@Column(name = "fecha_inicio", nullable = false)
 	private Date fechaInicio;
+	
+	@Column(name = "fecha_fin", nullable = false)
 	private Date fechaFin;
+	
+	@Column(name = "archivo", nullable = false)
 	private PDF archivoPDF;
 
 	//Relaciones
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idcliente", referencedColumnName = "id", foreignKey = @ForeignKey(name = "reserva_idcliente_fk"), nullable = false)
 	private Cliente cliente;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "reserva_idinmueble_fk"), nullable = false)
 	private Inmueble inmueble;
+	
+	public Reserva() {
+		super();
+	}
+	
+	public Reserva(Double importe, Date fechaInicio, Date fechaFin, PDF archivoPDF, Cliente cliente,
+			Inmueble inmueble, Estado estado) {
+		super();
+		this.importe = importe;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.archivoPDF = archivoPDF;
+		this.cliente = cliente;
+		this.inmueble = inmueble;
+		this.estado = estado;
+	}
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "reserva_idestado_fk"), nullable = false)
 	private Estado estado;
 
 	public Integer getId() {
 		return id;
-	}
-
-	public Reserva setId(Integer id) {
-		this.id = id;
-		return this;
 	}
 
 	public Double getImporte() {

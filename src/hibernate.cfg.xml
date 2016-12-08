@@ -60,11 +60,11 @@
         <mapping class="app.datos.entidades.PDF"/>
         <mapping class="app.datos.entidades.Propietario"/>
         <mapping class="app.datos.entidades.Provincia"/>
-<!--        <mapping class="app.datos.entidades.Reserva"/> -->
+        <mapping class="app.datos.entidades.Reserva"/>
         <mapping class="app.datos.entidades.TipoDocumento"/>
         <mapping class="app.datos.entidades.TipoInmueble"/>
         <mapping class="app.datos.entidades.Vendedor"/>
-<!--          <mapping class="app.datos.entidades.Venta"/> -->
+        <mapping class="app.datos.entidades.Venta"/>
 
     </session-factory>
 </hibernate-configuration>
