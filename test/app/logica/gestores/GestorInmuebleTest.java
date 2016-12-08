@@ -16,10 +16,15 @@ import app.comun.ValidadorFormato;
 import app.comun.Mock.ValidadorFormatoMock;
 import app.datos.clases.FiltroPropietario;
 import app.datos.clases.TipoDocumentoStr;
+import app.datos.entidades.Calle;
 import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Direccion;
+import app.datos.entidades.Estado;
 import app.datos.entidades.Inmueble;
+import app.datos.entidades.Localidad;
+import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
+import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
 import app.datos.servicios.HistorialService;
@@ -29,6 +34,7 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import app.logica.resultados.ResultadoModificarInmueble;
+import app.logica.resultados.ResultadoModificarPropietario;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -41,8 +47,21 @@ public class GestorInmuebleTest {
 	@Test
 	@Parameters
 	public void testCrearInmueble(Inmueble inmueble, ResultadoCrearInmueble resultado, ValidadorFormato validadorMock, Propietario propietario, Throwable excepcion) throws Exception {
+		GestorDatos gestorDatosMock = new GestorDatos(){
+			
+			@Override
+			public ArrayList<Estado> obtenerEstados() throws PersistenciaException{
+				return new ArrayList<Estado>();
+			}
+		};
+		
 		GestorPropietario gestorPropietarioMock = new GestorPropietario() {
 
+			@Override
+			public ResultadoModificarPropietario modificarPropietario(Propietario propietario) throws PersistenciaException {
+				return new ResultadoModificarPropietario();
+			}
+			
 			@Override
 			public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException {
 				if(propietario != null){
@@ -84,6 +103,7 @@ public class GestorInmuebleTest {
 			{
 				this.gestorPropietario = gestorPropietarioMock;
 				this.persistidorInmueble = persistidorInmuebleMock;
+				this.gestorDatos = gestorDatosMock;
 				this.validador = validadorMock;
 			}
 		};
@@ -136,43 +156,52 @@ public class GestorInmuebleTest {
 				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
 				.setNumeroDocumento("12345678");
 
+		Localidad localidad = new Localidad("sdf",new Provincia("sf",new Pais("sd")));
+		Direccion direccion = new Direccion("12",null,null,new Calle("sdf",localidad),null,localidad);
+		
 		Inmueble inmuebleCorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSinFecha = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSinPropietario = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setTipo(new TipoInmueble())
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSinTipo = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSinPrecio = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
-				.setTipo(new TipoInmueble());
+				.setTipo(new TipoInmueble())
+				.setDireccion(direccion);
 
 		Inmueble inmueblePrecioIncorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setPrecio(-32.5);
+				.setPrecio(-32.5)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleFrenteIncorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
@@ -180,7 +209,8 @@ public class GestorInmuebleTest {
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
 				.setFrente(-34.0)
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleFondoIncorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
@@ -188,7 +218,8 @@ public class GestorInmuebleTest {
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
 				.setFondo(-4.9)
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSuperficieIncorrecta = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
@@ -196,14 +227,16 @@ public class GestorInmuebleTest {
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
 				.setSuperficie(-9.993434)
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleDatosEdificioIncorrectos = new Inmueble()
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
 				.setDatosEdificio(new DatosEdificio())
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		ValidadorFormato validadorCorrecto = new ValidadorFormatoMock();
 		ValidadorFormato validadorFormatoDireccionIncorrecto = new ValidadorFormatoMock() {
@@ -242,7 +275,7 @@ public class GestorInmuebleTest {
 
 	@Test
 	@Parameters
-	public void testModificarInmueble(Inmueble inmueble, Boolean resultadoValidarFondo, Boolean resultadoValidarFrente, Boolean resultadoValidarSuperficie, Boolean resultadoValidarDireccion, Boolean resultadoValidarDatosEdificio, Boolean retornaInmueble, ResultadoModificarInmueble resultado, Throwable excepcion) throws Exception {
+	public void testModificarInmueble(Inmueble inmueble, Boolean resultadoValidarFondo, Boolean resultadoValidarFrente, Boolean resultadoValidarSuperficie, Boolean resultadoValidarDireccion, Boolean resultadoValidarDatosEdificio, Boolean resultadoValidarPrecio, Boolean retornaInmueble, ResultadoModificarInmueble resultado, Throwable excepcion) throws Exception {
 		GestorPropietario gestorPropietarioMock = Mockito.mock(GestorPropietario.class);
 		InmuebleService persistidorInmuebleMock = Mockito.mock(InmuebleService.class);
 		HistorialService persistidorHistorialMock = Mockito.mock(HistorialService.class);
@@ -252,6 +285,7 @@ public class GestorInmuebleTest {
 		Mockito.when(validadorFormatoMock.validarDoublePositivo(inmueble.getFrente())).thenReturn(resultadoValidarFrente);
 		Mockito.when(validadorFormatoMock.validarDoublePositivo(inmueble.getSuperficie())).thenReturn(resultadoValidarSuperficie);
 		Mockito.when(validadorFormatoMock.validarDireccion(inmueble.getDireccion())).thenReturn(resultadoValidarDireccion);
+		Mockito.when(validadorFormatoMock.validarDoublePositivo(inmueble.getPrecio())).thenReturn(resultadoValidarPrecio);
 		Mockito.when(gestorPropietarioMock.obtenerPropietario(any())).thenReturn(inmueble.getPropietario());
 
 		if(retornaInmueble){
@@ -263,6 +297,7 @@ public class GestorInmuebleTest {
 
 		GestorInmueble gestorInmueble = new GestorInmueble() {
 			{
+				this.validador = validadorFormatoMock;
 				this.gestorPropietario = gestorPropietarioMock;
 				this.persistidorInmueble = persistidorInmuebleMock;
 				this.persistidorHistorial = persistidorHistorialMock;
@@ -323,11 +358,15 @@ public class GestorInmuebleTest {
 				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
 				.setNumeroDocumento("12345678");
 
+		Localidad localidad = new Localidad("sdf",new Provincia("sf",new Pais("sd")));
+		Direccion direccion = new Direccion("12",null,null,new Calle("sdf",localidad),null,localidad);
+		
 		Inmueble inmuebleCorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
+				.setDireccion(direccion)
 				.setPrecio(20000.0);
 
 		Inmueble inmuebleSinFecha = new Inmueble()
@@ -410,7 +449,7 @@ public class GestorInmuebleTest {
 		};
 
 		return new Object[] {
-				new Object[] { inmuebleCorrecto, new ResultadoCrearInmueble(), validadorCorrecto, propietario, null }, //inmueble correcto
+				new Object[] { inmuebleCorrecto,true,true,true,true,true,true,true, new ResultadoModificarInmueble(), null }, //inmueble correcto
 				new Object[] { inmuebleSinFecha, new ResultadoCrearInmueble(ErrorCrearInmueble.Fecha_Vacia), validadorCorrecto, propietario, null }, //inmueble sin fecha de carga
 				new Object[] { inmuebleSinPropietario, new ResultadoCrearInmueble(ErrorCrearInmueble.Propietario_Vacio), validadorCorrecto, propietario, null }, //inmueble sin propietario
 				new Object[] { inmuebleSinTipo, new ResultadoCrearInmueble(ErrorCrearInmueble.Tipo_Vacio), validadorCorrecto, propietario, null }, //inmueble sin TipoInmueble
