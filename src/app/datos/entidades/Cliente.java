@@ -80,6 +80,10 @@ public class Cliente {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
 	@Transient
 	private Set<Venta> ventas;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
+	@Transient
+	private Set<Reserva> reservas;
 
 	public Cliente() {
 		super();
@@ -170,6 +174,15 @@ public class Cliente {
 
 	public Cliente setVentas(Set<Venta> ventas) {
 		this.ventas = ventas;
+		return this;
+	}
+	
+	public Set<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public Cliente setReservas(Set<Reserva> reservas) {
+		this.reservas = reservas;
 		return this;
 	}
 

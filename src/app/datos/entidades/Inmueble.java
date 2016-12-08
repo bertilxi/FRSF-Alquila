@@ -34,10 +34,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @NamedQuery(name = "obtenerInmuebles", query = "SELECT i FROM Inmueble i WHERE i.estado.estado = 'ALTA'")
@@ -103,6 +105,10 @@ public class Inmueble {
 
 	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	private Venta venta;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "inmueble")
+	@Transient
+	private Set<Reserva> reservas;
 	
 	public Inmueble() {
 		super();
@@ -236,6 +242,15 @@ public class Inmueble {
 
 	public Inmueble setDatosEdificio(DatosEdificio datosEdificio) {
 		this.datosEdificio = datosEdificio;
+		return this;
+	}
+	
+	public Set<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public Inmueble setReservas(Set<Reserva> reservas) {
+		this.reservas = reservas;
 		return this;
 	}
 

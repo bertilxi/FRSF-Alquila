@@ -33,7 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 /**
- * Controlador de la vista que lista y administra los propietarios
+ * Controlador de la vista que lista y administra los vendedores
  * Permite la creación, modificación y eliminación de vendedores
  */
 public class AdministrarVendedorController extends OlimpoController {
