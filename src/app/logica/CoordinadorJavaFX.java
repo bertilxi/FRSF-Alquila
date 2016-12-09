@@ -55,6 +55,7 @@ import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoEliminarCliente;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarPropietario;
+import app.logica.resultados.ResultadoEliminarReserva;
 import app.logica.resultados.ResultadoEliminarVendedor;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarInmueble;
@@ -78,7 +79,7 @@ public class CoordinadorJavaFX {
 
 	@Resource
 	GestorDatos gestorDatos;
-	
+
 	@Resource
 	GestorReserva gestorReserva;
 
@@ -190,7 +191,12 @@ public class CoordinadorJavaFX {
 		return gestorDatos.obtenerOrientaciones();
 	}
 
-	public ResultadoCrearReserva crearReserva(Reserva reserva) throws PersistenciaException  {
+	public ResultadoCrearReserva crearReserva(Reserva reserva) throws PersistenciaException {
 		return gestorReserva.crearReserva(reserva);
+	}
+
+	public ResultadoEliminarReserva eliminarReserva(Reserva reserva) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -27,6 +27,8 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarReserva;
 import app.logica.resultados.ResultadoEliminarReserva.ErrorEliminarReserva;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
+import app.ui.controladores.resultado.ResultadoControlador;
+import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +41,7 @@ import javafx.scene.control.TableView;
  * Permite la creación de una nueva reserva para un inmueble o un cliente (según de donde se invoque)
  * Permite ver el comprobante PDF de una reserva
  * Permite la eliminacion de una reserva
-*/
+ */
 public class AdministrarReservaController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarReserva.fxml";
@@ -61,27 +63,27 @@ public class AdministrarReservaController extends OlimpoController {
 	private Button botonVerPDF;
 	@FXML
 	private Button botonEliminar;
-	
+
 	protected Cliente cliente;
 	protected Inmueble inmueble;
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar reservas");
-			if(cliente!=null){
-				tablaReservas.getItems().addAll(cliente.getReservas());
-				columnaClienteOInmueble.setText("Inmueble");
-				columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getInmueble().getDireccion().toString()));
-			}
-			else if(inmueble!=null){
-				tablaReservas.getItems().addAll(inmueble.getReservas());
-				columnaClienteOInmueble.setText("Cliente");
-				columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().toString()));
-			}
+		if(cliente != null){
+			tablaReservas.getItems().addAll(cliente.getReservas());
+			columnaClienteOInmueble.setText("Inmueble");
+			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getInmueble().getDireccion().toString()));
+		}
+		else if(inmueble != null){
+			tablaReservas.getItems().addAll(inmueble.getReservas());
+			columnaClienteOInmueble.setText("Cliente");
+			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().toString()));
+		}
 
-			columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
-			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
-			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
+		columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
+		columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
+		columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
 
 		habilitarBotones(null);
 
@@ -119,7 +121,7 @@ public class AdministrarReservaController extends OlimpoController {
 	 * Se pasa a la pantalla modificar reserva
 	 */
 	public void modificarAction(ActionEvent event) {
-		Reserva reserva = tablaReservaes.getSelectionModel().getSelectedItem();
+		Reserva reserva = tablaReservas.getSelectionModel().getSelectedItem();
 		if(reserva == null){
 			return;
 		}
@@ -131,34 +133,38 @@ public class AdministrarReservaController extends OlimpoController {
 	 * Acción que se ejecuta al presionar el botón eliminar
 	 * Se muestra una ventana emergente para confirmar la operación
 	 */
-	public void eliminarAction(ActionEvent event) {
-		Reserva reserva = tablaReservaes.getSelectionModel().getSelectedItem();
+	public ResultadoControlador eliminarAction(ActionEvent event) {
+		Reserva reserva = tablaReservas.getSelectionModel().getSelectedItem();
 		if(reserva == null){
-			return;
+			return new ResultadoControlador();
 		}
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar reserva", "Está a punto de eliminar al reserva.\n¿Desea continuar?", this.stage);
 		if(ventana.acepta()){
-			try{
-				ResultadoEliminarReserva resultado = coordinador.eliminarReserva(reserva);
-				if(resultado.hayErrores()){
-					StringBuilder stringErrores = new StringBuilder();
-					for(ErrorEliminarReserva err: resultado.getErrores()){
-						switch(err) {
-						case No_Existe_Reserva:
-							stringErrores.append("No existe el reserva que desea eliminar.\n");
-							break;
-						}
-					}
-					presentador.presentarError("No se pudo eliminar el reserva", stringErrores.toString(), stage);
-
-				}
-				else{
-					tablaReservaes.getItems().remove(reserva);
-					presentador.presentarToast("Se ha eliminado al reserva " + reserva.getNombre() + " con éxito", stage);
-				}
-			} catch(PersistenciaException e){
-				presentador.presentarExcepcion(e, stage);
-			}
+			return new ResultadoControlador();
 		}
+		ResultadoEliminarReserva resultado;
+		try{
+			resultado = coordinador.eliminarReserva(reserva);
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
+		}
+
+		if(resultado.hayErrores()){
+			StringBuilder stringErrores = new StringBuilder();
+			for(ErrorEliminarReserva err: resultado.getErrores()){
+				switch(err) {
+				case No_Existe_Reserva:
+					stringErrores.append("No existe el reserva que desea eliminar.\n");
+					break;
+				}
+			}
+			presentador.presentarError("No se pudo eliminar el reserva", stringErrores.toString(), stage);
+		}
+		else{
+			tablaReservas.getItems().remove(reserva);
+			presentador.presentarToast("Se ha eliminado al reserva " + reserva.toString() + " con éxito", stage);
+		}
+		return new ResultadoControlador();
 	}
 }

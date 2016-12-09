@@ -20,13 +20,14 @@ package app.logica.resultados;
 import app.logica.resultados.ResultadoEliminarReserva.ErrorEliminarReserva;
 
 public class ResultadoEliminarReserva extends Resultado<ErrorEliminarReserva> {
-	
-	public ResultadoEliminarReserva(ErrorEliminarReserva... errores){
+
+	public ResultadoEliminarReserva(ErrorEliminarReserva... errores) {
 		super(errores);
 	}
-	
+
 	public enum ErrorEliminarReserva {
+		No_Existe_Reserva
 		//TODO escribir los errores posibles de Eliminar Reserva
 	}
-	
+
 }
