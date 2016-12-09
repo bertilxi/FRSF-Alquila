@@ -35,7 +35,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @NamedQueries(value = { @NamedQuery(name = "obtenerClientes", query = "SELECT c FROM Cliente c WHERE c.estado.estado = 'ALTA'"), @NamedQuery(name = "obtenerCliente", query = "SELECT c FROM Cliente c WHERE c.numeroDocumento = :documento AND c.tipoDocumento.tipo = :tipoDocumento") })
@@ -76,18 +75,17 @@ public class Cliente {
 
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	private InmuebleBuscado inmuebleBuscado;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
-	@Transient
-	private Set<Venta> ventas;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
-	@Transient
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
+	private Set<Venta> compras;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
 	private Set<Reserva> reservas;
 
 	public Cliente() {
 		super();
-		this.ventas = new HashSet<>();
+		this.compras = new HashSet<>();
+		this.reservas = new HashSet<>();
 	}
 
 	public Cliente(String nombre, String apellido, String numeroDocumento, String telefono, Estado estado, TipoDocumento tipoDocumento, InmuebleBuscado inmuebleBuscado) {
@@ -167,16 +165,16 @@ public class Cliente {
 		this.inmuebleBuscado = inmuebleBuscado;
 		return this;
 	}
-	
+
 	public Set<Venta> getVentas() {
-		return ventas;
+		return compras;
 	}
 
 	public Cliente setVentas(Set<Venta> ventas) {
-		this.ventas = ventas;
+		this.compras = ventas;
 		return this;
 	}
-	
+
 	public Set<Reserva> getReservas() {
 		return reservas;
 	}

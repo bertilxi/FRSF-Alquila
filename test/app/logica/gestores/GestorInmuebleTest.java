@@ -16,10 +16,16 @@ import app.comun.ValidadorFormato;
 import app.comun.Mock.ValidadorFormatoMock;
 import app.datos.clases.FiltroPropietario;
 import app.datos.clases.TipoDocumentoStr;
+import app.datos.entidades.Barrio;
+import app.datos.entidades.Calle;
 import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Direccion;
+import app.datos.entidades.Estado;
 import app.datos.entidades.Inmueble;
+import app.datos.entidades.Localidad;
+import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
+import app.datos.entidades.Provincia;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
 import app.datos.servicios.HistorialService;
@@ -41,6 +47,13 @@ public class GestorInmuebleTest {
 	@Test
 	@Parameters
 	public void testCrearInmueble(Inmueble inmueble, ResultadoCrearInmueble resultado, ValidadorFormato validadorMock, Propietario propietario, Throwable excepcion) throws Exception {
+		GestorDatos gestorDatosMock = new GestorDatos() {
+
+			@Override
+			public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
+				return new ArrayList<>();
+			}
+		};
 		GestorPropietario gestorPropietarioMock = new GestorPropietario() {
 
 			@Override
@@ -84,6 +97,7 @@ public class GestorInmuebleTest {
 			{
 				this.gestorPropietario = gestorPropietarioMock;
 				this.persistidorInmueble = persistidorInmuebleMock;
+				this.gestorDatos = gestorDatosMock;
 				this.validador = validadorMock;
 			}
 		};
@@ -136,43 +150,52 @@ public class GestorInmuebleTest {
 				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
 				.setNumeroDocumento("12345678");
 
+		Localidad localidad = new Localidad().setProvincia(new Provincia().setPais(new Pais()));
+		Direccion direccion = new Direccion().setCalle(new Calle().setLocalidad(localidad)).setLocalidad(localidad).setBarrio(new Barrio().setLocalidad(localidad));
+
 		Inmueble inmuebleCorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSinFecha = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSinPropietario = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setTipo(new TipoInmueble())
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSinTipo = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSinPrecio = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
-				.setTipo(new TipoInmueble());
+				.setTipo(new TipoInmueble())
+				.setDireccion(direccion);
 
 		Inmueble inmueblePrecioIncorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
-				.setPrecio(-32.5);
+				.setPrecio(-32.5)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleFrenteIncorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
@@ -180,7 +203,8 @@ public class GestorInmuebleTest {
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
 				.setFrente(-34.0)
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleFondoIncorrecto = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
@@ -188,7 +212,8 @@ public class GestorInmuebleTest {
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
 				.setFondo(-4.9)
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleSuperficieIncorrecta = new Inmueble()
 				.setDatosEdificio(datosCorrectos)
@@ -196,14 +221,16 @@ public class GestorInmuebleTest {
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
 				.setSuperficie(-9.993434)
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		Inmueble inmuebleDatosEdificioIncorrectos = new Inmueble()
 				.setFechaCarga(new Date())
 				.setPropietario(propietario)
 				.setTipo(new TipoInmueble())
 				.setDatosEdificio(new DatosEdificio())
-				.setPrecio(20000.0);
+				.setPrecio(20000.0)
+				.setDireccion(direccion);
 
 		ValidadorFormato validadorCorrecto = new ValidadorFormatoMock();
 		ValidadorFormato validadorFormatoDireccionIncorrecto = new ValidadorFormatoMock() {
