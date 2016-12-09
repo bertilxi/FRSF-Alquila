@@ -1,6 +1,5 @@
 ## Grupo Fernando Esteban
-
-20 Vista de consulta inmueble  						2
+20  Vista de consulta inmueble  					2
 29  Vista alta y listar venta  						3
 30  Lógica alta venta y generar PDF  				3
 31  Lógica imprimir venta  							1
