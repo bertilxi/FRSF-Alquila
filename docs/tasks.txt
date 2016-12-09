@@ -1,4 +1,4 @@
-## Grupo Beta Romeo
+## Grupo Fernando Esteban
 
 2 Entidad vendedor                                1
 5 Lógica alta, modificación y baja vendedor       4
@@ -10,7 +10,7 @@
 
 ### total : 15
 
-## Grupo Charlie Mike
+## Grupo Daniel Lucas
 
 3 Vista alta, modificar y baja vendedor           3
 7 Entidad Propietario                             1
@@ -22,7 +22,7 @@
 
 ### total : 19
 
-## Grupo Golf Romeo
+## Grupo Andrés Emiliano
 
 1 Vista y lógica del Login                        2
 4 Vista principal para la administración          2

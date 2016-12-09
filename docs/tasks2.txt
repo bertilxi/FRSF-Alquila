@@ -1,27 +1,27 @@
-## Grupo Beta Romeo
+## Grupo Fernando Esteban
 
-20 Vista de consulta inmueble  				2
-29  Vista alta y listar venta  				3
-30  Lógica alta venta y generar PDF  			3
-31  Lógica imprimir venta  				1
-33  Agregar EstadoInmueble a inmueble  			1
+20 Vista de consulta inmueble  						2
+29  Vista alta y listar venta  						3
+30  Lógica alta venta y generar PDF  				3
+31  Lógica imprimir venta  							1
+33  Agregar EstadoInmueble a inmueble  				1
 
 ### total : 10
 
-## Grupo Charlie Mike
+## Grupo Daniel Lucas
 23  Lógica alta catálogo de inmueble y generar PDF	3
-24  Vista alta, baja y listar reserva  			3
-26  Lógica envío de mail  				1
-28  Persistidor y entidad reserva  			1
-32  Persistidor y entidad venta  			2
+24  Vista alta, baja y listar reserva  				3
+26  Lógica envío de mail  							1
+28  Persistidor y entidad reserva  					1
+32  Persistidor y entidad venta  					2
 
 ### total : 10
 
-## Grupo Golf Romeo
+## Grupo Andrés Emiliano
 21  Lógica y persistidor de consulta inmuebles 		3
-22  Vista alta catálogo de inmueble  			3
+22  Vista alta catálogo de inmueble  				3
 25  Lógica alta, baja reserva y generar PDF 		3
-27  Cambios ABM Cliente  				1
+27  Cambios ABM Cliente  							1
 
 ### total : 10
 
