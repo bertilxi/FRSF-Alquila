@@ -103,13 +103,13 @@ public class Inmueble {
 	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	private DatosEdificio datosEdificio;
 
-	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = true)
 	private Venta venta;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "inmueble")
 	@Transient
 	private Set<Reserva> reservas;
-	
+
 	public Inmueble() {
 		super();
 		fotos = new HashSet<>();
@@ -244,7 +244,7 @@ public class Inmueble {
 		this.datosEdificio = datosEdificio;
 		return this;
 	}
-	
+
 	public Set<Reserva> getReservas() {
 		return reservas;
 	}
