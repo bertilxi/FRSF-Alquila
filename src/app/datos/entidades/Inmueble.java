@@ -39,7 +39,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @NamedQuery(name = "obtenerInmuebles", query = "SELECT i FROM Inmueble i WHERE i.estado.estado = 'ALTA'")
@@ -107,7 +106,6 @@ public class Inmueble {
 	private Venta venta;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "inmueble")
-	@Transient
 	private Set<Reserva> reservas;
 
 	public Inmueble() {
