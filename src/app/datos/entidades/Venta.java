@@ -39,40 +39,41 @@ public class Venta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id; //ID
-	
+
 	@Column(name = "importe", nullable = false)
 	private Double importe;
-	
+
 	@Column(name = "medio_de_pago", nullable = false)
 	private String medioDePago;
-	
+
 	@Column(name = "fecha", nullable = false)
 	private Date fecha;
-	
-	@Column(name = "archivo", nullable = false)
+
+	@OneToOne
+	@JoinColumn(name = "idarchivo")
 	private PDF archivoPDF;
 
 	//Relaciones
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idvendedor", referencedColumnName = "id", foreignKey = @ForeignKey(name = "venta_idvendedor_fk"), nullable = false)
 	private Vendedor vendedor;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idcliente", referencedColumnName = "id", foreignKey = @ForeignKey(name = "venta_idcliente_fk"), nullable = false)
 	private Cliente cliente;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idpropietario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "venta_idpropietario_fk"), nullable = false)
 	private Propietario propietario;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "venta_idinmueble_fk"), nullable = false)
 	private Inmueble inmueble;
-	
+
 	public Venta() {
 		super();
 	}
-	
+
 	public Venta(Double importe, String medioDePago, Date fecha, PDF archivoPDF, Vendedor vendedor, Cliente cliente, Propietario propietario, Inmueble inmueble) {
 		super();
 		this.importe = importe;
@@ -88,59 +89,74 @@ public class Venta {
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public Double getImporte() {
 		return importe;
 	}
+
 	public Venta setImporte(Double importe) {
 		this.importe = importe;
 		return this;
 	}
+
 	public String getMedioDePago() {
 		return medioDePago;
 	}
+
 	public Venta setMedioDePago(String medioDePago) {
 		this.medioDePago = medioDePago;
 		return this;
 	}
+
 	public Date getFecha() {
 		return fecha;
 	}
+
 	public Venta setFecha(Date fecha) {
 		this.fecha = fecha;
 		return this;
 	}
+
 	public PDF getArchivoPDF() {
 		return archivoPDF;
 	}
+
 	public Venta setArchivoPDF(PDF archivoPDF) {
 		this.archivoPDF = archivoPDF;
 		return this;
 	}
+
 	public Vendedor getVendedor() {
 		return vendedor;
 	}
+
 	public Venta setVendedor(Vendedor vendedor) {
 		this.vendedor = vendedor;
 		return this;
 	}
+
 	public Cliente getCliente() {
 		return cliente;
 	}
+
 	public Venta setCliente(Cliente cliente) {
 		this.cliente = cliente;
 		return this;
 	}
+
 	public Propietario getPropietario() {
 		return propietario;
 	}
+
 	public Venta setPropietario(Propietario propietario) {
 		this.propietario = propietario;
 		return this;
 	}
+
 	public Inmueble getInmueble() {
 		return inmueble;
 	}
+
 	public Venta setInmueble(Inmueble inmueble) {
 		this.inmueble = inmueble;
 		return this;
