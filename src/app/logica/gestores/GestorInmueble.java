@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
+import app.datos.clases.FiltroInmueble;
 import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Estado;
@@ -297,6 +298,23 @@ public class GestorInmueble {
 	 */
 	public ArrayList<Inmueble> obtenerInmuebles() throws PersistenciaException {
 		return persistidorInmueble.listarInmuebles();
+	}
+
+	/**
+	 * Obtiene el listado de inmuebles solicitándola a la capa de acceso a datos con el criterio del filtro pasado
+	 *
+	 * Pertenece a la TaskCard 21 de la iteración 2 y a la historia 4
+	 *
+	 * @param filtro
+	 *            Criterio de búsqueda de los inmuebles
+	 *
+	 * @return el listado de inmuebles solicitados
+	 *
+	 * @throws PersistenciaException
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
+	public ArrayList<Inmueble> obtenerInmuebles(FiltroInmueble filtro) throws PersistenciaException {
+		return persistidorInmueble.listarInmuebles(filtro);
 	}
 
 	protected Boolean validarDatosEdificio(DatosEdificio datosEdificio) {

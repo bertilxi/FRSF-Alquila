@@ -19,6 +19,7 @@ package app.datos.servicios;
 
 import java.util.ArrayList;
 
+import app.datos.clases.FiltroInmueble;
 import app.datos.entidades.Inmueble;
 import app.excepciones.PersistenciaException;
 
@@ -29,6 +30,8 @@ public interface InmuebleService {
 	public void modificarInmueble(Inmueble inmueble) throws PersistenciaException;
 
 	public ArrayList<Inmueble> listarInmuebles() throws PersistenciaException;
+
+	public ArrayList<Inmueble> listarInmuebles(FiltroInmueble filtro) throws PersistenciaException;
 
 	public Inmueble obtenerInmueble(Integer id) throws PersistenciaException;
 

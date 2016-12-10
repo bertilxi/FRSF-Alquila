@@ -21,12 +21,14 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import app.datos.clases.FiltroInmueble;
 import app.datos.entidades.Inmueble;
 import app.datos.servicios.InmuebleService;
 import app.excepciones.ConsultaException;
@@ -83,6 +85,25 @@ public class InmuebleServiceImpl implements InmuebleService {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
 			for(Object o: session.getNamedQuery("obtenerInmuebles").list()){
+				if(o instanceof Inmueble){
+					inmuebles.add((Inmueble) o);
+				}
+			}
+		} catch(Exception e){
+			throw new ConsultaException(e);
+		}
+		return inmuebles;
+	}
+
+	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
+	public ArrayList<Inmueble> listarInmuebles(FiltroInmueble filtro) throws PersistenciaException {
+		ArrayList<Inmueble> inmuebles = new ArrayList<>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			Query query = session.createQuery(filtro.getConsultaDinamica());
+			filtro.setParametros(query);
+			for(Object o: query.list()){
 				if(o instanceof Inmueble){
 					inmuebles.add((Inmueble) o);
 				}

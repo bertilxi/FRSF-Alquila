@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 
 import app.comun.ValidadorFormato;
 import app.comun.Mock.ValidadorFormatoMock;
+import app.datos.clases.FiltroInmueble;
 import app.datos.clases.FiltroPropietario;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Barrio;
@@ -93,6 +94,11 @@ public class GestorInmuebleTest {
 			@Override
 			public void guardarInmueble(Inmueble inmueble) throws PersistenciaException {
 
+			}
+
+			@Override
+			public ArrayList<Inmueble> listarInmuebles(FiltroInmueble filtro) throws PersistenciaException {
+				return null;
 			}
 		};
 		GestorInmueble gestorInmueble = new GestorInmueble() {
