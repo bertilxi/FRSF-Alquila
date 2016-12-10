@@ -42,7 +42,22 @@ public class FiltroInmueble {
 		super();
 	}
 
-	public class Builder {
+	private FiltroInmueble(FiltroInmueble filtro) {
+		this();
+		this.consulta = filtro.consulta;
+		this.nombreEntidad = filtro.nombreEntidad;
+		this.pais = filtro.pais;
+		this.provincia = filtro.provincia;
+		this.localidad = filtro.localidad;
+		this.barrio = filtro.barrio;
+		this.tipoInmueble = filtro.tipoInmueble;
+		this.cantidadDormitorios = filtro.cantidadDormitorios;
+		this.precioMaximo = filtro.precioMaximo;
+		this.precioMinimo = filtro.precioMinimo;
+		this.estadoInmueble = filtro.estadoInmueble;
+	}
+
+	public static class Builder {
 
 		private FiltroInmueble filtroInmueble;
 
@@ -98,7 +113,7 @@ public class FiltroInmueble {
 
 		public FiltroInmueble build() {
 			filtroInmueble.setConsulta();
-			return filtroInmueble;
+			return new FiltroInmueble(filtroInmueble);
 		}
 	}
 
@@ -118,15 +133,15 @@ public class FiltroInmueble {
 
 	private String getWhere() {
 		String where =
-				((pais != null) ? (nombreEntidad + ".direccion.localidad.provincia.pais LIKE :pai AND ") : ("")) +
-						((provincia != null) ? (nombreEntidad + ".direccion.localidad.provincia LIKE :pro AND ") : ("")) +
-						((localidad != null) ? (nombreEntidad + ".direccion.localidad LIKE :loc AND ") : ("")) +
-						((barrio != null) ? (nombreEntidad + ".direccion.barrio LIKE :bar AND ") : ("")) +
-						((tipoInmueble != null) ? (nombreEntidad + ".tipo = :tii AND ") : ("")) +
+				((pais != null) ? (nombreEntidad + ".direccion.localidad.provincia.pais.nombre LIKE :pai AND ") : ("")) +
+						((provincia != null) ? (nombreEntidad + ".direccion.localidad.provincia.nombre LIKE :pro AND ") : ("")) +
+						((localidad != null) ? (nombreEntidad + ".direccion.localidad.nombre LIKE :loc AND ") : ("")) +
+						((barrio != null) ? (nombreEntidad + ".direccion.barrio.nombre LIKE :bar AND ") : ("")) +
+						((tipoInmueble != null) ? (nombreEntidad + ".tipo.tipo = :tii AND ") : ("")) +
 						((cantidadDormitorios != null) ? (nombreEntidad + ".datosEdificio.dormitorios >= :cad AND ") : ("")) +
 						((precioMaximo != null) ? (nombreEntidad + ".precio <= :pma AND ") : ("")) +
 						((precioMinimo != null) ? (nombreEntidad + ".precio >= :pmi AND ") : ("")) +
-						((estadoInmueble != null) ? (nombreEntidad + ".estadoInmueble = :esi AND ") : ("")); //TODO cambiar cuando exista
+						((estadoInmueble != null) ? (nombreEntidad + ".estadoInmueble.estado = :esi AND ") : ("")); //TODO cambiar cuando exista
 
 		if(!where.isEmpty()){
 			where = " WHERE " + where;
