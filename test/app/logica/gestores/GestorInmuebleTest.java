@@ -49,6 +49,21 @@ public class GestorInmuebleTest {
 
 	@Test
 	@Parameters
+	/**
+	 * Prueba el método crearInmueble(), el cual corresponde con la taskcard 14 de la iteración 1 y a la historia 3
+	 *
+	 * @param inmueble
+	 *            inmueble a crear
+	 * @param resultado
+	 *            resultado que se espera que devuelva el gestor
+	 * @param validadorMock
+	 *            clase vacía que utiliza el gestor para validar
+	 * @param propietario
+	 *            propietario "en la base de datos" a comparar con el propietario del inmueble a guardar para verificar que exista en la base de datos
+	 * @param excepcion
+	 *            es la excepcion que debe lanzar el mock del persistidor, si la prueba involucra procesar una excepcion de dicho persistidor, debe ser nulo propietario para que se use
+	 * @throws Exception
+	 */
 	public void testCrearInmueble(Inmueble inmueble, ResultadoCrearInmueble resultado, ValidadorFormato validadorMock, Propietario propietario, Throwable excepcion) throws Exception {
 		GestorDatos gestorDatosMock = new GestorDatos() {
 
@@ -140,6 +155,11 @@ public class GestorInmuebleTest {
 		}
 	}
 
+	/**
+	 * Método que devuelve los parámetros para probar el método crearInmueble()
+	 *
+	 * @return parámetros de prueba
+	 */
 	protected Object[] parametersForTestCrearInmueble() {
 		DatosEdificio datosCorrectos = new DatosEdificio()
 				.setAguaCaliente(true)

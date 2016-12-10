@@ -30,13 +30,16 @@ public class AdministrarInmuebleControllerTest {
 	@Test
 	@Parameters
 	/**
-	 *
-	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 * Prueba el método eliminarInmueble(), el cual corresponde con la taskcard 13 de la iteración 1 y a la historia 3
 	 *
 	 * @param inmueble
+	 *            inmueble a crear
 	 * @param acepta
+	 *            si el usuario acepta la eliminacion
 	 * @param resultadoControlador
+	 *            resultado que se espera que devuelva el metodo a probar
 	 * @param resultadoLogica
+	 *            resultado que devuelve el gestor
 	 * @param excepcion
 	 */
 	public void testEliminarInmueble(Inmueble inmueble, Boolean acepta, ResultadoControlador resultadoControlador, ResultadoEliminarInmueble resultadoLogica, Throwable excepcion) throws Exception {

@@ -45,36 +45,62 @@ public class NMVInmuebleControllerTest {
 	@Parameters
 	//
 	/**
-	 *
-	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 * Prueba el método crearInmueble(), el cual corresponde con la taskcard 13 de la iteración 1 y a la historia 3
 	 *
 	 * @param propietario
+	 *            que se usará en el test
 	 * @param direccion
+	 *            que se usará en el test
 	 * @param tipoInmueble
+	 *            que se usará en el test
 	 * @param precio
+	 *            que se usará en el test
 	 * @param orientacion
+	 *            que se usará en el test
 	 * @param frente
+	 *            que se usará en el test
 	 * @param fondo
+	 *            que se usará en el test
 	 * @param superficie
+	 *            que se usará en el test
 	 * @param propiedadHorizontal
+	 *            que se usará en el test
 	 * @param superficieEdificio
+	 *            que se usará en el test
 	 * @param antigüedadEdificio
+	 *            que se usará en el test
 	 * @param dormitorios
+	 *            que se usarán en el test
 	 * @param baños
+	 *            que se usarán en el test
 	 * @param garaje
+	 *            que se usará en el test
 	 * @param patio
+	 *            que se usará en el test
 	 * @param piscina
+	 *            que se usará en el test
 	 * @param aguaCorriente
+	 *            que se usará en el test
 	 * @param cloacas
+	 *            que se usarán en el test
 	 * @param gasNatural
+	 *            que se usará en el test
 	 * @param aguaCaliente
+	 *            que se usará en el test
 	 * @param teléfono
+	 *            que se usará en el test
 	 * @param lavadero
+	 *            que se usará en el test
 	 * @param pavimento
+	 *            que se usará en el test
 	 * @param observaciones
+	 *            que se usarán en el test
 	 * @param resultadoControlador
+	 *            es lo que se espera que devuelva el metodo
 	 * @param resultadoLogica
+	 *            es lo que el mock de la lógica debe devolver en el test y que el controlador recibe
 	 * @param excepcion
+	 *            es la excepcion que debe lanzar el mock de la lógica, si la prueba involucra procesar una excepcion de dicha lógica, debe ser nulo resultadoLogica para que se use
 	 * @throws Exception
 	 */
 	public void testCrearInmueble(Propietario propietario,
@@ -379,36 +405,62 @@ public class NMVInmuebleControllerTest {
 	@Test
 	@Parameters
 	/**
-	 *
-	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+	 * Prueba el método modificarInmueble(), el cual corresponde con la taskcard 13 de la iteración 1 y a la historia 3
 	 *
 	 * @param propietario
+	 *            que se usará en el test
 	 * @param direccion
+	 *            que se usará en el test
 	 * @param tipoInmueble
+	 *            que se usará en el test
 	 * @param precio
+	 *            que se usará en el test
 	 * @param orientacion
+	 *            que se usará en el test
 	 * @param frente
+	 *            que se usará en el test
 	 * @param fondo
+	 *            que se usará en el test
 	 * @param superficie
+	 *            que se usará en el test
 	 * @param propiedadHorizontal
+	 *            que se usará en el test
 	 * @param superficieEdificio
+	 *            que se usará en el test
 	 * @param antigüedadEdificio
+	 *            que se usará en el test
 	 * @param dormitorios
+	 *            que se usarán en el test
 	 * @param baños
+	 *            que se usarán en el test
 	 * @param garaje
+	 *            que se usará en el test
 	 * @param patio
+	 *            que se usará en el test
 	 * @param piscina
+	 *            que se usará en el test
 	 * @param aguaCorriente
+	 *            que se usará en el test
 	 * @param cloacas
+	 *            que se usarán en el test
 	 * @param gasNatural
+	 *            que se usará en el test
 	 * @param aguaCaliente
+	 *            que se usará en el test
 	 * @param teléfono
+	 *            que se usará en el test
 	 * @param lavadero
+	 *            que se usará en el test
 	 * @param pavimento
+	 *            que se usará en el test
 	 * @param observaciones
+	 *            que se usarán en el test
 	 * @param resultadoControlador
+	 *            es lo que se espera que devuelva el metodo
 	 * @param resultadoLogica
+	 *            es lo que el mock de la lógica debe devolver en el test y que el controlador recibe
 	 * @param excepcion
+	 *            es la excepcion que debe lanzar el mock de la lógica, si la prueba involucra procesar una excepcion de dicha lógica, debe ser nulo resultadoLogica para que se use
 	 * @throws Exception
 	 */
 	public void testModificarInmueble(Propietario propietario,
