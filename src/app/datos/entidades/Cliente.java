@@ -66,7 +66,7 @@ public class Cliente {
 	@Column(name = "telefono", length = 30)
 	private String telefono;
 
-	@Column(name = "telefono", length = 100)
+	@Column(name = "correo", length = 100)
 	private String correo;
 
 	//Relaciones
