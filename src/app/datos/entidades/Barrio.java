@@ -33,14 +33,14 @@ import javax.persistence.UniqueConstraint;
 
 import app.comun.FormateadorString;
 
-@NamedQuery(name = "obtenerBarriosDe", query = "SELECT b FROM Barrio b WHERE localidad=:loc")
+@NamedQuery(name = "obtenerBarriosDe", query = "SELECT b FROM Barrio b WHERE localidad=:loc ORDER BY b.nombre ASC")
 @Entity
 @Table(name = "barrio", uniqueConstraints = @UniqueConstraint(name = "barrio_nombre_idlocalidad_uk", columnNames = { "nombre", "idlocalidad" }))
 /**
  * Entidad que modela un barrio
  * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
  */
-public class Barrio implements Comparable<Barrio> {
+public class Barrio {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -142,10 +142,5 @@ public class Barrio implements Comparable<Barrio> {
 	@Override
 	public String toString() {
 		return new FormateadorString().primeraMayuscula(nombre);
-	}
-
-	@Override
-	public int compareTo(Barrio barrio) {
-		return this.nombre.compareToIgnoreCase(barrio.getNombre());
 	}
 }

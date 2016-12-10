@@ -33,14 +33,14 @@ import javax.persistence.UniqueConstraint;
 
 import app.comun.FormateadorString;
 
-@NamedQuery(name = "obtenerProvinciasDe", query = "SELECT p FROM Provincia p WHERE pais=:pa")
+@NamedQuery(name = "obtenerProvinciasDe", query = "SELECT p FROM Provincia p WHERE pais=:pa ORDER BY p.nombre ASC")
 @Entity
 @Table(name = "provincia", uniqueConstraints = @UniqueConstraint(name = "provincia_nombre_idpais_uk", columnNames = { "nombre", "idpais" }))
 /*
  * Entidad que modela una provincia.
  * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
  */
-public class Provincia implements Comparable<Provincia> {
+public class Provincia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -144,8 +144,4 @@ public class Provincia implements Comparable<Provincia> {
 		return new FormateadorString().primeraMayuscula(nombre);
 	}
 
-	@Override
-	public int compareTo(Provincia o) {
-		return this.nombre.compareToIgnoreCase(o.getNombre());
-	}
 }

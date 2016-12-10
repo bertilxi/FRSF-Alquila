@@ -33,14 +33,14 @@ import javax.persistence.UniqueConstraint;
 
 import app.comun.FormateadorString;
 
-@NamedQuery(name = "obtenerCallesDe", query = "SELECT c FROM Calle c WHERE localidad=:loc")
+@NamedQuery(name = "obtenerCallesDe", query = "SELECT c FROM Calle c WHERE localidad=:loc ORDER BY c.nombre ASC")
 @Entity
 @Table(name = "calle", uniqueConstraints = @UniqueConstraint(name = "calle_nombre_idlocalidad_uk", columnNames = { "nombre", "idlocalidad" }))
 /*
  * Entidad que modela una calle.
  * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
  */
-public class Calle implements Comparable<Calle> {
+public class Calle {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -142,10 +142,5 @@ public class Calle implements Comparable<Calle> {
 	@Override
 	public String toString() {
 		return new FormateadorString().primeraMayuscula(nombre);
-	}
-
-	@Override
-	public int compareTo(Calle o) {
-		return this.nombre.compareToIgnoreCase(o.getNombre());
 	}
 }

@@ -27,14 +27,14 @@ import javax.persistence.Table;
 
 import app.comun.FormateadorString;
 
-@NamedQuery(name = "obtenerPaises", query = "SELECT p FROM Pais p")
+@NamedQuery(name = "obtenerPaises", query = "SELECT p FROM Pais p ORDER BY p.nombre ASC")
 @Entity
 @Table(name = "pais")
 /*
  * Entidad que modela un país.
  * Pertenece a la taskcard 12 de la iteración 1 y a la historia de usuario 3
  */
-public class Pais implements Comparable<Pais> {
+public class Pais {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -112,10 +112,5 @@ public class Pais implements Comparable<Pais> {
 	@Override
 	public String toString() {
 		return new FormateadorString().primeraMayuscula(nombre);
-	}
-
-	@Override
-	public int compareTo(Pais o) {
-		return this.nombre.compareToIgnoreCase(o.getNombre());
 	}
 }
