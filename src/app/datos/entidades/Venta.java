@@ -50,7 +50,7 @@ public class Venta {
 	private Date fecha;
 
 	@OneToOne
-	@JoinColumn(name = "idarchivo")
+	@JoinColumn(name = "idarchivo", foreignKey = @ForeignKey(name = "venta_idarchivo_fk"), nullable = false)
 	private PDF archivoPDF;
 
 	//Relaciones
@@ -180,12 +180,15 @@ public class Venta {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj)
+		if(this == obj){
 			return true;
-		if(obj == null)
+		}
+		if(obj == null){
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Venta other = (Venta) obj;
 		if(id == null){
 			if(other.id != null){
@@ -199,53 +202,69 @@ public class Venta {
 			return true;
 		}
 		if(archivoPDF == null){
-			if(other.archivoPDF != null)
+			if(other.archivoPDF != null){
 				return false;
+			}
 		}
-		else if(!archivoPDF.equals(other.archivoPDF))
+		else if(!archivoPDF.equals(other.archivoPDF)){
 			return false;
+		}
 		if(cliente == null){
-			if(other.cliente != null)
+			if(other.cliente != null){
 				return false;
+			}
 		}
-		else if(!cliente.equals(other.cliente))
+		else if(!cliente.equals(other.cliente)){
 			return false;
+		}
 		if(fecha == null){
-			if(other.fecha != null)
+			if(other.fecha != null){
 				return false;
+			}
 		}
-		else if(!fecha.equals(other.fecha))
+		else if(!fecha.equals(other.fecha)){
 			return false;
+		}
 		if(importe == null){
-			if(other.importe != null)
+			if(other.importe != null){
 				return false;
+			}
 		}
-		else if(!importe.equals(other.importe))
+		else if(!importe.equals(other.importe)){
 			return false;
+		}
 		if(inmueble == null){
-			if(other.inmueble != null)
+			if(other.inmueble != null){
 				return false;
+			}
 		}
-		else if(!inmueble.equals(other.inmueble))
+		else if(!inmueble.equals(other.inmueble)){
 			return false;
+		}
 		if(medioDePago == null){
-			if(other.medioDePago != null)
+			if(other.medioDePago != null){
 				return false;
+			}
 		}
-		else if(!medioDePago.equals(other.medioDePago))
+		else if(!medioDePago.equals(other.medioDePago)){
 			return false;
+		}
 		if(propietario == null){
-			if(other.propietario != null)
+			if(other.propietario != null){
 				return false;
+			}
 		}
-		else if(!propietario.equals(other.propietario))
+		else if(!propietario.equals(other.propietario)){
 			return false;
+		}
 		if(vendedor == null){
-			if(other.vendedor != null)
+			if(other.vendedor != null){
 				return false;
+			}
 		}
-		else if(!vendedor.equals(other.vendedor))
+		else if(!vendedor.equals(other.vendedor)){
 			return false;
+		}
 		return true;
 	}
 }
