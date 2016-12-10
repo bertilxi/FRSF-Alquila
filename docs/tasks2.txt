@@ -5,7 +5,7 @@
 31  Lógica imprimir venta  							1
 33  Agregar EstadoInmueble a inmueble  				1
 
-### total : 10
+### Total : 10
 
 ## Grupo Daniel Lucas
 23  Lógica alta catálogo de inmueble y generar PDF	3
@@ -14,7 +14,7 @@
 28  Persistidor y entidad reserva  					1
 32  Persistidor y entidad venta  					2
 
-### total : 10
+### Total : 10
 
 ## Grupo Andrés Emiliano
 21  Lógica y persistidor de consulta inmuebles 		3
@@ -22,8 +22,8 @@
 25  Lógica alta, baja reserva y generar PDF 		3
 27  Cambios ABM Cliente  							1
 
-### total : 10
+### Total : 10
 
-### fecha de inicio: miércoles 30 de noviembre
-### fecha de fin segunda iteracion: 14 de diciembre
-### con task points de 1 dia de 3 horas de trabajo
+### Fecha de inicio segunda iteracion: miércoles 30 de noviembre
+### Fecha de fin segunda iteracion: 14 de diciembre
+### Con task points de 1 dia de 3 horas de trabajo
