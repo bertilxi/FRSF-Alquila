@@ -46,9 +46,6 @@ public class Reserva {
 	@Column(name = "id")
 	private Integer id; //ID
 
-	@Column(name = "importe", nullable = false)
-	private Double importe;
-
 	@Column(name = "fecha_inicio", nullable = false)
 	private Date fechaInicio;
 
@@ -56,7 +53,7 @@ public class Reserva {
 	private Date fechaFin;
 
 	@OneToOne
-	@JoinColumn(name = "idarchivo")
+	@JoinColumn(name = "idarchivo", foreignKey = @ForeignKey(name = "reserva_idarchivo_fk"), nullable = false)
 	private PDF archivoPDF;
 
 	//Relaciones
@@ -76,10 +73,8 @@ public class Reserva {
 		super();
 	}
 
-	public Reserva(Double importe, Date fechaInicio, Date fechaFin, PDF archivoPDF, Cliente cliente,
-			Inmueble inmueble, Estado estado) {
+	public Reserva(Date fechaInicio, Date fechaFin, PDF archivoPDF, Cliente cliente, Inmueble inmueble, Estado estado) {
 		super();
-		this.importe = importe;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.archivoPDF = archivoPDF;
@@ -90,15 +85,6 @@ public class Reserva {
 
 	public Integer getId() {
 		return id;
-	}
-
-	public Double getImporte() {
-		return importe;
-	}
-
-	public Reserva setImporte(Double importe) {
-		this.importe = importe;
-		return this;
 	}
 
 	public Date getFechaInicio() {
@@ -165,19 +151,21 @@ public class Reserva {
 		result = prime * result + ((fechaFin == null) ? 0 : fechaFin.hashCode());
 		result = prime * result + ((fechaInicio == null) ? 0 : fechaInicio.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((importe == null) ? 0 : importe.hashCode());
 		result = prime * result + ((inmueble == null) ? 0 : inmueble.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj)
+		if(this == obj){
 			return true;
-		if(obj == null)
+		}
+		if(obj == null){
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()){
 			return false;
+		}
 		Reserva other = (Reserva) obj;
 		if(id == null){
 			if(other.id != null){
@@ -191,47 +179,53 @@ public class Reserva {
 			return true;
 		}
 		if(archivoPDF == null){
-			if(other.archivoPDF != null)
+			if(other.archivoPDF != null){
 				return false;
+			}
 		}
-		else if(!archivoPDF.equals(other.archivoPDF))
+		else if(!archivoPDF.equals(other.archivoPDF)){
 			return false;
+		}
 		if(cliente == null){
-			if(other.cliente != null)
+			if(other.cliente != null){
 				return false;
+			}
 		}
-		else if(!cliente.equals(other.cliente))
+		else if(!cliente.equals(other.cliente)){
 			return false;
+		}
 		if(estado == null){
-			if(other.estado != null)
+			if(other.estado != null){
 				return false;
+			}
 		}
-		else if(!estado.equals(other.estado))
+		else if(!estado.equals(other.estado)){
 			return false;
+		}
 		if(fechaFin == null){
-			if(other.fechaFin != null)
+			if(other.fechaFin != null){
 				return false;
+			}
 		}
-		else if(!fechaFin.equals(other.fechaFin))
+		else if(!fechaFin.equals(other.fechaFin)){
 			return false;
+		}
 		if(fechaInicio == null){
-			if(other.fechaInicio != null)
+			if(other.fechaInicio != null){
 				return false;
+			}
 		}
-		else if(!fechaInicio.equals(other.fechaInicio))
+		else if(!fechaInicio.equals(other.fechaInicio)){
 			return false;
-		if(importe == null){
-			if(other.importe != null)
-				return false;
 		}
-		else if(!importe.equals(other.importe))
-			return false;
 		if(inmueble == null){
-			if(other.inmueble != null)
+			if(other.inmueble != null){
 				return false;
+			}
 		}
-		else if(!inmueble.equals(other.inmueble))
+		else if(!inmueble.equals(other.inmueble)){
 			return false;
+		}
 		return true;
 	}
 
