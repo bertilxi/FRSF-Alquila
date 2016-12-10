@@ -53,16 +53,18 @@ public class GestorCliente {
 
 	/**
 	 * Se encarga de validar los datos de un cliente a crear y, en caso de que no haya errores,
-	 *  delegar el guardado del objeto a la capa de acceso a datos.
+	 * delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * Modificada en TaskCard 27 de la iteración 2
 	 *
 	 * @param cliente
-	 * 			cliente a crear
+	 *            cliente a crear
 	 * @return un resultado informando errores correspondientes en caso de que los haya
 	 *
 	 * @throws PersistenciaException
-	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 * @throws GestionException
-	 * 			se lanza una excepción EntidadExistenteConEstadoBaja cuando se encuentra que ya existe un vendedor con la misma identificación pero tiene estado BAJA
+	 *             se lanza una excepción EntidadExistenteConEstadoBaja cuando se encuentra que ya existe un vendedor con la misma identificación pero tiene estado BAJA
 	 */
 	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearCliente> errores = new ArrayList<>();
@@ -81,6 +83,10 @@ public class GestorCliente {
 
 		if(!validador.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
 			errores.add(ErrorCrearCliente.Formato_Documento_Incorrecto);
+		}
+
+		if(!validador.validarEmail(cliente.getCorreo())){
+			errores.add(ErrorCrearCliente.Formato_Correo_Incorrecto);
 		}
 
 		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
@@ -110,14 +116,16 @@ public class GestorCliente {
 
 	/**
 	 * Se encarga de validar los datos de un cliente a modificar y, en caso de que no haya errores,
-	 *  delegar el guardado del objeto a la capa de acceso a datos.
+	 * delegar el guardado del objeto a la capa de acceso a datos.
+	 *
+	 * Modificada en TaskCard 27 de la iteración 2
 	 *
 	 * @param cliente
-	 * 			cliente a modificar
+	 *            cliente a modificar
 	 * @return un resultado informando errores correspondientes en caso de que los haya
 	 *
 	 * @throws PersistenciaException
-	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoModificarCliente modificarCliente(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorModificarCliente> errores = new ArrayList<>();
@@ -136,6 +144,10 @@ public class GestorCliente {
 
 		if(!validador.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())){
 			errores.add(ErrorModificarCliente.Formato_Documento_Incorrecto);
+		}
+
+		if(!validador.validarEmail(cliente.getCorreo())){
+			errores.add(ErrorModificarCliente.Formato_Correo_Incorrecto);
 		}
 
 		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
@@ -162,14 +174,14 @@ public class GestorCliente {
 
 	/**
 	 * Se encarga de validar que exista el cliente a eliminar, se setea el estado en BAJA y,
-	 *  en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
+	 * en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
 	 *
 	 * @param cliente
-	 * 			cliente a eliminar
+	 *            cliente a eliminar
 	 * @return un resultado informando errores correspondientes en caso de que los haya
 	 *
 	 * @throws PersistenciaException
-	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoEliminarCliente eliminarCliente(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorEliminarCliente> errores = new ArrayList<>();
@@ -199,7 +211,7 @@ public class GestorCliente {
 	 * @return el listado de clientes solicitados
 	 *
 	 * @throws PersistenciaException
-	 * 			se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ArrayList<Cliente> obtenerClientes() throws PersistenciaException {
 		return persistidorCliente.listarClientes();

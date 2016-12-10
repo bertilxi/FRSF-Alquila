@@ -45,6 +45,7 @@ public class AltaClienteControllerTest {
 			TipoDocumento tipoDocumento,
 			String numeroDocumento,
 			String telefono,
+			String correo,
 			InmuebleBuscado inmueble,
 			ResultadoCrearCliente resultadoCrearClienteEsperado,
 			Integer llamaAPresentadorVentanasPresentarError,
@@ -76,7 +77,8 @@ public class AltaClienteControllerTest {
 				.setTipoDocumento(tipoDocumento)
 				.setNumeroDocumento(numeroDocumento)
 				.setInmuebleBuscado(inmueble)
-				.setTelefono(telefono);
+				.setTelefono(telefono)
+				.setCorreo(correo);
 
 		inmueble.setCliente(cliente);
 
@@ -105,6 +107,7 @@ public class AltaClienteControllerTest {
 				this.comboBoxTipoDocumento.getSelectionModel().select(tipoDocumento);
 				this.textFieldNumeroDocumento.setText(numeroDocumento);
 				this.textFieldTelefono.setText(telefono);
+				this.textFieldCorreo.setText(correo);
 				super.acceptAction();
 			}
 
@@ -144,35 +147,36 @@ public class AltaClienteControllerTest {
 
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
 
-
 	}
 
 	protected Object[] parametersForTestCrearCliente() {
 		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
-		InmuebleBuscado inm = new InmuebleBuscado(null,1000000.00, 10.0, 10, 1, 1, true, true, false, false, true, true, true, true, true, true, false);
+		InmuebleBuscado inm = new InmuebleBuscado(null, 1000000.00, 10.0, 10, 1, 1, true, true, false, false, true, true, true, true, true, true, false);
 		return new Object[] {
 				//prueba correcta
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", inm, resultadoCorrecto, 0, 0, 1, null, true, 0  },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCorrecto, 0, 0, 1, null, true, 0 },
 				//prueba nombre incorrecto
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", inm, resultadoCrearNombreIncorrecto, 1, 0, 1, null, true, 0 },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCrearNombreIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba apellido incorrecto
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", inm, resultadoCrearApellidoIncorrecto, 1, 0, 1, null, true, 0 },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCrearApellidoIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba documento incorrecto
-				new Object[] { "Juan", "Perez", doc,"12345678", "123-123", inm, resultadoCrearDocumentoIncorrecto, 1, 0, 1, null, true, 0 },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCrearDocumentoIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba teléfono incorrecto
-				new Object[] { "Juan", "Perez", doc,"12345678", "123-123", inm, resultadoCrearTelefonoIncorrecto, 1, 0, 1, null, true, 0 },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCrearTelefonoIncorrecto, 1, 0, 1, null, true, 0 },
+				//prueba correo incorrecto
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCrearCorreoIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba ya existe cliente
-				new Object[] { "Juan", "Perez", doc,"12345678", "123-123", inm, resultadoCrearYaExiste, 1, 0, 1, null, true, 0 },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCrearYaExiste, 1, 0, 1, null, true, 0 },
 				//prueba ya existe cliente
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", inm,new ResultadoCrearCliente(ErrorCrearCliente.Formato_Nombre_Incorrecto,ErrorCrearCliente.Formato_Apellido_Incorrecto),1, 0, 1, null, true, 0 },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, new ResultadoCrearCliente(ErrorCrearCliente.Formato_Nombre_Incorrecto, ErrorCrearCliente.Formato_Apellido_Incorrecto), 1, 0, 1, null, true, 0 },
 				//prueba nombre vacio
-				new Object[] { "", "Perez", doc, "12345678", "123-123", inm, null, 1, 0, 0, null, true, 0 },
+				new Object[] { "", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, null, 1, 0, 0, null, true, 0 },
 				//prueba cliente Existente y acepta
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", inm, resultadoCorrecto, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), true, 1 },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCorrecto, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), true, 1 },
 				//prueba cliente Existente y cancela
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", inm, resultadoCorrecto, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), false, 0 },
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCorrecto, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), false, 0 },
 				//prueba PersistenciaException
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", inm, resultadoCorrecto, 0, 1, 1, new SaveUpdateException(new Throwable()), false, 0 }
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCorrecto, 0, 1, 1, new SaveUpdateException(new Throwable()), false, 0 }
 
 		};
 	}
@@ -187,6 +191,8 @@ public class AltaClienteControllerTest {
 			new ResultadoCrearCliente(ResultadoCrearCliente.ErrorCrearCliente.Formato_Documento_Incorrecto);
 	private static final ResultadoCrearCliente resultadoCrearTelefonoIncorrecto =
 			new ResultadoCrearCliente(ResultadoCrearCliente.ErrorCrearCliente.Formato_Telefono_Incorrecto);
+	private static final ResultadoCrearCliente resultadoCrearCorreoIncorrecto =
+			new ResultadoCrearCliente(ResultadoCrearCliente.ErrorCrearCliente.Formato_Correo_Incorrecto);
 	private static final ResultadoCrearCliente resultadoCrearYaExiste =
 			new ResultadoCrearCliente(ResultadoCrearCliente.ErrorCrearCliente.Ya_Existe_Cliente);
 

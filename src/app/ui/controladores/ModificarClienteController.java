@@ -32,6 +32,7 @@ import javafx.scene.control.TextField;
 /**
  * Controlador de la vista para modificar un cliente
  */
+//Modificada en TaskCard 27 de la iteración 2
 public class ModificarClienteController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/modificarCliente.fxml";
@@ -51,13 +52,16 @@ public class ModificarClienteController extends OlimpoController {
 	@FXML
 	protected TextField textFieldTelefono;
 
+	@FXML
+	protected TextField textFieldCorreo;
+
 	protected Cliente clienteEnModificacion;
 
 	/**
 	 * Setea los campos con los datos del cliente pasado por parámetro.
 	 *
 	 * @param clienteEnModificacion
-	 * 			cliente del que se obtienen los datos.
+	 *            cliente del que se obtienen los datos.
 	 */
 	public void setClienteEnModificacion(Cliente clienteEnModificacion) {
 		this.clienteEnModificacion = clienteEnModificacion;
@@ -66,6 +70,7 @@ public class ModificarClienteController extends OlimpoController {
 		textFieldTelefono.setText(clienteEnModificacion.getTelefono());
 		textFieldNumeroDocumento.setText(clienteEnModificacion.getNumeroDocumento());
 		comboBoxTipoDocumento.setValue(clienteEnModificacion.getTipoDocumento());
+		textFieldCorreo.setText(clienteEnModificacion.getCorreo());
 	}
 
 	/**
@@ -83,6 +88,7 @@ public class ModificarClienteController extends OlimpoController {
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
 		String telefono = textFieldTelefono.getText().trim();
+		String correo = textFieldCorreo.getText().trim();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
 		if(nombre.isEmpty()){
@@ -101,6 +107,10 @@ public class ModificarClienteController extends OlimpoController {
 			error.append("Inserte un telefono").append("\r\n");
 		}
 
+		if(correo.isEmpty()){
+			error.append("Inserte una dirección de correo electrónico").append("\n");
+		}
+
 		if(!error.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
@@ -109,7 +119,8 @@ public class ModificarClienteController extends OlimpoController {
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)
-					.setTelefono(telefono);
+					.setTelefono(telefono)
+					.setCorreo(correo);
 
 			try{
 				ResultadoModificarCliente resultado = coordinador.modificarCliente(clienteEnModificacion);
@@ -125,6 +136,9 @@ public class ModificarClienteController extends OlimpoController {
 							break;
 						case Formato_Telefono_Incorrecto:
 							stringErrores.append("Formato de teléfono incorrecto.\n");
+							break;
+						case Formato_Correo_Incorrecto:
+							stringErrores.append("Formato de correo electrónico incorrecto.\n");
 							break;
 						case Formato_Documento_Incorrecto:
 							stringErrores.append("Tipo y formato de documento incorrecto.\n");

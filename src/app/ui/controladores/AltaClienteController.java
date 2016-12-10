@@ -34,6 +34,8 @@ import javafx.scene.control.TextField;
 
 /**
  * Controlador de la vista para dar de alta un cliente
+ *
+ * Modificada en TaskCard 27 de la iteración 2
  */
 public class AltaClienteController extends OlimpoController {
 
@@ -54,13 +56,16 @@ public class AltaClienteController extends OlimpoController {
 	@FXML
 	protected TextField textFieldTelefono;
 
+	@FXML
+	protected TextField textFieldCorreo;
+
 	protected Cliente cliente;
 
 	/**
 	 * Setea los campos con los datos del cliente pasado por parámetro. Si no se pasa ninguno se lo crea
 	 *
 	 * @param cliente
-	 * 			cliente del que se obtienen los datos. Si no hay cliente, es <code>null</code>
+	 *            cliente del que se obtienen los datos. Si no hay cliente, es <code>null</code>
 	 */
 	public void setCliente(Cliente cliente) {
 		if(cliente != null){
@@ -70,6 +75,7 @@ public class AltaClienteController extends OlimpoController {
 			textFieldTelefono.setText(cliente.getTelefono());
 			textFieldNumeroDocumento.setText(cliente.getNumeroDocumento());
 			comboBoxTipoDocumento.setValue(cliente.getTipoDocumento());
+			textFieldCorreo.setText(cliente.getCorreo());
 		}
 		else{
 			this.cliente = new Cliente();
@@ -91,6 +97,7 @@ public class AltaClienteController extends OlimpoController {
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
 		String telefono = textFieldTelefono.getText().trim();
+		String correo = textFieldCorreo.getText().trim();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
 		if(nombre.isEmpty()){
@@ -109,6 +116,10 @@ public class AltaClienteController extends OlimpoController {
 			error.append("Inserte un telefono").append("\n");
 		}
 
+		if(correo.isEmpty()){
+			error.append("Inserte una dirección de correo electrónico").append("\n");
+		}
+
 		if(cliente.getInmuebleBuscado() == null){
 			error.append("Debe cargar un inmueble buscado al cliente").append("\n");
 		}
@@ -121,7 +132,8 @@ public class AltaClienteController extends OlimpoController {
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
 					.setNumeroDocumento(numeroDocumento)
-					.setTelefono(telefono);
+					.setTelefono(telefono)
+					.setCorreo(correo);
 
 			try{
 				ResultadoCrearCliente resultado = coordinador.crearCliente(cliente);
@@ -137,6 +149,9 @@ public class AltaClienteController extends OlimpoController {
 							break;
 						case Formato_Telefono_Incorrecto:
 							stringErrores.append("Formato de teléfono incorrecto.\n");
+							break;
+						case Formato_Correo_Incorrecto:
+							stringErrores.append("Formato de correo electrónico incorrecto.\n");
 							break;
 						case Formato_Documento_Incorrecto:
 							stringErrores.append("Tipo y formato de documento incorrecto.\n");
@@ -176,7 +191,8 @@ public class AltaClienteController extends OlimpoController {
 				.setApellido(textFieldApellido.getText().trim())
 				.setTipoDocumento(comboBoxTipoDocumento.getValue())
 				.setNumeroDocumento(textFieldNumeroDocumento.getText().trim())
-				.setTelefono(textFieldTelefono.getText().trim());
+				.setTelefono(textFieldTelefono.getText().trim())
+				.setCorreo(textFieldCorreo.getText().trim());
 		InmuebleBuscadoController controlador = (InmuebleBuscadoController) cambiarmeAScene(InmuebleBuscadoController.URLVista);
 		controlador.setCliente(cliente);
 	}

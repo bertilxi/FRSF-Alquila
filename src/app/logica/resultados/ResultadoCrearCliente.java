@@ -19,7 +19,8 @@ package app.logica.resultados;
 
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 
-public class ResultadoCrearCliente extends Resultado<ErrorCrearCliente>{
+// Modificada en TaskCard 27 de la iteración 2
+public class ResultadoCrearCliente extends Resultado<ErrorCrearCliente> {
 
 	public ResultadoCrearCliente(ErrorCrearCliente... errores) {
 		super(errores);
@@ -31,7 +32,8 @@ public class ResultadoCrearCliente extends Resultado<ErrorCrearCliente>{
 		Formato_Apellido_Incorrecto,
 		Formato_Telefono_Incorrecto,
 		Formato_Documento_Incorrecto,
-		Ya_Existe_Cliente
+		Ya_Existe_Cliente,
+		Formato_Correo_Incorrecto
 	}
 
 }

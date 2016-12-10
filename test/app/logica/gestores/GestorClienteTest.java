@@ -31,6 +31,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
+//Modificada en TaskCard 27 de la iteración 2
 public class GestorClienteTest {
 
 	// Para crearCliente
@@ -43,6 +44,8 @@ public class GestorClienteTest {
 			new ResultadoCrearCliente(ErrorCrearCliente.Formato_Documento_Incorrecto);
 	private static final ResultadoCrearCliente resultadoCrearTelefonoIncorrecto =
 			new ResultadoCrearCliente(ErrorCrearCliente.Formato_Telefono_Incorrecto);
+	private static final ResultadoCrearCliente resultadoCrearCorreoIncorrecto =
+			new ResultadoCrearCliente(ErrorCrearCliente.Formato_Correo_Incorrecto);
 	private static final ResultadoCrearCliente resultadoCrearYaExiste =
 			new ResultadoCrearCliente(ErrorCrearCliente.Ya_Existe_Cliente);
 	// Para modificarCliente
@@ -55,6 +58,8 @@ public class GestorClienteTest {
 			new ResultadoModificarCliente(ErrorModificarCliente.Formato_Nombre_Incorrecto);
 	private static final ResultadoModificarCliente resultadoModificarTelefonoIncorrecto =
 			new ResultadoModificarCliente(ErrorModificarCliente.Formato_Telefono_Incorrecto);
+	private static final ResultadoModificarCliente resultadoModificarCorreoIncorrecto =
+			new ResultadoModificarCliente(ErrorModificarCliente.Formato_Correo_Incorrecto);
 	private static final ResultadoModificarCliente resultadoModificarYaSePoseeMismoDocumento =
 			new ResultadoModificarCliente(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 
@@ -62,7 +67,6 @@ public class GestorClienteTest {
 	private static final ResultadoEliminarCliente resultadoCorrectoEliminar = new ResultadoEliminarCliente();
 	private static final ResultadoEliminarCliente resultadoEliminarNoExisteCliente =
 			new ResultadoEliminarCliente(ErrorEliminarCliente.No_Existe_Cliente);
-
 
 	private static Cliente cliente;
 
@@ -77,23 +81,25 @@ public class GestorClienteTest {
 				.setNumeroDocumento("12345678")
 				.setTipoDocumento(doc)
 				.setTelefono("1234-1234")
+				.setCorreo("asdf@asf.com")
 				.setInmuebleBuscado(inm);
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, true, null, 1, resultadoCorrecto },
-				new Object[] { false, true, true, true, null, 0, resultadoCrearNombreIncorrecto },
-				new Object[] { true, false, true, true, null, 0, resultadoCrearApellidoIncorrecto },
-				new Object[] { true, true, false, true, null, 0, resultadoCrearDocumentoIncorrecto },
-				new Object[] { true, true, true, false, null, 0, resultadoCrearTelefonoIncorrecto },
-				new Object[] { false, false, true, true, null, 0, new ResultadoCrearCliente(ErrorCrearCliente.Formato_Nombre_Incorrecto, ErrorCrearCliente.Formato_Apellido_Incorrecto) },
-				new Object[] { true, true, true, true, cliente, 0, resultadoCrearYaExiste }
+				new Object[] { true, true, true, true, true, null, 1, resultadoCorrecto },
+				new Object[] { false, true, true, true, true, null, 0, resultadoCrearNombreIncorrecto },
+				new Object[] { true, false, true, true, true, null, 0, resultadoCrearApellidoIncorrecto },
+				new Object[] { true, true, false, true, true, null, 0, resultadoCrearDocumentoIncorrecto },
+				new Object[] { true, true, true, false, true, null, 0, resultadoCrearTelefonoIncorrecto },
+				new Object[] { true, true, true, true, false, null, 0, resultadoCrearCorreoIncorrecto },
+				new Object[] { false, false, true, true, true, null, 0, new ResultadoCrearCliente(ErrorCrearCliente.Formato_Nombre_Incorrecto, ErrorCrearCliente.Formato_Apellido_Incorrecto) },
+				new Object[] { true, true, true, true, true, cliente, 0, resultadoCrearYaExiste }
 		};
 	}
 
 	@Test
 	@Parameters
-	public void testCrearCliente(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Cliente resObtenerCliente, Integer guardar, ResultadoCrearCliente resultadoCrearClienteEsperado) throws Exception {
+	public void testCrearCliente(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValCorreo, Cliente resObtenerCliente, Integer guardar, ResultadoCrearCliente resultadoCrearClienteEsperado) throws Exception {
 		//Inicialización de los mocks
 		ClienteService clienteServiceMock = mock(ClienteService.class);
 		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
@@ -115,6 +121,7 @@ public class GestorClienteTest {
 		when(validadorFormatoMock.validarApellido(cliente.getApellido())).thenReturn(resValApellido);
 		when(validadorFormatoMock.validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento())).thenReturn(resValDocumento);
 		when(validadorFormatoMock.validarTelefono(cliente.getTelefono())).thenReturn(resValTelefono);
+		when(validadorFormatoMock.validarEmail(cliente.getCorreo())).thenReturn(resValCorreo);
 		when(clienteServiceMock.obtenerCliente(any())).thenReturn(resObtenerCliente);
 		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
 		doNothing().when(clienteServiceMock).guardarCliente(cliente); //Para métodos void la sintaxis es distinta
@@ -131,6 +138,7 @@ public class GestorClienteTest {
 		verify(validadorFormatoMock).validarApellido(cliente.getApellido());
 		verify(validadorFormatoMock).validarDocumento(cliente.getTipoDocumento(), cliente.getNumeroDocumento());
 		verify(validadorFormatoMock).validarTelefono(cliente.getTelefono());
+		verify(validadorFormatoMock).validarEmail(cliente.getCorreo());
 		verify(gestorDatosMock, times(guardar)).obtenerEstados();
 		verify(clienteServiceMock, times(guardar)).guardarCliente(cliente);
 	}
@@ -183,19 +191,20 @@ public class GestorClienteTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, true, clienteM, 1, resultadoCorrectoModificar },
-				new Object[] { false, true, true, true, clienteM, 0, resultadoModificarNombreIncorrecto },
-				new Object[] { true, false, true, true, clienteM, 0, resultadoModificarApellidoIncorrecto },
-				new Object[] { true, true, false, true, clienteM, 0, resultadoModificarDocumentoIncorrecto },
-				new Object[] { true, true, true, false, clienteM, 0, resultadoModificarTelefonoIncorrecto },
-				new Object[] { false, false, true, true, clienteM, 0, new ResultadoModificarCliente(ErrorModificarCliente.Formato_Nombre_Incorrecto, ErrorModificarCliente.Formato_Apellido_Incorrecto) },
-				new Object[] { true, true, true, true, clienteM2, 0, resultadoModificarYaSePoseeMismoDocumento }
+				new Object[] { true, true, true, true, true, clienteM, 1, resultadoCorrectoModificar },
+				new Object[] { false, true, true, true, true, clienteM, 0, resultadoModificarNombreIncorrecto },
+				new Object[] { true, false, true, true, true, clienteM, 0, resultadoModificarApellidoIncorrecto },
+				new Object[] { true, true, false, true, true, clienteM, 0, resultadoModificarDocumentoIncorrecto },
+				new Object[] { true, true, true, false, true, clienteM, 0, resultadoModificarTelefonoIncorrecto },
+				new Object[] { true, true, true, true, false, clienteM, 0, resultadoModificarCorreoIncorrecto },
+				new Object[] { false, false, true, true, true, clienteM, 0, new ResultadoModificarCliente(ErrorModificarCliente.Formato_Nombre_Incorrecto, ErrorModificarCliente.Formato_Apellido_Incorrecto) },
+				new Object[] { true, true, true, true, true, clienteM2, 0, resultadoModificarYaSePoseeMismoDocumento }
 		};
 	}
 
 	@Test
 	@Parameters
-	public void testModificarCliente(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Cliente resObtenerCliente, Integer modificar, ResultadoModificarCliente resultadoModificarClienteEsperado) throws Exception {
+	public void testModificarCliente(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValCorreo, Cliente resObtenerCliente, Integer modificar, ResultadoModificarCliente resultadoModificarClienteEsperado) throws Exception {
 		//Inicialización de los mocks
 		ClienteService clienteServiceMock = mock(ClienteService.class);
 		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
@@ -218,6 +227,7 @@ public class GestorClienteTest {
 		when(validadorFormatoMock.validarApellido(clienteM.getApellido())).thenReturn(resValApellido);
 		when(validadorFormatoMock.validarDocumento(clienteM.getTipoDocumento(), cliente.getNumeroDocumento())).thenReturn(resValDocumento);
 		when(validadorFormatoMock.validarTelefono(clienteM.getTelefono())).thenReturn(resValTelefono);
+		when(validadorFormatoMock.validarEmail(clienteM.getCorreo())).thenReturn(resValCorreo);
 		when(clienteServiceMock.obtenerCliente(any())).thenReturn(resObtenerCliente);
 		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
 		doNothing().when(clienteServiceMock).modificarCliente(clienteM); //Para métodos void la sintaxis es distinta
@@ -234,6 +244,7 @@ public class GestorClienteTest {
 		verify(validadorFormatoMock).validarApellido(clienteM.getApellido());
 		verify(validadorFormatoMock).validarDocumento(clienteM.getTipoDocumento(), clienteM.getNumeroDocumento());
 		verify(validadorFormatoMock).validarTelefono(clienteM.getTelefono());
+		verify(validadorFormatoMock).validarEmail(clienteM.getCorreo());
 		verify(clienteServiceMock, times(modificar)).modificarCliente(clienteM);
 	}
 

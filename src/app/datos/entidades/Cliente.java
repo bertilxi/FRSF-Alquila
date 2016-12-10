@@ -43,6 +43,9 @@ import javax.persistence.UniqueConstraint;
 /**
  * Entidad que modela un cliente
  * Pertenece a la taskcard 16 de la iteración 1 y a la historia 6
+ *
+ * Modificada en TaskCard 27 de la iteración 2
+ *
  */
 public class Cliente {
 
@@ -62,6 +65,9 @@ public class Cliente {
 
 	@Column(name = "telefono", length = 30)
 	private String telefono;
+
+	@Column(name = "telefono", length = 100)
+	private String correo;
 
 	//Relaciones
 
@@ -139,6 +145,15 @@ public class Cliente {
 		return this;
 	}
 
+	public String getCorreo() {
+		return correo;
+	}
+
+	public Cliente setCorreo(String correo) {
+		this.correo = correo;
+		return this;
+	}
+
 	public TipoDocumento getTipoDocumento() {
 		return tipoDocumento;
 	}
@@ -193,6 +208,7 @@ public class Cliente {
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
 		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
 		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		return result;
@@ -251,6 +267,14 @@ public class Cliente {
 			}
 		}
 		else if(!telefono.equals(other.telefono)){
+			return false;
+		}
+		if(correo == null){
+			if(other.correo != null){
+				return false;
+			}
+		}
+		else if(!correo.equals(other.correo)){
 			return false;
 		}
 		if(tipoDocumento == null){
