@@ -23,9 +23,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import app.datos.clases.ReservaVista;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
-import app.datos.entidades.Reserva;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
@@ -46,7 +46,7 @@ public class AltaReservaController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/altaReserva.fxml";
 	protected Inmueble inmueble;
-	
+
 	@FXML
 	protected Label labelDetalleInmueble;
 	@FXML
@@ -61,8 +61,6 @@ public class AltaReservaController extends OlimpoController {
 	private Button acceptButton;
 	@FXML
 	private Button cancelButton;
-	
-	
 
 	/**
 	 * Acción que se ejecuta al apretar el botón aceptar.
@@ -79,49 +77,44 @@ public class AltaReservaController extends OlimpoController {
 		Date fechaFin = Date.from(datePickerFin.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Cliente cliente = comboBoxCliente.getValue();
 
-		if(cliente==null){
+		if(cliente == null){
 			error.append("Seleccione un cliente").append("\r\n ");
 		}
-		
+
 		if(importe.equals("")){
 			error.append("Ingrese un importe").append("\r\n ");
 		}
-		
+
 		/*
-		if(fecha==null)){
-			error.append("Por favor, seleccione un cliente.").append("\r\n ");
-		}
-		if(cliente==null)){
-			error.append("Por favor, seleccione un cliente.").append("\r\n ");
-		}
-		*/
-		
+		 * if(fecha==null)){
+		 * error.append("Por favor, seleccione un cliente.").append("\r\n ");
+		 * }
+		 * if(cliente==null)){
+		 * error.append("Por favor, seleccione un cliente.").append("\r\n ");
+		 * }
+		 */
+
 		if(!error.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
-			Reserva reserva = new Reserva()
-					.setImporte(Double.valueOf(importe))
-					.setFechaInicio(fechaInicio)
-					.setFechaFin(fechaFin)
-					.setCliente(cliente)
-					.setInmueble(inmueble);
-			
+			ReservaVista reserva = new ReservaVista(cliente, inmueble, Double.valueOf(importe), fechaInicio, fechaFin);
+
 			ResultadoCrearReserva resultadoCrearReserva = null;
 
 			try{
 				resultadoCrearReserva = coordinador.crearReserva(reserva);
 				error.delete(0, error.length());
-				
+
 				if(resultadoCrearReserva.hayErrores()){
 					for(ErrorCrearReserva e: resultadoCrearReserva.getErrores()){
-						switch(e){
-							case Formato_Importe_Incorrecto:
-								error.append("El formato del importe es incorrecto");
-								break;
-							case Ya_Existe_Reserva_Entre_Las_Fechas:
-								error.append("Ya existe una reserva para este inmueble en ese periodo de tiempo");
-								break;
+						switch(e) {
+						case Formato_Importe_Incorrecto:
+							error.append("El formato del importe es incorrecto");
+							break;
+						case Ya_Existe_Reserva_Entre_Las_Fechas:
+							error.append("Ya existe una reserva para este inmueble en ese periodo de tiempo");
+							break;
 						}
 					}
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
@@ -130,11 +123,9 @@ public class AltaReservaController extends OlimpoController {
 					presentador.presentarToast("Se ha realizado la reserva con éxito", stage);
 					cambiarmeAScene(AdministrarInmuebleController.URLVista);
 				}
-			}
-			catch(PersistenciaException e){
+			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
-			}
-			catch(Exception e){
+			} catch(Exception e){
 				presentador.presentarExcepcionInesperada(e, stage); //falta el stage
 			}
 		}
@@ -148,16 +139,16 @@ public class AltaReservaController extends OlimpoController {
 		cambiarmeAScene(AdministrarInmuebleController.URLVista);
 	}
 
-	public void setInmueble(Inmueble inmueble){
+	public void setInmueble(Inmueble inmueble) {
 		this.inmueble = inmueble;
 	}
-	
+
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		//this.setTitulo("Nueva Reserva");
 		try{
 			comboBoxCliente.getItems().addAll(coordinador.obtenerClientes());
-		//	labelDetalleInmueble.setText(inmueble.getDireccion().toString());
+			//	labelDetalleInmueble.setText(inmueble.getDireccion().toString());
 		} catch(PersistenciaException e){
 		}
 		textFieldImporte.setTextFormatter(new TextFormatter<>(new NumberStringConverter(Locale.US, "###############.##")));
