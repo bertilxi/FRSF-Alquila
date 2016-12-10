@@ -1,7 +1,9 @@
 package app.logica.gestores;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,12 +11,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import app.comun.ValidadorFormato;
 import app.datos.clases.EstadoStr;
-import app.datos.clases.FiltroPropietario;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
@@ -24,8 +26,12 @@ import app.datos.entidades.Localidad;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.TipoDocumento;
 import app.datos.servicios.PropietarioService;
+import app.excepciones.EntidadExistenteConEstadoBajaException;
+import app.excepciones.SaveUpdateException;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
+import app.logica.resultados.ResultadoEliminarPropietario;
+import app.logica.resultados.ResultadoEliminarPropietario.ErrorEliminarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
 import junitparams.JUnitParamsRunner;
@@ -35,7 +41,6 @@ import junitparams.Parameters;
 public class GestorPropietarioTest {
 
 	private static Propietario propietario;
-	private static FiltroPropietario filtro;
 
 	protected Object[] parametersForTestCrearPropietario() {
 		//Se carga propietario con datos básicos solo para evitar punteros nulos
@@ -45,31 +50,46 @@ public class GestorPropietarioTest {
 		Direccion dir = new Direccion("1234", "1234", "a", new Calle("hilka", localidad), new Barrio("asdas", localidad), localidad);
 		propietario = new Propietario(1, "Juan", "Perez", "38377777", "3424686868", "d.a@hotmail.com", doc, dir);
 		propietario.setEstado(new Estado(EstadoStr.ALTA));
-		filtro = new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento());
+
+		Propietario propietario2 = new Propietario(1, "Juan", "Perez", "38377777", "3424686868", "d.a@hotmail.com", doc, dir);
+		propietario2.setEstado(new Estado(EstadoStr.BAJA));
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, true, true, true, null, 1, resultadoCorrecto },
-				new Object[] { false, true, true, true, true, true, null, 0, resultadoCrearNombreIncorrecto },
-				new Object[] { true, false, true, true, true, true, null, 0, resultadoCrearApellidoIncorrecto },
-				new Object[] { true, true, false, true, true, true, null, 0, resultadoCrearDocumentoIncorrecto },
-				new Object[] { true, true, true, false, true, true, null, 0, resultadoCrearTelefonoIncorrecto },
-				new Object[] { true, true, true, true, false, true, null, 0, resultadoCrearEmailIncorrecto },
-				new Object[] { true, true, true, true, true, false, null, 0, resultadoCrearDireccionIncorrecto },
-				new Object[] { false, false, true, true, true, true, null, 0, new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto, ErrorCrearPropietario.Formato_Apellido_Incorrecto) },
-				new Object[] { true, true, true, true, true, true, propietario, 0, resultadoCrearYaExiste }
+				new Object[] { true, true, true, true, true, true, null, 1, resultadoCrearCorrecto, null, null }, //Test correcto
+				new Object[] { false, true, true, true, true, true, null, 0, resultadoCrearNombreIncorrecto, null, null }, //Nombre Incorrecto
+				new Object[] { true, false, true, true, true, true, null, 0, resultadoCrearApellidoIncorrecto, null, null }, //Apellido Incorrecto
+				new Object[] { true, true, false, true, true, true, null, 0, resultadoCrearDocumentoIncorrecto, null, null }, //Documento Incorrecto
+				new Object[] { true, true, true, false, true, true, null, 0, resultadoCrearTelefonoIncorrecto, null, null }, //Teléfono Incorrecto
+				new Object[] { true, true, true, true, false, true, null, 0, resultadoCrearEmailIncorrecto, null, null }, //Email Incorrecto
+				new Object[] { true, true, true, true, true, false, null, 0, resultadoCrearDireccionIncorrecto, null, null }, //Dirección incorrecta
+				new Object[] { false, false, true, true, true, true, null, 0, new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto, ErrorCrearPropietario.Formato_Apellido_Incorrecto), null, null }, //Nombre y apellido incorrectos
+				new Object[] { true, true, true, true, true, true, propietario, 0, resultadoCrearYaExiste, null, null }, //Ya existe un propietario con el mismo documento
+				new Object[] { true, true, true, true, true, true, null, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) }, //La base de datos tira una excepción
+				new Object[] { true, true, true, true, true, true, propietario2, 0, null, null, new EntidadExistenteConEstadoBajaException() } //El propietario ya existe pero con estado BAJA
 		};
 	}
 
 	@Test
 	@Parameters
-	public void testCrearPropietario(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValEmail, Boolean resValDireccion, Propietario resObtenerPropietario, Integer guardar, ResultadoCrearPropietario resultadoCrearPropietarioEsperado) throws Exception {
+	public void testCrearPropietario(Boolean resValNombre,
+			Boolean resValApellido,
+			Boolean resValDocumento,
+			Boolean resValTelefono,
+			Boolean resValEmail,
+			Boolean resValDireccion,
+			Propietario resObtenerPropietario,
+			Integer guardar,
+			ResultadoCrearPropietario resultadoCrearPropietarioEsperado,
+			Throwable excepcion,
+			Throwable excepcionEsperada) throws Exception {
+
 		//Inicialización de los mocks
 		PropietarioService propietarioServiceMock = mock(PropietarioService.class);
 		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
 		GestorDatos gestorDatosMock = mock(GestorDatos.class);
 
-		//Clase anónima necesaria para inyectar dependencias hasta que funcione Spring
+		//Clase anónima necesaria para inyectar dependencias
 		GestorPropietario gestorPropietario = new GestorPropietario() {
 			{
 				this.persistidorPropietario = propietarioServiceMock;
@@ -79,6 +99,7 @@ public class GestorPropietarioTest {
 		};
 
 		ArrayList<Estado> estados = new ArrayList<>();
+		estados.add(new Estado(EstadoStr.BAJA));
 		estados.add(new Estado(EstadoStr.ALTA));
 
 		//Setear valores esperados a los mocks
@@ -88,28 +109,213 @@ public class GestorPropietarioTest {
 		when(validadorFormatoMock.validarTelefono(propietario.getTelefono())).thenReturn(resValTelefono);
 		when(validadorFormatoMock.validarEmail(propietario.getEmail())).thenReturn(resValEmail);
 		when(validadorFormatoMock.validarDireccion(propietario.getDireccion())).thenReturn(resValDireccion);
-		when(propietarioServiceMock.obtenerPropietario(filtro)).thenReturn(resObtenerPropietario);
+		when(propietarioServiceMock.obtenerPropietario(any())).thenReturn(resObtenerPropietario);
 		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
-		doNothing().when(propietarioServiceMock).guardarPropietario(propietario); //Para métodos void la sintaxis es distinta
 
-		//Llamar al método a testear
-		ResultadoCrearPropietario resultadoCrearPropietario = gestorPropietario.crearPropietario(propietario);
+		//Setear la excepcion devuelta por la base de datos, si corresponde
+		if(excepcion != null){
+			doThrow(excepcion).when(propietarioServiceMock).guardarPropietario(propietario);
+		}
+		else{
+			doNothing().when(propietarioServiceMock).guardarPropietario(propietario);
+		}
 
-		//Comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
-		assertEquals(resultadoCrearPropietarioEsperado.getErrores(), resultadoCrearPropietario.getErrores());
+		//Llamar al método a testear y comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
+		if(excepcionEsperada == null){
+			assertEquals(resultadoCrearPropietarioEsperado.getErrores(), gestorPropietario.crearPropietario(propietario).getErrores());
+		}
+		else{
+			try{
+				gestorPropietario.crearPropietario(propietario);
+				Assert.fail("Debería haber fallado!");
+			} catch(Exception e){
+				assertEquals(excepcionEsperada.getClass(), e.getClass());
+			}
+		}
 		verify(validadorFormatoMock).validarNombre(propietario.getNombre());
 		verify(validadorFormatoMock).validarApellido(propietario.getApellido());
 		verify(validadorFormatoMock).validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento());
 		verify(validadorFormatoMock).validarTelefono(propietario.getTelefono());
 		verify(validadorFormatoMock).validarEmail(propietario.getEmail());
 		verify(validadorFormatoMock).validarDireccion(propietario.getDireccion());
-		verify(propietarioServiceMock).obtenerPropietario(filtro);
+		verify(propietarioServiceMock).obtenerPropietario(any());
 		verify(gestorDatosMock, times(guardar)).obtenerEstados();
 		verify(propietarioServiceMock, times(guardar)).guardarPropietario(propietario);
 	}
 
+	protected Object[] parametersForTestModificarPropietario() {
+		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
+		Localidad localidad = new Localidad("sadadfa", null);
+		Direccion dir = new Direccion("1234", "1234", "a", new Calle("hilka", localidad), new Barrio("asdas", localidad), localidad);
+		propietario = new Propietario(1, "Juan", "Perez", "38377777", "3424686868", "d.a@hotmail.com", doc, dir);
+		propietario.setEstado(new Estado(EstadoStr.ALTA));
+
+		Propietario propietario2 = new Propietario(2, "José", "Perez2", "38377777", "3424686868", "j.c@hotmail.com", doc, dir);
+		propietario2.setEstado(new Estado(EstadoStr.ALTA));
+
+		//Parámetros de JUnitParams
+		return new Object[] {
+				new Object[] { true, true, true, true, true, true, null, 1, resultadoModificarCorrecto, null, null }, //Test correcto (se modifica el documento)
+				new Object[] { false, true, true, true, true, true, null, 0, resultadoModificarNombreIncorrecto, null, null }, //Nombre Incorrecto
+				new Object[] { true, false, true, true, true, true, null, 0, resultadoModificarApellidoIncorrecto, null, null }, //Apellido Incorrecto
+				new Object[] { true, true, false, true, true, true, null, 0, resultadoModificarDocumentoIncorrecto, null, null }, //Documento Incorrecto
+				new Object[] { true, true, true, false, true, true, null, 0, resultadoModificarTelefonoIncorrecto, null, null }, //Teléfono Incorrecto
+				new Object[] { true, true, true, true, false, true, null, 0, resultadoModificarEmailIncorrecto, null, null }, //Email Incorrecto
+				new Object[] { true, true, true, true, true, false, null, 0, resultadoModificarDireccionIncorrecto, null, null }, //Dirección incorrecta
+				new Object[] { false, false, true, true, true, true, null, 0, new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Nombre_Incorrecto, ErrorModificarPropietario.Formato_Apellido_Incorrecto), null, null }, //Nombre y apellido incorrectos
+				new Object[] { true, true, true, true, true, true, propietario2, 0, resultadoModificarYaSePoseeMismoDocumento, null, null }, //Ya existe un propietario con el mismo documento
+				new Object[] { true, true, true, true, true, true, propietario, 1, resultadoModificarCorrecto, null, null }, //Test correcto, no se cambió el documento
+				new Object[] { true, true, true, true, true, true, null, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) } //La base de datos tira una excepción
+		};
+	}
+
+	@Test
+	@Parameters
+	public void testModificarPropietario(Boolean resValNombre,
+			Boolean resValApellido,
+			Boolean resValDocumento,
+			Boolean resValTelefono,
+			Boolean resValEmail,
+			Boolean resValDireccion,
+			Propietario resObtenerPropietario,
+			Integer modificar,
+			ResultadoModificarPropietario resultadoModificarPropietarioEsperado,
+			Throwable excepcion,
+			Throwable excepcionEsperada) throws Exception {
+		//Inicialización de los mocks
+		PropietarioService propietarioServiceMock = mock(PropietarioService.class);
+		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
+		GestorDatos gestorDatosMock = mock(GestorDatos.class);
+
+		//Clase anónima necesaria para inyectar dependencias
+		GestorPropietario gestorPropietario = new GestorPropietario() {
+			{
+				this.persistidorPropietario = propietarioServiceMock;
+				this.validador = validadorFormatoMock;
+				this.gestorDatos = gestorDatosMock;
+			}
+		};
+
+		ArrayList<Estado> estados = new ArrayList<>();
+		estados.add(new Estado(EstadoStr.BAJA));
+		estados.add(new Estado(EstadoStr.ALTA));
+
+		//Setear valores esperados a los mocks
+		when(validadorFormatoMock.validarNombre(propietario.getNombre())).thenReturn(resValNombre);
+		when(validadorFormatoMock.validarApellido(propietario.getApellido())).thenReturn(resValApellido);
+		when(validadorFormatoMock.validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento())).thenReturn(resValDocumento);
+		when(validadorFormatoMock.validarTelefono(propietario.getTelefono())).thenReturn(resValTelefono);
+		when(validadorFormatoMock.validarEmail(propietario.getEmail())).thenReturn(resValEmail);
+		when(validadorFormatoMock.validarDireccion(propietario.getDireccion())).thenReturn(resValDireccion);
+		when(propietarioServiceMock.obtenerPropietario(any())).thenReturn(resObtenerPropietario);
+		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
+
+		//Setear la excepcion devuelta por la base de datos, si corresponde
+		if(excepcion != null){
+			doThrow(excepcion).when(propietarioServiceMock).modificarPropietario(propietario);
+		}
+		else{
+			doNothing().when(propietarioServiceMock).modificarPropietario(propietario);
+		}
+
+		//Llamar al método a testear y comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
+		if(excepcionEsperada == null){
+			assertEquals(resultadoModificarPropietarioEsperado.getErrores(), gestorPropietario.modificarPropietario(propietario).getErrores());
+		}
+		else{
+			try{
+				gestorPropietario.modificarPropietario(propietario);
+				Assert.fail("Debería haber fallado!");
+			} catch(Exception e){
+				assertEquals(excepcionEsperada.getClass(), e.getClass());
+			}
+		}
+		verify(validadorFormatoMock).validarNombre(propietario.getNombre());
+		verify(validadorFormatoMock).validarApellido(propietario.getApellido());
+		verify(validadorFormatoMock).validarDocumento(propietario.getTipoDocumento(), propietario.getNumeroDocumento());
+		verify(validadorFormatoMock).validarTelefono(propietario.getTelefono());
+		verify(validadorFormatoMock).validarEmail(propietario.getEmail());
+		verify(validadorFormatoMock).validarDireccion(propietario.getDireccion());
+		verify(propietarioServiceMock).obtenerPropietario(any());
+		verify(gestorDatosMock, times(modificar)).obtenerEstados();
+		verify(propietarioServiceMock, times(modificar)).modificarPropietario(propietario);
+	}
+
+	protected Object[] parametersForTestEliminarPropietario() {
+		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
+		Localidad localidad = new Localidad("sadadfa", null);
+		Direccion dir = new Direccion("1234", "1234", "a", new Calle("hilka", localidad), new Barrio("asdas", localidad), localidad);
+		propietario = new Propietario(1, "Juan", "Perez", "38377777", "3424686868", "d.a@hotmail.com", doc, dir);
+		propietario.setEstado(new Estado(EstadoStr.ALTA));
+
+		Propietario propietario2 = new Propietario(2, "José", "Perez2", "38377777", "3424686868", "j.c@hotmail.com", doc, dir);
+		propietario2.setEstado(new Estado(EstadoStr.ALTA));
+
+		//Parámetros de JUnitParams
+		return new Object[] {
+				new Object[] { propietario, 1, resultadoEliminarCorrecto, null, null }, //Test correcto
+				new Object[] { null, 0, resultadoEliminarNo_Existe, null, null }, //No existe el propietario a eliminar
+				new Object[] { propietario, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) } //La base de datos tira una excepción
+		};
+	}
+
+	@Test
+	@Parameters
+	public void testEliminarPropietario(Propietario resObtenerPropietario,
+			Integer eliminar,
+			ResultadoEliminarPropietario resultadoEliminarPropietarioEsperado,
+			Throwable excepcion,
+			Throwable excepcionEsperada) throws Exception {
+		//Inicialización de los mocks
+		PropietarioService propietarioServiceMock = mock(PropietarioService.class);
+		GestorDatos gestorDatosMock = mock(GestorDatos.class);
+
+		//Clase anónima necesaria para inyectar dependencias
+		GestorPropietario gestorPropietario = new GestorPropietario() {
+			{
+				this.persistidorPropietario = propietarioServiceMock;
+				this.gestorDatos = gestorDatosMock;
+			}
+		};
+
+		ArrayList<Estado> estados = new ArrayList<>();
+		estados.add(new Estado(EstadoStr.ALTA));
+		estados.add(new Estado(EstadoStr.BAJA));
+
+		//Setear valores esperados a los mocks
+		when(propietarioServiceMock.obtenerPropietario(any())).thenReturn(resObtenerPropietario);
+		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
+
+		//Setear la excepcion devuelta por la base de datos, si corresponde
+		if(excepcion != null){
+			doThrow(excepcion).when(propietarioServiceMock).modificarPropietario(propietario);
+		}
+		else{
+			doNothing().when(propietarioServiceMock).modificarPropietario(propietario);
+		}
+
+		//Llamar al método a testear y comprobar resultados obtenidos, que se llaman a los métodos deseados y con los parámetros correctos
+		if(excepcionEsperada == null){
+			assertEquals(resultadoEliminarPropietarioEsperado.getErrores(), gestorPropietario.eliminarPropietario(propietario).getErrores());
+		}
+		else{
+			try{
+				gestorPropietario.eliminarPropietario(propietario);
+				Assert.fail("Debería haber fallado!");
+			} catch(Exception e){
+				assertEquals(excepcionEsperada.getClass(), e.getClass());
+			}
+		}
+		if(eliminar != 0){
+			assertEquals(EstadoStr.BAJA, propietario.getEstado().getEstado());
+		}
+		verify(propietarioServiceMock).obtenerPropietario(any());
+		verify(gestorDatosMock, times(eliminar)).obtenerEstados();
+		verify(propietarioServiceMock, times(eliminar)).modificarPropietario(propietario);
+	}
+
 	//Para crearPropietario
-	private static final ResultadoCrearPropietario resultadoCorrecto = new ResultadoCrearPropietario();
+	private static final ResultadoCrearPropietario resultadoCrearCorrecto = new ResultadoCrearPropietario();
 	private static final ResultadoCrearPropietario resultadoCrearNombreIncorrecto =
 			new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto);
 	private static final ResultadoCrearPropietario resultadoCrearApellidoIncorrecto =
@@ -124,7 +330,9 @@ public class GestorPropietarioTest {
 			new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Direccion_Incorrecto);
 	private static final ResultadoCrearPropietario resultadoCrearYaExiste =
 			new ResultadoCrearPropietario(ErrorCrearPropietario.Ya_Existe_Propietario);
+
 	//Para modificarPropietario
+	private static final ResultadoModificarPropietario resultadoModificarCorrecto = new ResultadoModificarPropietario();
 	private static final ResultadoModificarPropietario resultadoModificarApellidoIncorrecto =
 			new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Apellido_Incorrecto);
 	private static final ResultadoModificarPropietario resultadoModificarDocumentoIncorrecto =
@@ -135,4 +343,12 @@ public class GestorPropietarioTest {
 			new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Telefono_Incorrecto);
 	private static final ResultadoModificarPropietario resultadoModificarYaSePoseeMismoDocumento =
 			new ResultadoModificarPropietario(ErrorModificarPropietario.Ya_Existe_Propietario);
+	private static final ResultadoModificarPropietario resultadoModificarEmailIncorrecto =
+			new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Email_Incorrecto);
+	private static final ResultadoModificarPropietario resultadoModificarDireccionIncorrecto =
+			new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Direccion_Incorrecto);
+
+	//Para eliminarPropietario
+	private static final ResultadoEliminarPropietario resultadoEliminarCorrecto = new ResultadoEliminarPropietario();
+	private static final ResultadoEliminarPropietario resultadoEliminarNo_Existe = new ResultadoEliminarPropietario(ErrorEliminarPropietario.No_Existe_Propietario);
 }
