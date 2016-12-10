@@ -44,7 +44,6 @@
         <mapping class="app.datos.entidades.Archivo"/>
         <mapping class="app.datos.entidades.Barrio"/>
         <mapping class="app.datos.entidades.Calle"/>
-<!--        <mapping class="app.datos.entidades.Catalogo"/> -->
         <mapping class="app.datos.entidades.Cliente"/>
         <mapping class="app.datos.entidades.DatosEdificio"/>
         <mapping class="app.datos.entidades.Direccion"/>

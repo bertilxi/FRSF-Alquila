@@ -15,20 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
  */
-package app.datos.entidades;
+package app.datos.clases;
 
-import java.util.Date;
+public class CatalogoVista {
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-@SuppressWarnings("unused")
-@Entity
-@Table(name = "catalogo")
-public class Catalogo {
-	private Cliente cliente; //ID
-	private Date fechaEmision;
-
-	//Relaciones
-	private PDF catalogo;
 }
