@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import app.datos.clases.DatosLogin;
 import app.datos.clases.FiltroInmueble;
 import app.datos.clases.FiltroPropietario;
-import app.datos.clases.ReservaVista;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Cliente;
@@ -197,12 +196,11 @@ public class CoordinadorJavaFX {
 		return gestorDatos.obtenerOrientaciones();
 	}
 
-	public ResultadoCrearReserva crearReserva(ReservaVista reserva) throws PersistenciaException {
+	public ResultadoCrearReserva crearReserva(Reserva reserva) throws PersistenciaException {
 		return gestorReserva.crearReserva(reserva);
 	}
 
 	public ResultadoEliminarReserva eliminarReserva(Reserva reserva) throws PersistenciaException {
-		// TODO Auto-generated method stub
-		return null;
+		return gestorReserva.eliminarReserva(reserva);
 	}
 }

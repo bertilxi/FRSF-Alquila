@@ -103,6 +103,9 @@
         <JUnitParams.version>1.0.5</JUnitParams.version>
         <commons-validator.version>1.4.1</commons-validator.version>
         <itext.version>2.1.7</itext.version>
+        <googleAPI.version>v1-rev53-1.22.0</googleAPI.version>
+        <googleOauthClient.version>1.22.0</googleOauthClient.version>
+        <javaxmail.version>1.4</javaxmail.version>
     </properties>
     <dependencies>
 
@@ -204,6 +207,30 @@
             <artifactId>itext</artifactId>
             <version>${itext.version}</version>
         </dependency>
+        
+        <dependency>
+        	<groupId>com.google.apis</groupId>
+      		<artifactId>google-api-services-gmail</artifactId>
+      		<version>${googleAPI.version}</version>
+    	</dependency>
+		
+		<dependency>
+  			<groupId>com.google.oauth-client</groupId>
+  			<artifactId>google-oauth-client-java6</artifactId>
+  			<version>${googleOauthClient.version}</version>
+		</dependency>
+		
+		<dependency>
+  			<groupId>com.google.oauth-client</groupId>
+  			<artifactId>google-oauth-client-jetty</artifactId>
+  			<version>${googleOauthClient.version}</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>javax.mail</groupId>
+    		<artifactId>mail</artifactId>
+    		<version>${javaxmail.version}</version>
+		</dependency>
         
     </dependencies>
 

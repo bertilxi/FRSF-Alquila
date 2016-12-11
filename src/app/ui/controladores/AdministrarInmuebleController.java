@@ -58,6 +58,9 @@ public class AdministrarInmuebleController extends OlimpoController {
 	private Button btVerMas;
 
 	@FXML
+	private Button btVerReservas;
+
+	@FXML
 	private Button btModificar;
 
 	@FXML
@@ -129,6 +132,19 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 		nuevaPantalla.formatearVerInmueble(inmueble);
+	}
+
+	/**
+	 * Acción que se ejecuta al presionar el botón ver reservas
+	 * Se pasa a la pantalla administrar reservas con el inmueble seleccionado
+	 */
+	@FXML
+	private void verReservas() {
+		if(tablaInmuebles.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
+		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
+		controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
 	}
 
 	/**

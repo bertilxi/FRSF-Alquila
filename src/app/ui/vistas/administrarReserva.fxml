@@ -33,7 +33,7 @@
          <children>
             <TableView fx:id="tablaReservas" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="columnaClienteoInmueble" editable="false" maxWidth="4000.0" minWidth="-1.0" prefWidth="144.0" text="" />
+                <TableColumn fx:id="columnaClienteOInmueble" editable="false" maxWidth="4000.0" minWidth="-1.0" prefWidth="144.0" text="" />
                 <TableColumn fx:id="columnaImporte" prefWidth="150.0" text="Importe" />
                 <TableColumn fx:id="columnaFechaInicio" editable="false" prefWidth="150.0" text="Inicio de vigencia" />
                 <TableColumn fx:id="columnaFechaFin" prefWidth="150.0" text="Fin de vigencia" />
@@ -49,8 +49,8 @@
       </VBox>
       <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
          <children>
-            <Button fx:id="botonNueva" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregarAction" text="Nueva" />
-            <Button fx:id="botonVerPDF" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#modificarAction" text="Ver" />
+            <Button fx:id="botonNueva" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#nuevoAction" text="Nueva" />
+            <Button fx:id="botonVerPDF" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#verAction" text="Ver" />
             <Button fx:id="botonEliminar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#eliminarAction" text="Eliminar" />
          </children>
       </VBox>

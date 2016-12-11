@@ -61,6 +61,8 @@ public class AdministrarClienteController extends OlimpoController {
 	private Button botonModificar;
 	@FXML
 	private Button botonEliminar;
+	@FXML
+	private Button botonVerReservas;
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
@@ -88,16 +90,18 @@ public class AdministrarClienteController extends OlimpoController {
 	 * Habilita o deshabilita botones según si hay un cliente seleccionado o no
 	 *
 	 * @param cliente
-	 * 			cliente seleccionado. Si no hay propietario seleccionado, es <code>null</code>
+	 *            cliente seleccionado. Si no hay propietario seleccionado, es <code>null</code>
 	 */
 	private void habilitarBotones(Cliente cliente) {
 		if(cliente == null){
 			botonVerInmuebleBuscado.setDisable(true);
+			botonVerReservas.setDisable(true);
 			botonModificar.setDisable(true);
 			botonEliminar.setDisable(true);
 		}
 		else{
 			botonVerInmuebleBuscado.setDisable(false);
+			botonVerReservas.setDisable(false);
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
 		}
@@ -114,6 +118,19 @@ public class AdministrarClienteController extends OlimpoController {
 		}
 		VerInmuebleBuscadoController controlador = (VerInmuebleBuscadoController) cambiarmeAScene(VerInmuebleBuscadoController.URLVista);
 		controlador.setInmueble(tablaClientes.getSelectionModel().getSelectedItem().getInmuebleBuscado());
+	}
+
+	/**
+	 * Acción que se ejecuta al presionar el botón ver reservas
+	 * Se pasa a la pantalla administrar reservas con el cliente seleccionado
+	 */
+	@FXML
+	private void handleVerReservas() {
+		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
+		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
+		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
 	}
 
 	/**
@@ -168,7 +185,8 @@ public class AdministrarClienteController extends OlimpoController {
 				}
 				presentador.presentarError("No se pudo eliminar el cliente", stringErrores.toString(), stage);
 
-			} else {
+			}
+			else{
 				presentador.presentarToast("Se ha eliminado el cliente con éxito", stage);
 			}
 			tablaClientes.getItems().clear();
@@ -177,7 +195,7 @@ public class AdministrarClienteController extends OlimpoController {
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
-		} catch(Exception e) {
+		} catch(Exception e){
 			presentador.presentarExcepcionInesperada(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}

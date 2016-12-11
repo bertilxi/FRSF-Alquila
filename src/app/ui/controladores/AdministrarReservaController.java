@@ -17,6 +17,10 @@
  */
 package app.ui.controladores;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,8 +31,6 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarReserva;
 import app.logica.resultados.ResultadoEliminarReserva.ErrorEliminarReserva;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
-import app.ui.controladores.resultado.ResultadoControlador;
-import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,6 +47,8 @@ import javafx.scene.control.TableView;
 public class AdministrarReservaController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarReserva.fxml";
+	protected Cliente cliente;
+	protected Inmueble inmueble;
 
 	@FXML
 	protected TableView<Reserva> tablaReservas;
@@ -64,27 +68,9 @@ public class AdministrarReservaController extends OlimpoController {
 	@FXML
 	private Button botonEliminar;
 
-	protected Cliente cliente;
-	protected Inmueble inmueble;
-
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar reservas");
-		if(cliente != null){
-			tablaReservas.getItems().addAll(cliente.getReservas());
-			columnaClienteOInmueble.setText("Inmueble");
-			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getInmueble().getDireccion().toString()));
-		}
-		else if(inmueble != null){
-			tablaReservas.getItems().addAll(inmueble.getReservas());
-			columnaClienteOInmueble.setText("Cliente");
-			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().toString()));
-		}
-
-		columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
-		columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
-		columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
-
 		habilitarBotones(null);
 
 		tablaReservas.getSelectionModel().selectedItemProperty().addListener(
@@ -113,58 +99,93 @@ public class AdministrarReservaController extends OlimpoController {
 	 * Se pasa a la pantalla alta reserva
 	 */
 	public void nuevoAction(ActionEvent event) {
-		cambiarmeAScene(AltaReservaController.URLVista, URLVista);
+		AltaReservaController controlador = (AltaReservaController) cambiarmeAScene(AltaReservaController.URLVista, URLVista);
+		if(cliente != null){
+			controlador.setCliente(cliente);
+		}
+		else if(inmueble != null){
+			controlador.setInmueble(inmueble);
+		}
 	}
 
 	/**
-	 * Acción que se ejecuta al presionar el botón modificar
+	 * Acción que se ejecuta al presionar el botón ver
 	 * Se pasa a la pantalla modificar reserva
 	 */
-	public void modificarAction(ActionEvent event) {
+	public void verAction(ActionEvent event) {
 		Reserva reserva = tablaReservas.getSelectionModel().getSelectedItem();
 		if(reserva == null){
 			return;
 		}
-		ModificarReservaController modificarReservaController = (ModificarReservaController) cambiarmeAScene(ModificarReservaController.URLVista, URLVista);
-		modificarReservaController.setReserva(reserva);
+
+		//se crea un archivo PDF temporal para poder abrirlo desde el visor PDF predeterminado del SO.
+		try{
+			File PDFtmp = new File("reserva_tmp.pdf");
+			FileOutputStream fos = new FileOutputStream(PDFtmp);
+			fos.write(reserva.getArchivoPDF().getArchivo());
+			fos.flush();
+			fos.close();
+			Desktop.getDesktop().open(PDFtmp);
+		} catch(IOException ex){
+			ex.printStackTrace();
+		}
 	}
 
 	/**
 	 * Acción que se ejecuta al presionar el botón eliminar
 	 * Se muestra una ventana emergente para confirmar la operación
 	 */
-	public ResultadoControlador eliminarAction(ActionEvent event) {
+	public void eliminarAction(ActionEvent event) {
 		Reserva reserva = tablaReservas.getSelectionModel().getSelectedItem();
 		if(reserva == null){
-			return new ResultadoControlador();
+			return;
 		}
-		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar reserva", "Está a punto de eliminar al reserva.\n¿Desea continuar?", this.stage);
+		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar reserva", "Está a punto de eliminar una reserva.\n¿Desea continuar?", this.stage);
 		if(ventana.acepta()){
-			return new ResultadoControlador();
-		}
-		ResultadoEliminarReserva resultado;
-		try{
-			resultado = coordinador.eliminarReserva(reserva);
-		} catch(PersistenciaException e){
-			presentador.presentarExcepcion(e, stage);
-			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
-		}
-
-		if(resultado.hayErrores()){
-			StringBuilder stringErrores = new StringBuilder();
-			for(ErrorEliminarReserva err: resultado.getErrores()){
-				switch(err) {
-				case No_Existe_Reserva:
-					stringErrores.append("No existe el reserva que desea eliminar.\n");
-					break;
-				}
+			ResultadoEliminarReserva resultado = new ResultadoEliminarReserva();
+			try{
+				resultado = coordinador.eliminarReserva(reserva);
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
 			}
-			presentador.presentarError("No se pudo eliminar el reserva", stringErrores.toString(), stage);
+
+			if(resultado.hayErrores()){
+				StringBuilder stringErrores = new StringBuilder();
+				for(ErrorEliminarReserva err: resultado.getErrores()){
+					switch(err) {
+					case No_Existe_Reserva:
+						stringErrores.append("Ya no existe la reserva que desea eliminar.\n");
+						break;
+					}
+				}
+				presentador.presentarError("Ha ocurrido un error", stringErrores.toString(), stage);
+			}
+			else{
+				tablaReservas.getItems().remove(reserva);
+				presentador.presentarToast("Se ha eliminado la reserva con éxito", stage);
+			}
 		}
-		else{
-			tablaReservas.getItems().remove(reserva);
-			presentador.presentarToast("Se ha eliminado al reserva " + reserva.toString() + " con éxito", stage);
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+		if(cliente != null){
+			tablaReservas.getItems().addAll(cliente.getReservas());
+			columnaClienteOInmueble.setText("Inmueble");
+			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getInmueble().getDireccion().toString()));
+			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
+			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
 		}
-		return new ResultadoControlador();
+	}
+
+	public void setInmueble(Inmueble inmueble) {
+		this.inmueble = inmueble;
+		if(inmueble != null){
+			tablaReservas.getItems().addAll(inmueble.getReservas());
+			columnaClienteOInmueble.setText("Cliente");
+			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().toString()));
+			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
+			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
+		}
 	}
 }

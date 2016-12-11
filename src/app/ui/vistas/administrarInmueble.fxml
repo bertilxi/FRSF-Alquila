@@ -47,9 +47,10 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="152.0" minWidth="150.0" prefHeight="650.0" prefWidth="152.0" styleClass="buttonbar">
          <children>
             <Button fx:id="btVerMas" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#verMas" text="Ver más" />
+            <Button fx:id="btVerReservas" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#verReservas" text="Ver reservas" />
             <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
             <Button fx:id="btModificar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
             <Button fx:id="btEliminar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#eliminarInmueble" text="Eliminar" />

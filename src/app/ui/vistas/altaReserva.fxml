@@ -52,19 +52,20 @@
                         <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <ComboBox fx:id="comboBoxCliente" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Cliente" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  		<TextField fx:id="textFieldImporte" maxHeight="1000.0" maxWidth="1000.0" promptText="0,00" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Cliente:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Importe:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" prefHeight="40.0" prefWidth="215.0" styleClass="label-medium" text="d" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Contraseña:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label fx:id="labelDetalleInmueble" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-                  <Label prefHeight="51.0" prefWidth="555.0" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="3" />
-                  <DatePicker fx:id="datePickerInicio" prefHeight="30.0" prefWidth="449.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <DatePicker fx:id="datePickerFin" prefHeight="30.0" prefWidth="464.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="comboBoxCliente" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  		<Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Inmueble:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  		<ComboBox fx:id="comboBoxInmueble" maxHeight="1000.0" maxWidth="1000.0" prefHeight="40.0" prefWidth="363.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  		<TextField fx:id="textFieldImporte" alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" promptText="0.00" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Importe:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  		<Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" prefHeight="40.0" prefWidth="215.0" styleClass="label-medium" text="Inicio de vigencia" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  		<Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Fin de vigencia" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  		<DatePicker fx:id="datePickerInicio" prefHeight="30.0" prefWidth="449.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  		<DatePicker fx:id="datePickerFin" prefHeight="30.0" prefWidth="464.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />
