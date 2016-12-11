@@ -80,16 +80,16 @@ public class InmuebleBuscadoControllerTest {
 		when(coordinadorMock.obtenerPaises()).thenReturn(new ArrayList<Pais>());
 		when(presentadorVentanasMock.presentarError(any(), any(), any())).thenReturn(ventanaErrorMock);
 		when(presentadorVentanasMock.presentarExcepcion(any(), any())).thenReturn(ventanaErrorExcepcionMock);
-		if (clienteNuevo != null) {
+		if(clienteNuevo != null){
 			when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(altaClienteControllerMock);
 		}
-		if (clienteEnModificacion != null) {
+		if(clienteEnModificacion != null){
 			when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarClienteControllerMock);
 		}
 		doNothing().when(altaClienteControllerMock).setCliente(any());
 		doNothing().when(modificarClienteControllerMock).setClienteEnModificacion(any());
 
-		if(excepcion == null) {
+		if(excepcion == null){
 			ArrayList<TipoInmueble> tipos = new ArrayList<>();
 			tipos.add(new TipoInmueble(TipoInmuebleStr.CASA));
 			tipos.add(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO));
@@ -98,7 +98,8 @@ public class InmuebleBuscadoControllerTest {
 			tipos.add(new TipoInmueble(TipoInmuebleStr.QUINTA));
 			tipos.add(new TipoInmueble(TipoInmuebleStr.TERRENO));
 			when(coordinadorMock.obtenerTiposInmueble()).thenReturn(tipos);
-		} else {
+		}
+		else{
 			when(coordinadorMock.obtenerTiposInmueble()).thenThrow(excepcion);
 		}
 
@@ -153,7 +154,8 @@ public class InmuebleBuscadoControllerTest {
 				InmuebleBuscado inmueble = cliente.getInmuebleBuscado();
 				if(inmueble != null){
 					this.alta = false;
-				} else {
+				}
+				else{
 					this.alta = true;
 				}
 			}
@@ -165,22 +167,22 @@ public class InmuebleBuscadoControllerTest {
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
-				if(clienteNuevo != null) {
+				if(clienteNuevo != null){
 					inmuebleBuscadoController.setCliente(clienteNuevo);
 				}
-				if(clienteEnModificacion != null) {
+				if(clienteEnModificacion != null){
 					inmuebleBuscadoController.setCliente(clienteEnModificacion);
 				}
 
 				inmuebleBuscadoController.acceptAction();
 
-				if (clienteNuevo != null && excepcion == null) {
-					Mockito.verify(altaClienteControllerMock,times(camposCorrectos)).setCliente(clienteNuevo);
+				if(clienteNuevo != null && excepcion == null){
+					Mockito.verify(altaClienteControllerMock, times(camposCorrectos)).setCliente(clienteNuevo);
 				}
-				if (clienteEnModificacion != null  && excepcion == null) {
-					Mockito.verify(modificarClienteControllerMock,times(camposCorrectos)).setClienteEnModificacion(clienteEnModificacion);
+				if(clienteEnModificacion != null && excepcion == null){
+					Mockito.verify(modificarClienteControllerMock, times(camposCorrectos)).setClienteEnModificacion(clienteEnModificacion);
 				}
-				Mockito.verify(coordinadorMock,times(camposCorrectos)).obtenerTiposInmueble();
+				Mockito.verify(coordinadorMock, times(camposCorrectos)).obtenerTiposInmueble();
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarError)).presentarError(eq("Revise sus campos"), any(), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcion)).presentarExcepcion(eq(excepcion), any());
 			}
@@ -188,34 +190,32 @@ public class InmuebleBuscadoControllerTest {
 
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
 
-
 	}
 
 	protected Object[] parametersForTestCrearCliente() {
 		ArrayList<Localidad> localidades = new ArrayList<>();
 		localidades.add(new Localidad("Federal", new Provincia("Entre ríos", new Pais("Argentina"))));
 		ArrayList<Barrio> barrios = new ArrayList<>();
-		Cliente clienteNuevo = new Cliente();
 		Cliente clienteEnModificacion = new Cliente();
 		clienteEnModificacion.setInmuebleBuscado(new InmuebleBuscado());
 		clienteEnModificacion.getInmuebleBuscado().setCliente(clienteEnModificacion);
 		return new Object[] {
 				//prueba correcta de inmueble nuevo
-				new Object[] {"30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, clienteNuevo, null, 1, 0, 0, null},
+				new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 1, 0, 0, null },
 				//prueba campo de texto incorrecto de inmueble nuevo
-				new Object[] {"30.0", "abc", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, clienteNuevo, null, 0, 1, 0, null},
+				new Object[] { "30.0", "abc", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 0, 1, 0, null },
 				//prueba campo texto vacio de inmueble nuevo
-				new Object[] {"30.0", "10", "", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, clienteNuevo, null, 0, 1, 0, null},
+				new Object[] { "30.0", "10", "", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 0, 1, 0, null },
 				//prueba PersistenciaException de inmueble nuevo
-				new Object[] {"30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, clienteNuevo, null, 1, 0, 1, new SaveUpdateException(new Throwable())},
+				new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 1, 0, 1, new SaveUpdateException(new Throwable()) },
 				//prueba correcta de inmueble en modificación
-				new Object[] {"30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 1, 0, 0, null},
+				new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 1, 0, 0, null },
 				//prueba campo de texto incorrecto de inmueble en modificación
-				new Object[] {"30.0", "abc", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 0, 1, 0, null},
+				new Object[] { "30.0", "abc", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 0, 1, 0, null },
 				//prueba campo texto vacio de inmueble en modificación
-				new Object[] {"30.0", "10", "", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 0, 1, 0, null},
+				new Object[] { "30.0", "10", "", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 0, 1, 0, null },
 				//prueba PersistenciaException de inmueble en modificación
-				new Object[] {"30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 1, 0, 1, new SaveUpdateException(new Throwable())}
+				new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 1, 0, 1, new SaveUpdateException(new Throwable()) }
 
 		};
 	}
