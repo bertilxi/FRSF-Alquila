@@ -2,6 +2,7 @@ package app.logica.gestores;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.ReservaVista;
 import app.datos.entidades.Reserva;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearReserva;
@@ -23,7 +24,7 @@ public class GestorReserva {
 	 * @throws PersistenciaException
 	 *             si falló al persistir
 	 */
-	public ResultadoCrearReserva crearReserva(Reserva reserva) throws PersistenciaException {
+	public ResultadoCrearReserva crearReserva(ReservaVista reserva) throws PersistenciaException {
 		// TODO Auto-generated method stub
 		return null;
 	}

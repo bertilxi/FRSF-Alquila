@@ -42,15 +42,7 @@ public class CatalogoVista {
 		return cliente;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
 	public HashMap<Inmueble, Imagen> getFotos() {
 		return fotos;
-	}
-
-	public void setFotos(HashMap<Inmueble, Imagen> fotos) {
-		this.fotos = fotos;
 	}
 }
