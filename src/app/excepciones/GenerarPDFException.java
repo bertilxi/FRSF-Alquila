@@ -17,15 +17,15 @@
  */
 package app.excepciones;
 
-public class EntidadExistenteConEstadoBajaException extends GestionException {
+public class GenerarPDFException extends GestionException {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public EntidadExistenteConEstadoBajaException() {
-		super("Sucedió un error al crear PDF.", null);
+	public GenerarPDFException(Throwable e) {
+		super("La entidad que se intenta crear ya existe, pero está dada de baja.", e);
 	}
 
 }
