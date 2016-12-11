@@ -17,6 +17,40 @@
  */
 package app.datos.clases;
 
+import java.util.HashMap;
+
+import app.datos.entidades.Cliente;
+import app.datos.entidades.Imagen;
+import app.datos.entidades.Inmueble;
+
 public class CatalogoVista {
 
+	private Cliente cliente;
+	private HashMap<Inmueble, Imagen> fotos;
+
+	public CatalogoVista() {
+		super();
+	}
+
+	public CatalogoVista(Cliente cliente, HashMap<Inmueble, Imagen> fotos) {
+		super();
+		this.cliente = cliente;
+		this.fotos = fotos;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public HashMap<Inmueble, Imagen> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(HashMap<Inmueble, Imagen> fotos) {
+		this.fotos = fotos;
+	}
 }
