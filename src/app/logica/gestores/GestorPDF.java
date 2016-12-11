@@ -21,8 +21,18 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
 
 @Service
+/**
+ * Gestor que implementa la generación de PDFs a partir de un objeto dado.
+ */
 public class GestorPDF {
 
+	/**
+	 * Método para crear un PDF a partir de una pantalla.
+	 *
+	 * @param pantallaAPDF
+	 *            pantalla que se imprimirá en PDF
+	 * @return PDF de una captura de la pantalla pasada
+	 */
 	private PDF generarPDF(Node pantallaAPDF) throws Exception {
 		WritableImage image = pantallaAPDF.snapshot(new SnapshotParameters(), null);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -42,16 +52,40 @@ public class GestorPDF {
 		return null;
 	}
 
+	/**
+	 * Método para crear un PDF de un catalogo a partir de los datos de un CatalogoVista.
+	 * Pertenece a la taskcard 23 de la iteración 2 y a la historia 5
+	 *
+	 * @param catalogo
+	 *            datos que se utilizaran para generar el PDF de un catalogo
+	 * @return catalogo en PDF
+	 */
 	public PDF generarPDF(CatalogoVista catalogo) {
 		//TODO hacer
 		return null;
 	}
 
+	/**
+	 * Método para crear un PDF de una reserva a partir de los datos de una Reserva.
+	 * Pertenece a la taskcard 25 de la iteración 2 y a la historia 7
+	 *
+	 * @param reserva
+	 *            datos que se utilizaran para generar el PDF de una reserva
+	 * @return reserva en PDF
+	 */
 	public PDF generarPDF(Reserva reserva) {
 		//TODO hacer
 		return null;
 	}
 
+	/**
+	 * Método para crear un PDF de una venta a partir de los datos de una Venta.
+	 * Pertenece a la taskcard 30 de la iteración 2 y a la historia 8
+	 *
+	 * @param venta
+	 *            datos que se utilizaran para generar el PDF de una venta
+	 * @return venta en PDF
+	 */
 	public PDF generarPDF(Venta venta) {
 		//TODO hacer
 		return null;
