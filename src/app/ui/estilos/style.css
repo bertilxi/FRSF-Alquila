@@ -44,14 +44,6 @@
   -fx-hgap: 2.188em;
 }
 
-.grid-pane-pie {
-  -fx-padding: 15 30 10 30;
-  -fx-vgap: 0.938em;
-  -fx-hgap: 2.188em;
-  -fx-border-width: 1 0 0 0;
-  -fx-border-style: solid;
-}
-
 .app-name {
   -fx-font-size: 3em;
   -fx-font-family: "Tahoma";
@@ -403,20 +395,4 @@
 
 .alert.warning.dialog-pane {
 /*    -fx-graphic: url('/res/img/imagen.png');      para cambiar imagen ventana advertencia*/
-}
-
-.label-catalogo-encabezado {
-	-fx-font-size: 1.8em;
-	-fx-text-fill: #000000;
-	-fx-letter-spacing: 3px;
-	-fx-font-family: Arial, Helvetica, sans-serif;
-}
-
-.label-catalogo-medium {
-	-fx-font-size: 1.2em;
-	-fx-text-fill: #888a85;
-	-fx-letter-spacing: 1px;
-	-fx-font-family: Arial, Helvetica, sans-serif;
-	-fx-font-style: italic;
-	-fx-font-weight: bold;
 }
