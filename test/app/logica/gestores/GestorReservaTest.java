@@ -59,11 +59,20 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class GestorReservaTest {
 
-	//Prueba el método crearReserva(), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
-
 	@Test
 	@Parameters
-
+	/**
+	 * Prueba el método crearReserva(), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
+	 *
+	 * @param Reserva
+	 *            reserva a crear
+	 * @param resultado
+	 *            resultado que se espera que devuelva el gestor
+	 * @param excepcion
+	 *            es la excepcion que debe lanzar el mock del persistidor o del gestorPDF, si la prueba involucra procesar una excepcion de dicho persistidor/gestor, debe ser nulo propietario para que
+	 *            se use
+	 * @throws Exception
+	 */
 	public void testCrearReserva(Reserva Reserva, ResultadoCrearReserva resultado, Throwable excepcion) throws Exception {
 		GestorDatos gestorDatosMock = new GestorDatos() {
 

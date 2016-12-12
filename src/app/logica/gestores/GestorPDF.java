@@ -129,45 +129,45 @@ public class GestorPDF {
 			Semaphore semaforo = new Semaphore(0);
 
 			Platform.runLater(() -> {
-				Label label = (Label) documentoReserva.lookup("#lblNombreOferente");
-				label.setText(formateador.primeraMayuscula(reserva.getCliente().getNombre()));
-				label = (Label) documentoReserva.lookup("#lblApellidoOferente");
-				label.setText(formateador.primeraMayuscula(reserva.getCliente().getApellido()));
-				label = (Label) documentoReserva.lookup("#lblDocumentoOferente");
-				label.setText(reserva.getCliente().getTipoDocumento() + " - " + reserva.getCliente().getNumeroDocumento());
-				label = (Label) documentoReserva.lookup("#lblNombrePropietario");
-				label.setText(formateador.primeraMayuscula(reserva.getInmueble().getPropietario().getNombre()));
-				label = (Label) documentoReserva.lookup("#lblApellidoPropietario");
-				label.setText(formateador.primeraMayuscula(reserva.getInmueble().getPropietario().getApellido()));
-				label = (Label) documentoReserva.lookup("#lblCodigoInmueble");
-				label.setText(Integer.toString(reserva.getInmueble().getId()));
-				label = (Label) documentoReserva.lookup("#lblTipoInmueble");
-				label.setText(reserva.getInmueble().getTipo().getTipo().toString());
-				label = (Label) documentoReserva.lookup("#lblLocalidadInmueble");
-				label.setText(reserva.getInmueble().getDireccion().getLocalidad().toString());
-				label = (Label) documentoReserva.lookup("#lblBarrioInmueble");
-				label.setText(reserva.getInmueble().getDireccion().getBarrio().toString());
-				label = (Label) documentoReserva.lookup("#lblCalleInmueble");
-				label.setText(reserva.getInmueble().getDireccion().getCalle().toString());
-				label = (Label) documentoReserva.lookup("#lblAlturaInmueble");
-				label.setText(reserva.getInmueble().getDireccion().getNumero());
-				label = (Label) documentoReserva.lookup("#lblPisoInmueble");
-				label.setText(reserva.getInmueble().getDireccion().getPiso());
-				label = (Label) documentoReserva.lookup("#lblDepartamentoInmueble");
-				label.setText(reserva.getInmueble().getDireccion().getDepartamento());
-				label = (Label) documentoReserva.lookup("#lblOtrosInmueble");
-				label.setText(reserva.getInmueble().getDireccion().getOtros());
-				label = (Label) documentoReserva.lookup("#lblImporte");
-				label.setText(String.format("$ %10.2f", reserva.getImporte()));
-				label = (Label) documentoReserva.lookup("#lblFechaRealizacion");
-				label.setText(conversorFechas.diaMesYAnioToString(reserva.getFechaInicio()));
-				label = (Label) documentoReserva.lookup("#lblFechaVencimiento");
-				label.setText(conversorFechas.diaMesYAnioToString(reserva.getFechaFin()));
-				label = (Label) documentoReserva.lookup("#lblHoraGenerado");
-				Date ahora = new Date();
-				label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
-
 				try{
+					Label label = (Label) documentoReserva.lookup("#lblNombreOferente");
+					label.setText(formateador.primeraMayuscula(reserva.getCliente().getNombre()));
+					label = (Label) documentoReserva.lookup("#lblApellidoOferente");
+					label.setText(formateador.primeraMayuscula(reserva.getCliente().getApellido()));
+					label = (Label) documentoReserva.lookup("#lblDocumentoOferente");
+					label.setText(reserva.getCliente().getTipoDocumento() + " - " + reserva.getCliente().getNumeroDocumento());
+					label = (Label) documentoReserva.lookup("#lblNombrePropietario");
+					label.setText(formateador.primeraMayuscula(reserva.getInmueble().getPropietario().getNombre()));
+					label = (Label) documentoReserva.lookup("#lblApellidoPropietario");
+					label.setText(formateador.primeraMayuscula(reserva.getInmueble().getPropietario().getApellido()));
+					label = (Label) documentoReserva.lookup("#lblCodigoInmueble");
+					label.setText(Integer.toString(reserva.getInmueble().getId()));
+					label = (Label) documentoReserva.lookup("#lblTipoInmueble");
+					label.setText(reserva.getInmueble().getTipo().getTipo().toString());
+					label = (Label) documentoReserva.lookup("#lblLocalidadInmueble");
+					label.setText(reserva.getInmueble().getDireccion().getLocalidad().toString());
+					label = (Label) documentoReserva.lookup("#lblBarrioInmueble");
+					label.setText(reserva.getInmueble().getDireccion().getBarrio().toString());
+					label = (Label) documentoReserva.lookup("#lblCalleInmueble");
+					label.setText(reserva.getInmueble().getDireccion().getCalle().toString());
+					label = (Label) documentoReserva.lookup("#lblAlturaInmueble");
+					label.setText(reserva.getInmueble().getDireccion().getNumero());
+					label = (Label) documentoReserva.lookup("#lblPisoInmueble");
+					label.setText(reserva.getInmueble().getDireccion().getPiso());
+					label = (Label) documentoReserva.lookup("#lblDepartamentoInmueble");
+					label.setText(reserva.getInmueble().getDireccion().getDepartamento());
+					label = (Label) documentoReserva.lookup("#lblOtrosInmueble");
+					label.setText(reserva.getInmueble().getDireccion().getOtros());
+					label = (Label) documentoReserva.lookup("#lblImporte");
+					label.setText(String.format("$ %10.2f", reserva.getImporte()));
+					label = (Label) documentoReserva.lookup("#lblFechaRealizacion");
+					label.setText(conversorFechas.diaMesYAnioToString(reserva.getFechaInicio()));
+					label = (Label) documentoReserva.lookup("#lblFechaVencimiento");
+					label.setText(conversorFechas.diaMesYAnioToString(reserva.getFechaFin()));
+					label = (Label) documentoReserva.lookup("#lblHoraGenerado");
+					Date ahora = new Date();
+					label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
+
 					pdf = generarPDF(documentoReserva);
 				} catch(Exception e){
 					exception = e;
@@ -180,6 +180,9 @@ public class GestorPDF {
 
 			if(exception != null){
 				throw exception;
+			}
+			if(pdf == null){
+				throw new NullPointerException("Error al generar PDF");
 			}
 		} catch(Exception e){
 			throw new GenerarPDFException(e);
