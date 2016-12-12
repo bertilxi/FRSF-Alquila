@@ -119,13 +119,66 @@ public class AltaReservaController extends OlimpoController {
 				if(resultadoCrearReserva.hayErrores()){
 					for(ErrorCrearReserva e: resultadoCrearReserva.getErrores()){
 						switch(e) {
+						case Cliente_Vacío:
+							error.append("No se ha seleccionado un cliente\r\n");
+							break;
+						case Nombre_Cliente_Vacío:
+							error.append("El cliente seleccionado no tiene nombre\r\n");
+							break;
+						case Apellido_Cliente_Vacío:
+							error.append("El cliente seleccionado no tiene un apellido\r\n");
+							break;
+						case NúmeroDocumento_Cliente_Vacío:
+							error.append("El cliente seleccionado no tiene número de documento\r\n");
+							break;
+						case TipoDocumento_Cliente_Vacío:
+							error.append("El cliente seleccionado no tiene un tipo de documento\r\n");
+							break;
+						case Inmueble_Vacío:
+							error.append("No se ha seleccionado un inmueble\r\n");
+							break;
+						case Dirección_Inmueble_Vacía:
+							error.append("El inmueble seleccionado no tiene una dirección\r\n");
+							break;
+						case Barrio_Inmueble_Vacío:
+							error.append("El inmueble seleccionado no tiene un barrio\r\n");
+							break;
+						case Calle_Inmueble_Vacía:
+							error.append("El inmueble seleccionado no tiene una calle\r\n");
+							break;
+						case Localidad_Inmueble_Vacía:
+							error.append("El inmueble seleccionado no tiene una localidad\r\n");
+							break;
+						case Altura_Inmueble_Vacía:
+							error.append("El inmueble seleccionado no tiene una altura en su dirección\r\n");
+							break;
+						case Tipo_Inmueble_Vacío:
+							error.append("El inmueble seleccionado no tiene un tipo de inmueble\r\n");
+							break;
+						case Propietario_Vacío:
+							error.append("El inmueble seleccionado no tiene propietario\r\n");
+							break;
+						case Nombre_Propietario_Vacío:
+							error.append("El propietario del inmueble ingresado no tiene nombre\r\n");
+							break;
+						case Apellido_Propietario_Vacío:
+							error.append("El propietario del inmueble seleccionado no tiene apellido\r\n");
+							break;
+						case Importe_vacío:
+							error.append("No se ha ingresado un importe\r\n");
+							break;
 						case Formato_Importe_Incorrecto:
-							error.append("El formato del importe es incorrecto");
+							error.append("El formato del importe es incorrecto\r\n");
+							break;
+						case FechaFin_vacía:
+							error.append("No se ha seleccionado una fecha de fin\r\n");
+							break;
+						case FechaInicio_vacía:
+							error.append("No se ha seleccionado una fecha de inicio\r\n");
 							break;
 						case Ya_Existe_Reserva_Entre_Las_Fechas:
-							error.append("Ya existe una reserva para este inmueble en ese periodo de tiempo");
+							error.append("Ya existe una reserva para este inmueble en ese periodo de tiempo\r\n");
 							break;
-						//TODO completar errores faltantes
 						}
 					}
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
