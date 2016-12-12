@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfWriter;
 
 import app.comun.ConversorFechas;
@@ -45,7 +46,7 @@ public class GestorPDF {
 
 	private PDF pdf;
 
-	private Exception exception = null;
+	private Exception exception;
 
 	private static final String URLDocumentoReserva = "/res/pdf/documentoReserva.fxml";
 
@@ -61,22 +62,22 @@ public class GestorPDF {
 		WritableImage image = pantallaAPDF.snapshot(new SnapshotParameters(), null);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", baos);
-		baos.flush();
 		byte[] imageInByte = baos.toByteArray();
+		baos.flush();
 		baos.close();
 		Image imagen = Image.getInstance(imageInByte);
 		Document document = new Document();
 		ByteArrayOutputStream pdfbaos = new ByteArrayOutputStream();
 		PdfWriter escritor = PdfWriter.getInstance(document, pdfbaos);
 		document.open();
+		imagen.setAbsolutePosition(0, 0);
+		imagen.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
 		document.add(imagen);
 		document.close();
-
 		byte[] pdfBytes = pdfbaos.toByteArray();
 		pdfbaos.flush();
 		escritor.close();
 		pdfbaos.close();
-
 		return (PDF) new PDF().setArchivo(pdfBytes);
 	}
 
@@ -102,6 +103,7 @@ public class GestorPDF {
 	 * @return reserva en PDF
 	 */
 	public PDF generarPDF(ReservaVista reserva) throws GestionException {
+		exception = null;
 		try{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLDocumentoReserva));
