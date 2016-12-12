@@ -26,7 +26,6 @@ import org.junit.Test;
 
 import app.comun.ConversorFechas;
 import app.comun.FormateadorString;
-import app.datos.clases.ReservaVista;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.clases.TipoInmuebleStr;
 import app.datos.entidades.Barrio;
@@ -39,6 +38,7 @@ import app.datos.entidades.PDF;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
+import app.datos.entidades.Reserva;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
 import app.ui.controladores.ControladorTest;
@@ -47,7 +47,13 @@ import app.ui.controladores.LoginController;
 public class GestorPDFTest {
 
 	@Test
-	public void test() throws Exception {
+	/**
+	 * Prueba el método generarPDF(Reserva reserva), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
+	 * El test es en parte manual ya que genera un archivo pdf que debe comprobarse si es correcto manualmente.
+	 *
+	 * @throws Exception
+	 */
+	public void testGenerarPDFReserva() throws Exception {
 		new ControladorTest(LoginController.URLVista, new LoginController() {
 			@Override
 			protected void setTitulo(String titulo) {
@@ -85,9 +91,9 @@ public class GestorPDFTest {
 				.setDireccion(direccion)
 				.setPropietario(propietario);
 		Date fechahoy = new Date();
-		ReservaVista reserva = new ReservaVista(cliente, inmueble, 300000.50, fechahoy, fechahoy);
+		Reserva reserva = new Reserva().setCliente(cliente).setInmueble(inmueble).setImporte(300000.50).setFechaInicio(fechahoy).setFechaFin(fechahoy);
 		PDF pdf = gestor.generarPDF(reserva);
-		FileOutputStream fos = new FileOutputStream("borrarRico.pdf");
+		FileOutputStream fos = new FileOutputStream("testReserva.pdf");
 		fos.write(pdf.getArchivo());
 		fos.close();
 	}
