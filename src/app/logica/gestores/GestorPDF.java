@@ -34,8 +34,8 @@ import com.lowagie.text.pdf.PdfWriter;
 import app.comun.ConversorFechas;
 import app.comun.FormateadorString;
 import app.datos.clases.CatalogoVista;
-import app.datos.clases.ReservaVista;
 import app.datos.entidades.PDF;
+import app.datos.entidades.Reserva;
 import app.datos.entidades.Venta;
 import app.excepciones.GenerarPDFException;
 import app.excepciones.GestionException;
@@ -120,7 +120,7 @@ public class GestorPDF {
 	 *            datos que se utilizaran para generar el PDF de una reserva
 	 * @return reserva en PDF
 	 */
-	public PDF generarPDF(ReservaVista reserva) throws GestionException {
+	public PDF generarPDF(Reserva reserva) throws GestionException {
 		exception = null;
 		try{
 			FXMLLoader loader = new FXMLLoader();
@@ -166,7 +166,7 @@ public class GestorPDF {
 				label = (Label) documentoReserva.lookup("#lblHoraGenerado");
 				Date ahora = new Date();
 				label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
-				
+
 				try{
 					pdf = generarPDF(documentoReserva);
 				} catch(Exception e){

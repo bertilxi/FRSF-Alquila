@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
 
-import app.datos.clases.ReservaVista;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.clases.TipoInmuebleStr;
 import app.datos.entidades.Barrio;
@@ -65,7 +64,7 @@ public class GestorReservaTest {
 	@Test
 	@Parameters
 
-	public void testCrearReserva(ReservaVista reservaVista, ResultadoCrearReserva resultado, Throwable excepcion) throws Exception {
+	public void testCrearReserva(Reserva Reserva, ResultadoCrearReserva resultado, Throwable excepcion) throws Exception {
 		GestorDatos gestorDatosMock = new GestorDatos() {
 
 			@Override
@@ -76,7 +75,7 @@ public class GestorReservaTest {
 		GestorPDF gestorPDFMock = new GestorPDF() {
 
 			@Override
-			public PDF generarPDF(ReservaVista reserva) throws GestionException {
+			public PDF generarPDF(Reserva reserva) throws GestionException {
 				if(excepcion != null && excepcion instanceof GestionException){
 					throw (GestionException) excepcion;
 				}
@@ -128,11 +127,11 @@ public class GestorReservaTest {
 			@Override
 			public void evaluate() throws Throwable {
 				if(resultado != null){
-					assertEquals(resultado, gestorReserva.crearReserva(reservaVista));
+					assertEquals(resultado, gestorReserva.crearReserva(Reserva));
 				}
 				else{
 					try{
-						gestorReserva.crearReserva(reservaVista);
+						gestorReserva.crearReserva(Reserva);
 						Assert.fail("Debería haber fallado!");
 					} catch(PersistenciaException | GestionException e){
 						Assert.assertEquals((excepcion), e);
@@ -196,144 +195,224 @@ public class GestorReservaTest {
 
 		Date fechahoy = new Date();
 
-		ReservaVista reservaCorrecta = new ReservaVista(cliente, inmueble, 300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinCliente = new ReservaVista(null, inmueble, 300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinNombreCliente = new ReservaVista(new Cliente()
-				.setApellido("Van Derdonckt")
-				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
-				.setNumeroDocumento("36696969"),
-				inmueble, 300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinApellidoCliente = new ReservaVista(new Cliente()
-				.setNombre("Pablo")
-				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
-				.setNumeroDocumento("36696969"),
-				inmueble, 300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinTipoDocumentoCliente = new ReservaVista(new Cliente()
-				.setNombre("Pablo")
-				.setApellido("Van Derdonckt")
-				.setNumeroDocumento("36696969"),
-				inmueble, 300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinNumeroDocumentoCliente = new ReservaVista(new Cliente()
-				.setNombre("Pablo")
-				.setApellido("Van Derdonckt")
-				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI)),
-				inmueble, 300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinInmueble = new ReservaVista(cliente, null, 300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinPropietario = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}
-				.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-				.setDireccion(direccion),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinNombrePropietario = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-				.setDireccion(direccion)
-				.setPropietario(new Propietario()
-						.setApellido("Rebechi")),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinApellidoPropietario = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-				.setDireccion(direccion)
-				.setPropietario(new Propietario()
-						.setNombre("Esteban")),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinTipoInmueble = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}
-				.setDireccion(direccion)
-				.setPropietario(propietario),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinDireccionInmueble = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-				.setPropietario(propietario),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinLocalidadInmueble = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-				.setDireccion(new Direccion()
-						.setCalle(new Calle()
-								.setNombre("Azquenaga"))
-						.setBarrio(new Barrio()
-								.setNombre("Vicente Zaspe"))
-						.setNumero("3434")
-						.setPiso("6")
-						.setDepartamento("6B")
-						.setOtros("Ala izquierda"))
-				.setPropietario(propietario),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinBarrioInmueble = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-				.setDireccion(new Direccion()
-						.setCalle(new Calle()
-								.setNombre("Azquenaga"))
-						.setLocalidad(localidad)
-						.setNumero("3434")
-						.setPiso("6")
-						.setDepartamento("6B")
-						.setOtros("Ala izquierda"))
-				.setPropietario(propietario),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinCalleInmueble = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-				.setDireccion(new Direccion()
-						.setLocalidad(localidad)
-						.setBarrio(new Barrio()
-								.setNombre("Vicente Zaspe"))
-						.setNumero("3434")
-						.setPiso("6")
-						.setDepartamento("6B")
-						.setOtros("Ala izquierda"))
-				.setPropietario(propietario),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinAlturaInmueble = new ReservaVista(cliente, new Inmueble() {
-			@Override
-			public Integer getId() {
-				return 12345;
-			};
-		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-				.setDireccion(new Direccion()
-						.setCalle(new Calle()
-								.setNombre("Azquenaga"))
-						.setLocalidad(localidad)
-						.setBarrio(new Barrio()
-								.setNombre("Vicente Zaspe"))
-						.setPiso("6")
-						.setDepartamento("6B")
-						.setOtros("Ala izquierda"))
-				.setPropietario(propietario),
-				300000.0, fechahoy, fechahoy);
-		ReservaVista reservaSinFechaInicio = new ReservaVista(cliente, inmueble, 300000.0, null, fechahoy);
-		ReservaVista reservaSinFechaFin = new ReservaVista(cliente, inmueble, 300000.0, fechahoy, null);
-		ReservaVista reservaSinImporte = new ReservaVista(cliente, inmueble, null, fechahoy, fechahoy);
+		Reserva reservaCorrecta = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinCliente = new Reserva()
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinNombreCliente = new Reserva()
+				.setCliente(new Cliente()
+						.setApellido("Van Derdonckt")
+						.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
+						.setNumeroDocumento("36696969"))
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinApellidoCliente = new Reserva()
+				.setCliente(new Cliente()
+						.setNombre("Pablo")
+						.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
+						.setNumeroDocumento("36696969"))
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinTipoDocumentoCliente = new Reserva()
+				.setCliente(new Cliente()
+						.setNombre("Pablo")
+						.setApellido("Van Derdonckt")
+						.setNumeroDocumento("36696969"))
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinNumeroDocumentoCliente = new Reserva()
+				.setCliente(new Cliente()
+						.setNombre("Pablo")
+						.setApellido("Van Derdonckt")
+						.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI)))
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinInmueble = new Reserva()
+				.setCliente(cliente)
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinPropietario = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}
+						.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setDireccion(direccion))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinNombrePropietario = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}
+						.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setDireccion(direccion)
+						.setPropietario(new Propietario()
+								.setApellido("Rebechi")))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinApellidoPropietario = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}
+						.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setDireccion(direccion)
+						.setPropietario(new Propietario()
+								.setNombre("Esteban")))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinTipoInmueble = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}
+						.setDireccion(direccion)
+						.setPropietario(propietario))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinDireccionInmueble = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}
+						.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setPropietario(propietario))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinLocalidadInmueble = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setDireccion(new Direccion()
+								.setCalle(new Calle()
+										.setNombre("Azquenaga"))
+								.setBarrio(new Barrio()
+										.setNombre("Vicente Zaspe"))
+								.setNumero("3434")
+								.setPiso("6")
+								.setDepartamento("6B")
+								.setOtros("Ala izquierda"))
+						.setPropietario(propietario))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinBarrioInmueble = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setDireccion(new Direccion()
+								.setCalle(new Calle()
+										.setNombre("Azquenaga"))
+								.setLocalidad(localidad)
+								.setNumero("3434")
+								.setPiso("6")
+								.setDepartamento("6B")
+								.setOtros("Ala izquierda"))
+						.setPropietario(propietario))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinCalleInmueble = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setDireccion(new Direccion()
+								.setLocalidad(localidad)
+								.setBarrio(new Barrio()
+										.setNombre("Vicente Zaspe"))
+								.setNumero("3434")
+								.setPiso("6")
+								.setDepartamento("6B")
+								.setOtros("Ala izquierda"))
+						.setPropietario(propietario))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinAlturaInmueble = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setDireccion(new Direccion()
+								.setCalle(new Calle()
+										.setNombre("Azquenaga"))
+								.setLocalidad(localidad)
+								.setBarrio(new Barrio()
+										.setNombre("Vicente Zaspe"))
+								.setPiso("6")
+								.setDepartamento("6B")
+								.setOtros("Ala izquierda"))
+						.setPropietario(propietario))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinFechaInicio = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaFin(fechahoy);
+		Reserva reservaSinFechaFin = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy);
+		Reserva reservaSinImporte = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(inmueble)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
 
 		return new Object[] {
 				new Object[] { reservaCorrecta, new ResultadoCrearReserva(), null }, //reserva correcta

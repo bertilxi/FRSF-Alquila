@@ -125,6 +125,7 @@ public class AltaReservaController extends OlimpoController {
 						case Ya_Existe_Reserva_Entre_Las_Fechas:
 							error.append("Ya existe una reserva para este inmueble en ese periodo de tiempo");
 							break;
+						//TODO completar errores faltantes
 						}
 					}
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
