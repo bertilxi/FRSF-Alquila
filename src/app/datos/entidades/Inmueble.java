@@ -99,6 +99,10 @@ public class Inmueble {
 	@JoinColumn(name = "idestado", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idestado_fk"), nullable = false)
 	private Estado estado;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idestadoinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idestadoinmueble_fk"), nullable = false)
+	private EstadoInmueble estadoInmueble;
+
 	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	private DatosEdificio datosEdificio;
 
@@ -231,6 +235,15 @@ public class Inmueble {
 
 	public Inmueble setEstado(Estado estado) {
 		this.estado = estado;
+		return this;
+	}
+
+	public EstadoInmueble getEstadoInmueble() {
+		return estadoInmueble;
+	}
+
+	public Inmueble setEstadoInmueble(EstadoInmueble estadoInmueble) {
+		this.estadoInmueble = estadoInmueble;
 		return this;
 	}
 

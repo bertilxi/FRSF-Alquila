@@ -19,6 +19,7 @@ package app.datos.entidades;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -66,7 +67,7 @@ public class Venta {
 	@JoinColumn(name = "idpropietario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "venta_idpropietario_fk"), nullable = false)
 	private Propietario propietario;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "idinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "venta_idinmueble_fk"), nullable = false)
 	private Inmueble inmueble;
 

@@ -87,6 +87,22 @@ public class ValidadorFormato {
 	}
 
 	/**
+	 * Valida si un medio de pago tiene el formato adecuado
+	 *
+	 * @param medio
+	 *            medio de pago a validar
+	 * @return si es valido
+	 */
+	public Boolean validarMedioDePago(String medio) {
+		if(medio == null){
+			return false;
+		}
+
+		Pattern pat = Pattern.compile("[a-zA-Z\\ ÁÉÍÓÚÜÑáéíóúüñ]{1,30}");
+		return pat.matcher(medio).matches();
+	}
+
+	/**
 	 * Valida si un apellido tiene el formato adecuado
 	 *
 	 * @param apellido

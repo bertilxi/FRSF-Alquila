@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Estado;
+import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
@@ -43,6 +44,8 @@ public interface DatosService {
 	public ArrayList<TipoInmueble> obtenerTiposDeInmueble() throws PersistenciaException;
 
 	public ArrayList<Estado> obtenerEstados() throws PersistenciaException;
+
+	public ArrayList<EstadoInmueble> obtenerEstadosInmueble() throws PersistenciaException;
 
 	public ArrayList<Barrio> obtenerBarriosDe(Localidad localidad) throws PersistenciaException;
 

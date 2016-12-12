@@ -27,11 +27,13 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import app.comun.ValidadorFormato;
+import app.datos.clases.EstadoInmuebleStr;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.FiltroInmueble;
 import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Estado;
+import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.HistorialDatosEdificio;
 import app.datos.entidades.HistorialInmueble;
 import app.datos.entidades.Inmueble;
@@ -132,6 +134,13 @@ public class GestorInmueble {
 			for(Estado e: estados){
 				if(e.getEstado().equals(EstadoStr.ALTA)){
 					inmueble.setEstado(e);
+					break;
+				}
+			}
+			ArrayList<EstadoInmueble> estadosInm = gestorDatos.obtenerEstadosInmueble();
+			for(EstadoInmueble ei: estadosInm){
+				if(ei.getEstado().equals(EstadoInmuebleStr.NO_VENDIDO)){
+					inmueble.setEstadoInmueble(ei);
 					break;
 				}
 			}

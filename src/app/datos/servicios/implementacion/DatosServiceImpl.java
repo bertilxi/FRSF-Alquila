@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Estado;
+import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
@@ -148,6 +149,23 @@ public class DatosServiceImpl implements DatosService {
 			for(Object o: session.getNamedQuery("obtenerEstados").list()){
 				if(o instanceof Estado){
 					estados.add((Estado) o);
+				}
+			}
+		} catch(Exception e){
+			throw new ConsultaException(e);
+		}
+		return estados;
+	}
+
+	@Override
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
+	public ArrayList<EstadoInmueble> obtenerEstadosInmueble() throws PersistenciaException {
+		ArrayList<EstadoInmueble> estados = new ArrayList<>();
+		Session session = getSessionFactory().getCurrentSession();
+		try{
+			for(Object o: session.getNamedQuery("obtenerEstadosInmueble").list()){
+				if(o instanceof EstadoInmueble){
+					estados.add((EstadoInmueble) o);
 				}
 			}
 		} catch(Exception e){

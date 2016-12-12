@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Estado;
+import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Orientacion;
 import app.datos.entidades.Pais;
@@ -66,6 +67,10 @@ public class GestorDatos {
 
 	public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
 		return persistidorDatos.obtenerEstados();
+	}
+
+	public ArrayList<EstadoInmueble> obtenerEstadosInmueble() throws PersistenciaException {
+		return persistidorDatos.obtenerEstadosInmueble();
 	}
 
 	public ArrayList<Barrio> obtenerBarriosDe(Localidad localidad) throws PersistenciaException {
