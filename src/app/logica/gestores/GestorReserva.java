@@ -47,9 +47,6 @@ public class GestorReserva {
 	protected ReservaService persistidorReserva;
 	
 	@Resource
-	protected GestorInmueble gestorInmueble;
-	
-	@Resource
 	protected GestorDatos gestorDatos;
  	
 	@Resource
