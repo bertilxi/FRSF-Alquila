@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * This file is part of Olimpo.
+ *
+ * Olimpo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Olimpo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.logica.gestores;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +48,6 @@ import app.excepciones.SaveUpdateException;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.logica.resultados.ResultadoEliminarPropietario;
-import app.logica.resultados.ResultadoEliminarPropietario.ErrorEliminarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
 import junitparams.JUnitParamsRunner;
@@ -254,7 +270,6 @@ public class GestorPropietarioTest {
 		//Parámetros de JUnitParams
 		return new Object[] {
 				new Object[] { propietario, 1, resultadoEliminarCorrecto, null, null }, //Test correcto
-				new Object[] { null, 0, resultadoEliminarNo_Existe, null, null }, //No existe el propietario a eliminar
 				new Object[] { propietario, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) } //La base de datos tira una excepción
 		};
 	}
@@ -350,5 +365,4 @@ public class GestorPropietarioTest {
 
 	//Para eliminarPropietario
 	private static final ResultadoEliminarPropietario resultadoEliminarCorrecto = new ResultadoEliminarPropietario();
-	private static final ResultadoEliminarPropietario resultadoEliminarNo_Existe = new ResultadoEliminarPropietario(ErrorEliminarPropietario.No_Existe_Propietario);
 }

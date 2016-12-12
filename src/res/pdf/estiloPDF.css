@@ -15,26 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
  */
-package app.ui.controladores;
-
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import app.datos.entidades.Reserva;
-
-public class ModificarReservaController extends OlimpoController {
-
-	public static final String URLVista = null;
-
-	public void setReserva(Reserva reserva) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void inicializar(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
-	}
+.root{
+  -fx-background: #ffffff;
+  -fx-background-color: linear-gradient(#ffffff 0%, #ffffff 100%);
+  -fx-text-fill: black;
+  -fx-background-repeat: stretch;
+  -fx-background-size: 500 500;
+  -fx-background-position: center center;
 
 }
+ 

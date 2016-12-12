@@ -73,4 +73,16 @@ public class ConversorFechas {
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		return formatter.format(fecha);
 	}
+	
+	/**
+	 * Retorna un string con la hora y minutos de la fecha que se le pasa
+	 *
+	 * @param fecha
+	 *            de la que se va a obtener la hora y minutos
+	 * @return un string con la hora y minutos de la fecha que se le pasa
+	 */
+	public String horaYMinutosToString(Date fecha) {
+		DateFormat formatter = new SimpleDateFormat("HH:mm");
+		return formatter.format(fecha);
+	}
 }

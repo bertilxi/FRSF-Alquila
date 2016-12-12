@@ -46,9 +46,6 @@ public class Reserva {
 	@Column(name = "id")
 	private Integer id; //ID
 
-	@Column(name = "importe", nullable = false)
-	private Double importe;
-
 	@Column(name = "fecha_inicio", nullable = false)
 	private Date fechaInicio;
 
@@ -76,10 +73,8 @@ public class Reserva {
 		super();
 	}
 
-	public Reserva(Double importe, Date fechaInicio, Date fechaFin, PDF archivoPDF, Cliente cliente,
-			Inmueble inmueble, Estado estado) {
+	public Reserva(Date fechaInicio, Date fechaFin, PDF archivoPDF, Cliente cliente, Inmueble inmueble, Estado estado) {
 		super();
-		this.importe = importe;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.archivoPDF = archivoPDF;
@@ -90,15 +85,6 @@ public class Reserva {
 
 	public Integer getId() {
 		return id;
-	}
-
-	public Double getImporte() {
-		return importe;
-	}
-
-	public Reserva setImporte(Double importe) {
-		this.importe = importe;
-		return this;
 	}
 
 	public Date getFechaInicio() {
@@ -165,7 +151,6 @@ public class Reserva {
 		result = prime * result + ((fechaFin == null) ? 0 : fechaFin.hashCode());
 		result = prime * result + ((fechaInicio == null) ? 0 : fechaInicio.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((importe == null) ? 0 : importe.hashCode());
 		result = prime * result + ((inmueble == null) ? 0 : inmueble.hashCode());
 		return result;
 	}
@@ -233,14 +218,6 @@ public class Reserva {
 		else if(!fechaInicio.equals(other.fechaInicio)){
 			return false;
 		}
-		if(importe == null){
-			if(other.importe != null){
-				return false;
-			}
-		}
-		else if(!importe.equals(other.importe)){
-			return false;
-		}
 		if(inmueble == null){
 			if(other.inmueble != null){
 				return false;
@@ -251,4 +228,5 @@ public class Reserva {
 		}
 		return true;
 	}
+
 }

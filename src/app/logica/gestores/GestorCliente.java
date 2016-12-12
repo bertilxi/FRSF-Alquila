@@ -35,7 +35,6 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 import app.logica.resultados.ResultadoEliminarCliente;
-import app.logica.resultados.ResultadoEliminarCliente.ErrorEliminarCliente;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 
@@ -184,25 +183,15 @@ public class GestorCliente {
 	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoEliminarCliente eliminarCliente(Cliente cliente) throws PersistenciaException {
-		ArrayList<ErrorEliminarCliente> errores = new ArrayList<>();
-
-		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(), cliente.getNumeroDocumento()));
-
-		if(null == clienteAuxiliar){
-			errores.add(ErrorEliminarCliente.No_Existe_Cliente);
-		}
-
-		if(errores.isEmpty()){
-			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
-			for(Estado e: estados){
-				if(e.getEstado().equals(EstadoStr.BAJA)){
-					cliente.setEstado(e);
-				}
+		ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+		for(Estado e: estados){
+			if(e.getEstado().equals(EstadoStr.BAJA)){
+				cliente.setEstado(e);
 			}
-			persistidorCliente.modificarCliente(cliente);
 		}
+		persistidorCliente.modificarCliente(cliente);
 
-		return new ResultadoEliminarCliente(errores.toArray(new ErrorEliminarCliente[0]));
+		return new ResultadoEliminarCliente();
 	}
 
 	/**

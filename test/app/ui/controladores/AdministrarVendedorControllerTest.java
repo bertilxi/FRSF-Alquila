@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * This file is part of Olimpo.
+ *
+ * Olimpo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Olimpo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.ui.controladores;
 
 import static org.junit.Assert.assertNotEquals;
@@ -22,7 +39,6 @@ import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoEliminarVendedor;
-import app.logica.resultados.ResultadoEliminarVendedor.ErrorEliminarVendedor;
 import app.ui.ScenographyChanger;
 import app.ui.componentes.ventanas.PresentadorVentanas;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
@@ -259,7 +275,6 @@ public class AdministrarVendedorControllerTest {
 
 		ArrayList<Vendedor> listaVendedores = new ArrayList<>();
 		ArrayList<Vendedor> listaVendedoresVacia = new ArrayList<>();
-		ResultadoEliminarVendedor resultadoConError = new ResultadoEliminarVendedor(ErrorEliminarVendedor.No_Existe_Vendedor);
 		ResultadoEliminarVendedor resultadoSinError = new ResultadoEliminarVendedor();
 
 		SaveUpdateException exception = new SaveUpdateException(new Throwable());
@@ -270,8 +285,6 @@ public class AdministrarVendedorControllerTest {
 		return new Object[] {
 				new Object[] { listaVendedores, 1, true, resultadoSinError, 0, 0, null },
 				new Object[] { listaVendedores, 1, true, resultadoSinError, 0, 1, exception },
-				new Object[] { listaVendedores, 1, true, resultadoConError, 1, 0, null },
-				new Object[] { listaVendedores, 1, true, resultadoConError, 1, 1, exception },
 				new Object[] { listaVendedores, 1, false, resultadoSinError, 0, 0, null },
 				new Object[] { listaVendedoresVacia, 0, false, resultadoSinError, 0, 0, null },
 				new Object[] { listaVendedoresVacia, 0, false, resultadoSinError, 0, 0, null }

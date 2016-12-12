@@ -26,7 +26,7 @@ public abstract class GestionException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
-	public GestionException(String msg) {
+	public GestionException(String msg, Throwable e) {
 		super(msg);
 	}
 }

@@ -17,9 +17,12 @@
  */
 package app.comun;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Clase encargada de la conversion de strings
  */
+@Service
 public class FormateadorString {
 
 	/**
