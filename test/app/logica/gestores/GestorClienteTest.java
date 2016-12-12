@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * This file is part of Olimpo.
+ *
+ * Olimpo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Olimpo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.logica.gestores;
 
 import static org.junit.Assert.assertEquals;
@@ -24,7 +41,6 @@ import app.datos.servicios.ClienteService;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearCliente.ErrorCrearCliente;
 import app.logica.resultados.ResultadoEliminarCliente;
-import app.logica.resultados.ResultadoEliminarCliente.ErrorEliminarCliente;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 import junitparams.JUnitParamsRunner;
@@ -65,8 +81,6 @@ public class GestorClienteTest {
 
 	//Para eliminar cliente
 	private static final ResultadoEliminarCliente resultadoCorrectoEliminar = new ResultadoEliminarCliente();
-	private static final ResultadoEliminarCliente resultadoEliminarNoExisteCliente =
-			new ResultadoEliminarCliente(ErrorEliminarCliente.No_Existe_Cliente);
 
 	private static Cliente cliente;
 
@@ -267,7 +281,6 @@ public class GestorClienteTest {
 		//Parámetros de JUnitParams
 		return new Object[] {
 				new Object[] { clienteE, 1, resultadoCorrectoEliminar },
-				new Object[] { null, 0, resultadoEliminarNoExisteCliente },
 		};
 	}
 

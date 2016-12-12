@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * This file is part of Olimpo.
+ *
+ * Olimpo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Olimpo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.ui.controladores;
 
 import static org.junit.Assert.assertEquals;
@@ -13,7 +30,6 @@ import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.logica.CoordinadorJavaFX;
 import app.logica.resultados.ResultadoEliminarInmueble;
-import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
 import app.ui.componentes.ventanas.PresentadorVentanas;
 import app.ui.componentes.ventanas.mock.PresentadorVentanasMock;
 import app.ui.controladores.resultado.ResultadoControlador;
@@ -104,21 +120,17 @@ public class AdministrarInmuebleControllerTest {
 		Boolean acepta = true;
 
 		ResultadoControlador resultadoControladorCorrecto = new ResultadoControlador();
-		ResultadoControlador resultadoControladorEntidadNoEncontrada = new ResultadoControlador(ErrorControlador.Entidad_No_Encontrada);
 		ResultadoControlador resultadoControladorErrorPersistencia = new ResultadoControlador(ErrorControlador.Error_Persistencia);
 		ResultadoControlador resultadoControladorErrorDesconocido = new ResultadoControlador(ErrorControlador.Error_Desconocido);
 
 		ResultadoEliminarInmueble resultadoLogicaCorrecto = new ResultadoEliminarInmueble();
-		ResultadoEliminarInmueble resultadoLogicaNoExisteInmueble = new ResultadoEliminarInmueble(ErrorEliminarInmueble.No_Existe_Inmueble);
 
 		Throwable excepcionPersistencia = new ObjNotFoundException("", new Exception());
 		Throwable excepcionInesperada = new Exception();
 
 		return new Object[] {
 				new Object[] { inmueble, acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario acepta y el inmueble se elimina correctamente
-				new Object[] { inmueble, acepta, resultadoControladorEntidadNoEncontrada, resultadoLogicaNoExisteInmueble, null }, //test donde el usuario acepta, pero devuelve errores
 				new Object[] { inmueble, !acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario no acepta, pero de haber aceptado, se hubiese eliminado el inmueble correctamente
-				new Object[] { inmueble, !acepta, resultadoControladorCorrecto, resultadoLogicaNoExisteInmueble, null }, //test donde el usuario no acepta, pero de haber aceptado, se huese devuelto error
 				new Object[] { inmueble, acepta, resultadoControladorErrorPersistencia, null, excepcionPersistencia }, //test donde el controlador tira una excepción de persistencia
 				new Object[] { inmueble, acepta, resultadoControladorErrorDesconocido, null, excepcionInesperada } //test donde el controlador tira unaexcepción inesperada
 		};
