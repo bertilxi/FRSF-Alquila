@@ -42,7 +42,6 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble;
-import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
 import app.logica.resultados.ResultadoModificarInmueble;
 import app.logica.resultados.ResultadoModificarInmueble.ErrorModificarInmueble;
 
@@ -267,25 +266,15 @@ public class GestorInmueble {
 	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoEliminarInmueble eliminarInmueble(Inmueble inmueble) throws PersistenciaException {
-		ArrayList<ErrorEliminarInmueble> errores = new ArrayList<>();
-
-		Inmueble inmuebleAuxiliar = persistidorInmueble.obtenerInmueble(inmueble.getId());
-
-		if(null == inmuebleAuxiliar){
-			errores.add(ErrorEliminarInmueble.No_Existe_Inmueble);
-		}
-
-		if(errores.isEmpty()){
-			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
-			for(Estado e: estados){
-				if(e.getEstado().equals(EstadoStr.BAJA)){
-					inmueble.setEstado(e);
-				}
+		ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+		for(Estado e: estados){
+			if(e.getEstado().equals(EstadoStr.BAJA)){
+				inmueble.setEstado(e);
 			}
-			persistidorInmueble.modificarInmueble(inmueble);
 		}
+		persistidorInmueble.modificarInmueble(inmueble);
 
-		return new ResultadoEliminarInmueble(errores.toArray(new ErrorEliminarInmueble[0]));
+		return new ResultadoEliminarInmueble();
 	}
 
 	/**

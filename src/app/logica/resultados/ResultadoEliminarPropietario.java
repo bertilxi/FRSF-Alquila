@@ -27,7 +27,6 @@ public class ResultadoEliminarPropietario extends Resultado<ErrorEliminarPropiet
 
 	public enum ErrorEliminarPropietario {
 
-		No_Existe_Propietario
 	}
 
 }

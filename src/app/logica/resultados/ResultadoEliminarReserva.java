@@ -26,7 +26,7 @@ public class ResultadoEliminarReserva extends Resultado<ErrorEliminarReserva> {
 	}
 
 	public enum ErrorEliminarReserva {
-		No_Existe_Reserva
+
 	}
 
 }

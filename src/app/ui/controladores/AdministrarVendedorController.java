@@ -132,9 +132,7 @@ public class AdministrarVendedorController extends OlimpoController {
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorEliminarVendedor err: resultado.getErrores()){
 						switch(err) {
-						case No_Existe_Vendedor:
-							stringErrores.append("No existe el vendedor que desea eliminar.\n");
-							break;
+
 						}
 					}
 					presentador.presentarError("No se pudo eliminar el vendedor", stringErrores.toString(), stage);

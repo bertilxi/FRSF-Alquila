@@ -35,7 +35,6 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearPropietario.ErrorCrearPropietario;
 import app.logica.resultados.ResultadoEliminarPropietario;
-import app.logica.resultados.ResultadoEliminarPropietario.ErrorEliminarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario;
 import app.logica.resultados.ResultadoModificarPropietario.ErrorModificarPropietario;
 
@@ -99,7 +98,7 @@ public class GestorPropietario {
 
 	/**
 	 * Método auxiliar que encapsula la validación de los formatos de los atributos del propietario a crear
-	 * 
+	 *
 	 * @param propietario
 	 *            propietario a validar
 	 * @param errores
@@ -169,7 +168,7 @@ public class GestorPropietario {
 
 	/**
 	 * Método auxiliar que encapsula la validación de los formatos de los atributos del propietario a modificar
-	 * 
+	 *
 	 * @param propietario
 	 *            propietario a validar
 	 * @param errores
@@ -213,27 +212,16 @@ public class GestorPropietario {
 	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoEliminarPropietario eliminarPropietario(Propietario propietario) throws PersistenciaException {
-		ArrayList<ErrorEliminarPropietario> errores = new ArrayList<>();
-
-		Propietario propietarioAuxiliar;
-		propietarioAuxiliar = persistidorPropietario.obtenerPropietario(new FiltroPropietario(propietario.getTipoDocumento().getTipo(), propietario.getNumeroDocumento()));
-
-		if(null == propietarioAuxiliar){
-			errores.add(ErrorEliminarPropietario.No_Existe_Propietario);
-		}
-
-		if(errores.isEmpty()){
-			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
-			for(Estado e: estados){
-				if(e.getEstado().equals(EstadoStr.BAJA)){
-					propietario.setEstado(e);
-					break;
-				}
+		ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+		for(Estado e: estados){
+			if(e.getEstado().equals(EstadoStr.BAJA)){
+				propietario.setEstado(e);
+				break;
 			}
-			persistidorPropietario.modificarPropietario(propietario);
 		}
+		persistidorPropietario.modificarPropietario(propietario);
 
-		return new ResultadoEliminarPropietario(errores.toArray(new ErrorEliminarPropietario[0]));
+		return new ResultadoEliminarPropietario();
 	}
 
 	/**
