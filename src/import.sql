@@ -2678,8 +2678,8 @@ INSERT INTO localidad (id,idprovincia,nombre) VALUES (nextval('localidad_id_seq'
 INSERT INTO estado VALUES (nextval('estado_id_seq'),'ALTA');
 INSERT INTO estado VALUES (nextval('estado_id_seq'),'BAJA');
 
-INSERT INTO estadoinmueble VALUES (nextval('estado_id_seq'),'VENDIDO');
-INSERT INTO estadoinmueble VALUES (nextval('estado_id_seq'),'NO_VENDIDO');
+INSERT INTO estadoinmueble VALUES (nextval('estadoinmueble_id_seq'),'VENDIDO');
+INSERT INTO estadoinmueble VALUES (nextval('estadoinmueble_id_seq'),'NO_VENDIDO');
 
 
 INSERT INTO tipo_documento VALUES (nextval('tipo_documento_id_seq'),'DNI');
