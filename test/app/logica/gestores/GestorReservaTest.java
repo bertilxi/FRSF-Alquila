@@ -18,6 +18,7 @@
 package app.logica.gestores;
 
 import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,6 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
+
 import app.datos.clases.ReservaVista;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.clases.TipoInmuebleStr;
@@ -45,10 +47,10 @@ import app.datos.entidades.TipoInmueble;
 import app.datos.servicios.ReservaService;
 import app.excepciones.GenerarPDFException;
 import app.excepciones.GestionException;
+import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
-import javassist.tools.rmi.ObjectNotFoundException;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -59,7 +61,7 @@ import junitparams.Parameters;
 public class GestorReservaTest {
 
 	//Prueba el método crearReserva(), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
-	
+
 	@Test
 	@Parameters
 
@@ -176,13 +178,13 @@ public class GestorReservaTest {
 				.setPiso("6")
 				.setDepartamento("6B")
 				.setOtros("Ala izquierda");
-		
+
 		Cliente cliente = new Cliente()
 				.setNombre("Pablo")
 				.setApellido("Van Derdonckt")
 				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
 				.setNumeroDocumento("36696969");
-		
+
 		Inmueble inmueble = new Inmueble() {
 			@Override
 			public Integer getId() {
@@ -191,9 +193,9 @@ public class GestorReservaTest {
 		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 				.setDireccion(direccion)
 				.setPropietario(propietario);
-		
+
 		Date fechahoy = new Date();
-		
+
 		ReservaVista reservaCorrecta = new ReservaVista(cliente, inmueble, 300000.0, fechahoy, fechahoy);
 		ReservaVista reservaSinCliente = new ReservaVista(null, inmueble, 300000.0, fechahoy, fechahoy);
 		ReservaVista reservaSinNombreCliente = new ReservaVista(new Cliente()
@@ -209,7 +211,7 @@ public class GestorReservaTest {
 		ReservaVista reservaSinTipoDocumentoCliente = new ReservaVista(new Cliente()
 				.setNombre("Pablo")
 				.setApellido("Van Derdonckt")
-				.setNumeroDocumento("36696969"), 
+				.setNumeroDocumento("36696969"),
 				inmueble, 300000.0, fechahoy, fechahoy);
 		ReservaVista reservaSinNumeroDocumentoCliente = new ReservaVista(new Cliente()
 				.setNombre("Pablo")
@@ -218,10 +220,11 @@ public class GestorReservaTest {
 				inmueble, 300000.0, fechahoy, fechahoy);
 		ReservaVista reservaSinInmueble = new ReservaVista(cliente, null, 300000.0, fechahoy, fechahoy);
 		ReservaVista reservaSinPropietario = new ReservaVista(cliente, new Inmueble() {
-				@Override
-				public Integer getId() {
-					return 12345;
-				};}
+			@Override
+			public Integer getId() {
+				return 12345;
+			};
+		}
 				.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 				.setDireccion(direccion),
 				300000.0, fechahoy, fechahoy);
@@ -353,7 +356,7 @@ public class GestorReservaTest {
 				new Object[] { reservaSinFechaFin, new ResultadoCrearReserva(ErrorCrearReserva.FechaFin_vacía), null }, //reserva sin fecha de fin vacía
 				new Object[] { reservaSinImporte, new ResultadoCrearReserva(ErrorCrearReserva.Importe_vacío), null }, //reserva sin Importe
 				new Object[] { reservaCorrecta, null, new GenerarPDFException(new Exception()) }, //el gestorPDF tira una excepción
-				new Object[] { reservaCorrecta, null, new ObjectNotFoundException("", new Exception()) }, //el persistidor tira una excepción
+				new Object[] { reservaCorrecta, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una excepción
 				new Object[] { reservaCorrecta, null, new Exception() } //el persistidor tira una excepción inesperada
 		};
 	}
