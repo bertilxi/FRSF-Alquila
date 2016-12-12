@@ -47,7 +47,13 @@ import app.ui.controladores.LoginController;
 public class GestorPDFTest {
 
 	@Test
-	public void test() throws Exception {
+	/**
+	 * Prueba el método generarPDF(Reserva reserva), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
+	 * El test es en parte manual ya que genera un archivo pdf que debe comprobarse si es correcto manualmente.
+	 *
+	 * @throws Exception
+	 */
+	public void testGenerarPDFReserva() throws Exception {
 		new ControladorTest(LoginController.URLVista, new LoginController() {
 			@Override
 			protected void setTitulo(String titulo) {
@@ -87,7 +93,7 @@ public class GestorPDFTest {
 		Date fechahoy = new Date();
 		Reserva reserva = new Reserva().setCliente(cliente).setInmueble(inmueble).setImporte(300000.50).setFechaInicio(fechahoy).setFechaFin(fechahoy);
 		PDF pdf = gestor.generarPDF(reserva);
-		FileOutputStream fos = new FileOutputStream("borrarRico.pdf");
+		FileOutputStream fos = new FileOutputStream("testReserva.pdf");
 		fos.write(pdf.getArchivo());
 		fos.close();
 	}
