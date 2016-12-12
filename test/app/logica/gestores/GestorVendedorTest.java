@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+ * This file is part of Olimpo.
+ *
+ * Olimpo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Olimpo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.logica.gestores;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +51,6 @@ import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
 import app.logica.resultados.ResultadoCrearVendedor;
 import app.logica.resultados.ResultadoCrearVendedor.ErrorCrearVendedor;
 import app.logica.resultados.ResultadoEliminarVendedor;
-import app.logica.resultados.ResultadoEliminarVendedor.ErrorEliminarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor;
 import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
 import junitparams.JUnitParamsRunner;
@@ -378,7 +394,6 @@ public class GestorVendedorTest {
 		//Parámetros de JUnitParams
 		return new Object[] {
 				new Object[] { vendedorE, 1, resultadoCorrectoEliminar },
-				new Object[] { null, 0, resultadoEliminarNoExisteVendedor },
 		};
 	}
 
@@ -419,7 +434,5 @@ public class GestorVendedorTest {
 
 	//Para eliminar vendedor
 	private static final ResultadoEliminarVendedor resultadoCorrectoEliminar = new ResultadoEliminarVendedor();
-	private static final ResultadoEliminarVendedor resultadoEliminarNoExisteVendedor =
-			new ResultadoEliminarVendedor(ErrorEliminarVendedor.No_Existe_Vendedor);
 
 }

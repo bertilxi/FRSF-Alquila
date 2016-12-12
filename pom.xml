@@ -54,6 +54,7 @@
                         <project>Olimpo</project>
 		            </properties>
 		            <basedir>src</basedir>
+		            <basedir>test</basedir>
   	            </configuration>
   		
                 <executions>

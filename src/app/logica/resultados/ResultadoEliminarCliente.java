@@ -27,7 +27,6 @@ public class ResultadoEliminarCliente extends Resultado<ErrorEliminarCliente> {
 
 	public enum ErrorEliminarCliente {
 
-		No_Existe_Cliente
 	}
 
 }

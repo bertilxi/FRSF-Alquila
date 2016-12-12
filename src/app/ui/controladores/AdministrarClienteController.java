@@ -177,10 +177,7 @@ public class AdministrarClienteController extends OlimpoController {
 				StringBuilder stringErrores = new StringBuilder();
 				for(ErrorEliminarCliente err: resultado.getErrores()){
 					switch(err) {
-					case No_Existe_Cliente:
-						stringErrores.append("No existe el cliente que desea eliminar.\n");
-						erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
-						break;
+
 					}
 				}
 				presentador.presentarError("No se pudo eliminar el cliente", stringErrores.toString(), stage);

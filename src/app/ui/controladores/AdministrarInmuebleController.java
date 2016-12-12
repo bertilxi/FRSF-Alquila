@@ -181,11 +181,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		if(resultado.hayErrores()){
 			for(ErrorEliminarInmueble err: resultado.getErrores()){
 				switch(err) {
-				case No_Existe_Inmueble:
-					erroresBfr.append("El inmueble no existe.\n");
 
-					erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
-					break;
 				}
 			}
 			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);

@@ -27,7 +27,6 @@ public class ResultadoEliminarVendedor extends Resultado<ErrorEliminarVendedor> 
 
 	public enum ErrorEliminarVendedor {
 
-		No_Existe_Vendedor
 	}
 
 }

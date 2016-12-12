@@ -153,9 +153,7 @@ public class AdministrarReservaController extends OlimpoController {
 				StringBuilder stringErrores = new StringBuilder();
 				for(ErrorEliminarReserva err: resultado.getErrores()){
 					switch(err) {
-					case No_Existe_Reserva:
-						stringErrores.append("Ya no existe la reserva que desea eliminar.\n");
-						break;
+
 					}
 				}
 				presentador.presentarError("Ha ocurrido un error", stringErrores.toString(), stage);

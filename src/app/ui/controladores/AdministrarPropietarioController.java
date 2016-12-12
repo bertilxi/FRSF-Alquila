@@ -62,7 +62,6 @@ public class AdministrarPropietarioController extends OlimpoController {
 	@FXML
 	private Button botonEliminar;
 
-
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar propietarios");
@@ -88,7 +87,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 	 * Habilita o deshabilita botones según si hay un propietario seleccionado o no
 	 *
 	 * @param propietario
-	 * 		propietario seleccionado. Si no hay propietario seleccionado, es <code>null</code>
+	 *            propietario seleccionado. Si no hay propietario seleccionado, es <code>null</code>
 	 */
 	private void habilitarBotones(Propietario propietario) {
 		if(propietario == null){
@@ -153,32 +152,30 @@ public class AdministrarPropietarioController extends OlimpoController {
 		if(!ventana.acepta()){
 			return new ResultadoControlador();
 		}
-			try{
-				ResultadoEliminarPropietario resultado = coordinador.eliminarPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
-				if(resultado.hayErrores()){
-					StringBuilder stringErrores = new StringBuilder();
-					for(ErrorEliminarPropietario err: resultado.getErrores()){
-						switch(err) {
-						case No_Existe_Propietario:
-							stringErrores.append("No existe el propietario que desea eliminar.\n");
-							erroresControlador.add(ErrorControlador.Entidad_No_Encontrada);
-							break;
-						}
-					}
-					presentador.presentarError("No se pudo eliminar el propietario", stringErrores.toString(), stage);
+		try{
+			ResultadoEliminarPropietario resultado = coordinador.eliminarPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
+			if(resultado.hayErrores()){
+				StringBuilder stringErrores = new StringBuilder();
+				for(ErrorEliminarPropietario err: resultado.getErrores()){
+					switch(err) {
 
-				} else {
-					presentador.presentarToast("Se ha eliminado el propietario con éxito", stage);
+					}
 				}
-				tablaPropietarios.getItems().clear();
-				tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());
-				return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
-			} catch(PersistenciaException e){
-				presentador.presentarExcepcion(e, stage);
-				return new ResultadoControlador(ErrorControlador.Error_Persistencia);
-			} catch(Exception e) {
-				presentador.presentarExcepcionInesperada(e, stage);
-				return new ResultadoControlador(ErrorControlador.Error_Desconocido);
+				presentador.presentarError("No se pudo eliminar el propietario", stringErrores.toString(), stage);
+
 			}
+			else{
+				presentador.presentarToast("Se ha eliminado el propietario con éxito", stage);
+			}
+			tablaPropietarios.getItems().clear();
+			tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());
+			return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
+		} catch(Exception e){
+			presentador.presentarExcepcionInesperada(e, stage);
+			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 	}
+}
