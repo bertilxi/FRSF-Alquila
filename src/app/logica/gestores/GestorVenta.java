@@ -78,6 +78,10 @@ public class GestorVenta {
 			errores.add(ErrorCrearVenta.Cliente_Igual_A_Propietario);
 		}
 
+		if(venta.getInmueble().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)) {
+			errores.add(ErrorCrearVenta.Inmueble_Ya_Vendido);
+		}
+
 		Date fechaHoy = new Date(System.currentTimeMillis());
 		for(Reserva r: venta.getInmueble().getReservas()) {
 			if (fechaHoy.after(r.getFechaInicio()) && fechaHoy.before(r.getFechaFin()) && !r.getCliente().equals(venta.getCliente())) {
@@ -89,7 +93,7 @@ public class GestorVenta {
 		if(errores.isEmpty()){
 			ArrayList<EstadoInmueble> estadosInm = gestorDatos.obtenerEstadosInmueble();
 			for(EstadoInmueble ei: estadosInm){
-				if(ei.getEstado().equals(EstadoInmuebleStr.NO_VENDIDO)){
+				if(ei.getEstado().equals(EstadoInmuebleStr.VENDIDO)){
 					venta.getInmueble().setEstadoInmueble(ei);
 					break;
 				}

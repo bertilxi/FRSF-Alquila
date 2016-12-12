@@ -10,6 +10,7 @@ public class ResultadoCrearVenta extends Resultado<ErrorCrearVenta> {
 
 	public enum ErrorCrearVenta {
 
+		Inmueble_Ya_Vendido,
 		Cliente_Igual_A_Propietario,
 		Inmueble_Reservado_Por_Otro_Cliente,
 		Formato_Medio_De_Pago_Incorrecto,
