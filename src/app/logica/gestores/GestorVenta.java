@@ -13,6 +13,7 @@ import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Reserva;
 import app.datos.entidades.Venta;
 import app.datos.servicios.VentaService;
+import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearVenta;
 import app.logica.resultados.ResultadoCrearVenta.ErrorCrearVenta;
@@ -45,7 +46,7 @@ public class GestorVenta {
 	 * @throws PersistenciaException
 	 * 			si falló al persistir
 	 */
-	public ResultadoCrearVenta crearVenta(Venta venta) throws PersistenciaException {
+	public ResultadoCrearVenta crearVenta(Venta venta) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearVenta> errores = new ArrayList<>();
 
 		if(venta.getCliente() == null){

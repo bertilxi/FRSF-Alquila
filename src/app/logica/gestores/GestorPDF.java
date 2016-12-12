@@ -68,6 +68,8 @@ public class GestorPDF {
 
 	private static final String URLDocumentoReserva = "/res/pdf/documentoReserva.fxml";
 
+	private static final String URLDocumentoVenta = "/res/pdf/documentoVenta.fxml";
+
 	/**
 	 * Método para crear un PDF a partir de una pantalla.
 	 *
@@ -199,8 +201,76 @@ public class GestorPDF {
 	 *            datos que se utilizaran para generar el PDF de una venta
 	 * @return venta en PDF
 	 */
-	public PDF generarPDF(Venta venta) {
-		//TODO hacer
-		return null;
+	public PDF generarPDF(Venta venta)  throws GestionException {
+		exception = null;
+		try{
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource(URLDocumentoVenta));
+			Pane documentoReserva = (Pane) loader.load();
+			Semaphore semaforo = new Semaphore(0);
+
+			Platform.runLater(() -> {
+				try{
+					Label label = (Label) documentoReserva.lookup("#lblNombreComprador");
+					label.setText(formateador.primeraMayuscula(venta.getCliente().getNombre()));
+					label = (Label) documentoReserva.lookup("#lblApellidoComprador");
+					label.setText(formateador.primeraMayuscula(venta.getCliente().getApellido()));
+					label = (Label) documentoReserva.lookup("#lblDocumentoComprador");
+					label.setText(venta.getCliente().getTipoDocumento() + " - " + venta.getCliente().getNumeroDocumento());
+					label = (Label) documentoReserva.lookup("#lblNombrePropietario");
+					label.setText(formateador.primeraMayuscula(venta.getInmueble().getPropietario().getNombre()));
+					label = (Label) documentoReserva.lookup("#lblApellidoPropietario");
+					label.setText(formateador.primeraMayuscula(venta.getInmueble().getPropietario().getApellido()));
+					label = (Label) documentoReserva.lookup("#lblDocumentoComprador");
+					label.setText(venta.getCliente().getTipoDocumento() + " - " + venta.getCliente().getNumeroDocumento());
+					label = (Label) documentoReserva.lookup("#lblCodigoInmueble");
+					label.setText(Integer.toString(venta.getInmueble().getId()));
+					label = (Label) documentoReserva.lookup("#lblTipoInmueble");
+					label.setText(venta.getInmueble().getTipo().getTipo().toString());
+					label = (Label) documentoReserva.lookup("#lblLocalidadInmueble");
+					label.setText(venta.getInmueble().getDireccion().getLocalidad().toString());
+					label = (Label) documentoReserva.lookup("#lblBarrioInmueble");
+					label.setText(venta.getInmueble().getDireccion().getBarrio().toString());
+					label = (Label) documentoReserva.lookup("#lblCalleInmueble");
+					label.setText(venta.getInmueble().getDireccion().getCalle().toString());
+					label = (Label) documentoReserva.lookup("#lblAlturaInmueble");
+					label.setText(venta.getInmueble().getDireccion().getNumero());
+					label = (Label) documentoReserva.lookup("#lblPisoInmueble");
+					label.setText(venta.getInmueble().getDireccion().getPiso());
+					label = (Label) documentoReserva.lookup("#lblDepartamentoInmueble");
+					label.setText(venta.getInmueble().getDireccion().getDepartamento());
+					label = (Label) documentoReserva.lookup("#lblOtrosInmueble");
+					label.setText(venta.getInmueble().getDireccion().getOtros());
+					label = (Label) documentoReserva.lookup("#lblImporte");
+					label.setText(String.format("$ %10.2f", venta.getImporte()));
+					label = (Label) documentoReserva.lookup("#lblMedioDePago");
+					label.setText(venta.getMedioDePago());
+					label = (Label) documentoReserva.lookup("#lblFechaVenta");
+					label.setText(conversorFechas.diaMesYAnioToString(venta.getFecha()));
+					label = (Label) documentoReserva.lookup("#lblHoraGenerado");
+					Date ahora = new Date();
+					label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
+
+					pdf = generarPDF(documentoReserva);
+				} catch(Exception e){
+					exception = e;
+				}
+
+				semaforo.release();
+			});
+
+			semaforo.acquire();
+
+			if(exception != null){
+				throw exception;
+			}
+			if(pdf == null){
+				throw new NullPointerException("Error al generar PDF");
+			}
+		} catch(Exception e){
+			throw new GenerarPDFException(e);
+		}
+
+		return pdf;
 	}
 }
