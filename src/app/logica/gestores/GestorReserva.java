@@ -1,5 +1,6 @@
 package app.logica.gestores;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,17 +8,17 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.EstadoStr;
 import app.datos.clases.ReservaVista;
+import app.datos.entidades.Estado;
 import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
-import app.datos.servicios.InmuebleService;
 import app.datos.servicios.ReservaService;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
 import app.logica.resultados.ResultadoEliminarReserva;
-import app.logica.resultados.ResultadoCrearInmueble.ErrorCrearInmueble;
 
 @Service
 /**
@@ -31,6 +32,9 @@ public class GestorReserva {
 	@Resource
 	protected GestorInmueble gestorInmueble;
 	
+	@Resource
+	protected GestorDatos gestorDatos;
+ 	
 	@Resource
 	protected GestorPDF gestorPDF;
 	
@@ -127,9 +131,19 @@ public class GestorReserva {
 		return new ResultadoCrearReserva(errores.toArray(new ErrorCrearReserva[0]));
 	}
 
-	public ResultadoEliminarReserva eliminarReserva(Reserva reserva) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResultadoEliminarReserva eliminarReserva(Reserva reserva) throws PersistenciaException {
+		
+		ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+		Estado estadoBaja = null;
+		for(Estado estado: estados){
+			if(estado.getEstado().equals(EstadoStr.BAJA)){
+				estadoBaja = estado;
+			}
+		}
+		reserva.setEstado(estadoBaja);
+		persistidorReserva.modificarReserva(reserva);
+		
+		return new ResultadoEliminarReserva();
 	}
 
 }
