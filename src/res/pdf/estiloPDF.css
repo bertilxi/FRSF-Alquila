@@ -16,9 +16,7 @@
  * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
  */
 .root{
-  -fx-font-size: 1em;
-  -fx-font-family: "System";
-  -fx-background: #f9f9f9;
+  -fx-background: #ffffff;
   -fx-background-color: linear-gradient(#ffffff 0%, #ffffff 100%);
   -fx-text-fill: black;
   -fx-background-repeat: stretch;

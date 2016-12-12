@@ -1,6 +1,7 @@
 package app.logica.gestores;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 import java.util.concurrent.Semaphore;
 
 import javax.annotation.Resource;
@@ -145,7 +146,10 @@ public class GestorPDF {
 				label.setText(conversorFechas.diaMesYAnioToString(reserva.getFechaInicio()));
 				label = (Label) documentoReserva.lookup("#lblFechaVencimiento");
 				label.setText(conversorFechas.diaMesYAnioToString(reserva.getFechaFin()));
-
+				label = (Label) documentoReserva.lookup("#lblHoraGenerado");
+				Date ahora = new Date();
+				label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
+				
 				try{
 					pdf = generarPDF(documentoReserva);
 				} catch(Exception e){
