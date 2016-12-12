@@ -197,7 +197,7 @@ public class CoordinadorJavaFX {
 		return gestorDatos.obtenerOrientaciones();
 	}
 
-	public ResultadoCrearReserva crearReserva(ReservaVista reserva) throws PersistenciaException {
+	public ResultadoCrearReserva crearReserva(ReservaVista reserva) throws PersistenciaException, GestionException {
 		return gestorReserva.crearReserva(reserva);
 	}
 
