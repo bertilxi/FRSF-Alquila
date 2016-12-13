@@ -457,13 +457,13 @@ public class AdministrarInmuebleController extends OlimpoController {
 					FiltroInmueble filtro = new FiltroInmueble.Builder()
 							.barrio(barrio)
 							.cantidadDormitorios(cantidadDormitorios)
-							.estadoInmueble(estadoInmueble.getEstado())
+							.estadoInmueble(((estadoInmueble != null) ? estadoInmueble.getEstado() : (null)))
 							.localidad(localidad)
 							.pais(pais)
 							.precioMaximo(precioMaximo)
 							.precioMinimo(precioMinimo)
 							.provincia(provincia)
-							.tipoInmueble(tipoInmueble.getTipo())
+							.tipoInmueble(((tipoInmueble != null) ? tipoInmueble.getTipo() : (null)))
 							.build();
 					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles(filtro));
 				} catch(Exception e){

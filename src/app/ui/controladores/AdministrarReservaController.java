@@ -18,8 +18,11 @@
 package app.ui.controladores;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import app.comun.ConversorFechas;
+import app.datos.clases.EstadoStr;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Reserva;
@@ -47,6 +50,7 @@ public class AdministrarReservaController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/administrarReserva.fxml";
 	protected Cliente cliente;
 	protected Inmueble inmueble;
+	protected ConversorFechas conversorFechas = new ConversorFechas();
 
 	@FXML
 	protected TableView<Reserva> tablaReservas;
@@ -164,22 +168,40 @@ public class AdministrarReservaController extends OlimpoController {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 		if(cliente != null){
-			tablaReservas.getItems().addAll(cliente.getReservas());
+			ArrayList<Reserva> reservasTmp = new ArrayList<>();
+			ArrayList<Reserva> reservas = new ArrayList<>();
+			reservasTmp.addAll(cliente.getReservas());
+			for(Reserva r : reservasTmp){
+				if(r.getEstado().getEstado().equals(EstadoStr.ALTA)){
+					reservas.add(r);
+				}
+			}
+			tablaReservas.getItems().addAll(reservas);
 			columnaClienteOInmueble.setText("Inmueble");
 			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getInmueble().getDireccion().toString()));
-			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
-			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
+			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(conversorFechas.diaMesYAnioToString(cellData.getValue().getFechaInicio())));
+			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(conversorFechas.diaMesYAnioToString(cellData.getValue().getFechaFin())));
+			columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
 		}
 	}
 
 	public void setInmueble(Inmueble inmueble) {
 		this.inmueble = inmueble;
 		if(inmueble != null){
-			tablaReservas.getItems().addAll(inmueble.getReservas());
+			ArrayList<Reserva> reservasTmp = new ArrayList<>();
+			ArrayList<Reserva> reservas = new ArrayList<>();
+			reservasTmp.addAll(inmueble.getReservas());
+			for(Reserva r : reservasTmp){
+				if(r.getEstado().getEstado().equals(EstadoStr.ALTA)){
+					reservas.add(r);
+				}
+			}
+			tablaReservas.getItems().addAll(reservas);
 			columnaClienteOInmueble.setText("Cliente");
 			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().toString()));
-			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
-			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
+			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(conversorFechas.diaMesYAnioToString(cellData.getValue().getFechaInicio())));
+			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(conversorFechas.diaMesYAnioToString(cellData.getValue().getFechaFin())));
+			columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
 		}
 	}
 }
