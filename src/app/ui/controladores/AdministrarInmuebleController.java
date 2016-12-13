@@ -114,7 +114,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 	@FXML
 	private TextField textFieldPrecioMaximo;
 
-
 	private ArrayList<Inmueble> inmueblesNoMostrar;
 
 	private ArrayList<Inmueble> inmueblesSeleccionados;
@@ -337,7 +336,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	 * También se delega la tarea de vaciar el comboBox de localidades
 	 *
 	 * @param pais
-	 * 			país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarProvincias(Pais pais) {
 		comboBoxProvincia.getItems().clear();
@@ -356,7 +355,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	 * También se delega la tarea de vaciar el comboBox de barrios
 	 *
 	 * @param provincia
-	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarLocalidades(Provincia provincia) {
 		comboBoxLocalidad.getItems().clear();
@@ -374,7 +373,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	 * Cuando varía la seleccion del comboBox de localidades, se actualiza el comboBox de barrios.
 	 *
 	 * @param localidad
-	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarBarrios(Localidad localidad) {
 		comboBoxBarrio.getItems().clear();
@@ -407,49 +406,54 @@ public class AdministrarInmuebleController extends OlimpoController {
 
 		boolean vacioCD = false, vacioPMa = false, vacioPMi = false;
 
-		if(!textFieldCantidadDormitorios.getText().trim().isEmpty()) {
-			try {
+		if(!textFieldCantidadDormitorios.getText().trim().isEmpty()){
+			try{
 				cantidadDormitorios = Integer.valueOf(textFieldCantidadDormitorios.getText().trim());
-			} catch (Exception e) {
+			} catch(Exception e){
 				errores.append("Cantidad de dormitorios incorrecta. Introduzca solo números.\n");
 			}
-		} else {
+		}
+		else{
 			vacioCD = true;
 		}
 
-		if(!textFieldPrecioMinimo.getText().trim().isEmpty()) {
-			try {
+		if(!textFieldPrecioMinimo.getText().trim().isEmpty()){
+			try{
 				precioMinimo = Double.valueOf(textFieldPrecioMinimo.getText().trim());
-			} catch (Exception e) {
+			} catch(Exception e){
 				errores.append("Precio mínimo incorrecto. Introduzca solo números y un punto para decimales.\n");
 			}
-		} else {
+		}
+		else{
 			vacioPMa = true;
 		}
 
-		if(!textFieldPrecioMaximo.getText().trim().isEmpty()) {
-			try {
+		if(!textFieldPrecioMaximo.getText().trim().isEmpty()){
+			try{
 				precioMaximo = Double.valueOf(textFieldPrecioMaximo.getText().trim());
-			} catch (Exception e) {
+			} catch(Exception e){
 				errores.append("Precio máximo incorrecto. Introduzca solo números y un punto para decimales.\n");
 			}
-		} else {
+		}
+		else{
 			vacioPMi = true;
 		}
 
 		if(!errores.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
-		} else {
+		}
+		else{
 
 			tablaInmuebles.getItems().clear();
-			if(pais == null && provincia == null && localidad == null && barrio == null && estadoInmueble == null && tipoInmueble == null && vacioCD && vacioPMa && vacioPMi) {
-				try {
+			if(pais == null && provincia == null && localidad == null && barrio == null && estadoInmueble == null && tipoInmueble == null && vacioCD && vacioPMa && vacioPMi){
+				try{
 					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles());
-				} catch (PersistenciaException e) {
+				} catch(PersistenciaException e){
 					presentador.presentarExcepcion(e, stage);
 				}
-			} else {
-				try {
+			}
+			else{
+				try{
 					FiltroInmueble filtro = new FiltroInmueble.Builder()
 							.barrio(barrio)
 							.cantidadDormitorios(cantidadDormitorios)
@@ -462,8 +466,8 @@ public class AdministrarInmuebleController extends OlimpoController {
 							.tipoInmueble(tipoInmueble.getTipo())
 							.build();
 					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles(filtro));
-				} catch (Exception e) {
-					presentador.presentarExcepcion(e, stage);
+				} catch(Exception e){
+					presentador.presentarExcepcionInesperada(e, stage);
 				}
 			}
 		}
