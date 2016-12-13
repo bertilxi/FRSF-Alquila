@@ -169,6 +169,7 @@ public class AdministrarReservaController extends OlimpoController {
 			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getInmueble().getDireccion().toString()));
 			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
 			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
+			columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
 		}
 	}
 
@@ -180,6 +181,7 @@ public class AdministrarReservaController extends OlimpoController {
 			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().toString()));
 			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
 			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
+			columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
 		}
 	}
 }
