@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Reserva;
+import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
@@ -61,6 +62,12 @@ public class AltaReservaController extends OlimpoController {
 	private Button acceptButton;
 	@FXML
 	private Button cancelButton;
+
+	private Vendedor vendedorLogueado;
+
+	public void setVendedorLogueado(Vendedor vendedorLogueado) {
+		this.vendedorLogueado = vendedorLogueado;
+	}
 
 	/**
 	 * Acción que se ejecuta al apretar el botón aceptar.
@@ -212,9 +219,11 @@ public class AltaReservaController extends OlimpoController {
 		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
 		if(cliente != null){
 			controlador.setCliente(cliente);
+			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 		else if(inmueble != null){
 			controlador.setCliente(cliente);
+			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 	}
 

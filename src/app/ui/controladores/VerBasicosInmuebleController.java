@@ -90,6 +90,7 @@ public class VerBasicosInmuebleController extends OlimpoController {
 	@FXML
 	private void handleAtras() {
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 		switch(persona) {
 		case Cliente:
 			controlador.setCliente(cliente);

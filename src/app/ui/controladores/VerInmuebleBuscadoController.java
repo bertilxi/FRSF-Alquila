@@ -163,7 +163,8 @@ public class VerInmuebleBuscadoController extends OlimpoController {
 	 */
 	@FXML
 	private void handleAtras() {
-		cambiarmeAScene(AdministrarClienteController.URLVista);
+		OlimpoController controlador = cambiarmeAScene(AdministrarClienteController.URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@Override

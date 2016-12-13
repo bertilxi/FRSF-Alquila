@@ -215,7 +215,8 @@ public class ModificarPropietarioController extends OlimpoController {
 				}
 				else{
 					presentador.presentarToast("Se ha modificado el propietario con éxito", stage);
-					cambiarmeAScene(AdministrarPropietarioController.URLVista);
+					AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
+					controlador.setVendedorLogueado(vendedorLogueado);
 				}
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
@@ -229,7 +230,8 @@ public class ModificarPropietarioController extends OlimpoController {
 	 */
 	@FXML
 	public void cancelAction() {
-		cambiarmeAScene(AdministrarPropietarioController.URLVista);
+		AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@Override

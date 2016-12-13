@@ -17,6 +17,8 @@
  */
 package app.comun;
 
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,20 +38,32 @@ public class FormateadorString {
 		if(entrada == null){
 			return null;
 		}
-		switch(entrada.length()) {
-		// Los strings vacíos se retornan como están.
-		case 0:
-			entrada = "";
-			break;
-		// Los strings de un solo caracter se devuelven en mayúscula.
-		case 1:
-			entrada = entrada.toUpperCase();
-			break;
-		// Sino, mayúscula la primera letra, minúscula el resto.
-		default:
-			entrada = entrada.substring(0, 1).toUpperCase()
-					+ entrada.substring(1).toLowerCase();
+
+		//Si la entrada consiste solo de espacios en blanco, se devuelve una cadena vacía
+		entrada.trim();
+		if(entrada == ""){
+			return "";
 		}
-		return entrada;
+
+		//Se convierte toda la cadena a minúsculas
+		entrada.toLowerCase();
+
+		//Se separan las palabras
+		String[] partes = entrada.split(" ");
+		StringBuffer salida = new StringBuffer();
+
+		//Si la palabra es alguna de las siguientes, no se debe convertir a mayúscula su primer letra
+		Pattern patron = Pattern.compile("a|de|del|el|en|la|las|lo|los|of|y");
+		for(String parte: partes){
+			if(patron.matcher(parte).matches()){
+				salida.append(parte + " ");
+			}
+			else{
+				salida.append(parte.substring(0, 1).toUpperCase() + parte.substring(1) + " ");
+			}
+		}
+
+		//Se convierte la primera letra a mayúscula en caso de no haberlo hecho antes y se recortan los espacios al final
+		return (salida.substring(0, 1).toUpperCase() + salida.substring(1)).trim();
 	}
 }

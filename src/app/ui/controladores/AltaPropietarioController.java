@@ -192,7 +192,8 @@ public class AltaPropietarioController extends OlimpoController {
 				}
 				else{
 					presentador.presentarToast("Se ha creado el propietario con éxito", stage);
-					cambiarmeAScene(AdministrarPropietarioController.URLVista);
+					AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
+					controlador.setVendedorLogueado(vendedorLogueado);
 				}
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
@@ -200,6 +201,7 @@ public class AltaPropietarioController extends OlimpoController {
 					if(ventana.acepta()){
 						ModificarPropietarioController controlador = (ModificarPropietarioController) cambiarmeAScene(ModificarPropietarioController.URLVista);
 						controlador.setPropietarioEnModificacion(propietario);
+						controlador.setVendedorLogueado(vendedorLogueado);
 					}
 				}
 			} catch(PersistenciaException e){
@@ -214,7 +216,8 @@ public class AltaPropietarioController extends OlimpoController {
 	 */
 	@FXML
 	public void cancelAction() {
-		cambiarmeAScene(AdministrarPropietarioController.URLVista);
+		AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@Override

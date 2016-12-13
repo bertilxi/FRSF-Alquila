@@ -217,7 +217,8 @@ public class AltaVentaController extends OlimpoController {
 							presentador.presentarExcepcion(ex, stage);
 						}
 					}
-					cambiarmeAScene(AdministrarInmuebleController.URLVista);
+					AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
+					controlador.setVendedorLogueado(vendedorLogueado);
 				}
 			} catch (GestionException e) {
 				presentador.presentarExcepcion(e, stage);
@@ -233,6 +234,7 @@ public class AltaVentaController extends OlimpoController {
 	 */
 	@FXML
 	private void cancelAction() {
-		cambiarmeAScene(AdministrarInmuebleController.URLVista);
+		AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 }

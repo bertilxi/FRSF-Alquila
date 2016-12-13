@@ -145,6 +145,7 @@ public class AdministrarVentaController extends OlimpoController {
 		if(tablaVentas.getSelectionModel().getSelectedItem() != null) {
 			VerBasicosInmuebleController controlador = (VerBasicosInmuebleController) cambiarmeAScene(VerBasicosInmuebleController.URLVista);
 			controlador.setInmueble(tablaVentas.getSelectionModel().getSelectedItem().getInmueble());
+			controlador.setVendedorLogueado(vendedorLogueado);
 			switch(tipoPersona) {
 			case Cliente:
 				controlador.setCliente(tablaVentas.getSelectionModel().getSelectedItem().getCliente());

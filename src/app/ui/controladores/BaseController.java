@@ -72,8 +72,6 @@ public class BaseController extends OlimpoController {
 	@FXML
 	private Pane panelVendedores;
 
-	private Vendedor vendedorLogueado;
-
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		this.agregarScenographyChanger(background, new ScenographyChanger(stage, presentador, coordinador, background));
@@ -136,7 +134,8 @@ public class BaseController extends OlimpoController {
 
 	@FXML
 	public void verInmuebles() {
-		cambiarScene(background, AdministrarInmuebleController.URLVista);
+		AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarScene(background, AdministrarInmuebleController.URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@FXML
@@ -152,7 +151,8 @@ public class BaseController extends OlimpoController {
 	@FXML
 	@Override
 	public void salir() {
-		cambiarmeAScene(URLVistaRetorno, true);
+		OlimpoController controlador = cambiarmeAScene(URLVistaRetorno, true);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	public void formatearConVendedor(Vendedor vendedor) {
