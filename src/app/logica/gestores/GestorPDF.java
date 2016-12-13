@@ -135,15 +135,15 @@ public class GestorPDF {
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
 					Label label = (Label) documentoReserva.lookup("#lblNombreOferente");
-					label.setText(formateador.primeraMayuscula(reserva.getCliente().getNombre()));
+					label.setText(formateador.nombrePropio(reserva.getCliente().getNombre()));
 					label = (Label) documentoReserva.lookup("#lblApellidoOferente");
-					label.setText(formateador.primeraMayuscula(reserva.getCliente().getApellido()));
+					label.setText(formateador.nombrePropio(reserva.getCliente().getApellido()));
 					label = (Label) documentoReserva.lookup("#lblDocumentoOferente");
 					label.setText(reserva.getCliente().getTipoDocumento() + " - " + reserva.getCliente().getNumeroDocumento());
 					label = (Label) documentoReserva.lookup("#lblNombrePropietario");
-					label.setText(formateador.primeraMayuscula(reserva.getInmueble().getPropietario().getNombre()));
+					label.setText(formateador.nombrePropio(reserva.getInmueble().getPropietario().getNombre()));
 					label = (Label) documentoReserva.lookup("#lblApellidoPropietario");
-					label.setText(formateador.primeraMayuscula(reserva.getInmueble().getPropietario().getApellido()));
+					label.setText(formateador.nombrePropio(reserva.getInmueble().getPropietario().getApellido()));
 					label = (Label) documentoReserva.lookup("#lblCodigoInmueble");
 					label.setText(Integer.toString(reserva.getInmueble().getId()));
 					label = (Label) documentoReserva.lookup("#lblTipoInmueble");
@@ -217,15 +217,15 @@ public class GestorPDF {
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
 					Label label = (Label) documentoVenta.lookup("#lblNombreComprador");
-					label.setText(formateador.primeraMayuscula(venta.getCliente().getNombre()));
+					label.setText(formateador.nombrePropio(venta.getCliente().getNombre()));
 					label = (Label) documentoVenta.lookup("#lblApellidoComprador");
-					label.setText(formateador.primeraMayuscula(venta.getCliente().getApellido()));
+					label.setText(formateador.nombrePropio(venta.getCliente().getApellido()));
 					label = (Label) documentoVenta.lookup("#lblDocumentoComprador");
 					label.setText(venta.getCliente().getTipoDocumento() + " - " + venta.getCliente().getNumeroDocumento());
 					label = (Label) documentoVenta.lookup("#lblNombrePropietario");
-					label.setText(formateador.primeraMayuscula(venta.getInmueble().getPropietario().getNombre()));
+					label.setText(formateador.nombrePropio(venta.getInmueble().getPropietario().getNombre()));
 					label = (Label) documentoVenta.lookup("#lblApellidoPropietario");
-					label.setText(formateador.primeraMayuscula(venta.getInmueble().getPropietario().getApellido()));
+					label.setText(formateador.nombrePropio(venta.getInmueble().getPropietario().getApellido()));
 					label = (Label) documentoVenta.lookup("#lblDocumentoComprador");
 					label.setText(venta.getCliente().getTipoDocumento() + " - " + venta.getCliente().getNumeroDocumento());
 					label = (Label) documentoVenta.lookup("#lblCodigoInmueble");

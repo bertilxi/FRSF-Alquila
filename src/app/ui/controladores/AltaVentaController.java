@@ -17,6 +17,7 @@
  */
 package app.ui.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -31,9 +32,14 @@ import app.logica.resultados.ResultadoCrearVenta;
 import app.logica.resultados.ResultadoCrearVenta.ErrorCrearVenta;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class AltaVentaController extends OlimpoController {
 
@@ -159,71 +165,73 @@ public class AltaVentaController extends OlimpoController {
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
 		}
 		else{
-			//TODO pedir contraseña
-			Venta venta = new Venta();
-			venta.setCliente(cliente);
-			venta.setFecha(new Date(System.currentTimeMillis()));
-			venta.setImporte(importe);
-			venta.setInmueble(inmueble);
-			venta.setMedioDePago(medioDePago);
-			venta.setPropietario(inmueble.getPropietario());
-			//venta.setVendedor(vendedor);
+			boolean contraseñaCorrecta = showConfirmarContraseñaDialog();
+			if(contraseñaCorrecta) {
+				Venta venta = new Venta();
+				venta.setCliente(cliente);
+				venta.setFecha(new Date(System.currentTimeMillis()));
+				venta.setImporte(importe);
+				venta.setInmueble(inmueble);
+				venta.setMedioDePago(medioDePago);
+				venta.setPropietario(inmueble.getPropietario());
+				venta.setVendedor(vendedorLogueado);
 
-			try {
-				ResultadoCrearVenta resultado = coordinador.crearVenta(venta);
-				if (resultado.hayErrores()) {
-					StringBuilder stringErrores = new StringBuilder();
-					for (ErrorCrearVenta e: resultado.getErrores()) {
-						switch(e) {
-						case Cliente_Igual_A_Propietario:
-							stringErrores.append("El cliente seleccionado es el actual propietario del inmueble.\n");
-							break;
-						case Cliente_Vacío:
-							stringErrores.append("No se ha seleccionado ningún cliente.\n");
-							break;
-						case Formato_Medio_De_Pago_Incorrecto:
-							stringErrores.append("Formato de medio de pago incorrecto.\n");
-							break;
-						case Importe_vacío:
-							stringErrores.append("No se ha introducido importe.\n");
-							break;
-						case Inmueble_Reservado_Por_Otro_Cliente:
-							stringErrores.append("El inmueble está reservado por otro cliente.\n");
-							break;
-						case Inmueble_Vacío:
-							stringErrores.append("No se ha seleccionado ningún inmueble.\n");
-							break;
-						case Inmueble_Ya_Vendido:
-							stringErrores.append("El inmueble ya se encuentra vendido.\n");
-							break;
-						case Medio_De_Pago_Vacío:
-							stringErrores.append("No se ha introducido medio de pago.\n");
-							break;
-						case Propietario_Vacío:
-							stringErrores.append("El inmueble no posee propietario.\n");
-							break;
-						case Vendedor_Vacío:
-							stringErrores.append("No se ha confirmado el vendedor en esta operación.\n");
-							break;
+				try {
+					ResultadoCrearVenta resultado = coordinador.crearVenta(venta);
+					if (resultado.hayErrores()) {
+						StringBuilder stringErrores = new StringBuilder();
+						for (ErrorCrearVenta e: resultado.getErrores()) {
+							switch(e) {
+							case Cliente_Igual_A_Propietario:
+								stringErrores.append("El cliente seleccionado es el actual propietario del inmueble.\n");
+								break;
+							case Cliente_Vacío:
+								stringErrores.append("No se ha seleccionado ningún cliente.\n");
+								break;
+							case Formato_Medio_De_Pago_Incorrecto:
+								stringErrores.append("Formato de medio de pago incorrecto.\n");
+								break;
+							case Importe_vacío:
+								stringErrores.append("No se ha introducido importe.\n");
+								break;
+							case Inmueble_Reservado_Por_Otro_Cliente:
+								stringErrores.append("El inmueble está reservado por otro cliente.\n");
+								break;
+							case Inmueble_Vacío:
+								stringErrores.append("No se ha seleccionado ningún inmueble.\n");
+								break;
+							case Inmueble_Ya_Vendido:
+								stringErrores.append("El inmueble ya se encuentra vendido.\n");
+								break;
+							case Medio_De_Pago_Vacío:
+								stringErrores.append("No se ha introducido medio de pago.\n");
+								break;
+							case Propietario_Vacío:
+								stringErrores.append("El inmueble no posee propietario.\n");
+								break;
+							case Vendedor_Vacío:
+								stringErrores.append("No se ha confirmado el vendedor en esta operación.\n");
+								break;
+							}
 						}
-					}
-					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
-				} else {
-					VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada correctamente", "¿Desea imprimir el documento generado?", stage);
-					if(ventana.acepta()) {
-						try{
-							coordinador.imprimirPDF(venta.getArchivoPDF());
-						} catch(GestionException ex){
-							presentador.presentarExcepcion(ex, stage);
+						presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
+					} else {
+						VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada correctamente", "¿Desea imprimir el documento generado?", stage);
+						if(ventana.acepta()) {
+							try{
+								coordinador.imprimirPDF(venta.getArchivoPDF());
+							} catch(GestionException ex){
+								presentador.presentarExcepcion(ex, stage);
+							}
 						}
+						AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
+						controlador.setVendedorLogueado(vendedorLogueado);
 					}
-					AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
-					controlador.setVendedorLogueado(vendedorLogueado);
+				} catch (GestionException e) {
+					presentador.presentarExcepcion(e, stage);
+				} catch(PersistenciaException e){
+					presentador.presentarExcepcion(e, stage);
 				}
-			} catch (GestionException e) {
-				presentador.presentarExcepcion(e, stage);
-			} catch(PersistenciaException e){
-				presentador.presentarExcepcion(e, stage);
 			}
 		}
 	}
@@ -236,5 +244,38 @@ public class AltaVentaController extends OlimpoController {
 	private void cancelAction() {
 		AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
 		controlador.setVendedorLogueado(vendedorLogueado);
+	}
+
+	private boolean showConfirmarContraseñaDialog() {
+		try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(getClass().getResource(ConfirmarContraseñaController.URLVista));
+	        VBox page = (VBox) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setResizable(false);
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.setTitle("Confirmar contraseña");
+	        dialogStage.initOwner(stage);
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        // Set the evento into the controller.
+	        ConfirmarContraseñaController controlador = loader.getController();
+	        controlador.setDialogStage(dialogStage);
+	        controlador.setVendedorLogueado(vendedorLogueado);
+	        controlador.setCoordinador(coordinador);
+	        controlador.setPresentador(presentador);
+
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+
+	        return controlador.isCorrecto();
+	    } catch (IOException e) {
+	        presentador.presentarExcepcion(e, stage);
+	        return false;
+	    }
 	}
 }

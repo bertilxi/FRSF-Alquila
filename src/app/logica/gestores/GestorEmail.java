@@ -56,7 +56,6 @@ import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 
 import app.datos.entidades.Archivo;
-import javafx.concurrent.Task;
 
 @Service
 public class GestorEmail {
@@ -82,12 +81,15 @@ public class GestorEmail {
 	 * Global instance of the scopes required by this quickstart.
 	 *
 	 * If modifying these scopes, delete your previously saved credentials
-	 * at ~/.credentials/gmail-java-quickstart
+	 * at ~/.credentials/olimpo
 	 */
 	private final List<String> SCOPES =
 			Arrays.asList(GmailScopes.MAIL_GOOGLE_COM, GmailScopes.GMAIL_MODIFY, GmailScopes.GMAIL_COMPOSE, GmailScopes.GMAIL_SEND);
 
 	public GestorEmail() {
+		final java.util.logging.Logger buggyLogger = java.util.logging.Logger.getLogger(FileDataStoreFactory.class.getName());
+		 buggyLogger.setLevel(java.util.logging.Level.SEVERE);
+		
 		try{
 			HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 			DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
@@ -101,28 +103,18 @@ public class GestorEmail {
 	}
 
 	public void enviarEmail(String destinatario, String asunto, String mensaje, Archivo archivo) throws IOException, MessagingException {
+		// Build a new authorized API client service.
+		Gmail service = getGmailService();
 
-		Task<Boolean> task = new Task<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				// Build a new authorized API client service.
-				Gmail service = getGmailService();
+		// Print the labels in the user's account.
+		String user = "me";
 
-				// Print the labels in the user's account.
-				String user = "me";
-
-				File archivoTMP = new File("reserva.pdf");
-				FileOutputStream fos = new FileOutputStream(archivoTMP);
-				fos.write(archivo.getArchivo());
-				fos.flush();
-				fos.close();
-				sendMessage(service, user, createEmailWithAttachment(destinatario, "olimpoagilinmobiliaria2016@gmail.com", asunto, mensaje, archivoTMP));
-				return true;
-			}
-		};
-		Thread hiloEnvioDeEmail = new Thread(task);
-		hiloEnvioDeEmail.setDaemon(true);
-		hiloEnvioDeEmail.start();
+		File archivoTMP = new File("reserva.pdf");
+		FileOutputStream fos = new FileOutputStream(archivoTMP);
+		fos.write(archivo.getArchivo());
+		fos.flush();
+		fos.close();
+		sendMessage(service, user, createEmailWithAttachment(destinatario, "olimpoagilinmobiliaria2016@gmail.com", asunto, mensaje, archivoTMP));
 	}
 
 	/**
@@ -134,7 +126,8 @@ public class GestorEmail {
 	private Credential authorize() throws IOException {
 		// Load client secrets.
 		InputStream in =
-				GestorEmail.class.getResourceAsStream("/res/client_secret.json");
+				GestorEmail.class.getResourceAsStream("../../../res/client_secret.json");
+
 		GoogleClientSecrets clientSecrets =
 				GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
