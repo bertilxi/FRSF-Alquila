@@ -20,6 +20,7 @@ package app.logica.gestores;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Assert;
@@ -422,27 +423,45 @@ public class GestorReservaTest {
 				.setInmueble(inmueble)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
+		Calendar calendario = Calendar.getInstance();
+		calendario.setTime(fechahoy);
+		calendario.add(Calendar.DATE, 1);
+		Reserva reservaFechaInicioPosteriorAFechaFin = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(inmueble)
+				.setImporte(300000.0)
+				.setFechaInicio(calendario.getTime())
+				.setFechaFin(fechahoy);
+		Reserva reservaImporteMenorIgualCero = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(inmueble)
+				.setImporte(-300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
 
 		return new Object[] {
-				new Object[] { reservaCorrecta, new ResultadoCrearReserva(), null }, //reserva correcta
-				new Object[] { reservaSinCliente, new ResultadoCrearReserva(ErrorCrearReserva.Cliente_Vacío), null }, //reserva sin cliente
-				new Object[] { reservaSinNombreCliente, new ResultadoCrearReserva(ErrorCrearReserva.Nombre_Cliente_Vacío), null }, //reserva sin nombre cliente
-				new Object[] { reservaSinApellidoCliente, new ResultadoCrearReserva(ErrorCrearReserva.Apellido_Cliente_Vacío), null }, //reserva sin apellido cliente
-				new Object[] { reservaSinTipoDocumentoCliente, new ResultadoCrearReserva(ErrorCrearReserva.TipoDocumento_Cliente_Vacío), null }, //reserva sin tipo documento en el cliente
-				new Object[] { reservaSinNumeroDocumentoCliente, new ResultadoCrearReserva(ErrorCrearReserva.NúmeroDocumento_Cliente_Vacío), null }, //reserva sin numero de documento en el cliente
-				new Object[] { reservaSinInmueble, new ResultadoCrearReserva(ErrorCrearReserva.Inmueble_Vacío), null }, //reserva sin inmueble
-				new Object[] { reservaSinPropietario, new ResultadoCrearReserva(ErrorCrearReserva.Propietario_Vacío), null }, //reserva sin Propietario
-				new Object[] { reservaSinNombrePropietario, new ResultadoCrearReserva(ErrorCrearReserva.Nombre_Propietario_Vacío), null }, //reserva sin nombre de Propietario
-				new Object[] { reservaSinApellidoPropietario, new ResultadoCrearReserva(ErrorCrearReserva.Apellido_Propietario_Vacío), null }, //reserva sin apellido de Propietario
-				new Object[] { reservaSinTipoInmueble, new ResultadoCrearReserva(ErrorCrearReserva.Tipo_Inmueble_Vacío), null }, //reserva sin tipo de Inmueble
-				new Object[] { reservaSinDireccionInmueble, new ResultadoCrearReserva(ErrorCrearReserva.Dirección_Inmueble_Vacía), null }, //reserva sin direccion de inmueble
-				new Object[] { reservaSinLocalidadInmueble, new ResultadoCrearReserva(ErrorCrearReserva.Localidad_Inmueble_Vacía), null }, //reserva sin localidad de inmueble
-				new Object[] { reservaSinBarrioInmueble, new ResultadoCrearReserva(ErrorCrearReserva.Barrio_Inmueble_Vacío), null }, //reserva sin Barrio de inmueble
-				new Object[] { reservaSinCalleInmueble, new ResultadoCrearReserva(ErrorCrearReserva.Calle_Inmueble_Vacía), null }, //reserva sin calle de inmueble
-				new Object[] { reservaSinAlturaInmueble, new ResultadoCrearReserva(ErrorCrearReserva.Altura_Inmueble_Vacía), null }, //reserva sin altura de calle de inmueble
-				new Object[] { reservaSinFechaInicio, new ResultadoCrearReserva(ErrorCrearReserva.FechaInicio_vacía), null }, //reserva sin fecha de inicio vacía
-				new Object[] { reservaSinFechaFin, new ResultadoCrearReserva(ErrorCrearReserva.FechaFin_vacía), null }, //reserva sin fecha de fin vacía
-				new Object[] { reservaSinImporte, new ResultadoCrearReserva(ErrorCrearReserva.Importe_vacío), null }, //reserva sin Importe
+				new Object[] { reservaCorrecta, new ResultadoCrearReserva(null), null }, //reserva correcta
+				new Object[] { reservaSinCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Cliente_Vacío), null }, //reserva sin cliente
+				new Object[] { reservaSinNombreCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Nombre_Cliente_Vacío), null }, //reserva sin nombre cliente
+				new Object[] { reservaSinApellidoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Apellido_Cliente_Vacío), null }, //reserva sin apellido cliente
+				new Object[] { reservaSinTipoDocumentoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.TipoDocumento_Cliente_Vacío), null }, //reserva sin tipo documento en el cliente
+				new Object[] { reservaSinNumeroDocumentoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.NúmeroDocumento_Cliente_Vacío), null }, //reserva sin numero de documento en el cliente
+				new Object[] { reservaSinInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Inmueble_Vacío), null }, //reserva sin inmueble
+				new Object[] { reservaSinPropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Propietario_Vacío), null }, //reserva sin Propietario
+				new Object[] { reservaSinNombrePropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Nombre_Propietario_Vacío), null }, //reserva sin nombre de Propietario
+				new Object[] { reservaSinApellidoPropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Apellido_Propietario_Vacío), null }, //reserva sin apellido de Propietario
+				new Object[] { reservaSinTipoInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Tipo_Inmueble_Vacío), null }, //reserva sin tipo de Inmueble
+				new Object[] { reservaSinDireccionInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Dirección_Inmueble_Vacía), null }, //reserva sin direccion de inmueble
+				new Object[] { reservaSinLocalidadInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Localidad_Inmueble_Vacía), null }, //reserva sin localidad de inmueble
+				new Object[] { reservaSinBarrioInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Barrio_Inmueble_Vacío), null }, //reserva sin Barrio de inmueble
+				new Object[] { reservaSinCalleInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Calle_Inmueble_Vacía), null }, //reserva sin calle de inmueble
+				new Object[] { reservaSinAlturaInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Altura_Inmueble_Vacía), null }, //reserva sin altura de calle de inmueble
+				new Object[] { reservaSinFechaInicio, new ResultadoCrearReserva(null, ErrorCrearReserva.FechaInicio_vacía), null }, //reserva sin fecha de inicio vacía
+				new Object[] { reservaSinFechaFin, new ResultadoCrearReserva(null, ErrorCrearReserva.FechaFin_vacía), null }, //reserva sin fecha de fin vacía
+				new Object[] { reservaFechaInicioPosteriorAFechaFin, new ResultadoCrearReserva(null, ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin), null }, //reserva con fecha inicio posterior a fecha fin
+				new Object[] { reservaCorrecta, new ResultadoCrearReserva(reservaCorrecta, ErrorCrearReserva.Existe_Otra_Reserva_Activa), null }, //existe otra reserva en el mismo rango de fechas
+				new Object[] { reservaSinImporte, new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Vacío), null }, //reserva sin Importe
+				new Object[] { reservaImporteMenorIgualCero, new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Menor_O_Igual_A_Cero), null }, //reserva con importe menor o igual a cero
 				new Object[] { reservaCorrecta, null, new GenerarPDFException(new Exception()) }, //el gestorPDF tira una excepción
 				new Object[] { reservaCorrecta, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una excepción
 				new Object[] { reservaCorrecta, null, new Exception() } //el persistidor tira una excepción inesperada

@@ -28,7 +28,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarVentaController">
    <children>
       <Label fx:id="labelPersona" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="1000.0" styleClass="label-medium" text="Persona: Apellido y Nombre">
@@ -40,7 +39,7 @@
           <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" HBox.hgrow="ALWAYS">
               <TableView fx:id="tablaVentas" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                   <columns>
-                      <TableColumn fx:id="columnaNumeroDocumento" editable="false" minWidth="100.0" prefWidth="100.0" text="Fecha" />
+                      <TableColumn fx:id="columnaFecha" editable="false" minWidth="100.0" prefWidth="100.0" text="Fecha" />
                       <TableColumn fx:id="columnaCliente" editable="false" prefWidth="65.0" text="Cliente">
                      <columns>
                         <TableColumn fx:id="columnaNombreCliente" editable="false" minWidth="30.0" prefWidth="150.0" text="Nombre" />

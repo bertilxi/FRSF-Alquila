@@ -164,10 +164,10 @@ public class AltaReservaController extends OlimpoController {
 						case Apellido_Propietario_Vacío:
 							error.append("El propietario del inmueble seleccionado no tiene apellido\r\n");
 							break;
-						case Importe_vacío:
+						case Importe_Vacío:
 							error.append("No se ha ingresado un importe\r\n");
 							break;
-						case Formato_Importe_Incorrecto:
+						case Importe_Menor_O_Igual_A_Cero:
 							error.append("El formato del importe es incorrecto\r\n");
 							break;
 						case FechaFin_vacía:
@@ -176,7 +176,10 @@ public class AltaReservaController extends OlimpoController {
 						case FechaInicio_vacía:
 							error.append("No se ha seleccionado una fecha de inicio\r\n");
 							break;
-						case Ya_Existe_Reserva_Entre_Las_Fechas:
+						case Fecha_Inicio_Posterior_A_Fecha_Fin:
+							error.append("La fecha de inicio de la reserva no puede ser posterior a la fecha de vencimiento");
+							break;
+						case Existe_Otra_Reserva_Activa:
 							error.append("Ya existe una reserva para este inmueble en ese periodo de tiempo\r\n");
 							break;
 						}

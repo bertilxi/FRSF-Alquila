@@ -362,4 +362,9 @@ public class Inmueble {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return direccion.toString();
+	}
 }

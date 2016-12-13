@@ -38,6 +38,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.springframework.stereotype.Service;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -56,24 +58,25 @@ import com.google.api.services.gmail.model.Message;
 import app.datos.entidades.Archivo;
 import javafx.concurrent.Task;
 
+@Service
 public class GestorEmail {
 	/** Application name. */
-	private static final String APPLICATION_NAME =
+	private final String APPLICATION_NAME =
 			"Olimpo";
 
 	/** Directory to store user credentials for this application. */
-	private static final java.io.File DATA_STORE_DIR = new java.io.File(
-			System.getProperty("user.home"), ".credentials/gmail-java-quickstart");
+	private final java.io.File DATA_STORE_DIR = new java.io.File(
+			System.getProperty("user.home"), ".credentials/olimpo");
 
 	/** Global instance of the {@link FileDataStoreFactory}. */
-	private static FileDataStoreFactory DATA_STORE_FACTORY;
+	private FileDataStoreFactory DATA_STORE_FACTORY;
 
 	/** Global instance of the JSON factory. */
-	private static final JsonFactory JSON_FACTORY =
+	private final JsonFactory JSON_FACTORY =
 			JacksonFactory.getDefaultInstance();
 
 	/** Global instance of the HTTP transport. */
-	private static HttpTransport HTTP_TRANSPORT;
+	private HttpTransport HTTP_TRANSPORT;
 
 	/**
 	 * Global instance of the scopes required by this quickstart.
@@ -81,10 +84,10 @@ public class GestorEmail {
 	 * If modifying these scopes, delete your previously saved credentials
 	 * at ~/.credentials/gmail-java-quickstart
 	 */
-	private static final List<String> SCOPES =
+	private final List<String> SCOPES =
 			Arrays.asList(GmailScopes.MAIL_GOOGLE_COM, GmailScopes.GMAIL_MODIFY, GmailScopes.GMAIL_COMPOSE, GmailScopes.GMAIL_SEND);
 
-	static{
+	{
 		try{
 			HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 			DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
@@ -105,7 +108,7 @@ public class GestorEmail {
 				// Print the labels in the user's account.
 				String user = "me";
 
-				File archivoTMP = new File("reserva_email_tmp.pdf");
+				File archivoTMP = new File("reserva.pdf");
 				FileOutputStream fos = new FileOutputStream(archivoTMP);
 				fos.write(archivo.getArchivo());
 				fos.flush();
@@ -125,7 +128,7 @@ public class GestorEmail {
 	 * @return an authorized Credential object.
 	 * @throws IOException
 	 */
-	private static Credential authorize() throws IOException {
+	private Credential authorize() throws IOException {
 		// Load client secrets.
 		InputStream in =
 				GestorEmail.class.getResourceAsStream("/res/client_secret.json");
@@ -152,7 +155,7 @@ public class GestorEmail {
 	 * @return an authorized Gmail client service
 	 * @throws IOException
 	 */
-	private static Gmail getGmailService() throws IOException {
+	private Gmail getGmailService() throws IOException {
 		Credential credential = authorize();
 		return new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
 				.setApplicationName(APPLICATION_NAME)
@@ -175,7 +178,7 @@ public class GestorEmail {
 	 * @return MimeMessage to be used to send email.
 	 * @throws MessagingException
 	 */
-	private static MimeMessage createEmailWithAttachment(String to,
+	private MimeMessage createEmailWithAttachment(String to,
 			String from,
 			String subject,
 			String bodyText,
@@ -218,7 +221,7 @@ public class GestorEmail {
 	 * @throws IOException
 	 * @throws MessagingException
 	 */
-	private static Message createMessageWithEmail(MimeMessage emailContent)
+	private Message createMessageWithEmail(MimeMessage emailContent)
 			throws MessagingException, IOException {
 		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 		emailContent.writeTo(buffer);
@@ -243,7 +246,7 @@ public class GestorEmail {
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
-	private static Message sendMessage(Gmail service,
+	private Message sendMessage(Gmail service,
 			String userId,
 			MimeMessage emailContent)
 			throws MessagingException, IOException {

@@ -159,8 +159,7 @@ public class AltaVentaController extends OlimpoController {
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
 		}
 		else{
-			//TODO pedir contraseña de vendedor
-
+			//TODO pedir contraseña
 			Venta venta = new Venta();
 			venta.setCliente(cliente);
 			venta.setFecha(new Date(System.currentTimeMillis()));
@@ -210,9 +209,13 @@ public class AltaVentaController extends OlimpoController {
 					}
 					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				} else {
-					VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada", "¿Desea imprimir el documento generado?", stage);
+					VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada correctamente", "¿Desea imprimir el documento generado?", stage);
 					if(ventana.acepta()) {
-						//TODO mandar a imprimir
+						try{
+							coordinador.imprimirPDF(venta.getArchivoPDF());
+						} catch(GestionException ex){
+							presentador.presentarExcepcion(ex, stage);
+						}
 					}
 					cambiarmeAScene(AdministrarInmuebleController.URLVista);
 				}

@@ -78,12 +78,25 @@
                         <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />
                     </padding>
                 </GridPane>
-                <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
-                    <children>
-                        <Button fx:id="acceptButton" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="cancelButton" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
-                    </children>
-                </HBox>
+            <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
+               <children>
+                  <HBox alignment="CENTER_LEFT" styleClass="buttonbar" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <Button fx:id="verMisVentasButton" contentDisplay="RIGHT" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#verMisVentasAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Ver mis ventas" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                      <HBox alignment="CENTER_RIGHT" styleClass="buttonbar" HBox.hgrow="SOMETIMES">
+                          <children>
+                              <Button fx:id="acceptButton" alignment="CENTER" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Aceptar" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="cancelButton" alignment="CENTER" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
+                          </children>
+                      </HBox>
+               </children>
+            </HBox>
             </children>
         </VBox>
     </children>
