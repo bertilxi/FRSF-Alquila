@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+    Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+    This file is part of Olimpo.
+
+    Olimpo is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Olimpo is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.VerInmuebleBuscadoController">
+    <children>
+      <Separator>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </Separator>
+        <GridPane alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="grid-pane" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="170.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
+            </columnConstraints>
+            <rowConstraints>
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+            <Label focusTraversable="false" layoutX="141.0" layoutY="132.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Tipo de inmueble:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Localidad:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Barrio:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Calle:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label focusTraversable="false" layoutX="20.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Altura:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <Label focusTraversable="false" layoutX="466.0" layoutY="78.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Piso:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="labelLocalidad" focusTraversable="false" layoutX="59.0" layoutY="132.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="localidad" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="labelCalle" focusTraversable="false" layoutX="59.0" layoutY="170.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="calle" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label fx:id="labelPiso" focusTraversable="false" layoutX="59.0" layoutY="208.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="piso" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label fx:id="labelBarrio" focusTraversable="false" layoutX="443.0" layoutY="132.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="barrio" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <Label fx:id="labelAltura" focusTraversable="false" layoutX="443.0" layoutY="170.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="altura" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+            <Label fx:id="labelTipoInmueble" focusTraversable="false" layoutX="901.0" layoutY="28.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="tipo" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label focusTraversable="false" layoutX="496.0" layoutY="28.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Código:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="labelCodigoInmueble" focusTraversable="false" layoutX="708.0" layoutY="28.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Codigo" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label focusTraversable="false" layoutX="158.0" layoutY="226.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="País:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label focusTraversable="false" layoutX="158.0" layoutY="174.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Provincia:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label fx:id="labelPais" focusTraversable="false" layoutX="339.0" layoutY="138.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="pais" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="labelProvincia" focusTraversable="false" layoutX="339.0" layoutY="254.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="provincia" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Label focusTraversable="false" layoutX="158.0" layoutY="399.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Departamento:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+            <Label fx:id="labelDepartamento" focusTraversable="false" layoutX="339.0" layoutY="399.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="departamento" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+            <Label focusTraversable="false" layoutX="93.0" layoutY="399.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Otros:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="labelOtros" focusTraversable="false" layoutX="224.0" layoutY="399.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="otros" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            </children>
+        </GridPane>
+        <HBox alignment="BOTTOM_RIGHT" styleClass="buttonbar">
+            <children>
+                <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleAtras" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Atrás" HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

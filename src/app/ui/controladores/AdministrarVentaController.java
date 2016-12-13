@@ -69,12 +69,15 @@ public class AdministrarVentaController extends OlimpoController {
     @FXML
     private Button botonVerDocumento;
 
+    private TipoPersona tipoPersona;
+
     public void setCliente(Cliente persona) {
     	if(persona != null) {
     		labelPersona.setText("Cliente: " + persona.getApellido() + ", " + persona.getNombre());
     		tablaVentas.getItems().addAll(persona.getVentas());
     	}
     	columnaCliente.setVisible(false);
+    	tipoPersona = TipoPersona.Cliente;
     }
 
     public void setPropietario(Propietario persona) {
@@ -83,6 +86,7 @@ public class AdministrarVentaController extends OlimpoController {
     		tablaVentas.getItems().addAll(persona.getVentas());
     	}
     	columnaPropietario.setVisible(false);
+    	tipoPersona = TipoPersona.Propietario;
     }
 
     public void setVendedor(Vendedor persona) {
@@ -91,6 +95,7 @@ public class AdministrarVentaController extends OlimpoController {
     		tablaVentas.getItems().addAll(persona.getVentas());
     	}
     	columnaVendedor.setVisible(false);
+    	tipoPersona = TipoPersona.Vendedor;
     }
 
     @Override
@@ -133,7 +138,21 @@ public class AdministrarVentaController extends OlimpoController {
 	 */
 	@FXML
 	private void handleVerInmueble() {
-		//TODO hacer
+		if(tablaVentas.getSelectionModel().getSelectedItem() != null) {
+			VerBasicosInmuebleController controlador = (VerBasicosInmuebleController) cambiarmeAScene(VerBasicosInmuebleController.URLVista);
+			controlador.setInmueble(tablaVentas.getSelectionModel().getSelectedItem().getInmueble());
+			switch(tipoPersona) {
+			case Cliente:
+				controlador.setCliente(tablaVentas.getSelectionModel().getSelectedItem().getCliente());
+				break;
+			case Propietario:
+				controlador.setPropietario(tablaVentas.getSelectionModel().getSelectedItem().getPropietario());
+				break;
+			case Vendedor:
+				controlador.setVendedor(tablaVentas.getSelectionModel().getSelectedItem().getVendedor());
+				break;
+			}
+		}
 	}
 
 	/**
@@ -142,5 +161,11 @@ public class AdministrarVentaController extends OlimpoController {
 	@FXML
 	private void handleVerDocumento() {
 		//TODO hacer
+	}
+
+	public enum TipoPersona {
+		Cliente,
+		Propietario,
+		Vendedor
 	}
 }
