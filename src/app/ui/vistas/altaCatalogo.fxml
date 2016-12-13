@@ -63,7 +63,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
             </ScrollPane>
                 <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5">
                     <children>
-                  <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#generarCatalogo" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Generar catàlogo">
+                  <Button fx:id="btnGenerarCatalogo" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#generarCatalogo" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Generar catálogo">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>

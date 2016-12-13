@@ -110,46 +110,38 @@ public class RenglonInmuebleController extends OlimpoController {
 			}
 			cbFotos.getSelectionModel().select(new Random().nextInt(cbFotos.getItems().size()));
 			cbFotos.setCellFactory((p) -> {
-				return new ListCell<Imagen>() {
-					@Override
-					protected void updateItem(Imagen item, boolean empty) {
-						super.updateItem(item, empty);
-
-						if(item == null || empty){
-							setGraphic(null);
-						}
-						else{
-							byte[] imagenRaw = item.getArchivo();
-							InputStream in = new ByteArrayInputStream(imagenRaw);
-							ImageView imageView = new ImageView(new Image(in));
-							imageView.setPreserveRatio(true);
-							imageView.setFitHeight(100);
-							setGraphic(imageView);
-						}
-					}
-				};
+				return generarListCell();
 			});
-			cbFotos.setButtonCell(new ListCell<Imagen>() {
-				@Override
-				protected void updateItem(Imagen item, boolean empty) {
-					super.updateItem(item, empty);
-
-					if(item == null || empty){
-						setGraphic(null);
-					}
-					else{
-						byte[] imagenRaw = item.getArchivo();
-						InputStream in = new ByteArrayInputStream(imagenRaw);
-						ImageView imageView = new ImageView(new Image(in));
-						imageView.setPreserveRatio(true);
-						imageView.setFitHeight(100);
-						setGraphic(imageView);
-					}
-				}
-			});
+			cbFotos.setButtonCell(generarListCell());
 		}
 	}
 
+	private ListCell<Imagen> generarListCell(){
+		return new ListCell<Imagen>() {
+			@Override
+			protected void updateItem(Imagen item, boolean empty) {
+				super.updateItem(item, empty);
+
+				if(item == null || empty){
+					setGraphic(null);
+				}
+				else{
+					byte[] imagenRaw = item.getArchivo();
+					InputStream in = new ByteArrayInputStream(imagenRaw);
+					ImageView imageView = new ImageView(new Image(in));
+					imageView.setPreserveRatio(true);
+					if(imageView.getImage().getHeight() > imageView.getImage().getWidth()){
+						imageView.setFitHeight(100);
+					}
+					else{
+						imageView.setFitWidth(100);
+					}
+					setGraphic(imageView);
+				}
+			}
+		};
+	}
+	
 	@FXML
 	public void eliminarInmueble() {
 		eliminarInmueble.run();

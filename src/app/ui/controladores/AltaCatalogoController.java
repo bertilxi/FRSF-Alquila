@@ -19,8 +19,12 @@ import app.ui.ScenographyChanger;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 
@@ -42,13 +46,31 @@ public class AltaCatalogoController extends OlimpoController {
 	@FXML
 	private Pane fondo;
 
+	@FXML
+	private Button btnGenerarCatalogo;
+	
 	private Map<Node, RenglonInmuebleController> renglones = new HashMap<>();
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
 		this.agregarScenographyChanger(fondo, new ScenographyChanger(stage, presentador, coordinador, fondo));
 		this.setTitulo("Nuevo catalogo");
-
+		
+		btnGenerarCatalogo.setDisable(true);
+		listaInmuebles.getChildren().addListener(new ListChangeListener<Node>() {
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends Node> c) {
+				btnGenerarCatalogo.setDisable(c.getList().isEmpty() || cbCliente.getValue() == null);
+			}
+		});
+		
+		cbCliente.valueProperty().addListener(new ChangeListener<Cliente>() {
+			@Override
+			public void changed(ObservableValue<? extends Cliente> observable, Cliente oldValue, Cliente newValue) {
+				btnGenerarCatalogo.setDisable(listaInmuebles.getChildren().isEmpty() || newValue == null);
+			}
+		});
+		
 		try{
 			cbCliente.getItems().addAll(coordinador.obtenerClientes());
 		} catch(PersistenciaException e){
