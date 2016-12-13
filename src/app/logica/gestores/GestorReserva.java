@@ -145,7 +145,7 @@ public class GestorReserva {
 			if(reserva.getFechaInicio().compareTo(reserva.getFechaFin()) > 0){
 				errores.add(ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin);
 			}
-			else{
+			else if(reserva.getInmueble() != null){
 				Set<Reserva> reservasDelInmueble = reserva.getInmueble().getReservas();
 				Iterator<Reserva> itRes = reservasDelInmueble.iterator();
 				Reserva res = null;
@@ -177,7 +177,9 @@ public class GestorReserva {
 			PDF pdfReserva = gestorPDF.generarPDF(reserva);
 			new Thread(()->{
 				try {
-					gestorEmail.enviarEmail(reserva.getCliente().getCorreo(), ASUNTO_RESERVA_CREADA, MENSAJE_RESERVA_CREADA, pdfReserva);
+					if(reserva.getCliente().getCorreo()!=null) {
+						gestorEmail.enviarEmail(reserva.getCliente().getCorreo(), ASUNTO_RESERVA_CREADA, MENSAJE_RESERVA_CREADA, pdfReserva);
+					}
 				} catch (IOException | MessagingException e) {
 					e.printStackTrace();
 				}
