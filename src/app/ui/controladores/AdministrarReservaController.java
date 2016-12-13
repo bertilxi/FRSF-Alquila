@@ -17,10 +17,6 @@
  */
 package app.ui.controladores;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -30,6 +26,7 @@ import app.datos.entidades.Reserva;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarReserva;
 import app.logica.resultados.ResultadoEliminarReserva.ErrorEliminarReserva;
+import app.ui.ScenographyChanger;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -37,6 +34,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 
 /**
  * Controlador de la vista que lista y administra las reservas
@@ -68,8 +66,12 @@ public class AdministrarReservaController extends OlimpoController {
 	@FXML
 	private Button botonEliminar;
 
+	@FXML
+	private Pane fondo;
+
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		this.agregarScenographyChanger(fondo, new ScenographyChanger(stage, presentador, coordinador, fondo));
 		setTitulo("Administrar reservas");
 		habilitarBotones(null);
 
@@ -120,17 +122,9 @@ public class AdministrarReservaController extends OlimpoController {
 			return;
 		}
 
-		//se crea un archivo PDF temporal para poder abrirlo desde el visor PDF predeterminado del SO.
-		try{
-			File PDFtmp = new File("reserva_tmp.pdf");
-			FileOutputStream fos = new FileOutputStream(PDFtmp);
-			fos.write(reserva.getArchivoPDF().getArchivo());
-			fos.flush();
-			fos.close();
-			Desktop.getDesktop().open(PDFtmp);
-		} catch(IOException ex){
-			ex.printStackTrace();
-		}
+		VerPDFController visorPDF = (VerPDFController) cambiarScene(fondo, VerPDFController.URLVista, (Pane) fondo.getChildren().get(0));
+		visorPDF.cargarPDF(reserva.getArchivoPDF());
+		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**

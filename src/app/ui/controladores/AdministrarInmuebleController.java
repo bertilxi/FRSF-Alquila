@@ -182,7 +182,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		if(tablaInmuebles.getSelectionModel().getSelectedItem() == null){
 			return;
 		}
-		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
+		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista, URLVista);
 		controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
 		controlador.setVendedorLogueado(vendedorLogueado);
 	}

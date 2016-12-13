@@ -17,12 +17,15 @@
  */
 package app.logica.resultados;
 
+import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
 
 public class ResultadoCrearReserva extends Resultado<ErrorCrearReserva> {
-	
+
 	private Reserva reservaEnConflicto;
+
+	private PDF pdfReserva;
 
 	public enum ErrorCrearReserva {
 
@@ -48,13 +51,22 @@ public class ResultadoCrearReserva extends Resultado<ErrorCrearReserva> {
 		Importe_Vacío,
 		Importe_Menor_O_Igual_A_Cero,
 	}
-	
+
 	public ResultadoCrearReserva(Reserva reservaEnConflicto, ErrorCrearReserva... errores) {
 		super(errores);
 		this.reservaEnConflicto = reservaEnConflicto;
 	}
-	
-	public Reserva getReservaEnConflicto(){
+
+	public ResultadoCrearReserva(PDF pdfReserva) {
+		super();
+		this.pdfReserva = pdfReserva;
+	}
+
+	public Reserva getReservaEnConflicto() {
 		return reservaEnConflicto;
+	}
+
+	public PDF getPdfReserva() {
+		return pdfReserva;
 	}
 }

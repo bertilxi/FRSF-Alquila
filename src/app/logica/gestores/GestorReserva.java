@@ -47,7 +47,7 @@ public class GestorReserva {
 
 	public static final String ASUNTO_RESERVA_CREADA = "Reserva efectuada con éxito";
 	public static final String MENSAJE_RESERVA_CREADA = "Su reserva se ha registrado exitosamente. Puede ver los detalles de la reserva en el documento adjunto.";
-	
+
 	@Resource
 	protected ReservaService persistidorReserva;
 
@@ -56,7 +56,7 @@ public class GestorReserva {
 
 	@Resource
 	protected GestorPDF gestorPDF;
-	
+
 	@Resource
 	protected GestorEmail gestorEmail;
 
@@ -135,12 +135,12 @@ public class GestorReserva {
 			errores.add(ErrorCrearReserva.FechaInicio_vacía);
 			fechaInicioVacia = true;
 		}
-		
+
 		if(reserva.getFechaFin() == null){
 			errores.add(ErrorCrearReserva.FechaFin_vacía);
 			fechaFinVacia = true;
 		}
-		
+
 		if(!fechaInicioVacia && !fechaFinVacia){
 			if(reserva.getFechaInicio().compareTo(reserva.getFechaFin()) > 0){
 				errores.add(ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin);
@@ -160,11 +160,11 @@ public class GestorReserva {
 				if(reservaEnConflictoEncontrada){
 					reservaEnConflicto = res;
 					errores.add(ErrorCrearReserva.Existe_Otra_Reserva_Activa);
-					
+
 				}
 			}
 		}
-		
+
 		if(reserva.getImporte() == null){
 			errores.add(ErrorCrearReserva.Importe_Vacío);
 		}
@@ -173,18 +173,26 @@ public class GestorReserva {
 		}
 
 		if(errores.isEmpty()){
-			reserva.setArchivoPDF(gestorPDF.generarPDF(reserva));
-			PDF pdfReserva = gestorPDF.generarPDF(reserva);
-			new Thread(()->{
-				try {
-					if(reserva.getCliente().getCorreo()!=null) {
+			final PDF pdfReserva = gestorPDF.generarPDF(reserva);
+			reserva.setArchivoPDF(pdfReserva);
+			Estado estadoAlta = null;
+			for(Estado estado: gestorDatos.obtenerEstados()){
+				if(estado.getEstado().equals(EstadoStr.ALTA)){
+					estadoAlta = estado;
+				}
+			}
+			reserva.setEstado(estadoAlta);
+			new Thread(() -> {
+				try{
+					if(reserva.getCliente().getCorreo() != null){
 						gestorEmail.enviarEmail(reserva.getCliente().getCorreo(), ASUNTO_RESERVA_CREADA, MENSAJE_RESERVA_CREADA, pdfReserva);
 					}
-				} catch (IOException | MessagingException e) {
+				} catch(IOException | MessagingException e){
 					e.printStackTrace();
 				}
-			});
+			}).start();
 			persistidorReserva.guardarReserva(reserva);
+			return new ResultadoCrearReserva(pdfReserva);
 		}
 
 		return new ResultadoCrearReserva(reservaEnConflicto, errores.toArray(new ErrorCrearReserva[0]));
