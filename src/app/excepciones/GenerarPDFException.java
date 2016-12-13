@@ -25,7 +25,7 @@ public class GenerarPDFException extends GestionException {
 	private static final long serialVersionUID = 1L;
 
 	public GenerarPDFException(Throwable e) {
-		super("La entidad que se intenta crear ya existe, pero está dada de baja.", e);
+		super("No se pudo generar el pdf deseado.", e);
 	}
 
 }
