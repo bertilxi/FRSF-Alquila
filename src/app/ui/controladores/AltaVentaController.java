@@ -29,6 +29,7 @@ import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearVenta;
 import app.logica.resultados.ResultadoCrearVenta.ErrorCrearVenta;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -208,6 +209,12 @@ public class AltaVentaController extends OlimpoController {
 						}
 					}
 					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
+				} else {
+					VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada", "¿Desea imprimir el documento generado?", stage);
+					if(ventana.acepta()) {
+						//TODO mandar a imprimir
+					}
+					cambiarmeAScene(AdministrarInmuebleController.URLVista);
 				}
 			} catch (GestionException e) {
 				presentador.presentarExcepcion(e, stage);

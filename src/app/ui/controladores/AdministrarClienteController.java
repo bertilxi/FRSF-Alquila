@@ -63,6 +63,8 @@ public class AdministrarClienteController extends OlimpoController {
 	private Button botonEliminar;
 	@FXML
 	private Button botonVerReservas;
+	@FXML
+	private Button botonVerVentas;
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
@@ -90,18 +92,20 @@ public class AdministrarClienteController extends OlimpoController {
 	 * Habilita o deshabilita botones según si hay un cliente seleccionado o no
 	 *
 	 * @param cliente
-	 *            cliente seleccionado. Si no hay propietario seleccionado, es <code>null</code>
+	 *            cliente seleccionado. Si no hay cliente seleccionado, es <code>null</code>
 	 */
 	private void habilitarBotones(Cliente cliente) {
 		if(cliente == null){
 			botonVerInmuebleBuscado.setDisable(true);
 			botonVerReservas.setDisable(true);
+			botonVerVentas.setDisable(true);
 			botonModificar.setDisable(true);
 			botonEliminar.setDisable(true);
 		}
 		else{
 			botonVerInmuebleBuscado.setDisable(false);
 			botonVerReservas.setDisable(false);
+			botonVerVentas.setDisable(false);
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
 		}
@@ -132,6 +136,20 @@ public class AdministrarClienteController extends OlimpoController {
 		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
 		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
 	}
+
+	/**
+	 * Acción que se ejecuta al presionar el botón ver ventas
+	 * Se pasa a la pantalla administrar ventas con el cliente seleccionado
+	 */
+	@FXML
+	private void handleVerVentas() {
+		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
+		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
+		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
+	}
+
 
 	/**
 	 * Acción que se ejecuta al presionar el botón agregar

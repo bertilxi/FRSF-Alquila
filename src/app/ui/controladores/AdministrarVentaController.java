@@ -18,15 +18,129 @@
 package app.ui.controladores;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
+
+import app.datos.entidades.Cliente;
+import app.datos.entidades.Propietario;
+import app.datos.entidades.Vendedor;
+import app.datos.entidades.Venta;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 public class AdministrarVentaController extends OlimpoController {
 
-    public static final String URLVista = "/app/ui/vistas/x.fxml";
+    public static final String URLVista = "/app/ui/vistas/administrarVenta.fxml";
+
+    @FXML
+    protected Label labelPersona;
+
+    @FXML
+    private TableView<Venta> tablaVentas;
+
+    @FXML
+    private TableColumn<Venta, Object> columnaCliente;
+    @FXML
+    private TableColumn<Venta, String> columnaFecha;
+    @FXML
+    private TableColumn<Venta, String> columnaNombreCliente;
+    @FXML
+    private TableColumn<Venta, String> columnaApellidoCliente;
+    @FXML
+    private TableColumn<Venta, Object> columnaPropietario;
+    @FXML
+    private TableColumn<Venta, String> columnaNombrePropietario;
+    @FXML
+    private TableColumn<Venta, String> columnaApellidoPropietario;
+    @FXML
+    private TableColumn<Venta, Object> columnaVendedor;
+    @FXML
+    private TableColumn<Venta, String> columnaNombreVendedor;
+    @FXML
+    private TableColumn<Venta, String> columnaApellidoVendedor;
+
+    @FXML
+    private Button botonVerInmueble;
+
+    @FXML
+    private Button botonVerDocumento;
+
+    public void setCliente(Cliente persona) {
+    	if(persona != null) {
+    		labelPersona.setText("Cliente: " + persona.getApellido() + ", " + persona.getNombre());
+    		tablaVentas.getItems().addAll(persona.getVentas());
+    	}
+    	columnaCliente.setVisible(false);
+    }
+
+    public void setPropietario(Propietario persona) {
+    	if(persona != null) {
+    		labelPersona.setText("Propietario: " + persona.getApellido() + ", " + persona.getNombre());
+    		tablaVentas.getItems().addAll(persona.getVentas());
+    	}
+    	columnaPropietario.setVisible(false);
+    }
+
+    public void setVendedor(Vendedor persona) {
+    	if(persona != null) {
+    		labelPersona.setText("Vendedor: " + persona.getApellido() + ", " + persona.getNombre());
+    		tablaVentas.getItems().addAll(persona.getVentas());
+    	}
+    	columnaVendedor.setVisible(false);
+    }
 
     @Override
     protected void inicializar(URL location, ResourceBundle resources) {
+    	this.setTitulo("Ventas");
 
+    	columnaFecha.setCellValueFactory(cellData -> new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(cellData.getValue().getFecha())));
+    	columnaNombreCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getNombre()));
+    	columnaApellidoCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getApellido()));
+    	columnaNombrePropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPropietario().getNombre()));
+    	columnaApellidoPropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPropietario().getApellido()));
+    	columnaNombreVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedor().getNombre()));
+    	columnaApellidoVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedor().getApellido()));
 
+    	habilitarBotones(null);
+
+		tablaVentas.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> habilitarBotones(newValue));
     }
+
+    /**
+	 * Habilita o deshabilita botones según si hay una venta seleccionada o no
+	 *
+	 * @param venta
+	 *            venta seleccionada. Si no hay venta seleccionada, es <code>null</code>
+	 */
+	private void habilitarBotones(Venta venta) {
+		if(venta == null){
+			botonVerDocumento.setDisable(true);
+			botonVerInmueble.setDisable(true);
+		}
+		else{
+			botonVerDocumento.setDisable(false);
+			botonVerInmueble.setDisable(false);
+		}
+	}
+
+	/**
+	 * Acción que se ejecuta al presionar el botón ver inmueble
+	 */
+	@FXML
+	private void handleVerInmueble() {
+		//TODO hacer
+	}
+
+	/**
+	 * Acción que se ejecuta al presionar el botón ver documento
+	 */
+	@FXML
+	private void handleVerDocumento() {
+		//TODO hacer
+	}
 }

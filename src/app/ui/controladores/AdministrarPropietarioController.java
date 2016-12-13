@@ -56,6 +56,8 @@ public class AdministrarPropietarioController extends OlimpoController {
 	@FXML
 	private Button botonVer;
 	@FXML
+	private Button botonVerVentas;
+	@FXML
 	private Button botonAgregar;
 	@FXML
 	private Button botonModificar;
@@ -92,11 +94,13 @@ public class AdministrarPropietarioController extends OlimpoController {
 	private void habilitarBotones(Propietario propietario) {
 		if(propietario == null){
 			botonVer.setDisable(true);
+			botonVerVentas.setDisable(true);
 			botonModificar.setDisable(true);
 			botonEliminar.setDisable(true);
 		}
 		else{
 			botonVer.setDisable(false);
+			botonVerVentas.setDisable(false);
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
 		}
@@ -112,6 +116,19 @@ public class AdministrarPropietarioController extends OlimpoController {
 			return;
 		}
 		VerPropietarioController controlador = (VerPropietarioController) cambiarmeAScene(VerPropietarioController.URLVista);
+		controlador.setPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
+	}
+
+	/**
+	 * Acción que se ejecuta al presionar el botón ver ventas
+	 * Se pasa a la pantalla administrar ventas del propietario seleccionado
+	 */
+	@FXML
+	private void handleVerVentas() {
+		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
+		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
 		controlador.setPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
 	}
 
