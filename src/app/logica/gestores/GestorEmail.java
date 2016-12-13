@@ -38,7 +38,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -98,9 +97,9 @@ public class GestorEmail {
 	}
 
 	public GestorEmail(Boolean test) {
-		
+
 	}
-	
+
 	public void enviarEmail(String destinatario, String asunto, String mensaje, Archivo archivo) throws IOException, MessagingException {
 
 		Task<Boolean> task = new Task<Boolean>() {
