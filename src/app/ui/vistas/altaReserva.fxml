@@ -57,15 +57,15 @@
                     </rowConstraints>
                     <children>
                         <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Cliente:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="comboBoxCliente" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="comboBoxCliente" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   		<Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Inmueble:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  		<ComboBox fx:id="comboBoxInmueble" maxHeight="1000.0" maxWidth="1000.0" prefHeight="40.0" prefWidth="363.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  		<TextField fx:id="textFieldImporte" alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" promptText="0.00" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  		<ComboBox fx:id="comboBoxInmueble" maxWidth="1000.0" prefWidth="363.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  		<TextField fx:id="textFieldImporte" alignment="CENTER_RIGHT" maxWidth="1000.0" promptText="0.00" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                         <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Importe:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   		<Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" prefHeight="40.0" prefWidth="215.0" styleClass="label-medium" text="Inicio de vigencia" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   		<Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Fin de vigencia" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  		<DatePicker fx:id="datePickerInicio" prefHeight="30.0" prefWidth="449.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  		<DatePicker fx:id="datePickerFin" prefHeight="30.0" prefWidth="464.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  		<DatePicker fx:id="datePickerInicio" prefWidth="449.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  		<DatePicker fx:id="datePickerFin" prefWidth="464.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />

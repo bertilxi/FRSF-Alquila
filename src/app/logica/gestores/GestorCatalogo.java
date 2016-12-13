@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import app.datos.clases.CatalogoVista;
+import app.datos.entidades.PDF;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCatalogo;
@@ -40,6 +41,7 @@ public class GestorCatalogo {
 
 	public ResultadoCrearCatalogo crearCatalogo(CatalogoVista catalogoVista) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearCatalogo> errores = new ArrayList<>();
+		PDF catalogoPDF = null;
 
 		if(catalogoVista.getCliente() == null){
 			errores.add(ErrorCrearCatalogo.Cliente_inexistente);
@@ -72,9 +74,9 @@ public class GestorCatalogo {
 		});
 
 		if(errores.isEmpty()){
-			gestorPDF.generarPDF(catalogoVista);
+			catalogoPDF = gestorPDF.generarPDF(catalogoVista);
 		}
 
-		return new ResultadoCrearCatalogo(errores.toArray(new ErrorCrearCatalogo[0]));
+		return new ResultadoCrearCatalogo(catalogoPDF, errores.toArray(new ErrorCrearCatalogo[0]));
 	}
 }

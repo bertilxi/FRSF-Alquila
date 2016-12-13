@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+    Copyright (C) 2016 Fernando Berti - Daniel Campodonico - Emiliano Gioria - Lucas Moretti - Esteban Rebechi - Andres Leonel Rico
+    This file is part of Olimpo.
+
+    Olimpo is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Olimpo is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+Vista que crea, modifica o muestra un inmueble
+Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
+-->
+
+<VBox fx:id="fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaCatalogoController">
+      <children>
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" VBox.vgrow="SOMETIMES">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="1000.0" />
+                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="1000.0" />
+                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="1000.0" />
+                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="1000.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
+                </columnConstraints>
+                <rowConstraints>
+            <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="NEVER" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="70.0" prefHeight="70.0" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="NEVER" />
+                </rowConstraints>
+                <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-pane-tile-pane" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="listaInmuebles" />
+               </content>
+            </ScrollPane>
+                <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5">
+                    <children>
+                  <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#generarCatalogo" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Generar catàlogo">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Button>
+                        <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#salir" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Cancelar" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+            <Label text="Lista de inmuebles" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbCliente" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" promptText="Cliente" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#agregarInmueble" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Agregar Inmueble" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                </children>
+            </GridPane>
+      </children>
+  </VBox>

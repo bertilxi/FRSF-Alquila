@@ -17,7 +17,7 @@
  */
 package app.datos.clases;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Imagen;
@@ -26,13 +26,13 @@ import app.datos.entidades.Inmueble;
 public class CatalogoVista {
 
 	private Cliente cliente;
-	private HashMap<Inmueble, Imagen> fotos;
+	private Map<Inmueble, Imagen> fotos;
 
 	public CatalogoVista() {
 		super();
 	}
 
-	public CatalogoVista(Cliente cliente, HashMap<Inmueble, Imagen> fotos) {
+	public CatalogoVista(Cliente cliente, Map<Inmueble, Imagen> fotos) {
 		super();
 		this.cliente = cliente;
 		this.fotos = fotos;
@@ -42,7 +42,7 @@ public class CatalogoVista {
 		return cliente;
 	}
 
-	public HashMap<Inmueble, Imagen> getFotos() {
+	public Map<Inmueble, Imagen> getFotos() {
 		return fotos;
 	}
 }

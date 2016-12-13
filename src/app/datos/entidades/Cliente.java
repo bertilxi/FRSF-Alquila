@@ -37,6 +37,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import app.comun.FormateadorString;
+
 @NamedQueries(value = { @NamedQuery(name = "obtenerClientes", query = "SELECT c FROM Cliente c WHERE c.estado.estado = 'ALTA'"), @NamedQuery(name = "obtenerCliente", query = "SELECT c FROM Cliente c WHERE c.numeroDocumento = :documento AND c.tipoDocumento.tipo = :tipoDocumento") })
 @Entity
 @Table(name = "cliente", uniqueConstraints = @UniqueConstraint(name = "cliente_numerodocumento_idtipodocumento_uk", columnNames = { "numerodocumento", "idtipodocumento" }))
@@ -286,5 +288,11 @@ public class Cliente {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		FormateadorString formateador = new FormateadorString();
+		return formateador.primeraMayuscula(nombre) + " " + formateador.primeraMayuscula(apellido);
 	}
 }

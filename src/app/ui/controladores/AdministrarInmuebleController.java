@@ -29,11 +29,14 @@ import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
 import app.ui.componentes.ventanas.VentanaConfirmacion;
 import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.VBox;
 
 /**
  * Controlador de la vista de administración de inmuebles que se encarga de manejar el listado y la eliminación de inmuebles
@@ -62,6 +65,9 @@ public class AdministrarInmuebleController extends OlimpoController {
 	private Button btVerReservas;
 
 	@FXML
+	private Button btAgregar;
+
+	@FXML
 	private Button btModificar;
 
 	@FXML
@@ -69,6 +75,21 @@ public class AdministrarInmuebleController extends OlimpoController {
 
 	@FXML
 	private Button btVender;
+
+	@FXML
+	private Button btAceptar;
+
+	@FXML
+	private Button btSalir;
+
+	@FXML
+	private VBox vboxBotones;
+
+	private ArrayList<Inmueble> inmueblesNoMostrar;
+
+	private ArrayList<Inmueble> inmueblesSeleccionados;
+
+	private Runnable accionCierre;
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
@@ -113,6 +134,14 @@ public class AdministrarInmuebleController extends OlimpoController {
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
+
+		tablaInmuebles.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Inmueble>() {
+			@Override
+			public void onChanged(Change<? extends Inmueble> c) {
+				btAceptar.setDisable(c.getList().isEmpty());
+			}
+
+		});
 	}
 
 	@FXML
@@ -213,5 +242,27 @@ public class AdministrarInmuebleController extends OlimpoController {
 			AltaVentaController controlador = (AltaVentaController) cambiarmeAScene(AltaVentaController.URLVista);
 			controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
 		}
+	}
+
+	@FXML
+	public void aceptar() {
+		inmueblesSeleccionados.addAll(tablaInmuebles.getSelectionModel().getSelectedItems());
+		accionCierre.run();
+		salir();
+	}
+
+	public void formatearObtenerInmuebles(ArrayList<Inmueble> inmuebles, ArrayList<Inmueble> inmueblesNuevos, Runnable accionCierre) {
+		this.inmueblesNoMostrar = inmuebles;
+		this.inmueblesSeleccionados = inmueblesNuevos;
+		this.accionCierre = accionCierre;
+		vboxBotones.getChildren().clear();
+		vboxBotones.getChildren().add(btAceptar);
+		vboxBotones.getChildren().add(btSalir);
+		btAceptar.setVisible(true);
+		btSalir.setVisible(true);
+		btSalir.setDisable(false);
+		Platform.runLater(() -> {
+			tablaInmuebles.getItems().removeAll(inmueblesNoMostrar);
+		});
 	}
 }
