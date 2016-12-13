@@ -191,47 +191,47 @@ public class AltaReservaControllerTest {
 	}
 
 	//Resultados crearReserva
-	private static final ResultadoCrearReserva resultadoCorrecto = new ResultadoCrearReserva();
+	private static final ResultadoCrearReserva resultadoCorrecto = new ResultadoCrearReserva(null);
 	private static final ResultadoCrearReserva resultadoCrearCliente_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Cliente_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Cliente_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearNombre_Cliente_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Nombre_Cliente_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Nombre_Cliente_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearApellido_Cliente_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Apellido_Cliente_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Apellido_Cliente_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearTipoDocumento_Cliente_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.TipoDocumento_Cliente_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.TipoDocumento_Cliente_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearNúmeroDocumento_Cliente_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.NúmeroDocumento_Cliente_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.NúmeroDocumento_Cliente_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearPropietario_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Propietario_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Propietario_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearNombre_Propietario_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Nombre_Propietario_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Nombre_Propietario_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearApellido_Propietario_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Apellido_Propietario_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Apellido_Propietario_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearInmueble_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Inmueble_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Inmueble_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearTipo_Inmueble_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Tipo_Inmueble_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Tipo_Inmueble_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearDirección_Inmueble_Vacía =
-			new ResultadoCrearReserva(ErrorCrearReserva.Dirección_Inmueble_Vacía);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Dirección_Inmueble_Vacía);
 	private static final ResultadoCrearReserva resultadoCrearLocalidad_Inmueble_Vacía =
-			new ResultadoCrearReserva(ErrorCrearReserva.Localidad_Inmueble_Vacía);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Localidad_Inmueble_Vacía);
 	private static final ResultadoCrearReserva resultadoCrearBarrio_Inmueble_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Barrio_Inmueble_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Barrio_Inmueble_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearCalle_Inmueble_Vacía =
-			new ResultadoCrearReserva(ErrorCrearReserva.Calle_Inmueble_Vacía);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Calle_Inmueble_Vacía);
 	private static final ResultadoCrearReserva resultadoCrearAltura_Inmueble_Vacía =
-			new ResultadoCrearReserva(ErrorCrearReserva.Altura_Inmueble_Vacía);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Altura_Inmueble_Vacía);
 	private static final ResultadoCrearReserva resultadoCrearFechaInicio_vacía =
-			new ResultadoCrearReserva(ErrorCrearReserva.FechaInicio_vacía);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.FechaInicio_vacía);
 	private static final ResultadoCrearReserva resultadoCrearFechaFin_vacía =
-			new ResultadoCrearReserva(ErrorCrearReserva.FechaFin_vacía);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.FechaFin_vacía);
 	private static final ResultadoCrearReserva resultadoCrearFecha_Inicio_Posterior_A_Fecha_Fin =
-			new ResultadoCrearReserva(ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin);
 	private static final ResultadoCrearReserva resultadoCrearExiste_Otra_Reserva_Activa =
-			new ResultadoCrearReserva(ErrorCrearReserva.Existe_Otra_Reserva_Activa);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Existe_Otra_Reserva_Activa);
 	private static final ResultadoCrearReserva resultadoCrearImporte_Vacío =
-			new ResultadoCrearReserva(ErrorCrearReserva.Importe_Vacío);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Vacío);
 	private static final ResultadoCrearReserva resultadoCrearImporte_Menor_O_Igual_A_Cero =
-			new ResultadoCrearReserva(ErrorCrearReserva.Importe_Menor_O_Igual_A_Cero);
+			new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Menor_O_Igual_A_Cero);
 }
