@@ -112,7 +112,7 @@
                         <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Importe:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   		<TextField fx:id="textFieldImporte" alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" promptText="0.00" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Medio de pago:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="textFieldMedioDePago" prefHeight="1000.0" prefWidth="1000.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="textFieldMedioDePago" alignment="CENTER_RIGHT" prefHeight="1000.0" prefWidth="1000.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                </children>
             </GridPane>
                 <HBox alignment="CENTER_RIGHT" styleClass="buttonbar">
