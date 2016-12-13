@@ -20,6 +20,7 @@ package app.ui.controladores;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import app.comun.ConversorFechas;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Reserva;
@@ -47,6 +48,7 @@ public class AdministrarReservaController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/administrarReserva.fxml";
 	protected Cliente cliente;
 	protected Inmueble inmueble;
+	protected ConversorFechas conversorFechas = new ConversorFechas();
 
 	@FXML
 	protected TableView<Reserva> tablaReservas;
@@ -167,8 +169,8 @@ public class AdministrarReservaController extends OlimpoController {
 			tablaReservas.getItems().addAll(cliente.getReservas());
 			columnaClienteOInmueble.setText("Inmueble");
 			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getInmueble().getDireccion().toString()));
-			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
-			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
+			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(conversorFechas.diaMesYAnioToString(cellData.getValue().getFechaInicio())));
+			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(conversorFechas.diaMesYAnioToString(cellData.getValue().getFechaFin())));
 			columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
 		}
 	}
@@ -179,8 +181,8 @@ public class AdministrarReservaController extends OlimpoController {
 			tablaReservas.getItems().addAll(inmueble.getReservas());
 			columnaClienteOInmueble.setText("Cliente");
 			columnaClienteOInmueble.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().toString()));
-			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaInicio().toString()));
-			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaFin().toString()));
+			columnaFechaInicio.setCellValueFactory(cellData -> new SimpleStringProperty(conversorFechas.diaMesYAnioToString(cellData.getValue().getFechaInicio())));
+			columnaFechaFin.setCellValueFactory(cellData -> new SimpleStringProperty(conversorFechas.diaMesYAnioToString(cellData.getValue().getFechaFin())));
 			columnaImporte.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImporte().toString()));
 		}
 	}
