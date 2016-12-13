@@ -56,7 +56,6 @@
                   <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                   <Label focusTraversable="false" layoutX="141.0" layoutY="180.0" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Código:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
