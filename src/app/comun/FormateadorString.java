@@ -29,12 +29,40 @@ public class FormateadorString {
 
 	/**
 	 * Retorna el string con la primera letra en mayúscula
-	 * 
+	 *
 	 * @param entrada
 	 *            string a convertir
 	 * @return string de entrada con la primera letra en mayúscula
 	 */
 	public String primeraMayuscula(String entrada) {
+		if(entrada == null){
+			return null;
+		}
+		switch(entrada.length()) {
+		// Los strings vacíos se retornan como están.
+		case 0:
+			entrada = "";
+			break;
+		// Los strings de un solo caracter se devuelven en mayúscula.
+		case 1:
+			entrada = entrada.toUpperCase();
+			break;
+		// Sino, mayúscula la primera letra, minúscula el resto.
+		default:
+			entrada = entrada.substring(0, 1).toUpperCase()
+					+ entrada.substring(1).toLowerCase();
+		}
+		return entrada;
+	}
+
+	/**
+	 * Retorna el string con la primera letra de cada palabra en mayúscula a menos que sean "a|de|del|el|en|la|las|lo|los|of|y"
+	 *
+	 * @param entrada
+	 *            string a convertir
+	 * @return string de entrada con la primera letra de cada palabra en mayúscula
+	 */
+	public String nombrePropio(String entrada) {
 		if(entrada == null){
 			return null;
 		}
