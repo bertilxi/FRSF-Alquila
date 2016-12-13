@@ -88,7 +88,6 @@ public class GestorEmail {
 	private final List<String> SCOPES =
 			Arrays.asList(GmailScopes.MAIL_GOOGLE_COM, GmailScopes.GMAIL_MODIFY, GmailScopes.GMAIL_COMPOSE, GmailScopes.GMAIL_SEND);
 
-	@Autowired
 	public GestorEmail() {
 		try{
 			HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();

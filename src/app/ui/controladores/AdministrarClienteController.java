@@ -87,7 +87,6 @@ public class AdministrarClienteController extends OlimpoController {
 
 		habilitarBotones(null);
 
-		tablaClientes.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		tablaClientes.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}

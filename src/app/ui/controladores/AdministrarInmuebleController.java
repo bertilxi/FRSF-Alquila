@@ -34,6 +34,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
@@ -263,6 +264,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		btSalir.setDisable(false);
 		Platform.runLater(() -> {
 			tablaInmuebles.getItems().removeAll(inmueblesNoMostrar);
+			tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		});
 	}
 }
