@@ -122,6 +122,7 @@ public class AdministrarClienteController extends OlimpoController {
 		}
 		VerInmuebleBuscadoController controlador = (VerInmuebleBuscadoController) cambiarmeAScene(VerInmuebleBuscadoController.URLVista);
 		controlador.setInmueble(tablaClientes.getSelectionModel().getSelectedItem().getInmuebleBuscado());
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -135,6 +136,7 @@ public class AdministrarClienteController extends OlimpoController {
 		}
 		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
 		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -148,6 +150,7 @@ public class AdministrarClienteController extends OlimpoController {
 		}
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
 		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 
@@ -159,6 +162,7 @@ public class AdministrarClienteController extends OlimpoController {
 	private void handleAgregar() {
 		AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
 		controlador.setCliente(null);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -172,6 +176,7 @@ public class AdministrarClienteController extends OlimpoController {
 		}
 		ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
 		controlador.setClienteEnModificacion(tablaClientes.getSelectionModel().getSelectedItem());
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**

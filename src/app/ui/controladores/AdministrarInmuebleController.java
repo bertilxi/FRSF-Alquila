@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 import app.datos.clases.EstadoInmuebleStr;
 import app.datos.entidades.Inmueble;
+import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
@@ -69,6 +70,12 @@ public class AdministrarInmuebleController extends OlimpoController {
 
 	@FXML
 	private Button btVender;
+
+	private Vendedor vendedorLogueado;
+
+	public void setVendedorLogueado(Vendedor vendedorLogueado) {
+		this.vendedorLogueado = vendedorLogueado;
+	}
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
@@ -117,7 +124,8 @@ public class AdministrarInmuebleController extends OlimpoController {
 
 	@FXML
 	public void agregar() {
-		cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
+		NMVInmuebleController controlador = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@FXML
@@ -128,6 +136,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 		nuevaPantalla.formatearModificarInmueble(inmueble);
+		nuevaPantalla.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@FXML
@@ -138,6 +147,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 		nuevaPantalla.formatearVerInmueble(inmueble);
+		nuevaPantalla.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -151,6 +161,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
 		controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -212,6 +223,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		else{
 			AltaVentaController controlador = (AltaVentaController) cambiarmeAScene(AltaVentaController.URLVista);
 			controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
+			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 	}
 }

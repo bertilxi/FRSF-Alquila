@@ -102,9 +102,11 @@ public class AdministrarReservaController extends OlimpoController {
 		AltaReservaController controlador = (AltaReservaController) cambiarmeAScene(AltaReservaController.URLVista, URLVista);
 		if(cliente != null){
 			controlador.setCliente(cliente);
+			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 		else if(inmueble != null){
 			controlador.setInmueble(inmueble);
+			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 	}
 

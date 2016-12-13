@@ -155,9 +155,10 @@ public class AltaVendedorController extends OlimpoController {
 					} catch(PersistenciaException e1){
 						presentador.presentarExcepcion(e1, stage);
 					}
-					ModificarVendedorController modificarVendedorController = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVistaRetorno);
-					modificarVendedorController.setVendedor(vendedor);
-					modificarVendedorController.setAltaVendedor();
+					ModificarVendedorController controlador = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVistaRetorno);
+					controlador.setVendedor(vendedor);
+					controlador.setAltaVendedor();
+					controlador.setVendedorLogueado(vendedorLogueado);
 				}
 			} catch(Exception e){
 				presentador.presentarExcepcionInesperada(e, stage); //falta el stage
@@ -180,7 +181,8 @@ public class AltaVendedorController extends OlimpoController {
 				cambiarmeAScene(URLVistaRetorno, true);
 			}
 			else{
-				cambiarmeAScene(URLVistaRetorno);
+				OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
+				controlador.setVendedorLogueado(vendedorLogueado);
 			}
 		}
 		else{

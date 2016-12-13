@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import app.datos.entidades.Vendedor;
 import app.logica.CoordinadorJavaFX;
 import app.ui.ScenographyChanger;
 import app.ui.componentes.ventanas.PresentadorVentanas;
@@ -40,6 +41,12 @@ public abstract class OlimpoController implements Initializable {
 	private ScenographyChanger parentScenographyChanger;
 	private Map<Node, ScenographyChanger> myScenographyChangers = new HashMap<>();
 	protected String URLVistaRetorno;
+
+	protected Vendedor vendedorLogueado;
+
+	public void setVendedorLogueado(Vendedor vendedorLogueado) {
+		this.vendedorLogueado = vendedorLogueado;
+	}
 
 	protected OlimpoController agregarScenographyChanger(Node contexto, ScenographyChanger scenographyChanger) {
 		myScenographyChangers.put(contexto, scenographyChanger);
@@ -114,7 +121,8 @@ public abstract class OlimpoController implements Initializable {
 	@FXML
 	public void salir() {
 		if(URLVistaRetorno != null){
-			cambiarmeAScene(URLVistaRetorno);
+			OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
+			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 		else{
 			stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));

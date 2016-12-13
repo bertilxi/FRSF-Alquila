@@ -117,6 +117,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 		}
 		VerPropietarioController controlador = (VerPropietarioController) cambiarmeAScene(VerPropietarioController.URLVista);
 		controlador.setPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -130,6 +131,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 		}
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
 		controlador.setPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -138,7 +140,8 @@ public class AdministrarPropietarioController extends OlimpoController {
 	 */
 	@FXML
 	private void handleAgregar() {
-		cambiarmeAScene(AltaPropietarioController.URLVista);
+		AltaPropietarioController controlador = (AltaPropietarioController) cambiarmeAScene(AltaPropietarioController.URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -152,6 +155,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 		}
 		ModificarPropietarioController controlador = (ModificarPropietarioController) cambiarmeAScene(ModificarPropietarioController.URLVista);
 		controlador.setPropietarioEnModificacion(tablaPropietarios.getSelectionModel().getSelectedItem());
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**

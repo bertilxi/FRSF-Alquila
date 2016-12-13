@@ -92,7 +92,8 @@ public class VerPropietarioController extends OlimpoController {
 	 */
 	@FXML
 	public void handleAtras() {
-		cambiarmeAScene(AdministrarPropietarioController.URLVista);
+		AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
+		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@Override

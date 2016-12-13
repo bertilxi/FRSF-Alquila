@@ -338,10 +338,12 @@ public class InmuebleBuscadoController extends OlimpoController {
 			if(alta){
 				AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
 				controlador.setCliente(cliente);
+				controlador.setVendedorLogueado(vendedorLogueado);
 			}
 			else{
 				ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
 				controlador.setClienteEnModificacion(cliente);
+				controlador.setVendedorLogueado(vendedorLogueado);
 			}
 		}
 	}
@@ -353,10 +355,12 @@ public class InmuebleBuscadoController extends OlimpoController {
 	@FXML
 	private void cancelAction() {
 		if(alta){
-			cambiarmeAScene(AltaClienteController.URLVista);
+			OlimpoController controlador = cambiarmeAScene(AltaClienteController.URLVista);
+			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 		else{
-			cambiarmeAScene(ModificarClienteController.URLVista);
+			OlimpoController controlador = cambiarmeAScene(ModificarClienteController.URLVista);
+			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 	}
 
