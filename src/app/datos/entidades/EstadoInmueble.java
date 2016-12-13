@@ -88,4 +88,9 @@ public class EstadoInmueble {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return estado.toString();
+	}
 }
