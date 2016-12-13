@@ -141,6 +141,6 @@ public class Barrio {
 
 	@Override
 	public String toString() {
-		return new FormateadorString().primeraMayuscula(nombre);
+		return new FormateadorString().nombrePropio(nombre);
 	}
 }
