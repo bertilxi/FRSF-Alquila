@@ -106,7 +106,7 @@ public class AdministrarVentaController extends OlimpoController {
     protected void inicializar(URL location, ResourceBundle resources) {
     	this.setTitulo("Ventas");
 
-    	columnaFecha.setCellValueFactory(cellData -> new SimpleStringProperty(new SimpleDateFormat("dd/MM/yyyy").format(cellData.getValue().getFecha())));
+    	columnaFecha.setCellValueFactory(cellData -> new SimpleStringProperty(((cellData.getValue().getFecha()!=null)?(new SimpleDateFormat("dd/MM/yyyy").format(cellData.getValue().getFecha())):(null))));
     	columnaNombreCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getNombre()));
     	columnaApellidoCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getApellido()));
     	columnaNombrePropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPropietario().getNombre()));
