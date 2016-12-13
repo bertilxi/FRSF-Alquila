@@ -38,6 +38,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.springframework.stereotype.Service;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -56,6 +58,7 @@ import com.google.api.services.gmail.model.Message;
 import app.datos.entidades.Archivo;
 import javafx.concurrent.Task;
 
+@Service
 public class GestorEmail {
 	/** Application name. */
 	private static final String APPLICATION_NAME =
@@ -63,7 +66,7 @@ public class GestorEmail {
 
 	/** Directory to store user credentials for this application. */
 	private static final java.io.File DATA_STORE_DIR = new java.io.File(
-			System.getProperty("user.home"), ".credentials/gmail-java-quickstart");
+			System.getProperty("user.home"), ".credentials/olimpo");
 
 	/** Global instance of the {@link FileDataStoreFactory}. */
 	private static FileDataStoreFactory DATA_STORE_FACTORY;
@@ -105,7 +108,7 @@ public class GestorEmail {
 				// Print the labels in the user's account.
 				String user = "me";
 
-				File archivoTMP = new File("reserva_email_tmp.pdf");
+				File archivoTMP = new File("reserva.pdf");
 				FileOutputStream fos = new FileOutputStream(archivoTMP);
 				fos.write(archivo.getArchivo());
 				fos.flush();
