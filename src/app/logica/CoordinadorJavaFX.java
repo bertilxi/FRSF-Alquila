@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.CatalogoVista;
 import app.datos.clases.DatosLogin;
 import app.datos.clases.FiltroInmueble;
 import app.datos.clases.FiltroPropietario;
@@ -43,6 +44,7 @@ import app.datos.entidades.Vendedor;
 import app.datos.entidades.Venta;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
+import app.logica.gestores.GestorCatalogo;
 import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorInmueble;
@@ -52,6 +54,7 @@ import app.logica.gestores.GestorReserva;
 import app.logica.gestores.GestorVendedor;
 import app.logica.gestores.GestorVenta;
 import app.logica.resultados.ResultadoAutenticacion;
+import app.logica.resultados.ResultadoCrearCatalogo;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearPropietario;
@@ -91,6 +94,9 @@ public class CoordinadorJavaFX {
 
 	@Resource
 	GestorVenta gestorVenta;
+
+	@Resource
+	GestorCatalogo gestorCatalogo;
 
 	@Resource
 	GestorPDF gestorPDF;
@@ -217,6 +223,10 @@ public class CoordinadorJavaFX {
 
 	public ResultadoCrearVenta crearVenta(Venta venta) throws PersistenciaException, GestionException {
 		return gestorVenta.crearVenta(venta);
+	}
+
+	public ResultadoCrearCatalogo crearCatalogo(CatalogoVista catalogoVista) throws PersistenciaException, GestionException {
+		return gestorCatalogo.crearCatalogo(catalogoVista);
 	}
 
 	public void imprimirPDF(PDF pdf) throws GestionException {

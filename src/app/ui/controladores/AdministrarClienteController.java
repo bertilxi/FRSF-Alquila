@@ -31,6 +31,7 @@ import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -65,6 +66,8 @@ public class AdministrarClienteController extends OlimpoController {
 	private Button botonVerReservas;
 	@FXML
 	private Button botonVerVentas;
+	@FXML
+	private Button botonGenerarCatalogo;
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
@@ -84,6 +87,7 @@ public class AdministrarClienteController extends OlimpoController {
 
 		habilitarBotones(null);
 
+		tablaClientes.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		tablaClientes.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}
@@ -101,6 +105,7 @@ public class AdministrarClienteController extends OlimpoController {
 			botonVerVentas.setDisable(true);
 			botonModificar.setDisable(true);
 			botonEliminar.setDisable(true);
+			botonGenerarCatalogo.setDisable(true);
 		}
 		else{
 			botonVerInmuebleBuscado.setDisable(false);
@@ -108,6 +113,7 @@ public class AdministrarClienteController extends OlimpoController {
 			botonVerVentas.setDisable(false);
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
+			botonGenerarCatalogo.setDisable(false);
 		}
 	}
 
@@ -152,7 +158,6 @@ public class AdministrarClienteController extends OlimpoController {
 		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
 		controlador.setVendedorLogueado(vendedorLogueado);
 	}
-
 
 	/**
 	 * Acción que se ejecuta al presionar el botón agregar
@@ -219,5 +224,15 @@ public class AdministrarClienteController extends OlimpoController {
 			presentador.presentarExcepcionInesperada(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
+	}
+
+	@FXML
+	public void generarCatalogo() {
+		Cliente cliente = tablaClientes.getSelectionModel().getSelectedItem();
+		if(cliente == null){
+			return;
+		}
+		AltaCatalogoController controlador = (AltaCatalogoController) cambiarmeAScene(AltaCatalogoController.URLVista);
+		controlador.setCliente(cliente);
 	}
 }

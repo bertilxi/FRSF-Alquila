@@ -98,10 +98,10 @@ public class InmuebleBuscadoControllerTest {
 		when(presentadorVentanasMock.presentarError(any(), any(), any())).thenReturn(ventanaErrorMock);
 		when(presentadorVentanasMock.presentarExcepcion(any(), any())).thenReturn(ventanaErrorExcepcionMock);
 		if(clienteNuevo != null){
-			when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(altaClienteControllerMock);
+			when(scenographyChangerMock.cambiarScenography(any(String.class), any())).thenReturn(altaClienteControllerMock);
 		}
 		if(clienteEnModificacion != null){
-			when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarClienteControllerMock);
+			when(scenographyChangerMock.cambiarScenography(any(String.class), any())).thenReturn(modificarClienteControllerMock);
 		}
 		doNothing().when(altaClienteControllerMock).setCliente(any());
 		doNothing().when(modificarClienteControllerMock).setClienteEnModificacion(any());

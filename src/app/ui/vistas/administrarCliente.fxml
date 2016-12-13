@@ -47,11 +47,12 @@
             </TableView>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="buttonbar" HBox.hgrow="NEVER">
          <children>
             <Button fx:id="botonVerInmuebleBuscado" layoutX="26.0" layoutY="26.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerInmuebleBuscado" text="Ver inmueble" />
             <Button fx:id="botonVerReservas" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerReservas" text="Ver reservas" />
             <Button fx:id="botonVerVentas" layoutX="26.0" layoutY="65.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerVentas" text="Ver ventas" />
+            <Button fx:id="botonGenerarCatalogo" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#generarCatalogo" text="Generar Catálogo" />
             <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleAgregar" text="Agregar" />
             <Button fx:id="botonModificar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleModificar" text="Modificar" />
             <Button fx:id="botonEliminar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleEliminar" text="Eliminar" />

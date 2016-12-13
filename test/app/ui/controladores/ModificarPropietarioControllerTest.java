@@ -84,7 +84,7 @@ public class ModificarPropietarioControllerTest {
 		when(presentadorVentanasMock.presentarError(any(), any(), any())).thenReturn(ventanaErrorMock);
 		when(presentadorVentanasMock.presentarExcepcion(any(), any())).thenReturn(ventanaErrorExcepcionMock);
 		when(presentadorVentanasMock.presentarConfirmacion(any(), any(), any())).thenReturn(ventanaConfirmacionMock);
-		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarPropietarioControllerMock);
+		when(scenographyChangerMock.cambiarScenography(any(String.class), any())).thenReturn(modificarPropietarioControllerMock);
 		doNothing().when(modificarPropietarioControllerMock).setPropietarioEnModificacion(any());
 		doNothing().when(presentadorVentanasMock).presentarToast(any(), any());
 
@@ -96,7 +96,6 @@ public class ModificarPropietarioControllerTest {
 				.setTelefono(telefono)
 				.setEmail(email)
 				.setDireccion(direccion);
-
 
 		when(coordinadorMock.modificarPropietario(propietario)).thenReturn(resultadoModificarPropietarioEsperado);
 		if(excepcion != null){
@@ -165,7 +164,6 @@ public class ModificarPropietarioControllerTest {
 
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
 
-
 	}
 
 	protected Object[] parametersForTestModificarPropietario() {
@@ -176,27 +174,27 @@ public class ModificarPropietarioControllerTest {
 		Direccion dir = new Direccion("1865", "1", "B", new Calle("San martín", localidad), new Barrio("Centro", localidad), localidad, "");
 		return new Object[] {
 				//prueba correcta
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 0, null },
 				//prueba nombre incorrecto
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarNombreIncorrecto, 1, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarNombreIncorrecto, 1, 0, null },
 				//prueba apellido incorrecto
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarApellidoIncorrecto, 1, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarApellidoIncorrecto, 1, 0, null },
 				//prueba documento incorrecto
-				new Object[] { "Juan", "Perez", doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarDocumentoIncorrecto, 1, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarDocumentoIncorrecto, 1, 0, null },
 				//prueba teléfono incorrecto
-				new Object[] { "Juan", "Perez", doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarTelefonoIncorrecto, 1, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarTelefonoIncorrecto, 1, 0, null },
 				//prueba email incorrecto
-				new Object[] { "Juan", "Perez", doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarEmailIncorrecto, 1, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarEmailIncorrecto, 1, 0, null },
 				//prueba direccion incorrecta
-				new Object[] { "Juan", "Perez", doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarDireccionIncorrecta, 1, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarDireccionIncorrecta, 1, 0, null },
 				//prueba ya existe propietario
-				new Object[] { "Juan", "Perez", doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarYaExiste, 1, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoModificarYaExiste, 1, 0, null },
 				//prueba ya existe propietario
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", "juanperez@hotmail.com", dir,new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Nombre_Incorrecto,ErrorModificarPropietario.Formato_Apellido_Incorrecto),1, 0, null},
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Nombre_Incorrecto, ErrorModificarPropietario.Formato_Apellido_Incorrecto), 1, 0, null },
 				//prueba nombre vacio
-				new Object[] { "", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, null, 1, 0, null},
+				new Object[] { "", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, null, 1, 0, null },
 				//prueba PersistenciaException
-				new Object[] { "Juan", "Perez",doc,"12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 1, new SaveUpdateException(new Throwable())}
+				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 1, new SaveUpdateException(new Throwable()) }
 
 		};
 	}

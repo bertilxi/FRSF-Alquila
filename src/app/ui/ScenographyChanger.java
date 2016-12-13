@@ -77,4 +77,23 @@ public class ScenographyChanger {
 	public OlimpoController cambiarScenography(String URLVistaACambiar) {
 		return cambiarScenography(URLVistaACambiar, false);
 	}
+
+	public void cambiarScenography(Pane newScenography, Boolean useSceneSize) {
+		background.getChildren().clear();
+		background.getChildren().add(newScenography);
+
+		if(useSceneSize){
+			background.resize(newScenography.getWidth(), newScenography.getHeight());
+			stage.sizeToScene();
+			stage.centerOnScreen();
+		}
+		else{
+			background.resize(stage.getWidth(), stage.getHeight());
+			newScenography.resize(background.getWidth(), background.getHeight());
+		}
+	}
+
+	public void cambiarScenography(Pane newScenography) {
+		cambiarScenography(newScenography, false);
+	}
 }

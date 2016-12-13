@@ -84,7 +84,7 @@ public class AltaClienteControllerTest {
 		when(presentadorVentanasMock.presentarExcepcion(any(), any())).thenReturn(ventanaErrorExcepcionMock);
 		when(presentadorVentanasMock.presentarConfirmacion(any(), any(), any())).thenReturn(ventanaConfirmacionMock);
 		when(ventanaConfirmacionMock.acepta()).thenReturn(aceptarVentanaConfirmacion);
-		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarClienteControllerMock);
+		when(scenographyChangerMock.cambiarScenography(any(String.class), any())).thenReturn(modificarClienteControllerMock);
 		doNothing().when(modificarClienteControllerMock).setClienteEnModificacion(any());
 		doNothing().when(presentadorVentanasMock).presentarToast(any(), any());
 

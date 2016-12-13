@@ -30,6 +30,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -47,6 +48,7 @@ public abstract class OlimpoController implements Initializable {
 	public void setVendedorLogueado(Vendedor vendedorLogueado) {
 		this.vendedorLogueado = vendedorLogueado;
 	}
+	protected Pane paneVistaRetorno;
 
 	protected OlimpoController agregarScenographyChanger(Node contexto, ScenographyChanger scenographyChanger) {
 		myScenographyChangers.put(contexto, scenographyChanger);
@@ -79,6 +81,34 @@ public abstract class OlimpoController implements Initializable {
 
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno) {
 		return cambiarmeAScene(URLVistaACambiar, URLVistaRetorno, false);
+	}
+
+	protected void cambiarmeAScene(Pane paneVistaRetorno, Boolean useSceneSize) {
+		parentScenographyChanger.cambiarScenography(paneVistaRetorno, useSceneSize);
+	}
+
+	protected void cambiarmeAScene(Pane paneVistaRetorno) {
+		cambiarmeAScene(paneVistaRetorno, false);
+	}
+
+	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar, Pane paneVistaRetorno, Boolean useStageSize) {
+		OlimpoController nuevoController = myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar, useStageSize);
+		nuevoController.paneVistaRetorno = paneVistaRetorno;
+		return nuevoController;
+	}
+
+	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar, Pane paneVistaRetorno) {
+		return cambiarScene(contexto, URLVistaACambiar, paneVistaRetorno, false);
+	}
+
+	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, Pane paneVistaRetorno, Boolean useSceneSize) {
+		OlimpoController nuevoController = parentScenographyChanger.cambiarScenography(URLVistaACambiar, useSceneSize);
+		nuevoController.paneVistaRetorno = paneVistaRetorno;
+		return nuevoController;
+	}
+
+	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, Pane paneVistaRetorno) {
+		return cambiarmeAScene(URLVistaACambiar, paneVistaRetorno, false);
 	}
 
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, Boolean useSceneSize) {
@@ -123,6 +153,9 @@ public abstract class OlimpoController implements Initializable {
 		if(URLVistaRetorno != null){
 			OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
 			controlador.setVendedorLogueado(vendedorLogueado);
+		}
+		else if(paneVistaRetorno != null){
+			cambiarmeAScene(paneVistaRetorno);
 		}
 		else{
 			stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));

@@ -38,6 +38,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -87,16 +88,20 @@ public class GestorEmail {
 	private final List<String> SCOPES =
 			Arrays.asList(GmailScopes.MAIL_GOOGLE_COM, GmailScopes.GMAIL_MODIFY, GmailScopes.GMAIL_COMPOSE, GmailScopes.GMAIL_SEND);
 
-	{
+	@Autowired
+	public GestorEmail() {
 		try{
 			HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 			DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
 		} catch(Throwable t){
 			t.printStackTrace();
-			System.exit(1);
 		}
 	}
 
+	public GestorEmail(Boolean test) {
+		
+	}
+	
 	public void enviarEmail(String destinatario, String asunto, String mensaje, Archivo archivo) throws IOException, MessagingException {
 
 		Task<Boolean> task = new Task<Boolean>() {

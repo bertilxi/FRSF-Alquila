@@ -17,12 +17,20 @@
  */
 package app.logica.resultados;
 
+import app.datos.entidades.PDF;
 import app.logica.resultados.ResultadoCrearCatalogo.ErrorCrearCatalogo;
 
 public class ResultadoCrearCatalogo extends Resultado<ErrorCrearCatalogo> {
 
-	public ResultadoCrearCatalogo(ErrorCrearCatalogo... errores) {
+	private PDF catalogoPDF;
+
+	public ResultadoCrearCatalogo(PDF catalogoPDF, ErrorCrearCatalogo... errores) {
 		super(errores);
+		this.catalogoPDF = catalogoPDF;
+	}
+
+	public PDF getCatalogoPDF() {
+		return catalogoPDF;
 	}
 
 	public enum ErrorCrearCatalogo {

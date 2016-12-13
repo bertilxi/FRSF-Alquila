@@ -62,7 +62,7 @@ public class AdministrarVendedorControllerTest {
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 
 		//Se setea lo que debe devolver el mock cuando es invocado por la clase a probar
-		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(altaVendedorControllerMock);
+		when(scenographyChangerMock.cambiarScenography(any(String.class), any())).thenReturn(altaVendedorControllerMock);
 
 		//Controlador a probar;
 		AdministrarVendedorController administrarVendedorController = new AdministrarVendedorController() {
@@ -108,7 +108,7 @@ public class AdministrarVendedorControllerTest {
 
 		//Se setea lo que deben devolver los mocks cuando son invocados por la clase a probar
 		when(coordinadorMock.obtenerVendedores()).thenReturn(listaVendedores);
-		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarVendedorControllerMock);
+		when(scenographyChangerMock.cambiarScenography(any(String.class), any())).thenReturn(modificarVendedorControllerMock);
 
 		//Controlador a probar, se sobreescriben algunos métodos para setear los mocks y setear los datos en la tabla
 		AdministrarVendedorController administrarVendedorController = new AdministrarVendedorController() {

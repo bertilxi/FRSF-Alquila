@@ -195,6 +195,7 @@ public class AltaReservaController extends OlimpoController {
 				}
 				else{
 					presentador.presentarToast("Se ha realizado la reserva con éxito", stage);
+					//TODO mostrar PDF
 					salir();
 				}
 			} catch(PersistenciaException e){
