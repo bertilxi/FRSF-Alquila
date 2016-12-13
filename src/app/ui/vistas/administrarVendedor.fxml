@@ -48,6 +48,7 @@
       </VBox>
       <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
          <children>
+            <Button fx:id="botonVerVentas" layoutX="26.0" layoutY="26.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerVentas" text="Ver ventas" />
             <Button fx:id="botonAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregarAction" text="Agregar" />
             <Button fx:id="botonModificar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#modificarAction" text="Modificar" />
             <Button fx:id="botonEliminar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#eliminarAction" text="Eliminar" />

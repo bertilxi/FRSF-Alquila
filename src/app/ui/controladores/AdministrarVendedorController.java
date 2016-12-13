@@ -50,6 +50,8 @@ public class AdministrarVendedorController extends OlimpoController {
 	private TableColumn<Vendedor, String> columnaApellido;
 
 	@FXML
+	private Button botonVerVentas;
+	@FXML
 	private Button botonAgregar;
 	@FXML
 	private Button botonModificar;
@@ -85,13 +87,28 @@ public class AdministrarVendedorController extends OlimpoController {
 	 */
 	private void habilitarBotones(Vendedor vendedor) {
 		if(vendedor == null){
+			botonVerVentas.setDisable(true);
 			botonModificar.setDisable(true);
 			botonEliminar.setDisable(true);
 		}
 		else{
+			botonVerVentas.setDisable(false);
 			botonModificar.setDisable(false);
 			botonEliminar.setDisable(false);
 		}
+	}
+
+	/**
+	 * Acción que se ejecuta al presionar el botón ver ventas
+	 * Se pasa a la pantalla administrar ventas con el vendedor seleccionado
+	 */
+	@FXML
+	private void handleVerVentas() {
+		if(tablaVendedores.getSelectionModel().getSelectedItem() == null){
+			return;
+		}
+		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
+		controlador.setVendedor(tablaVendedores.getSelectionModel().getSelectedItem());
 	}
 
 	/**

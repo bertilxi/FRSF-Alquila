@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import app.datos.clases.EstadoInmuebleStr;
 import app.datos.entidades.Inmueble;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarInmueble;
@@ -66,6 +67,9 @@ public class AdministrarInmuebleController extends OlimpoController {
 	@FXML
 	private Button btEliminar;
 
+	@FXML
+	private Button btVender;
+
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar inmuebles");
@@ -73,8 +77,10 @@ public class AdministrarInmuebleController extends OlimpoController {
 		tablaInmuebles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			Boolean noHayInmuebleSeleccionado = newValue == null;
 			btVerMas.setDisable(noHayInmuebleSeleccionado);
+			btVerReservas.setDisable(noHayInmuebleSeleccionado);
 			btModificar.setDisable(noHayInmuebleSeleccionado);
 			btEliminar.setDisable(noHayInmuebleSeleccionado);
+			btVender.setDisable(noHayInmuebleSeleccionado);
 		});
 
 		columnaTipoInmueble.setCellValueFactory(param -> {
@@ -194,4 +200,18 @@ public class AdministrarInmuebleController extends OlimpoController {
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
 	}
 
+	/**
+	 * Método que permite acceder a la pantalla de venta de un inmueble
+	 * Pertenece a la taskcard 29 de la iteración 2 y a la historia 8
+	 */
+	@FXML
+	public void venderInmueble() {
+		if(tablaInmuebles.getSelectionModel().getSelectedItem().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
+			presentador.presentarInformacion("Inmueble vendido", "No se puede realizar la venta ya que el inmueble ya se encuentra vendido", stage);
+		}
+		else{
+			AltaVentaController controlador = (AltaVentaController) cambiarmeAScene(AltaVentaController.URLVista);
+			controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
+		}
+	}
 }

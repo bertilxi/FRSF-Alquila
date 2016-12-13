@@ -100,7 +100,7 @@
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <Label text="Reserva de inmueble" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+            <Label text="Venta de inmueble" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                <font>
                   <Font name="Arial" size="48.0" />
                </font>

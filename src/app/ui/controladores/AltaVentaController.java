@@ -18,15 +18,218 @@
 package app.ui.controladores;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
+
+import app.datos.entidades.Cliente;
+import app.datos.entidades.Inmueble;
+import app.datos.entidades.Propietario;
+import app.datos.entidades.Venta;
+import app.excepciones.GestionException;
+import app.excepciones.PersistenciaException;
+import app.logica.resultados.ResultadoCrearVenta;
+import app.logica.resultados.ResultadoCrearVenta.ErrorCrearVenta;
+import app.ui.componentes.ventanas.VentanaConfirmacion;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class AltaVentaController extends OlimpoController {
 
-    public static final String URLVista = "/app/ui/vistas/x.fxml";
+    public static final String URLVista = "/app/ui/vistas/altaVenta.fxml";
 
-    @Override
+    @FXML
+    protected Label labelCodigo;
+
+    @FXML
+    protected Label labelTipoInmueble;
+
+    @FXML
+    protected Label labelLocalidad;
+
+    @FXML
+    protected Label labelBarrio;
+
+    @FXML
+    protected Label labelCalle;
+
+    @FXML
+    protected Label labelAltura;
+
+    @FXML
+    protected Label labelPiso;
+
+    @FXML
+    protected Label labelDepartamento;
+
+    @FXML
+    protected Label labelOtros;
+
+    @FXML
+    protected Label labelNombre;
+
+    @FXML
+    protected Label labelApellido;
+
+    @FXML
+    protected Label labelTipoDocumento;
+
+    @FXML
+    protected Label labelDocumento;
+
+    @FXML
+	protected ComboBox<Cliente> comboBoxCliente;
+
+    @FXML
+	protected TextField textFieldImporte;
+
+    @FXML
+	protected TextField textFieldMedioDePago;
+
+    protected Inmueble inmueble;
+
+    /**
+	 * Setea los campos con los datos del inmueble pasado por parámetro y de su propietario.
+	 *
+	 * @param inmueble
+	 *            inmueble del que se obtienen los datos.
+	 */
+    public void setInmueble(Inmueble inmueble) {
+		this.inmueble = inmueble;
+		if(inmueble != null) {
+			Propietario propietario = inmueble.getPropietario();
+
+			labelAltura.setText(inmueble.getDireccion().getNumero());
+			labelApellido.setText(propietario.getApellido());
+			labelBarrio.setText(inmueble.getDireccion().getBarrio().getNombre());
+			labelCalle.setText(inmueble.getDireccion().getCalle().getNombre());
+			labelCodigo.setText(inmueble.getId().toString());
+			labelDepartamento.setText(inmueble.getDireccion().getDepartamento());
+			labelDocumento.setText(propietario.getNumeroDocumento());
+			labelLocalidad.setText(inmueble.getDireccion().getLocalidad().getNombre());
+			labelNombre.setText(propietario.getNombre());
+			labelOtros.setText(inmueble.getDireccion().getOtros());
+			labelPiso.setText(inmueble.getDireccion().getPiso());
+			labelTipoDocumento.setText(propietario.getTipoDocumento().toString());
+			labelTipoInmueble.setText(inmueble.getTipo().toString());
+		}
+	}
+
+	@Override
     protected void inicializar(URL location, ResourceBundle resources) {
+		this.setTitulo("Nueva Venta");
 
-
+		try{
+			comboBoxCliente.getItems().addAll(coordinador.obtenerClientes());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		}
     }
+
+	/**
+	 * Acción que se ejecuta al apretar el botón aceptar.
+	 *
+	 * Valida que se hayan insertado datos, los carga a la venta y deriva la operación a capa lógica.
+	 * Si la capa lógica retorna errores, se muestran al usuario.
+	 */
+	@FXML
+	public void acceptAction() {
+		StringBuilder errores = new StringBuilder("");
+
+		Cliente cliente = comboBoxCliente.getValue();
+		Double importe = null;
+		String medioDePago = textFieldMedioDePago.getText().trim();
+
+		if(cliente == null){
+			errores.append("Elija un cliente").append("\n");
+		}
+
+		try {
+			importe = Double.valueOf(textFieldImporte.getText().trim());
+		} catch (Exception e) {
+			errores.append("Importe incorrecto. Introduzca solo números y un punto para decimales.\n");
+		}
+
+		if(medioDePago.isEmpty()){
+			errores.append("Inserte un medio de pago").append("\n");
+		}
+
+		if(!errores.toString().isEmpty()){
+			presentador.presentarError("Revise sus campos", errores.toString(), stage);
+		}
+		else{
+			//TODO pedir contraseña de vendedor
+
+			Venta venta = new Venta();
+			venta.setCliente(cliente);
+			venta.setFecha(new Date(System.currentTimeMillis()));
+			venta.setImporte(importe);
+			venta.setInmueble(inmueble);
+			venta.setMedioDePago(medioDePago);
+			venta.setPropietario(inmueble.getPropietario());
+			//venta.setVendedor(vendedor);
+
+			try {
+				ResultadoCrearVenta resultado = coordinador.crearVenta(venta);
+				if (resultado.hayErrores()) {
+					StringBuilder stringErrores = new StringBuilder();
+					for (ErrorCrearVenta e: resultado.getErrores()) {
+						switch(e) {
+						case Cliente_Igual_A_Propietario:
+							stringErrores.append("El cliente seleccionado es el actual propietario del inmueble.\n");
+							break;
+						case Cliente_Vacío:
+							stringErrores.append("No se ha seleccionado ningún cliente.\n");
+							break;
+						case Formato_Medio_De_Pago_Incorrecto:
+							stringErrores.append("Formato de medio de pago incorrecto.\n");
+							break;
+						case Importe_vacío:
+							stringErrores.append("No se ha introducido importe.\n");
+							break;
+						case Inmueble_Reservado_Por_Otro_Cliente:
+							stringErrores.append("El inmueble está reservado por otro cliente.\n");
+							break;
+						case Inmueble_Vacío:
+							stringErrores.append("No se ha seleccionado ningún inmueble.\n");
+							break;
+						case Inmueble_Ya_Vendido:
+							stringErrores.append("El inmueble ya se encuentra vendido.\n");
+							break;
+						case Medio_De_Pago_Vacío:
+							stringErrores.append("No se ha introducido medio de pago.\n");
+							break;
+						case Propietario_Vacío:
+							stringErrores.append("El inmueble no posee propietario.\n");
+							break;
+						case Vendedor_Vacío:
+							stringErrores.append("No se ha confirmado el vendedor en esta operación.\n");
+							break;
+						}
+					}
+					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
+				} else {
+					VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada", "¿Desea imprimir el documento generado?", stage);
+					if(ventana.acepta()) {
+						//TODO mandar a imprimir
+					}
+					cambiarmeAScene(AdministrarInmuebleController.URLVista);
+				}
+			} catch (GestionException e) {
+				presentador.presentarExcepcion(e, stage);
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+	}
+
+	/**
+	 * Acción que se ejecuta al presionar el botón cancelar.
+	 * Se vuelve a la pantalla administrar inmueble.
+	 */
+	@FXML
+	private void cancelAction() {
+		cambiarmeAScene(AdministrarInmuebleController.URLVista);
+	}
 }
