@@ -30,6 +30,7 @@ import app.datos.clases.FiltroPropietario;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Cliente;
+import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Orientacion;
@@ -175,6 +176,10 @@ public class CoordinadorJavaFX {
 
 	public ArrayList<TipoInmueble> obtenerTiposInmueble() throws PersistenciaException {
 		return gestorDatos.obtenerTiposInmueble();
+	}
+
+	public ArrayList<EstadoInmueble> obtenerEstadosInmueble() throws PersistenciaException {
+		return gestorDatos.obtenerEstadosInmueble();
 	}
 
 	public ArrayList<Provincia> obtenerProvinciasDe(Pais pais) throws PersistenciaException {

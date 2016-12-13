@@ -67,22 +67,30 @@ public class FiltroInmueble {
 		}
 
 		public Builder pais(Pais pais) {
-			filtroInmueble.pais = pais.getNombre();
+			if(pais != null) {
+				filtroInmueble.pais = pais.getNombre();
+			}
 			return this;
 		}
 
 		public Builder provincia(Provincia provincia) {
-			filtroInmueble.provincia = provincia.getNombre();
+			if(provincia != null) {
+				filtroInmueble.provincia = provincia.getNombre();
+			}
 			return this;
 		}
 
 		public Builder localidad(Localidad localidad) {
-			filtroInmueble.localidad = localidad.getNombre();
+			if(localidad != null) {
+				filtroInmueble.localidad = localidad.getNombre();
+			}
 			return this;
 		}
 
 		public Builder barrio(Barrio barrio) {
-			filtroInmueble.barrio = barrio.getNombre();
+			if(barrio != null) {
+				filtroInmueble.barrio = barrio.getNombre();
+			}
 			return this;
 		}
 
