@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.FutureTask;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -68,8 +68,6 @@ public class GestorPDF {
 	protected ConversorFechas conversorFechas;
 
 	private PDF pdf;
-
-	private Exception exception;
 
 	private static final String URLDocumentoReserva = "/res/pdf/documentoReserva.fxml";
 
@@ -128,14 +126,13 @@ public class GestorPDF {
 	 * @return reserva en PDF
 	 */
 	public PDF generarPDF(Reserva reserva) throws GestionException {
-		exception = null;
 		try{
+			pdf = null;
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLDocumentoReserva));
 			Pane documentoReserva = (Pane) loader.load();
-			Semaphore semaforo = new Semaphore(0);
 
-			Platform.runLater(() -> {
+			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
 					Label label = (Label) documentoReserva.lookup("#lblNombreOferente");
 					label.setText(formateador.primeraMayuscula(reserva.getCliente().getNombre()));
@@ -176,22 +173,23 @@ public class GestorPDF {
 					label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
 
 					pdf = generarPDF(documentoReserva);
-				} catch(Exception e){
-					exception = e;
+				} catch(Throwable e){
+					return e;
 				}
-
-				semaforo.release();
+				return null;
 			});
 
-			semaforo.acquire();
-
-			if(exception != null){
-				throw exception;
+			if(!Platform.isFxApplicationThread()){
+				Platform.runLater(future);
+			}
+			Throwable excepcion = future.get();
+			if(excepcion != null){
+				throw excepcion;
 			}
 			if(pdf == null){
 				throw new NullPointerException("Error al generar PDF");
 			}
-		} catch(Exception e){
+		} catch(Throwable e){
 			throw new GenerarPDFException(e);
 		}
 
@@ -206,73 +204,73 @@ public class GestorPDF {
 	 *            datos que se utilizaran para generar el PDF de una venta
 	 * @return venta en PDF
 	 */
-	public PDF generarPDF(Venta venta)  throws GestionException {
-		exception = null;
+	public PDF generarPDF(Venta venta) throws GestionException {
 		try{
+			pdf = null;
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLDocumentoVenta));
-			Pane documentoReserva = (Pane) loader.load();
-			Semaphore semaforo = new Semaphore(0);
+			Pane documentoVenta = (Pane) loader.load();
 
-			Platform.runLater(() -> {
+			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
-					Label label = (Label) documentoReserva.lookup("#lblNombreComprador");
+					Label label = (Label) documentoVenta.lookup("#lblNombreComprador");
 					label.setText(formateador.primeraMayuscula(venta.getCliente().getNombre()));
-					label = (Label) documentoReserva.lookup("#lblApellidoComprador");
+					label = (Label) documentoVenta.lookup("#lblApellidoComprador");
 					label.setText(formateador.primeraMayuscula(venta.getCliente().getApellido()));
-					label = (Label) documentoReserva.lookup("#lblDocumentoComprador");
+					label = (Label) documentoVenta.lookup("#lblDocumentoComprador");
 					label.setText(venta.getCliente().getTipoDocumento() + " - " + venta.getCliente().getNumeroDocumento());
-					label = (Label) documentoReserva.lookup("#lblNombrePropietario");
+					label = (Label) documentoVenta.lookup("#lblNombrePropietario");
 					label.setText(formateador.primeraMayuscula(venta.getInmueble().getPropietario().getNombre()));
-					label = (Label) documentoReserva.lookup("#lblApellidoPropietario");
+					label = (Label) documentoVenta.lookup("#lblApellidoPropietario");
 					label.setText(formateador.primeraMayuscula(venta.getInmueble().getPropietario().getApellido()));
-					label = (Label) documentoReserva.lookup("#lblDocumentoComprador");
+					label = (Label) documentoVenta.lookup("#lblDocumentoComprador");
 					label.setText(venta.getCliente().getTipoDocumento() + " - " + venta.getCliente().getNumeroDocumento());
-					label = (Label) documentoReserva.lookup("#lblCodigoInmueble");
+					label = (Label) documentoVenta.lookup("#lblCodigoInmueble");
 					label.setText(Integer.toString(venta.getInmueble().getId()));
-					label = (Label) documentoReserva.lookup("#lblTipoInmueble");
+					label = (Label) documentoVenta.lookup("#lblTipoInmueble");
 					label.setText(venta.getInmueble().getTipo().getTipo().toString());
-					label = (Label) documentoReserva.lookup("#lblLocalidadInmueble");
+					label = (Label) documentoVenta.lookup("#lblLocalidadInmueble");
 					label.setText(venta.getInmueble().getDireccion().getLocalidad().toString());
-					label = (Label) documentoReserva.lookup("#lblBarrioInmueble");
+					label = (Label) documentoVenta.lookup("#lblBarrioInmueble");
 					label.setText(venta.getInmueble().getDireccion().getBarrio().toString());
-					label = (Label) documentoReserva.lookup("#lblCalleInmueble");
+					label = (Label) documentoVenta.lookup("#lblCalleInmueble");
 					label.setText(venta.getInmueble().getDireccion().getCalle().toString());
-					label = (Label) documentoReserva.lookup("#lblAlturaInmueble");
+					label = (Label) documentoVenta.lookup("#lblAlturaInmueble");
 					label.setText(venta.getInmueble().getDireccion().getNumero());
-					label = (Label) documentoReserva.lookup("#lblPisoInmueble");
+					label = (Label) documentoVenta.lookup("#lblPisoInmueble");
 					label.setText(venta.getInmueble().getDireccion().getPiso());
-					label = (Label) documentoReserva.lookup("#lblDepartamentoInmueble");
+					label = (Label) documentoVenta.lookup("#lblDepartamentoInmueble");
 					label.setText(venta.getInmueble().getDireccion().getDepartamento());
-					label = (Label) documentoReserva.lookup("#lblOtrosInmueble");
+					label = (Label) documentoVenta.lookup("#lblOtrosInmueble");
 					label.setText(venta.getInmueble().getDireccion().getOtros());
-					label = (Label) documentoReserva.lookup("#lblImporte");
+					label = (Label) documentoVenta.lookup("#lblImporte");
 					label.setText(String.format("$ %10.2f", venta.getImporte()));
-					label = (Label) documentoReserva.lookup("#lblMedioDePago");
+					label = (Label) documentoVenta.lookup("#lblMedioDePago");
 					label.setText(venta.getMedioDePago());
-					label = (Label) documentoReserva.lookup("#lblFechaVenta");
+					label = (Label) documentoVenta.lookup("#lblFechaVenta");
 					label.setText(conversorFechas.diaMesYAnioToString(venta.getFecha()));
-					label = (Label) documentoReserva.lookup("#lblHoraGenerado");
+					label = (Label) documentoVenta.lookup("#lblHoraGenerado");
 					Date ahora = new Date();
 					label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
 
-					pdf = generarPDF(documentoReserva);
-				} catch(Exception e){
-					exception = e;
+					pdf = generarPDF(documentoVenta);
+				} catch(Throwable e){
+					return e;
 				}
-
-				semaforo.release();
+				return null;
 			});
 
-			semaforo.acquire();
-
-			if(exception != null){
-				throw exception;
+			if(!Platform.isFxApplicationThread()){
+				Platform.runLater(future);
+			}
+			Throwable excepcion = future.get();
+			if(excepcion != null){
+				throw excepcion;
 			}
 			if(pdf == null){
 				throw new NullPointerException("Error al generar PDF");
 			}
-		} catch(Exception e){
+		} catch(Throwable e){
 			throw new GenerarPDFException(e);
 		}
 
@@ -281,7 +279,7 @@ public class GestorPDF {
 
 	public void imprimirPDF(PDF p) throws GestionException {
 		try{
-			File PDFtmp = new File("reserva_tmp.pdf");
+			File PDFtmp = new File("tmp.pdf");
 			FileOutputStream fos = new FileOutputStream(PDFtmp);
 			fos.write(p.getArchivo());
 			fos.flush();
