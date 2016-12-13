@@ -22,7 +22,14 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import app.datos.clases.EstadoInmuebleStr;
+import app.datos.clases.FiltroInmueble;
+import app.datos.entidades.Barrio;
+import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Inmueble;
+import app.datos.entidades.Localidad;
+import app.datos.entidades.Pais;
+import app.datos.entidades.Provincia;
+import app.datos.entidades.TipoInmueble;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarInmueble.ErrorEliminarInmueble;
@@ -34,9 +41,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 /**
@@ -86,6 +95,26 @@ public class AdministrarInmuebleController extends OlimpoController {
 	@FXML
 	private VBox vboxBotones;
 
+	@FXML
+	private ComboBox<Pais> comboBoxPais;
+	@FXML
+	private ComboBox<Provincia> comboBoxProvincia;
+	@FXML
+	private ComboBox<Localidad> comboBoxLocalidad;
+	@FXML
+	private ComboBox<Barrio> comboBoxBarrio;
+	@FXML
+	private ComboBox<EstadoInmueble> comboBoxEstadoInmueble;
+	@FXML
+	private ComboBox<TipoInmueble> comboBoxTipoInmueble;
+	@FXML
+	private TextField textFieldCantidadDormitorios;
+	@FXML
+	private TextField textFieldPrecioMinimo;
+	@FXML
+	private TextField textFieldPrecioMaximo;
+
+
 	private ArrayList<Inmueble> inmueblesNoMostrar;
 
 	private ArrayList<Inmueble> inmueblesSeleccionados;
@@ -95,6 +124,31 @@ public class AdministrarInmuebleController extends OlimpoController {
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar inmuebles");
+
+		try{
+			comboBoxPais.getItems().addAll(coordinador.obtenerPaises());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		}
+
+		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
+		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarLocalidades(newValue));
+		comboBoxLocalidad.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> actualizarBarrios(newValue));
+
+		try{
+			comboBoxEstadoInmueble.getItems().addAll(coordinador.obtenerEstadosInmueble());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		}
+
+		try{
+			comboBoxTipoInmueble.getItems().addAll(coordinador.obtenerTiposInmueble());
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		}
 
 		tablaInmuebles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			Boolean noHayInmuebleSeleccionado = newValue == null;
@@ -276,5 +330,142 @@ public class AdministrarInmuebleController extends OlimpoController {
 				tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 			}
 		});
+	}
+
+	/**
+	 * Cuando varía la seleccion del comboBox de países, se actualiza el comboBox de provincias.
+	 * También se delega la tarea de vaciar el comboBox de localidades
+	 *
+	 * @param pais
+	 * 			país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
+	private void actualizarProvincias(Pais pais) {
+		comboBoxProvincia.getItems().clear();
+		if(pais != null){
+			try{
+				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+		actualizarLocalidades(null);
+	}
+
+	/**
+	 * Cuando varía la seleccion del comboBox de provincias, se actualiza el comboBox de localidades.
+	 * También se delega la tarea de vaciar el comboBox de barrios
+	 *
+	 * @param provincia
+	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
+	private void actualizarLocalidades(Provincia provincia) {
+		comboBoxLocalidad.getItems().clear();
+		if(provincia != null){
+			try{
+				comboBoxLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+		actualizarBarrios(null);
+	}
+
+	/**
+	 * Cuando varía la seleccion del comboBox de localidades, se actualiza el comboBox de barrios.
+	 *
+	 * @param localidad
+	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
+	private void actualizarBarrios(Localidad localidad) {
+		comboBoxBarrio.getItems().clear();
+		if(localidad != null){
+			try{
+				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(localidad));
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+	}
+
+	/**
+	 * Método que permite realizar una consulta de inmuebles
+	 * Pertenece a la taskcard 20 de la iteración 2 y a la historia 4
+	 */
+	@FXML
+	private void buscarAction() {
+		StringBuilder errores = new StringBuilder("");
+
+		Pais pais = comboBoxPais.getValue();
+		Provincia provincia = comboBoxProvincia.getValue();
+		Localidad localidad = comboBoxLocalidad.getValue();
+		Barrio barrio = comboBoxBarrio.getValue();
+		EstadoInmueble estadoInmueble = comboBoxEstadoInmueble.getValue();
+		TipoInmueble tipoInmueble = comboBoxTipoInmueble.getValue();
+		Integer cantidadDormitorios = null;
+		Double precioMinimo = null;
+		Double precioMaximo = null;
+
+		boolean vacioCD = false, vacioPMa = false, vacioPMi = false;
+
+		if(!textFieldCantidadDormitorios.getText().trim().isEmpty()) {
+			try {
+				cantidadDormitorios = Integer.valueOf(textFieldCantidadDormitorios.getText().trim());
+			} catch (Exception e) {
+				errores.append("Cantidad de dormitorios incorrecta. Introduzca solo números.\n");
+			}
+		} else {
+			vacioCD = true;
+		}
+
+		if(!textFieldPrecioMinimo.getText().trim().isEmpty()) {
+			try {
+				precioMinimo = Double.valueOf(textFieldPrecioMinimo.getText().trim());
+			} catch (Exception e) {
+				errores.append("Precio mínimo incorrecto. Introduzca solo números y un punto para decimales.\n");
+			}
+		} else {
+			vacioPMa = true;
+		}
+
+		if(!textFieldPrecioMaximo.getText().trim().isEmpty()) {
+			try {
+				precioMaximo = Double.valueOf(textFieldPrecioMaximo.getText().trim());
+			} catch (Exception e) {
+				errores.append("Precio máximo incorrecto. Introduzca solo números y un punto para decimales.\n");
+			}
+		} else {
+			vacioPMi = true;
+		}
+
+		if(!errores.toString().isEmpty()){
+			presentador.presentarError("Revise sus campos", errores.toString(), stage);
+		} else {
+
+			tablaInmuebles.getItems().clear();
+			if(pais == null && provincia == null && localidad == null && barrio == null && estadoInmueble == null && tipoInmueble == null && vacioCD && vacioPMa && vacioPMi) {
+				try {
+					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles());
+				} catch (PersistenciaException e) {
+					presentador.presentarExcepcion(e, stage);
+				}
+			} else {
+				try {
+					FiltroInmueble filtro = new FiltroInmueble.Builder()
+							.barrio(barrio)
+							.cantidadDormitorios(cantidadDormitorios)
+							.estadoInmueble(estadoInmueble.getEstado())
+							.localidad(localidad)
+							.pais(pais)
+							.precioMaximo(precioMaximo)
+							.precioMinimo(precioMinimo)
+							.provincia(provincia)
+							.tipoInmueble(tipoInmueble.getTipo())
+							.build();
+					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles(filtro));
+				} catch (Exception e) {
+					presentador.presentarExcepcion(e, stage);
+				}
+			}
+		}
 	}
 }
