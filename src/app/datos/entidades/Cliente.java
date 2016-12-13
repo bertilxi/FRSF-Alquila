@@ -293,6 +293,6 @@ public class Cliente {
 	@Override
 	public String toString() {
 		FormateadorString formateador = new FormateadorString();
-		return formateador.primeraMayuscula(nombre) + " " + formateador.primeraMayuscula(apellido);
+		return formateador.nombrePropio(nombre) + " " + formateador.nombrePropio(apellido);
 	}
 }

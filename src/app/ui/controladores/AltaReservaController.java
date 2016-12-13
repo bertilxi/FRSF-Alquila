@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
+import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
 import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
@@ -223,8 +224,7 @@ public class AltaReservaController extends OlimpoController {
 				}
 				else{
 					presentador.presentarToast("Se ha realizado la reserva con éxito", stage);
-					//TODO mostrar PDF
-					salir();
+					mostrarPDF(resultadoCrearReserva.getPdfReserva());
 				}
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
@@ -232,6 +232,19 @@ public class AltaReservaController extends OlimpoController {
 				presentador.presentarExcepcionInesperada(e, stage);
 			}
 		}
+	}
+
+	private void mostrarPDF(PDF pdf) {
+		String irA = null;
+		if(URLVistaRetorno != null){
+			irA = URLVistaRetorno;
+		}
+		else{
+			irA = AdministrarClienteController.URLVista;
+		}
+		VerPDFController visorPDF = (VerPDFController) cambiarmeAScene(VerPDFController.URLVista, irA);
+		visorPDF.cargarPDF(pdf);
+		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**

@@ -10,6 +10,7 @@ import app.datos.clases.CatalogoVista;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Imagen;
 import app.datos.entidades.Inmueble;
+import app.datos.entidades.PDF;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCatalogo;
@@ -145,10 +146,22 @@ public class AltaCatalogoController extends OlimpoController {
 		}
 		else{
 			presentador.presentarToast("Se ha creado el catálogo con éxito", stage);
-			//TODO mostrar PDF
-			salir();
+			mostrarPDF(resultado.getCatalogoPDF());
 			return new ResultadoControlador();
 		}
+	}
+
+	private void mostrarPDF(PDF pdf) {
+		String irA = null;
+		if(URLVistaRetorno != null){
+			irA = URLVistaRetorno;
+		}
+		else{
+			irA = AdministrarClienteController.URLVista;
+		}
+		VerPDFController visorPDF = (VerPDFController) cambiarmeAScene(VerPDFController.URLVista, irA);
+		visorPDF.cargarPDF(pdf);
+		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	public void setCliente(Cliente cliente) {

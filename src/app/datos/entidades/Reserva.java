@@ -19,6 +19,7 @@ package app.datos.entidades;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -55,7 +56,7 @@ public class Reserva {
 	@Column(name = "fecha_fin", nullable = false)
 	private Date fechaFin;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	@JoinColumn(name = "idarchivo", foreignKey = @ForeignKey(name = "reserva_idarchivo_fk"), nullable = false)
 	private PDF archivoPDF;
 

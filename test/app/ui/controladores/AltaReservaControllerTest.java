@@ -113,6 +113,11 @@ public class AltaReservaControllerTest {
 			}
 
 			@Override
+			protected void setTitulo(String titulo) {
+
+			}
+
+			@Override
 			public void acceptAction() {
 				this.textFieldImporte.setText(importe);
 				this.datePickerInicio.setValue(fechaInicio);
