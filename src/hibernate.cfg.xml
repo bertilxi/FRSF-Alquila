@@ -48,6 +48,7 @@
         <mapping class="app.datos.entidades.DatosEdificio"/>
         <mapping class="app.datos.entidades.Direccion"/>
         <mapping class="app.datos.entidades.Estado"/>
+        <mapping class="app.datos.entidades.EstadoInmueble"/>
         <mapping class="app.datos.entidades.HistorialDatosEdificio"/>
         <mapping class="app.datos.entidades.HistorialInmueble"/>
         <mapping class="app.datos.entidades.Imagen"/>

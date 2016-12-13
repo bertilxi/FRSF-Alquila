@@ -77,6 +77,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		tablaInmuebles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			Boolean noHayInmuebleSeleccionado = newValue == null;
 			btVerMas.setDisable(noHayInmuebleSeleccionado);
+			btVerReservas.setDisable(noHayInmuebleSeleccionado);
 			btModificar.setDisable(noHayInmuebleSeleccionado);
 			btEliminar.setDisable(noHayInmuebleSeleccionado);
 			btVender.setDisable(noHayInmuebleSeleccionado);
@@ -205,9 +206,10 @@ public class AdministrarInmuebleController extends OlimpoController {
 	 */
 	@FXML
 	public void venderInmueble() {
-		if(tablaInmuebles.getSelectionModel().getSelectedItem().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)) {
+		if(tablaInmuebles.getSelectionModel().getSelectedItem().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
 			presentador.presentarInformacion("Inmueble vendido", "No se puede realizar la venta ya que el inmueble ya se encuentra vendido", stage);
-		} else {
+		}
+		else{
 			AltaVentaController controlador = (AltaVentaController) cambiarmeAScene(AltaVentaController.URLVista);
 			controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
 		}
