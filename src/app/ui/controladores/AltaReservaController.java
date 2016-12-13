@@ -19,6 +19,7 @@ package app.ui.controladores;
 
 import java.net.URL;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
+import app.ui.ScenographyChanger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,6 +39,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.Pane;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -62,11 +65,36 @@ public class AltaReservaController extends OlimpoController {
 	private Button acceptButton;
 	@FXML
 	private Button cancelButton;
+	@FXML
+	private Button buscarInmuebleButton;
+
+	@FXML
+	private Pane fondo;
 
 	private Vendedor vendedorLogueado;
 
+	@Override
 	public void setVendedorLogueado(Vendedor vendedorLogueado) {
 		this.vendedorLogueado = vendedorLogueado;
+	}
+
+	/**
+	 * Acción que se ejecuta al apretar el botón buscarInmueble.
+	 *
+	 * Llama a la pantalla buscar Inmueble y selecciona en el comboBox el inmueble devuelto.
+	 */
+	public void buscarInmuebleAction() {
+		final ArrayList<Inmueble> inmueblesNuevos = new ArrayList<>();
+		AdministrarInmuebleController vistaInmuebles = (AdministrarInmuebleController) this.cambiarScene(fondo, AdministrarInmuebleController.URLVista, (Pane) fondo.getChildren().get(0));
+		vistaInmuebles.formatearObtenerInmuebles(new ArrayList<>(), inmueblesNuevos, () -> {
+			seleccionarInmueble(inmueblesNuevos);
+		}, false);
+	}
+
+	private void seleccionarInmueble(ArrayList<Inmueble> inmueblesNuevos) {
+		for(Inmueble i: inmueblesNuevos){
+			comboBoxInmueble.getSelectionModel().select(i);
+		}
 	}
 
 	/**
@@ -243,6 +271,7 @@ public class AltaReservaController extends OlimpoController {
 
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
+		this.agregarScenographyChanger(fondo, new ScenographyChanger(stage, presentador, coordinador, fondo));
 		this.setTitulo("Nueva Reserva");
 		try{
 			comboBoxCliente.getItems().addAll(coordinador.obtenerClientes());

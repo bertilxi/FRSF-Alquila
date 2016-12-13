@@ -257,7 +257,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		salir();
 	}
 
-	public void formatearObtenerInmuebles(ArrayList<Inmueble> inmuebles, ArrayList<Inmueble> inmueblesNuevos, Runnable accionCierre) {
+	public void formatearObtenerInmuebles(ArrayList<Inmueble> inmuebles, ArrayList<Inmueble> inmueblesNuevos, Runnable accionCierre, Boolean multiple) {
 		this.inmueblesNoMostrar = inmuebles;
 		this.inmueblesSeleccionados = inmueblesNuevos;
 		this.accionCierre = accionCierre;
@@ -269,7 +269,12 @@ public class AdministrarInmuebleController extends OlimpoController {
 		btSalir.setDisable(false);
 		Platform.runLater(() -> {
 			tablaInmuebles.getItems().removeAll(inmueblesNoMostrar);
-			tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+			if(multiple){
+				tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+			}
+			else{
+				tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+			}
 		});
 	}
 }

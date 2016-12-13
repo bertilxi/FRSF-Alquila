@@ -32,7 +32,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaReservaController">
+<HBox fx:id="fondo" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaReservaController">
     <children>
         <VBox HBox.hgrow="ALWAYS">
             <children>
@@ -41,8 +41,8 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.66666793823242" minWidth="30.0" prefWidth="109.66666793823242" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="178.33334350585938" prefWidth="178.33334350585938" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="177.66668701171875" minWidth="20.666656494140625" prefWidth="20.666656494140625" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="511.3333435058594" minWidth="250.0" prefWidth="421.3333740234375" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="173.6666259765625" minWidth="30.0" prefWidth="121.6666259765625" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="511.3333435058594" minWidth="250.0" prefWidth="385.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="254.0" minWidth="30.0" prefWidth="158.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -66,6 +66,7 @@
                   		<Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" styleClass="label-medium" text="Fin de vigencia" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   		<DatePicker fx:id="datePickerInicio" prefWidth="449.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                   		<DatePicker fx:id="datePickerFin" prefWidth="464.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <Button fx:id="buscarInmuebleButton" mnemonicParsing="false" onAction="#buscarInmuebleAction" prefHeight="32.0" prefWidth="155.0" text="Buscar Inmueble" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />
