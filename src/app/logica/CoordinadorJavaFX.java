@@ -39,6 +39,7 @@ import app.datos.entidades.Reserva;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
 import app.datos.entidades.Vendedor;
+import app.datos.entidades.Venta;
 import app.excepciones.GestionException;
 import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorCliente;
@@ -47,12 +48,14 @@ import app.logica.gestores.GestorInmueble;
 import app.logica.gestores.GestorPropietario;
 import app.logica.gestores.GestorReserva;
 import app.logica.gestores.GestorVendedor;
+import app.logica.gestores.GestorVenta;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoCrearCliente;
 import app.logica.resultados.ResultadoCrearInmueble;
 import app.logica.resultados.ResultadoCrearPropietario;
 import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearVendedor;
+import app.logica.resultados.ResultadoCrearVenta;
 import app.logica.resultados.ResultadoEliminarCliente;
 import app.logica.resultados.ResultadoEliminarInmueble;
 import app.logica.resultados.ResultadoEliminarPropietario;
@@ -83,6 +86,9 @@ public class CoordinadorJavaFX {
 
 	@Resource
 	GestorReserva gestorReserva;
+
+	@Resource
+	GestorVenta gestorVenta;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin login) throws PersistenciaException {
 		return gestorVendedor.autenticarVendedor(login);
@@ -202,5 +208,9 @@ public class CoordinadorJavaFX {
 
 	public ResultadoEliminarReserva eliminarReserva(Reserva reserva) throws PersistenciaException {
 		return gestorReserva.eliminarReserva(reserva);
+	}
+
+	public ResultadoCrearVenta crearVenta(Venta venta) throws PersistenciaException, GestionException {
+		return gestorVenta.crearVenta(venta);
 	}
 }

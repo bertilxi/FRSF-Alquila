@@ -54,6 +54,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
             <Button maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
             <Button fx:id="btModificar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
             <Button fx:id="btEliminar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#eliminarInmueble" text="Eliminar" />
+            <Button fx:id="btVender" disable="true" layoutX="26.0" layoutY="182.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#venderInmueble" text="Vender" />
          </children>
       </VBox>
    </children>
