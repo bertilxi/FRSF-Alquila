@@ -60,7 +60,7 @@ public class AltaReservaControllerTest {
 	@Test
 	@Parameters
 	public void testCrearReserva(Inmueble inmuebleAReservar,
-			Cliente cliente,
+			Cliente clienteSeleccionado,
 			String importe,
 			LocalDate fechaInicio,
 			LocalDate fechaFin,
@@ -88,17 +88,20 @@ public class AltaReservaControllerTest {
 				.setImporte(Double.valueOf(importe))
 				.setFechaFin(Date.from(fechaFin.atStartOfDay(ZoneId.systemDefault()).toInstant()))
 				.setFechaInicio(Date.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()).toInstant()))
-				.setCliente(cliente)
+				.setCliente(clienteSeleccionado)
 				.setInmueble(inmuebleAReservar);
-		
+
 		when(coordinadorMock.crearReserva(reserva)).thenReturn(resultadoCrearReservaEsperado);
 		if(excepcion != null){
 			when(coordinadorMock.crearReserva(reserva)).thenThrow(excepcion);
 		}
 
 		ArrayList<Cliente> clientes = new ArrayList<>();
-		clientes.add(cliente);
+		clientes.add(clienteSeleccionado);
 		when(coordinadorMock.obtenerClientes()).thenReturn(clientes);
+		ArrayList<Inmueble> inmuebles = new ArrayList<>();
+		inmuebles.add(inmuebleAReservar);
+		when(coordinadorMock.obtenerInmuebles()).thenReturn(inmuebles);
 
 		//Controlador a probar, se sobreescriben algunos métodos para setear los mocks y setear los datos que ingresaría el usuario en la vista
 		AltaReservaController altaReservaController = new AltaReservaController() {
@@ -114,13 +117,12 @@ public class AltaReservaControllerTest {
 				this.textFieldImporte.setText(importe);
 				this.datePickerInicio.setValue(fechaInicio);
 				this.datePickerFin.setValue(fechaFin);
-				this.comboBoxCliente.getSelectionModel().select(cliente);
+				this.comboBoxCliente.getSelectionModel().select(clienteSeleccionado);
+				this.comboBoxInmueble.getSelectionModel().select(inmuebleAReservar);
 				this.inmueble = inmuebleAReservar;
 				super.acceptAction();
 			};
-			
-			
-			
+
 		};
 
 		//Los controladores de las vistas deben correrse en un thread de JavaFX
@@ -157,23 +159,79 @@ public class AltaReservaControllerTest {
 	protected Object[] parametersForTestCrearReserva() {
 		Cliente cliente = new Cliente();
 		Inmueble inmueble = new Inmueble().setDireccion(new Direccion());
-		LocalDate fechaInicioCorrecta = LocalDate.of(1,1,1);
-		LocalDate fechaFinCorrecta = LocalDate.of(1,1,1);
-		
+		LocalDate fechaInicioCorrecta = LocalDate.of(1, 1, 1);
+		LocalDate fechaFinCorrecta = LocalDate.of(1, 1, 1);
+
 		return new Object[] {
-				new Object[] {inmueble,cliente,"10",fechaInicioCorrecta,fechaFinCorrecta,resultadoCorrecto,0,0,0,1,null}, //prueba correcta
-				new Object[] {inmueble,null,"10",fechaInicioCorrecta,fechaFinCorrecta,resultadoCorrecto,1,0,0,0,null}, //cliente no seleccionado
-				new Object[] {inmueble,cliente,"dsfs",fechaInicioCorrecta,fechaFinCorrecta,resultadoCorrecto,1,0,0,0,null}, //formato importe incorrecto
-				new Object[] {inmueble,cliente,"-10",fechaInicioCorrecta,fechaFinCorrecta,resultadoCrearFormatoIncorrecto,1,0,0,1,null}, //formato importe incorrecto
-				new Object[] {inmueble,cliente,"10",fechaInicioCorrecta,fechaFinCorrecta,resultadoCrearYaExisteReserva,1,0,0,1,null}, //ya existe una reserva
-				new Object[] {inmueble,cliente,"10",fechaInicioCorrecta,fechaFinCorrecta,resultadoCorrecto,0,1,0,1,new SaveUpdateException(new Throwable())}, //excepcion al guardar en base de datos
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 0, 0, 0, 1, null }, //prueba correcta
+				new Object[] { inmueble, null, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 1, 0, 0, 0, null }, //cliente no seleccionado
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearCliente_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNombre_Cliente_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearApellido_Cliente_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearTipoDocumento_Cliente_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearPropietario_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNombre_Propietario_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNúmeroDocumento_Cliente_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearApellido_Propietario_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearInmueble_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearTipo_Inmueble_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearDirección_Inmueble_Vacía, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearLocalidad_Inmueble_Vacía, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearBarrio_Inmueble_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearCalle_Inmueble_Vacía, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearAltura_Inmueble_Vacía, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFechaInicio_vacía, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFechaFin_vacía, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFecha_Inicio_Posterior_A_Fecha_Fin, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearExiste_Otra_Reserva_Activa, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearImporte_Vacío, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearImporte_Menor_O_Igual_A_Cero, 1, 0, 0, 1, null }, //ya existe una reserva
+				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 0, 1, 0, 1, new SaveUpdateException(new Throwable()) }, //excepcion al guardar en base de datos
 		};
 	}
 
 	//Resultados crearReserva
 	private static final ResultadoCrearReserva resultadoCorrecto = new ResultadoCrearReserva();
-	private static final ResultadoCrearReserva resultadoCrearYaExisteReserva =
-			new ResultadoCrearReserva(ErrorCrearReserva.Ya_Existe_Reserva_Entre_Las_Fechas);
-	private static final ResultadoCrearReserva resultadoCrearFormatoIncorrecto =
-			new ResultadoCrearReserva(ErrorCrearReserva.Formato_Importe_Incorrecto);
+	private static final ResultadoCrearReserva resultadoCrearCliente_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Cliente_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearNombre_Cliente_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Nombre_Cliente_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearApellido_Cliente_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Apellido_Cliente_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearTipoDocumento_Cliente_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.TipoDocumento_Cliente_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearNúmeroDocumento_Cliente_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.NúmeroDocumento_Cliente_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearPropietario_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Propietario_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearNombre_Propietario_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Nombre_Propietario_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearApellido_Propietario_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Apellido_Propietario_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearInmueble_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Inmueble_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearTipo_Inmueble_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Tipo_Inmueble_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearDirección_Inmueble_Vacía =
+			new ResultadoCrearReserva(ErrorCrearReserva.Dirección_Inmueble_Vacía);
+	private static final ResultadoCrearReserva resultadoCrearLocalidad_Inmueble_Vacía =
+			new ResultadoCrearReserva(ErrorCrearReserva.Localidad_Inmueble_Vacía);
+	private static final ResultadoCrearReserva resultadoCrearBarrio_Inmueble_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Barrio_Inmueble_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearCalle_Inmueble_Vacía =
+			new ResultadoCrearReserva(ErrorCrearReserva.Calle_Inmueble_Vacía);
+	private static final ResultadoCrearReserva resultadoCrearAltura_Inmueble_Vacía =
+			new ResultadoCrearReserva(ErrorCrearReserva.Altura_Inmueble_Vacía);
+	private static final ResultadoCrearReserva resultadoCrearFechaInicio_vacía =
+			new ResultadoCrearReserva(ErrorCrearReserva.FechaInicio_vacía);
+	private static final ResultadoCrearReserva resultadoCrearFechaFin_vacía =
+			new ResultadoCrearReserva(ErrorCrearReserva.FechaFin_vacía);
+	private static final ResultadoCrearReserva resultadoCrearFecha_Inicio_Posterior_A_Fecha_Fin =
+			new ResultadoCrearReserva(ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin);
+	private static final ResultadoCrearReserva resultadoCrearExiste_Otra_Reserva_Activa =
+			new ResultadoCrearReserva(ErrorCrearReserva.Existe_Otra_Reserva_Activa);
+	private static final ResultadoCrearReserva resultadoCrearImporte_Vacío =
+			new ResultadoCrearReserva(ErrorCrearReserva.Importe_Vacío);
+	private static final ResultadoCrearReserva resultadoCrearImporte_Menor_O_Igual_A_Cero =
+			new ResultadoCrearReserva(ErrorCrearReserva.Importe_Menor_O_Igual_A_Cero);
 }
