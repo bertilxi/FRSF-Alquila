@@ -164,7 +164,7 @@ public class AltaReservaController extends OlimpoController {
 						case Apellido_Propietario_Vacío:
 							error.append("El propietario del inmueble seleccionado no tiene apellido\r\n");
 							break;
-						case Importe_vacío:
+						case Importe_Vacío:
 							error.append("No se ha ingresado un importe\r\n");
 							break;
 						case Formato_Importe_Incorrecto:

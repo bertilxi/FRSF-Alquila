@@ -17,18 +17,15 @@
  */
 package app.logica.resultados;
 
+import app.datos.entidades.Reserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
 
 public class ResultadoCrearReserva extends Resultado<ErrorCrearReserva> {
-
-	public ResultadoCrearReserva(ErrorCrearReserva... errores) {
-		super(errores);
-	}
+	
+	private Reserva reservaEnConflicto;
 
 	public enum ErrorCrearReserva {
 
-		Formato_Importe_Incorrecto,
-		Ya_Existe_Reserva_Entre_Las_Fechas,
 		Cliente_Vacío,
 		Nombre_Cliente_Vacío,
 		Apellido_Cliente_Vacío,
@@ -46,6 +43,22 @@ public class ResultadoCrearReserva extends Resultado<ErrorCrearReserva> {
 		Altura_Inmueble_Vacía,
 		FechaInicio_vacía,
 		FechaFin_vacía,
-		Importe_vacío
+		Fecha_Inicio_Posterior_A_Fecha_Fin,
+		Existe_Otra_Reserva_Activa,
+		Importe_Vacío,
+		Importe_Menor_O_Igual_A_Cero,
+	}
+	
+	public ResultadoCrearReserva(Reserva reservaEnConflicto, ErrorCrearReserva... errores) {
+		super(errores);
+		this.reservaEnConflicto = reservaEnConflicto;
+	}
+	
+	public ResultadoCrearReserva(ErrorCrearReserva... errores) {
+		super(errores);
+	}
+	
+	public Reserva getReservaEnConflicto(){
+		return reservaEnConflicto;
 	}
 }

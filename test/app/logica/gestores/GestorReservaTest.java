@@ -442,7 +442,7 @@ public class GestorReservaTest {
 				new Object[] { reservaSinAlturaInmueble, new ResultadoCrearReserva(ErrorCrearReserva.Altura_Inmueble_Vacía), null }, //reserva sin altura de calle de inmueble
 				new Object[] { reservaSinFechaInicio, new ResultadoCrearReserva(ErrorCrearReserva.FechaInicio_vacía), null }, //reserva sin fecha de inicio vacía
 				new Object[] { reservaSinFechaFin, new ResultadoCrearReserva(ErrorCrearReserva.FechaFin_vacía), null }, //reserva sin fecha de fin vacía
-				new Object[] { reservaSinImporte, new ResultadoCrearReserva(ErrorCrearReserva.Importe_vacío), null }, //reserva sin Importe
+				new Object[] { reservaSinImporte, new ResultadoCrearReserva(ErrorCrearReserva.Importe_Vacío), null }, //reserva sin Importe
 				new Object[] { reservaCorrecta, null, new GenerarPDFException(new Exception()) }, //el gestorPDF tira una excepción
 				new Object[] { reservaCorrecta, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una excepción
 				new Object[] { reservaCorrecta, null, new Exception() } //el persistidor tira una excepción inesperada
