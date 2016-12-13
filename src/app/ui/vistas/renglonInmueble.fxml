@@ -20,31 +20,76 @@
 
 -->
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
 <!--
 Vista que crea, modifica o muestra un inmueble
 Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
 -->
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.RenglonInmuebleController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="ALWAYS" />
-    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints vgrow="NEVER" />
-    <RowConstraints vgrow="NEVER" />
-  </rowConstraints>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.RenglonInmuebleController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints vgrow="NEVER" />
+   </rowConstraints>
    <children>
-      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#eliminarInmueble" styleClass="button-cancel" text="Eliminar del catálogo" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
-      <Label fx:id="lbInmuebleId" text="Inmueble N° " />
-      <Label text="Datos inmueble" GridPane.rowIndex="1" />
-      <ComboBox fx:id="cbFotos" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Rectangle arcHeight="70.0" arcWidth="70.0" fill="WHITE" height="215.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="725.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="189.0" prefWidth="690.0" stylesheets="@../estilos/style.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="206.0" prefWidth="249.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="125.0" prefWidth="278.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="24.0" minWidth="10.0" prefWidth="10.0" />
+          <ColumnConstraints hgrow="NEVER" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="65.0" minHeight="22.0" prefHeight="32.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="61.0" minHeight="0.0" prefHeight="0.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="160.0" minHeight="100.0" prefHeight="160.0" vgrow="NEVER" />
+        </rowConstraints>
+         <children>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#eliminarInmueble" styleClass="button-cancel" text="Eliminar del catálogo" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowSpan="2" GridPane.valignment="TOP" />
+            <Label fx:id="lbInmuebleId" text="Inmueble N° %d" GridPane.columnSpan="2">
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <ScrollPane prefHeight="163.0" prefWidth="512.0" vbarPolicy="NEVER" GridPane.columnSpan="2" GridPane.rowIndex="2">
+               <content>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label fx:id="lblTipoInmueble" text="Tipo: %s" />
+                        <Label fx:id="lblPaisInmueble" text="País: %s" />
+                        <Label fx:id="lblProvinciaInmueble" text="Provincia: %s" />
+                        <Label fx:id="lblLocalidadInmueble" text="Localidad: %s" />
+                        <Label fx:id="lblCalleAlturaInmueble" text="Calle y altura: %s %s" />
+                        <Label fx:id="lblBarrioInmueble" text="Barrio: %s" />
+                        <Label fx:id="lblPrecioInmueble" text="Precio: %10.2f" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <ComboBox fx:id="cbFotos" minHeight="100.0" minWidth="150.0" prefHeight="115.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+         </children>
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin>
+      </GridPane>
    </children>
 </GridPane>

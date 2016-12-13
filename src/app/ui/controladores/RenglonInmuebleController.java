@@ -31,6 +31,27 @@ public class RenglonInmuebleController extends OlimpoController {
 
 	@FXML
 	private Label lbInmuebleId;
+	
+	@FXML
+	private Label lblTipoInmueble;
+	
+	@FXML
+	private Label lblPaisInmueble;
+
+	@FXML
+	private Label lblProvinciaInmueble;
+	
+	@FXML
+	private Label lblLocalidadInmueble;
+	
+	@FXML
+	private Label lblCalleAlturaInmueble;
+	
+	@FXML
+	private Label lblBarrioInmueble;
+	
+	@FXML
+	private Label lblPrecioInmueble;
 
 	@FXML
 	private ComboBox<Imagen> cbFotos;
@@ -71,7 +92,15 @@ public class RenglonInmuebleController extends OlimpoController {
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
-		lbInmuebleId.setText(lbInmuebleId.getText() + inmueble.getId());
+		lbInmuebleId.setText(String.format(lbInmuebleId.getText(), inmueble.getId()));
+		lblTipoInmueble.setText(String.format(lblTipoInmueble.getText(), inmueble.getTipo().getTipo().toString()));
+		lblPaisInmueble.setText(String.format(lblPaisInmueble.getText(), inmueble.getDireccion().getLocalidad().getProvincia().getPais().toString()));
+		lblProvinciaInmueble.setText(String.format(lblProvinciaInmueble.getText(), inmueble.getDireccion().getLocalidad().getProvincia().toString()));
+		lblLocalidadInmueble.setText(String.format(lblLocalidadInmueble.getText(), inmueble.getDireccion().getLocalidad().toString()));
+		lblCalleAlturaInmueble.setText(String.format(lblCalleAlturaInmueble.getText(), inmueble.getDireccion().getCalle().toString(), inmueble.getDireccion().getNumero()));
+		lblBarrioInmueble.setText(String.format(lblBarrioInmueble.getText(), inmueble.getDireccion().getBarrio().toString()));
+		lblPrecioInmueble.setText(String.format(lblPrecioInmueble.getText(), inmueble.getPrecio()));
+		
 		if(inmueble.getFotos().isEmpty()){
 			cbFotos.setVisible(false);
 		}

@@ -36,7 +36,7 @@ Vista que crea, modifica o muestra un inmueble
 Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
 -->
 
-<VBox fx:id="fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaCatalogoController">
+<VBox fx:id="fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AltaCatalogoController">
       <children>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" VBox.vgrow="SOMETIMES">
                 <columnConstraints>
@@ -56,9 +56,9 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
             <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="NEVER" />
                 </rowConstraints>
                 <children>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="scroll-pane-tile-pane" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefWidth="200.0" styleClass="scroll-pane-tile-pane" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <content>
-                  <VBox fx:id="listaInmuebles" />
+                  <VBox fx:id="listaInmuebles" maxHeight="1.7976931348623157E308" spacing="10.0" />
                </content>
             </ScrollPane>
                 <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5">
