@@ -89,7 +89,7 @@ public class AltaVendedorControllerTest {
 		when(presentadorVentanasMock.presentarExcepcionInesperada(any(), any())).thenReturn(ventanaErrorExcepcionInesperadaMock);
 		when(presentadorVentanasMock.presentarConfirmacion(any(), any(), any())).thenReturn(ventanaConfirmacionMock);
 		when(ventanaConfirmacionMock.acepta()).thenReturn(aceptarVentanaConfirmacion);
-		when(scenographyChangerMock.cambiarScenography(any(), any())).thenReturn(modificarVendedorControllerMock);
+		when(scenographyChangerMock.cambiarScenography(any(String.class), any())).thenReturn(modificarVendedorControllerMock);
 		doNothing().when(presentadorVentanasMock).presentarToast(any(), any());
 
 		Vendedor vendedor = new Vendedor()
