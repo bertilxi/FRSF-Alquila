@@ -66,6 +66,8 @@ public class ModificarVendedorController extends OlimpoController {
 	@FXML
 	protected ComboBox<TipoDocumento> comboBoxTipoDocumento;
 	@FXML
+	private Button verMisVentasButton;
+	@FXML
 	private Button acceptButton;
 	@FXML
 	private Button cancelButton;
@@ -190,6 +192,15 @@ public class ModificarVendedorController extends OlimpoController {
 	}
 
 	/**
+	 * Acción que se ejecuta al presionar el botón ver mis ventas.
+	 * Se pasa a la pantalla administrar ventas para el vendedor en modificación
+	 */
+	public void verMisVentasAction(ActionEvent event) {
+		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
+		controlador.setVendedor(vendedor);
+	}
+
+	/**
 	 * Acción que se ejecuta al presionar el checkBox de cambiar de contraseña.
 	 * Si está seleccionado se habilitan los campos para cambiar la contraseña,
 	 * si no, se deshabilitan.
@@ -242,6 +253,7 @@ public class ModificarVendedorController extends OlimpoController {
 		passwordFieldContraseñaNueva.setDisable(true);
 		passwordFieldRepiteContraseña.setDisable(true);
 		checkBoxCambiarContraseña.setSelected(false);
+		verMisVentasButton.setDisable(true);
 	}
 
 	/**
@@ -258,9 +270,12 @@ public class ModificarVendedorController extends OlimpoController {
 		textFieldApellido.setText(vendedor.getApellido());
 		textFieldNumeroDocumento.setText(vendedor.getNumeroDocumento());
 		comboBoxTipoDocumento.getSelectionModel().select(vendedor.getTipoDocumento());
+		verMisVentasButton.setDisable(false);
 	}
 
 	public void setAltaVendedor() {
 		this.esAltaNuevamente = true;
 	}
+
+
 }

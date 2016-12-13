@@ -32,6 +32,7 @@ import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Orientacion;
+import app.datos.entidades.PDF;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
@@ -45,6 +46,7 @@ import app.excepciones.PersistenciaException;
 import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorInmueble;
+import app.logica.gestores.GestorPDF;
 import app.logica.gestores.GestorPropietario;
 import app.logica.gestores.GestorReserva;
 import app.logica.gestores.GestorVendedor;
@@ -89,6 +91,9 @@ public class CoordinadorJavaFX {
 
 	@Resource
 	GestorVenta gestorVenta;
+
+	@Resource
+	GestorPDF gestorPDF;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin login) throws PersistenciaException {
 		return gestorVendedor.autenticarVendedor(login);
@@ -212,5 +217,9 @@ public class CoordinadorJavaFX {
 
 	public ResultadoCrearVenta crearVenta(Venta venta) throws PersistenciaException, GestionException {
 		return gestorVenta.crearVenta(venta);
+	}
+
+	public void imprimirPDF(PDF pdf) throws GestionException {
+		gestorPDF.imprimirPDF(pdf);
 	}
 }
