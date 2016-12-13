@@ -17,17 +17,20 @@
  */
 package app.logica.gestores;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 
 import org.springframework.stereotype.Service;
 
 import app.datos.clases.EstadoStr;
 import app.datos.entidades.Estado;
+import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
 import app.datos.servicios.ReservaService;
 import app.excepciones.GestionException;
@@ -42,6 +45,9 @@ import app.logica.resultados.ResultadoEliminarReserva;
  */
 public class GestorReserva {
 
+	public static final String ASUNTO_RESERVA_CREADA = "Reserva efectuada con éxito";
+	public static final String MENSAJE_RESERVA_CREADA = "Su reserva se ha registrado exitosamente. Puede ver los detalles de la reserva en el documento adjunto.";
+	
 	@Resource
 	protected ReservaService persistidorReserva;
 
@@ -50,6 +56,9 @@ public class GestorReserva {
 
 	@Resource
 	protected GestorPDF gestorPDF;
+	
+	@Resource
+	protected GestorEmail gestorEmail;
 
 	/**
 	 * Método para crear una reserva. Primero se validan las reglas de negocia y luego se persiste.
@@ -139,16 +148,19 @@ public class GestorReserva {
 			else{
 				Set<Reserva> reservasDelInmueble = reserva.getInmueble().getReservas();
 				Iterator<Reserva> itRes = reservasDelInmueble.iterator();
-				Reserva res;
+				Reserva res = null;
 				while(!reservaEnConflictoEncontrada && itRes.hasNext()){
 					res = itRes.next();
 					if(res.getEstado().getEstado().equals(EstadoStr.ALTA)
 							&& res.getFechaFin().compareTo(reserva.getFechaInicio()) > 0
 							&& res.getFechaInicio().compareTo(reserva.getFechaFin()) < 0){
 						reservaEnConflictoEncontrada = true;
-						reservaEnConflicto = res;
-						errores.add(ErrorCrearReserva.Existe_Otra_Reserva_Activa);
 					}
+				}
+				if(reservaEnConflictoEncontrada){
+					reservaEnConflicto = res;
+					errores.add(ErrorCrearReserva.Existe_Otra_Reserva_Activa);
+					
 				}
 			}
 		}
@@ -162,15 +174,18 @@ public class GestorReserva {
 
 		if(errores.isEmpty()){
 			reserva.setArchivoPDF(gestorPDF.generarPDF(reserva));
+			PDF pdfReserva = gestorPDF.generarPDF(reserva);
+			new Thread(()->{
+				try {
+					gestorEmail.enviarEmail(reserva.getCliente().getCorreo(), ASUNTO_RESERVA_CREADA, MENSAJE_RESERVA_CREADA, pdfReserva);
+				} catch (IOException | MessagingException e) {
+					e.printStackTrace();
+				}
+			});
 			persistidorReserva.guardarReserva(reserva);
 		}
 
-		if(reservaEnConflictoEncontrada){
-			return new ResultadoCrearReserva(reservaEnConflicto, errores.toArray(new ErrorCrearReserva[0]));
-		}
-		else{
-			return new ResultadoCrearReserva(errores.toArray(new ErrorCrearReserva[0]));
-		}
+		return new ResultadoCrearReserva(reservaEnConflicto, errores.toArray(new ErrorCrearReserva[0]));
 	}
 
 	public ResultadoEliminarReserva eliminarReserva(Reserva reserva) throws PersistenciaException {

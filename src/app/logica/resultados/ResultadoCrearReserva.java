@@ -54,10 +54,6 @@ public class ResultadoCrearReserva extends Resultado<ErrorCrearReserva> {
 		this.reservaEnConflicto = reservaEnConflicto;
 	}
 	
-	public ResultadoCrearReserva(ErrorCrearReserva... errores) {
-		super(errores);
-	}
-	
 	public Reserva getReservaEnConflicto(){
 		return reservaEnConflicto;
 	}
