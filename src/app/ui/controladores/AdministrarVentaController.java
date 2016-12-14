@@ -35,6 +35,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 
+/**
+ * Controlador de la pantalla que lista las ventas de una persona (puede ser vendedor, cliente o propietario)
+ *
+ * Pertenece a la taskcard 29 de la iteración 2 y a la historia 8
+ */
 public class AdministrarVentaController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/administrarVenta.fxml";
