@@ -22,11 +22,13 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import app.comun.ImpresoraPDF;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Venta;
 import app.excepciones.GestionException;
+import app.excepciones.ImprimirPDFException;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearVenta;
 import app.logica.resultados.ResultadoCrearVenta.ErrorCrearVenta;
@@ -94,6 +96,8 @@ public class AltaVentaController extends OlimpoController {
 	protected TextField textFieldMedioDePago;
 
 	protected Inmueble inmueble;
+
+	protected ImpresoraPDF impresora = new ImpresoraPDF();
 
 	/**
 	 * Setea los campos con los datos del inmueble pasado por parámetro y de su propietario.
@@ -228,8 +232,8 @@ public class AltaVentaController extends OlimpoController {
 						VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada correctamente", "¿Desea imprimir el documento generado?", stage);
 						if(ventana.acepta()){
 							try{
-								coordinador.imprimirPDF(venta.getArchivoPDF());
-							} catch(GestionException ex){
+								impresora.imprimirPDF(venta.getArchivoPDF());
+							} catch(ImprimirPDFException ex){
 								presentador.presentarExcepcion(ex, stage);
 							} catch(Exception e){
 								presentador.presentarExcepcionInesperada(e);

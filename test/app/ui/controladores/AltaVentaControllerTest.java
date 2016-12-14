@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
 import org.mockito.Mockito;
 
+import app.comun.ImpresoraPDF;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Direccion;
@@ -69,6 +70,7 @@ public class AltaVentaControllerTest {
 		VentanaErrorExcepcion ventanaErrorExcepcionMock = mock(VentanaErrorExcepcion.class);
 		VentanaErrorExcepcionInesperada ventanaErrorExcepcionInesperadaMock = mock(VentanaErrorExcepcionInesperada.class);
 		VentanaConfirmacion ventanaConfirmacionMock = mock(VentanaConfirmacion.class);
+		ImpresoraPDF impresoraMock = mock(ImpresoraPDF.class);
 
 		//Se setea lo que deben devolver los mocks cuando son invocados por la clase a probar
 		when(presentadorVentanasMock.presentarError(any(), any(), any())).thenReturn(ventanaErrorMock);
@@ -84,9 +86,9 @@ public class AltaVentaControllerTest {
 		}
 
 		if(excepcionAlImprimir != null){
-			Mockito.doThrow(excepcionAlImprimir).when(coordinadorMock).imprimirPDF(any());
+			Mockito.doThrow(excepcionAlImprimir).when(impresoraMock).imprimirPDF(any());
 		} else {
-			doNothing().when(coordinadorMock).imprimirPDF(any());
+			doNothing().when(impresoraMock).imprimirPDF(any());
 		}
 
 		ArrayList<Cliente> clientes = new ArrayList<>();
@@ -99,6 +101,7 @@ public class AltaVentaControllerTest {
 			public void inicializar(URL location, ResourceBundle resources) {
 				this.coordinador = coordinadorMock;
 				this.presentador = presentadorVentanasMock;
+				this.impresora = impresoraMock;
 				super.inicializar(location, resources);
 			}
 
@@ -139,7 +142,7 @@ public class AltaVentaControllerTest {
 				//Se hacen las verificaciones pertinentes para comprobar que el controlador se comporte adecuadamente
 				Mockito.verify(coordinadorMock).obtenerClientes();
 				Mockito.verify(coordinadorMock, times(llamaACrearVenta)).crearVenta(any());
-				Mockito.verify(coordinadorMock,times(llamaACoordinadorImprimirPDF)).imprimirPDF(any());
+				Mockito.verify(impresoraMock,times(llamaACoordinadorImprimirPDF)).imprimirPDF(any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarError)).presentarError(eq("Revise sus campos"), any(), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcionLogica)).presentarExcepcion(eq(excepcionCapaLogica), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcionImprimir)).presentarExcepcion(eq(excepcionAlImprimir), any());

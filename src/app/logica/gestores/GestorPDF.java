@@ -17,11 +17,7 @@
  */
 package app.logica.gestores;
 
-import java.awt.Desktop;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.FutureTask;
@@ -44,7 +40,6 @@ import app.datos.entidades.Reserva;
 import app.datos.entidades.Venta;
 import app.excepciones.GenerarPDFException;
 import app.excepciones.GestionException;
-import app.excepciones.ImprimirPDFException;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
@@ -375,18 +370,5 @@ public class GestorPDF {
 		}
 
 		return pdf;
-	}
-
-	public void imprimirPDF(PDF p) throws GestionException {
-		try{
-			File PDFtmp = new File("tmp.pdf");
-			FileOutputStream fos = new FileOutputStream(PDFtmp);
-			fos.write(p.getArchivo());
-			fos.flush();
-			fos.close();
-			Desktop.getDesktop().print(PDFtmp);
-		} catch(IOException ex){
-			throw new ImprimirPDFException(ex);
-		}
 	}
 }
