@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="466.0" maxWidth="1191.0" minHeight="466.0" minWidth="1191.0" prefHeight="466.0" prefWidth="1191.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="567.0" minWidth="567.0" prefWidth="567.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="10.0" prefWidth="110.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="0.0" prefWidth="322.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="9.0" prefWidth="11.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="10.0" prefWidth="155.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label fx:id="labelCodigo" alignment="CENTER" maxHeight="1000.0" maxWidth="1000.0" text="Inmueble Nº 1" GridPane.columnIndex="6" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Localidad:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Label fx:id="labelTipoInmueble" alignment="CENTER" maxHeight="1000.0" maxWidth="1000.0" text="CASA" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Dirección:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Barrio:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Dormitorios:" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Baños:" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="País:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Provincia:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Garaje:" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Patio:" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Superficie terreno:" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+      <Label alignment="CENTER_RIGHT" maxHeight="1000.0" maxWidth="1000.0" text="Superficie edificada" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+      <Label fx:id="labelPrecio" alignment="CENTER" maxHeight="1000.0" maxWidth="1000.0" text="700.000 USD" GridPane.columnIndex="6" GridPane.rowIndex="14" />
+      <Label fx:id="labelPais" maxHeight="1000.0" maxWidth="1000.0" text="Argentina" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <Label fx:id="labelProvincia" maxHeight="1000.0" maxWidth="1000.0" text="Santa Fe" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+      <Label fx:id="labelLocalidad" maxHeight="1000.0" maxWidth="1000.0" text="Santa Fe" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+      <Label fx:id="labelDireccion" maxHeight="1000.0" maxWidth="1000.0" text="Almirante Brown 2310" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+      <Label fx:id="labelDormitorios" maxHeight="1000.0" maxWidth="1000.0" text="4" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+      <Label fx:id="labelBarrio" maxHeight="1000.0" maxWidth="1000.0" text="Siete Jefes" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+      <Label fx:id="labelGaraje" maxHeight="1000.0" maxWidth="1000.0" text="SI" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+      <Label fx:id="labelPatio" maxHeight="1000.0" maxWidth="1000.0" text="SI" GridPane.columnIndex="4" GridPane.rowIndex="10" />
+      <Label fx:id="labelBaños" maxHeight="1000.0" maxWidth="1000.0" text="2" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+      <Label fx:id="labelSuperficieTerreno" maxHeight="1000.0" maxWidth="1000.0" text="400 m^2" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+      <Label fx:id="labelSuperficieEdificada" maxHeight="1000.0" maxWidth="1000.0" text="200 m^2" GridPane.columnIndex="4" GridPane.rowIndex="13" />
+      <HBox alignment="CENTER" maxHeight="466.0" maxWidth="567.0" minHeight="466.0" minWidth="567.0" prefHeight="466.0" prefWidth="567.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowSpan="15" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <children>
+            <ImageView fx:id="imageFoto" fitHeight="466.0" fitWidth="567.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>
