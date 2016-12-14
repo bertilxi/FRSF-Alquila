@@ -69,7 +69,7 @@ public class FormateadorString {
 
 		//Si la entrada consiste solo de espacios en blanco, se devuelve una cadena vacía
 		entrada.trim();
-		if(entrada == ""){
+		if(entrada.equals("")){
 			return "";
 		}
 
