@@ -167,7 +167,7 @@ public class AdministrarVentaController extends OlimpoController {
 	private void handleVerDocumento() {
 		if(tablaVentas.getSelectionModel().getSelectedItem() != null){
 			try{
-				File PDFtmp = new File("reserva_tmp.pdf");
+				File PDFtmp = new File("tmp.pdf");
 				FileOutputStream fos = new FileOutputStream(PDFtmp);
 				fos.write(tablaVentas.getSelectionModel().getSelectedItem().getArchivoPDF().getArchivo());
 				fos.flush();
