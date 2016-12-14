@@ -107,7 +107,8 @@ public class GestorPDF {
 		escritor.close();
 		pdfbaos.close();
 		return (PDF) new PDF().setArchivo(pdfBytes);
-}
+	}
+
 	/**
 	 * Método para crear un PDF a partir de varias pantalla.
 	 *
@@ -121,7 +122,7 @@ public class GestorPDF {
 		PdfWriter escritor = PdfWriter.getInstance(document, pdfbaos);
 		document.open();
 
-		for(Node pantalla : pantallasAPDF){
+		for(Node pantalla: pantallasAPDF){
 			new Scene((Parent) pantalla);
 			WritableImage image = pantalla.snapshot(new SnapshotParameters(), null);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -153,31 +154,37 @@ public class GestorPDF {
 	 *            datos que se utilizaran para generar el PDF de un catálogo
 	 * @return catalogo en PDF
 	 */
-	public PDF generarPDF(CatalogoVista catalogo) throws GestionException{
+	public PDF generarPDF(CatalogoVista catalogo) throws GestionException {
 		pdf = null;
 		Integer numeroInmuebles = catalogo.getFotos().size();
 		ArrayList<Node> paginas = new ArrayList<>();
 		Integer numeroTotalDePaginas = (numeroInmuebles + 2) / 3;
-		try {
+		Date fechaHoy = new Date();
+		try{
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
-					for (int numeroPagina = 1; numeroPagina <= numeroTotalDePaginas; numeroPagina++) {
+					for(int numeroPagina = 1; numeroPagina <= numeroTotalDePaginas; numeroPagina++){
 						Integer inmueblesProcesados = 0;
 						FXMLLoader loader = new FXMLLoader();
-						loader.setLocation(getClass().getResource(URLDocumentoReserva));
+						loader.setLocation(getClass().getResource(URLCatalogo));
 						Pane paginaCatalogo = (Pane) loader.load();
-						//TODO cargar datos de pagina
+
+						Label label = (Label) paginaCatalogo.lookup("#labelFechaEmision");
+						label.setText(formateador.nombrePropio(conversorFechas.diaMesYAnioToString(fechaHoy)));
+						label = (Label) paginaCatalogo.lookup("#labelNumeroPagina");
+						label.setText(numeroPagina + " de " + numeroTotalDePaginas);
+
 						//for(int i = 0; i < 3 && inmueblesProcesados < numeroInmuebles; i++, inmueblesProcesados++){
-							//FXMLLoader loaderFila = new FXMLLoader();
-							//loader.setLocation(getClass().getResource(URLFilaCatalogo));
-							//Pane fila = (Pane) loaderFila.load();
-							//TODO cargar fila
+						//FXMLLoader loaderFila = new FXMLLoader();
+						//loader.setLocation(getClass().getResource(URLFilaCatalogo));
+						//Pane fila = (Pane) loaderFila.load();
+						//TODO cargar fila
 						//}
 						paginas.add(paginaCatalogo);
 					}
 					pdf = generarPDF(paginas);
 				} catch(Throwable e){
-						return e;
+					return e;
 				}
 				return null;
 			});
@@ -196,13 +203,13 @@ public class GestorPDF {
 				throw new NullPointerException("Error al generar PDF");
 			}
 
-		} catch (Throwable e) {
+		} catch(Throwable e){
 			e.printStackTrace();
 			throw new GenerarPDFException(e);
 		}
 
 		return pdf;
-}
+	}
 
 	/**
 	 * Método para crear un PDF de una reserva a partir de los datos de una ReservaVista.
