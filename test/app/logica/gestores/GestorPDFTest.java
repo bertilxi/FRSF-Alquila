@@ -17,6 +17,8 @@
  */
 package app.logica.gestores;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.Date;
@@ -46,7 +48,6 @@ import app.datos.entidades.Reserva;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
 import app.datos.entidades.Venta;
-import app.ui.componentes.IconoAnimadoEspera;
 import app.ui.controladores.ControladorTest;
 import app.ui.controladores.LoginController;
 
@@ -114,7 +115,13 @@ public class GestorPDFTest {
 				.setNumero("123")
 				.setPiso("Piso 1")
 				.setOtros("Otros 1");
-		new IconoAnimadoEspera();
+		File file = new File("src/res/img/icono-256.png");
+		byte[] bytes = new byte[(int) file.length()];
+		FileInputStream fileInputStream = new FileInputStream(file);
+		fileInputStream.read(bytes);
+		fileInputStream.close();
+		Imagen imagen = (Imagen) new Imagen().setArchivo(bytes);
+
 		Inmueble inmueble1 = new Inmueble() {
 			@Override
 			public Integer getId() {
@@ -159,12 +166,12 @@ public class GestorPDFTest {
 		inmueble6.setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
 
 		HashMap<Inmueble, Imagen> mapa = new HashMap<>();
-		mapa.put(inmueble1, null);
-		mapa.put(inmueble2, null);
-		mapa.put(inmueble3, null);
-		mapa.put(inmueble4, null);
-		mapa.put(inmueble5, null);
-		mapa.put(inmueble6, null);
+		mapa.put(inmueble1, imagen);
+		mapa.put(inmueble2, imagen);
+		mapa.put(inmueble3, imagen);
+		mapa.put(inmueble4, imagen);
+		mapa.put(inmueble5, imagen);
+		mapa.put(inmueble6, imagen);
 
 		CatalogoVista catalogoVista = new CatalogoVista(new Cliente(), mapa);
 
@@ -229,11 +236,11 @@ public class GestorPDFTest {
 				.setPropietario(propietario);
 		Date fechahoy = new Date();
 		Venta venta = new Venta().setCliente(cliente)
-							.setPropietario(propietario)
-							.setInmueble(inmueble)
-							.setFecha(fechahoy)
-							.setImporte(1000000.0)
-							.setMedioDePago("contado");
+				.setPropietario(propietario)
+				.setInmueble(inmueble)
+				.setFecha(fechahoy)
+				.setImporte(1000000.0)
+				.setMedioDePago("contado");
 
 		PDF pdf = gestor.generarPDF(venta);
 		FileOutputStream fos = new FileOutputStream("testVenta.pdf");
