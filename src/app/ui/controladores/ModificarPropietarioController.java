@@ -40,6 +40,8 @@ import javafx.util.StringConverter;
 
 /**
  * Controlador de la vista para modificar un propietario
+ *
+ * Task card 8 de la iteración 1, historia de usuario 2
  */
 public class ModificarPropietarioController extends OlimpoController {
 

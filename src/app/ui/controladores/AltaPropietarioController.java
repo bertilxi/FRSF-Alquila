@@ -43,6 +43,8 @@ import javafx.util.StringConverter;
 
 /**
  * Controlador de la vista para dar de alta un propietario
+ *
+ * Task card 8 de la iteración 1, historia de usuario 2
  */
 public class AltaPropietarioController extends OlimpoController {
 

@@ -35,6 +35,8 @@ import javafx.scene.control.TextField;
 /**
  * Controlador de la vista para dar de alta un cliente
  *
+ * Task card 17 de la iteración 1, historia de usuario 2
+ *
  * Modificada en TaskCard 27 de la iteración 2
  */
 public class AltaClienteController extends OlimpoController {

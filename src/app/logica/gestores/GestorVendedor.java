@@ -44,6 +44,7 @@ import app.logica.resultados.ResultadoModificarVendedor.ErrorModificarVendedor;
 
 /**
  * Clase que se encarga de la lógica de negocios correspondientes a vendedores
+ * Task card 5 de la iteración 1, historia de usuario 1
  */
 @Service
 public class GestorVendedor {

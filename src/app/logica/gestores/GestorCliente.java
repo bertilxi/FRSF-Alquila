@@ -38,6 +38,12 @@ import app.logica.resultados.ResultadoEliminarCliente;
 import app.logica.resultados.ResultadoModificarCliente;
 import app.logica.resultados.ResultadoModificarCliente.ErrorModificarCliente;
 
+/**
+ * Se encarga de la lógica de negocios respectiva a la entidad cliente
+ *
+ * Task card 18 de la iteración 1, historia de usuario 2
+ *
+ */
 @Service
 public class GestorCliente {
 

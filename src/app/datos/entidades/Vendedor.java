@@ -43,6 +43,7 @@ import app.comun.FormateadorString;
 @Table(name = "vendedor", uniqueConstraints = @UniqueConstraint(name = "vendedor_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 /**
  * Entidad que modela a un vendedor
+ *  Task card 2 de la iteración 1, historia de usuario 1
  */
 public class Vendedor {
 

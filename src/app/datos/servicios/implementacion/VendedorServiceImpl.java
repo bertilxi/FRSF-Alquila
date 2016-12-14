@@ -35,6 +35,11 @@ import app.excepciones.ConsultaException;
 import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
+/**
+ * Permite persistir y obtener un vendedor, y listar vendedores
+ * Task card 6 de la iteración 1, historia de usuario 1
+ *
+ */
 @Repository
 public class VendedorServiceImpl implements VendedorService {
 
