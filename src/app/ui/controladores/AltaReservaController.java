@@ -227,14 +227,7 @@ public class AltaReservaController extends OlimpoController {
 	}
 
 	private void mostrarPDF(PDF pdf) {
-		String irA = null;
-		if(URLVistaRetorno != null){
-			irA = URLVistaRetorno;
-		}
-		else{
-			irA = AdministrarClienteController.URLVista;
-		}
-		VerPDFController visorPDF = (VerPDFController) cambiarmeAScene(VerPDFController.URLVista, irA);
+		VerPDFController visorPDF = (VerPDFController) cambiarmeAScene(VerPDFController.URLVista, InicioController.URLVista);
 		visorPDF.cargarPDF(pdf);
 	}
 
@@ -248,11 +241,12 @@ public class AltaReservaController extends OlimpoController {
 
 	@Override
 	public void salir() {
-		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
 		if(cliente != null){
+			AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista, AdministrarClienteController.URLVista);
 			controlador.setCliente(cliente);
 		}
 		else if(inmueble != null){
+			AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista, AdministrarInmuebleController.URLVista);
 			controlador.setInmueble(inmueble);
 		}
 	}
