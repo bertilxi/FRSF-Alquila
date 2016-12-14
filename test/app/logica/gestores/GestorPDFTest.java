@@ -17,21 +17,25 @@
  */
 package app.logica.gestores;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import org.junit.Test;
 
 import app.comun.ConversorFechas;
 import app.comun.FormateadorString;
+import app.datos.clases.CatalogoVista;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.clases.TipoInmuebleStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Direccion;
+import app.datos.entidades.Imagen;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.PDF;
@@ -41,6 +45,7 @@ import app.datos.entidades.Provincia;
 import app.datos.entidades.Reserva;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
+import app.excepciones.GestionException;
 import app.ui.controladores.ControladorTest;
 import app.ui.controladores.LoginController;
 
@@ -94,6 +99,34 @@ public class GestorPDFTest {
 		Reserva reserva = new Reserva().setCliente(cliente).setInmueble(inmueble).setImporte(300000.50).setFechaInicio(fechahoy).setFechaFin(fechahoy);
 		PDF pdf = gestor.generarPDF(reserva);
 		FileOutputStream fos = new FileOutputStream("testReserva.pdf");
+		fos.write(pdf.getArchivo());
+		fos.close();
+	}
+	
+	@Test
+	public void testGenerarPDFCatalogo() throws Exception{
+		Inmueble inmueble1= new Inmueble().setId(1);
+		Inmueble inmueble2= new Inmueble().setId(2);
+		Inmueble inmueble3= new Inmueble().setId(3);
+		Inmueble inmueble4= new Inmueble().setId(4);
+		Inmueble inmueble5= new Inmueble().setId(5);
+		Inmueble inmueble6= new Inmueble().setId(6);
+
+		HashMap<Inmueble, Imagen> mapa = new HashMap<>();
+		mapa.put(inmueble1, null);
+		mapa.put(inmueble2, null);
+		mapa.put(inmueble3, null);
+		mapa.put(inmueble4, null);
+		mapa.put(inmueble5, null);
+		mapa.put(inmueble6, null);
+
+		
+		CatalogoVista catalogoVista = new CatalogoVista(new Cliente(), mapa);
+		
+		GestorPDF gestor = new GestorPDF();
+		
+		PDF pdf = gestor.generarPDF(catalogoVista);
+		FileOutputStream fos = new FileOutputStream("testCatalogo.pdf");
 		fos.write(pdf.getArchivo());
 		fos.close();
 	}
