@@ -17,9 +17,6 @@
  */
 package app.ui.controladores;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
@@ -28,6 +25,7 @@ import app.datos.entidades.Cliente;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Vendedor;
 import app.datos.entidades.Venta;
+import app.ui.ScenographyChanger;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -35,6 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 
 public class AdministrarVentaController extends OlimpoController {
 
@@ -73,6 +72,9 @@ public class AdministrarVentaController extends OlimpoController {
 	@FXML
 	private Button botonVerDocumento;
 
+	@FXML
+	private Pane fondo;
+
 	protected TipoPersona tipoPersona;
 
 	public void setCliente(Cliente persona) {
@@ -110,6 +112,7 @@ public class AdministrarVentaController extends OlimpoController {
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
+		this.agregarScenographyChanger(fondo, new ScenographyChanger(stage, presentador, coordinador, fondo));
 		this.setTitulo("Ventas");
 
 		columnaFecha.setCellValueFactory(cellData -> new SimpleStringProperty(((cellData.getValue().getFecha() != null) ? (new SimpleDateFormat("dd/MM/yyyy").format(cellData.getValue().getFecha())) : (null))));
@@ -171,18 +174,14 @@ public class AdministrarVentaController extends OlimpoController {
 	 */
 	@FXML
 	protected void handleVerDocumento() {
-		if(tablaVentas.getSelectionModel().getSelectedItem() != null){
-			try{
-				File PDFtmp = new File("tmp.pdf");
-				FileOutputStream fos = new FileOutputStream(PDFtmp);
-				fos.write(tablaVentas.getSelectionModel().getSelectedItem().getArchivoPDF().getArchivo());
-				fos.flush();
-				fos.close();
-				Desktop.getDesktop().open(PDFtmp);
-			} catch(Exception ex){
-				presentador.presentarError("Error", "No se pudo abrir el archivo pdf", stage);
-			}
+		Venta venta = tablaVentas.getSelectionModel().getSelectedItem();
+		if(venta == null){
+			return;
 		}
+
+		VerPDFController visorPDF = (VerPDFController) cambiarScene(fondo, VerPDFController.URLVista, (Pane) fondo.getChildren().get(0));
+		visorPDF.cargarPDF(venta.getArchivoPDF());
+		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	private enum TipoPersona {

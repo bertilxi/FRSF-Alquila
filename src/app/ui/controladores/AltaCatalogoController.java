@@ -82,7 +82,7 @@ public class AltaCatalogoController extends OlimpoController {
 	public void agregarInmueble() {
 		final ArrayList<Inmueble> inmueblesNuevos = new ArrayList<>();
 		AdministrarInmuebleController vistaInmuebles = (AdministrarInmuebleController) this.cambiarScene(fondo, AdministrarInmuebleController.URLVista, (Pane) fondo.getChildren().get(0));
-		vistaInmuebles.formatearObtenerInmuebles(inmuebles, inmueblesNuevos, () -> {
+		vistaInmuebles.formatearObtenerInmueblesNoVendidos(inmuebles, inmueblesNuevos, () -> {
 			agregarInmuebles(inmueblesNuevos);
 		}, true);
 	}

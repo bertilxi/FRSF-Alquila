@@ -40,7 +40,6 @@ Vista de administración de inmuebles que se encarga de manejar el listado y la 
 Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
  -->
 
-
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarInmuebleController">
    <children>
       <Accordion>
@@ -110,10 +109,11 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                   </TableView>
                </children>
             </VBox>
-            <VBox fx:id="vboxBotones" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="152.0" minWidth="150.0" prefWidth="152.0" styleClass="buttonbar">
+            <VBox fx:id="vboxBotones" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" styleClass="buttonbar" HBox.hgrow="NEVER">
                <children>
                   <Button fx:id="btVerMas" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#verMas" text="Ver más" />
                   <Button fx:id="btVerReservas" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#verReservas" text="Ver reservas" />
+                  <Button fx:id="btGenerarCatalogo" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#generarCatalogo" text="Generar catálogo" />
                   <Button fx:id="btAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
                   <Button fx:id="btModificar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
                   <Button fx:id="btEliminar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#eliminarInmueble" text="Eliminar" />

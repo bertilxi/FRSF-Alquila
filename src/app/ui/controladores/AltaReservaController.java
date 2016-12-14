@@ -87,7 +87,7 @@ public class AltaReservaController extends OlimpoController {
 	public void buscarInmuebleAction() {
 		final ArrayList<Inmueble> inmueblesNuevos = new ArrayList<>();
 		AdministrarInmuebleController vistaInmuebles = (AdministrarInmuebleController) this.cambiarScene(fondo, AdministrarInmuebleController.URLVista, (Pane) fondo.getChildren().get(0));
-		vistaInmuebles.formatearObtenerInmuebles(new ArrayList<>(), inmueblesNuevos, () -> {
+		vistaInmuebles.formatearObtenerInmueblesNoVendidos(new ArrayList<>(), inmueblesNuevos, () -> {
 			seleccionarInmueble(inmueblesNuevos);
 		}, false);
 	}

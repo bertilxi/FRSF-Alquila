@@ -93,6 +93,9 @@ public class AdministrarInmuebleController extends OlimpoController {
 	private Button btSalir;
 
 	@FXML
+	private Button btGenerarCatalogo;
+
+	@FXML
 	private VBox vboxBotones;
 
 	@FXML
@@ -114,7 +117,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	@FXML
 	private TextField textFieldPrecioMaximo;
 
-	private ArrayList<Inmueble> inmueblesNoMostrar;
+	private ArrayList<Inmueble> inmueblesNoMostrar = new ArrayList<>();
 
 	private ArrayList<Inmueble> inmueblesSeleccionados;
 
@@ -149,6 +152,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 			presentador.presentarExcepcion(e, stage);
 		}
 
+		tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		tablaInmuebles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			Boolean noHayInmuebleSeleccionado = newValue == null;
 			btVerMas.setDisable(noHayInmuebleSeleccionado);
@@ -156,6 +160,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 			btModificar.setDisable(noHayInmuebleSeleccionado);
 			btEliminar.setDisable(noHayInmuebleSeleccionado);
 			btVender.setDisable(noHayInmuebleSeleccionado);
+			btGenerarCatalogo.setDisable(noHayInmuebleSeleccionado);
 		});
 
 		columnaTipoInmueble.setCellValueFactory(param -> {
@@ -304,13 +309,30 @@ public class AdministrarInmuebleController extends OlimpoController {
 	}
 
 	@FXML
+	public void generarCatalogo() {
+		ArrayList<Inmueble> inmuebles = new ArrayList<>(tablaInmuebles.getSelectionModel().getSelectedItems());
+		ArrayList<Inmueble> inmueblesVendidos = new ArrayList<>();
+		for(Inmueble inmueble: inmuebles){
+			if(inmueble.getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
+				inmueblesVendidos.add(inmueble);
+			}
+		}
+		inmuebles.removeAll(inmueblesVendidos);
+		if(inmuebles.isEmpty()){
+			return;
+		}
+		AltaCatalogoController controlador = (AltaCatalogoController) cambiarmeAScene(AltaCatalogoController.URLVista);
+		controlador.setInmuebles(inmuebles);
+	}
+
+	@FXML
 	public void aceptar() {
 		inmueblesSeleccionados.addAll(tablaInmuebles.getSelectionModel().getSelectedItems());
 		accionCierre.run();
 		salir();
 	}
 
-	public void formatearObtenerInmuebles(ArrayList<Inmueble> inmuebles, ArrayList<Inmueble> inmueblesNuevos, Runnable accionCierre, Boolean multiple) {
+	public void formatearObtenerInmueblesNoVendidos(ArrayList<Inmueble> inmuebles, ArrayList<Inmueble> inmueblesNuevos, Runnable accionCierre, Boolean multiple) {
 		this.inmueblesNoMostrar = inmuebles;
 		this.inmueblesSeleccionados = inmueblesNuevos;
 		this.accionCierre = accionCierre;
@@ -321,6 +343,13 @@ public class AdministrarInmuebleController extends OlimpoController {
 		btSalir.setVisible(true);
 		btSalir.setDisable(false);
 		Platform.runLater(() -> {
+			buscarAction();
+			for(EstadoInmueble estadoInmueble: comboBoxEstadoInmueble.getItems()){
+				if(estadoInmueble.getEstado().equals(EstadoInmuebleStr.NO_VENDIDO)){
+					comboBoxEstadoInmueble.getSelectionModel().select(estadoInmueble);
+					break;
+				}
+			}
 			tablaInmuebles.getItems().removeAll(inmueblesNoMostrar);
 			if(multiple){
 				tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -470,6 +499,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 					presentador.presentarExcepcionInesperada(e, stage);
 				}
 			}
+			tablaInmuebles.getItems().removeAll(inmueblesNoMostrar);
 		}
 	}
 }
