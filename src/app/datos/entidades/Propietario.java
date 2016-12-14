@@ -34,7 +34,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import app.comun.FormateadorString;
@@ -78,7 +77,6 @@ public class Propietario {
 
 	//Opcionales
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "propietario")
-	@Transient
 	private Set<Inmueble> inmuebles;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -86,7 +84,6 @@ public class Propietario {
 	private Estado estado;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propietario")
-	@Transient
 	private Set<Venta> ventas;
 
 	public Propietario() {
