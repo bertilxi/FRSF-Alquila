@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
 
+import app.datos.entidades.Direccion;
 import app.datos.entidades.Inmueble;
 import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
@@ -115,7 +116,7 @@ public class AdministrarInmuebleControllerTest {
 	 * @return parámetros de prueba
 	 */
 	protected Object[] parametersForTestEliminarInmueble() {
-		Inmueble inmueble = new Inmueble();
+		Inmueble inmueble = new Inmueble().setDireccion(new Direccion());
 
 		Boolean acepta = true;
 

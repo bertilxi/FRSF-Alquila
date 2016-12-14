@@ -297,7 +297,6 @@ public class GestorPropietarioTest {
 		estados.add(new Estado(EstadoStr.BAJA));
 
 		//Setear valores esperados a los mocks
-		when(propietarioServiceMock.obtenerPropietario(any())).thenReturn(resObtenerPropietario);
 		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
 
 		//Setear la excepcion devuelta por la base de datos, si corresponde
