@@ -158,7 +158,13 @@ public class AltaVentaController extends OlimpoController {
 		}
 
 		if(medioDePago.isEmpty()){
-			errores.append("Inserte un medio de pago").append("\n");
+			errores.append("Ingrese un medio de pago").append("\n");
+		}
+
+		if(inmueble == null) {
+			errores.append("No hay inmueble seleccionado").append("\n");
+		} else if(inmueble.getPropietario() == null) {
+			errores.append("No se encuentra el propietario del inmueble").append("\n");
 		}
 
 		if(!errores.toString().isEmpty()){
@@ -222,6 +228,8 @@ public class AltaVentaController extends OlimpoController {
 								coordinador.imprimirPDF(venta.getArchivoPDF());
 							} catch(GestionException ex){
 								presentador.presentarExcepcion(ex, stage);
+							} catch(Exception e) {
+								presentador.presentarExcepcionInesperada(e);
 							}
 						}
 						AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
@@ -231,6 +239,8 @@ public class AltaVentaController extends OlimpoController {
 					presentador.presentarExcepcion(e, stage);
 				} catch(PersistenciaException e){
 					presentador.presentarExcepcion(e, stage);
+				} catch(Exception e) {
+					presentador.presentarExcepcionInesperada(e);
 				}
 			}
 		}
@@ -246,7 +256,7 @@ public class AltaVentaController extends OlimpoController {
 		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
-	private boolean showConfirmarContraseñaDialog() {
+	protected boolean showConfirmarContraseñaDialog() {
 		try {
 	        // Load the fxml file and create a new stage for the popup dialog.
 	        FXMLLoader loader = new FXMLLoader();

@@ -134,6 +134,11 @@ public class Inmueble {
 	public Integer getId() {
 		return id;
 	}
+	
+	public Inmueble setId(Integer id) {
+		this.id = id;
+		return this;
+	}
 
 	public String getObservaciones() {
 		return observaciones;

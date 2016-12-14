@@ -52,7 +52,7 @@
                         <TableColumn fx:id="columnaApellidoPropietario" editable="false" minWidth="30.0" prefWidth="150.0" text="Apellido" />
                      </columns>
                   </TableColumn>
-                  <TableColumn fx:id="columnaVendedor" editable="false" prefWidth="65.0" text="Vendedor" visible="false">
+                  <TableColumn fx:id="columnaVendedor" editable="false" prefWidth="65.0" text="Vendedor">
                      <columns>
                         <TableColumn fx:id="columnaNombreVendedor" editable="false" minWidth="30.0" prefWidth="150.0" text="Nombre" />
                         <TableColumn fx:id="columnaApellidoVendedor" editable="false" minWidth="30.0" prefWidth="150.0" text="Apellido" />
