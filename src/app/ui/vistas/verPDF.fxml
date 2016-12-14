@@ -48,10 +48,10 @@
             </padding>
          <children>
             <WebView fx:id="visorPDF" minHeight="-1.0" minWidth="-1.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+               <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#download" prefHeight="40.0" prefWidth="150.0" styleClass="button-confirm" text="Guardar PDF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#salir" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Salir" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#print" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Imprimir PDF" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
         </GridPane>
-        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="buttonbar">
-            <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#salir" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Salir" HBox.hgrow="ALWAYS" />
-        </HBox>
     </VBox>
 </HBox>
