@@ -266,6 +266,9 @@ public class GestorPDF {
 			if(!Platform.isFxApplicationThread()){
 				Platform.runLater(future);
 			}
+			else{
+				future.run();
+			}
 			Throwable excepcion = future.get();
 			if(excepcion != null){
 				throw excepcion;

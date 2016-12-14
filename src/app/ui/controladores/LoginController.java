@@ -24,7 +24,6 @@ import java.util.Set;
 
 import app.datos.clases.DatosLogin;
 import app.datos.entidades.TipoDocumento;
-import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoAutenticacion;
 import app.logica.resultados.ResultadoAutenticacion.ErrorAutenticacion;
@@ -65,14 +64,6 @@ public class LoginController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	public ResultadoControlador ingresar() {
-		//TODO borrar para activar login
-		BaseController siguientePantallaa = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista, true);
-		siguientePantallaa.formatearConVendedor(new Vendedor().setRoot(true));
-		if(true){
-			return null;
-		}
-		@SuppressWarnings("unused")
-		//borrar
 		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoAutenticacion resultado = null;
 		Boolean hayErrores;
