@@ -224,6 +224,7 @@ public class AltaVentaController extends OlimpoController {
 						presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 					}
 					else{
+						presentador.presentarToast("Se ha realizado la venta con éxito", stage);
 						VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada correctamente", "¿Desea imprimir el documento generado?", stage);
 						if(ventana.acepta()){
 							try{
@@ -277,6 +278,7 @@ public class AltaVentaController extends OlimpoController {
 			controlador.setDialogStage(dialogStage);
 			controlador.setCoordinador(coordinador);
 			controlador.setPresentador(presentador);
+			controlador.setVendedorLogueado(vendedorLogueado);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();

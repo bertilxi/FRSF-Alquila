@@ -144,6 +144,7 @@ public class AltaVentaControllerTest {
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcionLogica)).presentarExcepcion(eq(excepcionCapaLogica), any());
 				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarExcepcionImprimir)).presentarExcepcion(eq(excepcionAlImprimir), any());
 				Mockito.verify(presentadorVentanasMock,times(llamaAPresentadorVentanasPresentarConfirmacion)).presentarConfirmacion(any(), any(), any());
+				Mockito.verify(presentadorVentanasMock,times(llamaAPresentadorVentanasPresentarConfirmacion)).presentarToast(any(), any());
 
 			}
 		};
