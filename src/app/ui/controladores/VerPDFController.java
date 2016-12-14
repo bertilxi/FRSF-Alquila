@@ -45,7 +45,7 @@ public class VerPDFController extends OlimpoController {
 
 	private static final String URL_Visor = "visorPDF/web/viewer.html";
 
-	private static final String URL_PDF = "visorPDF/web/ver.PDF";
+	private static final String URL_PDF = "visorPDF/web/ver.pdf";
 
 	@FXML
 	protected WebView visorPDF;
