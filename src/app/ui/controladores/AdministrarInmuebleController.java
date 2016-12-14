@@ -211,7 +211,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	@FXML
 	public void modificar() {
 		Inmueble inmueble = tablaInmuebles.getSelectionModel().getSelectedItem();
-		if(inmueble == null){
+		if(inmueble == null || inmueble.getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
 			return;
 		}
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);

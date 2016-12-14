@@ -67,28 +67,28 @@ public class FiltroInmueble {
 		}
 
 		public Builder pais(Pais pais) {
-			if(pais != null) {
+			if(pais != null){
 				filtroInmueble.pais = pais.getNombre();
 			}
 			return this;
 		}
 
 		public Builder provincia(Provincia provincia) {
-			if(provincia != null) {
+			if(provincia != null){
 				filtroInmueble.provincia = provincia.getNombre();
 			}
 			return this;
 		}
 
 		public Builder localidad(Localidad localidad) {
-			if(localidad != null) {
+			if(localidad != null){
 				filtroInmueble.localidad = localidad.getNombre();
 			}
 			return this;
 		}
 
 		public Builder barrio(Barrio barrio) {
-			if(barrio != null) {
+			if(barrio != null){
 				filtroInmueble.barrio = barrio.getNombre();
 			}
 			return this;
@@ -149,7 +149,7 @@ public class FiltroInmueble {
 						((cantidadDormitorios != null) ? (nombreEntidad + ".datosEdificio.dormitorios >= :cad AND ") : ("")) +
 						((precioMaximo != null) ? (nombreEntidad + ".precio <= :pma AND ") : ("")) +
 						((precioMinimo != null) ? (nombreEntidad + ".precio >= :pmi AND ") : ("")) +
-						((estadoInmueble != null) ? (nombreEntidad + ".estadoInmueble.estado = :esi AND ") : ("")); //TODO cambiar cuando exista
+						((estadoInmueble != null) ? (nombreEntidad + ".estadoInmueble.estado = :esi AND ") : (""));
 
 		if(!where.isEmpty()){
 			where = " WHERE " + where;
