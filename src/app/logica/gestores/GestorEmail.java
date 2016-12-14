@@ -88,8 +88,8 @@ public class GestorEmail {
 
 	public GestorEmail() {
 		final java.util.logging.Logger buggyLogger = java.util.logging.Logger.getLogger(FileDataStoreFactory.class.getName());
-		 buggyLogger.setLevel(java.util.logging.Level.SEVERE);
-		
+		buggyLogger.setLevel(java.util.logging.Level.SEVERE);
+
 		try{
 			HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 			DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
@@ -115,6 +115,7 @@ public class GestorEmail {
 		fos.flush();
 		fos.close();
 		sendMessage(service, user, createEmailWithAttachment(destinatario, "olimpoagilinmobiliaria2016@gmail.com", asunto, mensaje, archivoTMP));
+		archivoTMP.delete();
 	}
 
 	/**
@@ -249,8 +250,7 @@ public class GestorEmail {
 		Message message = createMessageWithEmail(emailContent);
 		message = service.users().messages().send(userId, message).execute();
 
-		System.out.println("Message id: " + message.getId());
-		System.out.println(message.toPrettyString());
+		System.out.println("Se ha enviado el email con éxito");
 		return message;
 	}
 
