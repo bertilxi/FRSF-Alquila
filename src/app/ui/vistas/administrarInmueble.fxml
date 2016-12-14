@@ -67,13 +67,13 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                            </rowConstraints>
                            <children>
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Pais" GridPane.columnIndex="1" />
-                              <ComboBox fx:id="comboBoxPais" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" />
+                              <ComboBox fx:id="comboBoxPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Provincia" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <ComboBox fx:id="comboBoxProvincia" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="comboBoxProvincia" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Localidad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="comboBoxLocalidad" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="comboBoxLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Barrio" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <ComboBox fx:id="comboBoxBarrio" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="comboBoxBarrio" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Estado del inmueble" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <ComboBox fx:id="comboBoxEstadoInmueble" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Tipo de inmueble" GridPane.columnIndex="4" />
