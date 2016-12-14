@@ -186,7 +186,6 @@ public class GestorPDF {
 							loaderFila.setLocation(getClass().getResource(URLFilaCatalogo));
 							Pane fila = (Pane) loaderFila.load();
 							Inmueble inmueble = inmuebles.get(inmueblesProcesados);
-							System.out.println(inmueblesProcesados);
 							if(catalogo.getFotos().get(inmueble) != null){
 								File imagenTMP = new File("imagen_tmp.png");
 								FileOutputStream fos = new FileOutputStream(imagenTMP);
