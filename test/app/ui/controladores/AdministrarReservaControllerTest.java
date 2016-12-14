@@ -94,7 +94,7 @@ public class AdministrarReservaControllerTest {
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
 		;
 	}
-	
+
 	@Test
 	@Parameters
 	public void testEliminarReserva(ArrayList<Reserva> listaReservas,
@@ -132,9 +132,7 @@ public class AdministrarReservaControllerTest {
 			@Override
 			public void inicializar(URL location, ResourceBundle resources) {
 				this.coordinador = coordinadorMock;
-				this.presentador = new PresentadorVentanas();
 				this.presentador = presentadorVentanasMock;
-				super.inicializar(location, resources);
 				this.setCliente(new Cliente());
 				this.tablaReservas.getSelectionModel().select(0); //se selecciona la primer reserva de la lista
 			}
