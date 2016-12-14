@@ -256,7 +256,6 @@ public class ModificarVendedorController extends OlimpoController {
 		passwordFieldContraseñaNueva.setDisable(true);
 		passwordFieldRepiteContraseña.setDisable(true);
 		checkBoxCambiarContraseña.setSelected(false);
-		verMisVentasButton.setVisible(false);
 	}
 
 	/**
@@ -266,19 +265,20 @@ public class ModificarVendedorController extends OlimpoController {
 	 *            vendedor del que se obtienen los datos.
 	 */
 	public void setVendedor(Vendedor vendedor) {
-		//TODO cambiar
 		this.setTitulo("Modificar vendedor");
 		this.vendedor = vendedor;
 		textFieldNombre.setText(vendedor.getNombre());
 		textFieldApellido.setText(vendedor.getApellido());
 		textFieldNumeroDocumento.setText(vendedor.getNumeroDocumento());
 		comboBoxTipoDocumento.getSelectionModel().select(vendedor.getTipoDocumento());
+	}
+
+	public void mostrarBotonVerVentas() {
 		verMisVentasButton.setVisible(true);
 	}
 
 	public void setAltaVendedor() {
 		this.esAltaNuevamente = true;
 	}
-
 
 }

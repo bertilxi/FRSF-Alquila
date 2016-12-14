@@ -94,7 +94,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
           </TitledPane>
         </panes>
       </Accordion>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" VBox.vgrow="ALWAYS">
          <children>
             <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" HBox.hgrow="ALWAYS">
                <children>

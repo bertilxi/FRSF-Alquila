@@ -216,14 +216,6 @@ public class Vendedor {
 		else if(!tipoDocumento.equals(vendedor.tipoDocumento)){
 			return false;
 		}
-		if(ventas == null){
-			if(vendedor.ventas != null){
-				return false;
-			}
-		}
-		else if(!ventas.equals(vendedor.ventas)){
-			return false;
-		}
 		return true;
 	}
 
@@ -234,7 +226,6 @@ public class Vendedor {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
 		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
-		result = prime * result + ((ventas == null) ? 0 : ventas.hashCode());
 		return result;
 	}
 
