@@ -298,7 +298,6 @@ public class GestorPropietarioTest {
 		estados.add(new Estado(EstadoStr.BAJA));
 
 		//Setear valores esperados a los mocks
-		when(propietarioServiceMock.obtenerPropietario(any())).thenReturn(resObtenerPropietario);
 		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
 
 		//Setear la excepcion devuelta por la base de datos, si corresponde
@@ -324,7 +323,6 @@ public class GestorPropietarioTest {
 		if(eliminar != 0){
 			assertEquals(EstadoStr.BAJA, propietario.getEstado().getEstado());
 		}
-		verify(propietarioServiceMock).obtenerPropietario(any());
 		verify(gestorDatosMock, times(eliminar)).obtenerEstados();
 		verify(propietarioServiceMock, times(eliminar)).modificarPropietario(propietario);
 	}
