@@ -45,6 +45,7 @@ import app.datos.entidades.Provincia;
 import app.datos.entidades.Reserva;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
+import app.datos.entidades.Venta;
 import app.ui.componentes.IconoAnimadoEspera;
 import app.ui.controladores.ControladorTest;
 import app.ui.controladores.LoginController;
@@ -140,6 +141,66 @@ public class GestorPDFTest {
 
 		PDF pdf = gestor.generarPDF(catalogoVista);
 		FileOutputStream fos = new FileOutputStream("testCatalogo.pdf");
+		fos.write(pdf.getArchivo());
+		fos.close();
+	}
+
+	@Test
+	/**
+	 * Prueba el método generarPDF(Venta venta), el cual corresponde con la taskcard 30 de la iteración 2 y a la historia 8
+	 * El test es en parte manual ya que genera un archivo pdf que debe comprobarse si es correcto manualmente.
+	 *
+	 * @throws Exception
+	 */
+	public void testGenerarPDFVenta() throws Exception {
+		new ControladorTest(LoginController.URLVista, new LoginController() {
+			@Override
+			protected void setTitulo(String titulo) {
+			}
+
+			@Override
+			public void inicializar(URL location, ResourceBundle resources) {
+			}
+		});
+		GestorPDF gestor = new GestorPDF() {
+			{
+				formateador = new FormateadorString();
+				conversorFechas = new ConversorFechas();
+			}
+		};
+		Cliente cliente = new Cliente().setNombre("Jaquelina")
+				.setApellido("Acosta")
+				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
+				.setNumeroDocumento("36696969");
+		Propietario propietario = new Propietario().setNombre("Ignacio")
+				.setApellido("Falchini")
+				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
+				.setNumeroDocumento("12345678");
+		Localidad localidad = new Localidad().setProvincia(new Provincia().setPais(new Pais())).setNombre("Federal");
+		Direccion direccion = new Direccion().setCalle(new Calle().setLocalidad(localidad).setNombre("Donovan")).setLocalidad(localidad).setBarrio(new Barrio().setLocalidad(localidad).setNombre("Centro"))
+				.setNumero("635")
+				.setPiso("6")
+				.setDepartamento("B")
+				.setOtros("otros");
+
+		Inmueble inmueble = new Inmueble() {
+			@Override
+			public Integer getId() {
+				return 12345;
+			};
+		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+				.setDireccion(direccion)
+				.setPropietario(propietario);
+		Date fechahoy = new Date();
+		Venta venta = new Venta().setCliente(cliente)
+							.setPropietario(propietario)
+							.setInmueble(inmueble)
+							.setFecha(fechahoy)
+							.setImporte(1000000.0)
+							.setMedioDePago("contado");
+
+		PDF pdf = gestor.generarPDF(venta);
+		FileOutputStream fos = new FileOutputStream("testVenta.pdf");
 		fos.write(pdf.getArchivo());
 		fos.close();
 	}
