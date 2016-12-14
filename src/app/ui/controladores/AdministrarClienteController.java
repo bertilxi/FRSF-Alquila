@@ -150,7 +150,7 @@ public class AdministrarClienteController extends OlimpoController {
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
 			return;
 		}
-		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
+		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista, URLVista);
 		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
 	}
 
@@ -160,7 +160,7 @@ public class AdministrarClienteController extends OlimpoController {
 	 */
 	@FXML
 	private void handleAgregar() {
-		AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
+		AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista, URLVista);
 		controlador.setCliente(null);
 	}
 
@@ -173,7 +173,7 @@ public class AdministrarClienteController extends OlimpoController {
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
 			return;
 		}
-		ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
+		ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista, URLVista);
 		controlador.setClienteEnModificacion(tablaClientes.getSelectionModel().getSelectedItem());
 	}
 

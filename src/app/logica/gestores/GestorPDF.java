@@ -164,10 +164,12 @@ public class GestorPDF {
 		ArrayList<Node> paginas = new ArrayList<>();
 		Integer numeroTotalDePaginas = (numeroInmuebles + 2) / 3;
 		Date fechaHoy = new Date();
-		
+
 		ArrayList<Inmueble> inmuebles = new ArrayList<>();
-		catalogo.getFotos().forEach((i, f) -> {inmuebles.add(i);});
-		
+		catalogo.getFotos().forEach((i, f) -> {
+			inmuebles.add(i);
+		});
+
 		try{
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
@@ -187,39 +189,41 @@ public class GestorPDF {
 							loaderFila.setLocation(getClass().getResource(URLFilaCatalogo));
 							Pane fila = (Pane) loaderFila.load();
 							Inmueble inmueble = inmuebles.get(i);
-							
-							File imagenTMP = new File("imagen_tmp.png");
-							FileOutputStream fos = new FileOutputStream(imagenTMP);
-							fos.write(catalogo.getFotos().get(inmueble).getArchivo());
-							fos.flush();
-							fos.close();
-							
-							ImageView imagen = (ImageView) fila.lookup("#imageFoto");
-							imagen.setImage(new javafx.scene.image.Image(imagenTMP.toURI().toString()));
-							
+
+							if(catalogo.getFotos().get(inmueble) != null){
+								File imagenTMP = new File("imagen_tmp.png");
+								FileOutputStream fos = new FileOutputStream(imagenTMP);
+								fos.write(catalogo.getFotos().get(inmueble).getArchivo());
+								fos.flush();
+								fos.close();
+
+								ImageView imagen = (ImageView) fila.lookup("#imageFoto");
+								imagen.setImage(new javafx.scene.image.Image(imagenTMP.toURI().toString()));
+							}
+
 							label = (Label) fila.lookup("#labelCodigo");
 							label.setText("Inmueble Nº " + inmueble.getId());
-							
+
 							label = (Label) fila.lookup("#labelTipoInmueble");
 							label.setText(inmueble.getTipo().toString());
-							
+
 							label = (Label) fila.lookup("#labelPais");
 							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().getProvincia().getPais().toString()));
-							
+
 							label = (Label) fila.lookup("#labelProvincia");
 							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().getProvincia().toString()));
-							
+
 							label = (Label) fila.lookup("#labelLocalidad");
 							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().toString()));
-							
+
 							label = (Label) fila.lookup("#labelBarrio");
 							label.setText(formateador.nombrePropio(inmueble.getDireccion().getBarrio().toString()));
-							
+
 							StringBuilder direccion = new StringBuilder("");
 							direccion.append(inmueble.getDireccion().getCalle());
 							direccion.append(" ");
 							direccion.append(inmueble.getDireccion().getNumero());
-							
+
 							if(inmueble.getDireccion().getPiso() != null){
 								direccion.append(" - Piso ");
 								direccion.append(inmueble.getDireccion().getPiso());
@@ -233,8 +237,9 @@ public class GestorPDF {
 								direccion.append(inmueble.getDireccion().getOtros());
 							}
 							label = (Label) fila.lookup("#labelDireccion");
+							System.out.println("*" + direccion.toString() + "*");
 							label.setText(formateador.nombrePropio(direccion.toString()));
-							
+
 							label = (Label) fila.lookup("#labelDormitorios");
 							if(inmueble.getDatosEdificio().getDormitorios() != null){
 								label.setText(inmueble.getDatosEdificio().getDormitorios().toString());
@@ -242,7 +247,7 @@ public class GestorPDF {
 							else{
 								label.setText("-");
 							}
-							
+
 							label = (Label) fila.lookup("#labelBaños");
 							if(inmueble.getDatosEdificio().getBaños() != null){
 								label.setText(inmueble.getDatosEdificio().getBaños().toString());
@@ -250,23 +255,23 @@ public class GestorPDF {
 							else{
 								label.setText("-");
 							}
-							
+
 							label = (Label) fila.lookup("#labelGaraje");
 							if(inmueble.getDatosEdificio().getGaraje() != null){
-								label.setText(inmueble.getDatosEdificio().getGaraje()? "SI":"NO");
+								label.setText(inmueble.getDatosEdificio().getGaraje() ? "SI" : "NO");
 							}
 							else{
 								label.setText("-");
 							}
-							
+
 							label = (Label) fila.lookup("#labelPatio");
 							if(inmueble.getDatosEdificio().getPatio() != null){
-								label.setText(inmueble.getDatosEdificio().getPatio()? "SI":"NO");
+								label.setText(inmueble.getDatosEdificio().getPatio() ? "SI" : "NO");
 							}
 							else{
 								label.setText("-");
 							}
-							
+
 							label = (Label) fila.lookup("#labelSuperficieTerreno");
 							if(inmueble.getSuperficie() != null){
 								label.setText(inmueble.getSuperficie() + " metros cuadrados.");
@@ -274,7 +279,7 @@ public class GestorPDF {
 							else{
 								label.setText("-");
 							}
-							
+
 							label = (Label) fila.lookup("#labelSuperficieEdificada");
 							if(inmueble.getDatosEdificio().getSuperficie() != null){
 								label.setText(inmueble.getDatosEdificio().getSuperficie() + " metros cuadrados.");
@@ -282,13 +287,13 @@ public class GestorPDF {
 							else{
 								label.setText("-");
 							}
-							
+
 							label = (Label) fila.lookup("#labelPrecio");
 							DecimalFormat formateadorDouble = new DecimalFormat("#.00");
 							label.setText(formateadorDouble.format(inmueble.getPrecio()) + " USD");
-							
+
 							GridPane gridPaneFilas = (GridPane) paginaCatalogo.lookup("#gridPaneFilas");
-							gridPaneFilas.add(fila,0,i);
+							gridPaneFilas.add(fila, 0, i);
 						}
 						paginas.add(paginaCatalogo);
 					}

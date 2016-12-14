@@ -197,7 +197,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                <children>
                   <Label text="Superficie del edificio" GridPane.columnIndex="1" />
                   <TextField fx:id="tfSuperficieEdificio" layoutX="571.0" layoutY="68.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Superficie del edificio" GridPane.columnIndex="2" />
-                  <Label text="Antiguiedad" GridPane.columnIndex="4" />
+                  <Label text="Antigüedad" GridPane.columnIndex="4" />
                   <TextField fx:id="tfAntiguedad" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Antiguedad" GridPane.columnIndex="5" />
                   <Label text="Cantidad de dormitorios" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="tfDormitorios" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Cantidad de dormitorios" GridPane.columnIndex="2" GridPane.rowIndex="1" />
