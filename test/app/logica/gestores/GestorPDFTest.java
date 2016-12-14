@@ -121,7 +121,12 @@ public class GestorPDFTest {
 
 		CatalogoVista catalogoVista = new CatalogoVista(new Cliente(), mapa);
 
-		GestorPDF gestor = new GestorPDF();
+		GestorPDF gestor = new GestorPDF() {
+			{
+				formateador = new FormateadorString();
+				conversorFechas = new ConversorFechas();
+			}
+		};
 
 		PDF pdf = gestor.generarPDF(catalogoVista);
 		FileOutputStream fos = new FileOutputStream("testCatalogo.pdf");
