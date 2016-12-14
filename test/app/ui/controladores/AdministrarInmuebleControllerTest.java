@@ -19,7 +19,9 @@ package app.ui.controladores;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -87,6 +89,11 @@ public class AdministrarInmuebleControllerTest {
 			public ResultadoControlador eliminarInmueble() {
 				tablaInmuebles.getSelectionModel().select(inmueble);
 				return super.eliminarInmueble();
+			}
+
+			@Override
+			protected void inicializar(URL location, ResourceBundle resources) {
+
 			}
 		};
 		administrarInmuebleController.setCoordinador(coordinadorMock);
