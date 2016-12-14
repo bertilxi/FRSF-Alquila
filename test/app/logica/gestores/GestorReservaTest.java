@@ -33,6 +33,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
 
+import app.datos.clases.EstadoInmuebleStr;
 import app.datos.clases.EstadoStr;
 import app.datos.clases.TipoDocumentoStr;
 import app.datos.clases.TipoInmuebleStr;
@@ -42,6 +43,7 @@ import app.datos.entidades.Calle;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Direccion;
 import app.datos.entidades.Estado;
+import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.PDF;
@@ -211,18 +213,22 @@ public class GestorReservaTest {
 				.setTipoDocumento(new TipoDocumento().setTipo(TipoDocumentoStr.DNI))
 				.setNumeroDocumento("36696969");
 
+		EstadoInmueble estadoInmueble = new EstadoInmueble().setEstado(EstadoInmuebleStr.NO_VENDIDO);
+
 		Inmueble inmueble = new Inmueble() {
 			@Override
 			public Integer getId() {
 				return 12345;
 			};
+
 			@Override
 			public Set<Reserva> getReservas() {
-				return new HashSet<Reserva>();
+				return new HashSet<>();
 			};
 		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 				.setDireccion(direccion)
-				.setPropietario(propietario);
+				.setPropietario(propietario)
+				.setEstadoInmueble(estadoInmueble);
 
 		Date fechahoy = new Date();
 
@@ -232,13 +238,13 @@ public class GestorReservaTest {
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinCliente = new Reserva()
 				.setInmueble(inmueble)
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinNombreCliente = new Reserva()
 				.setCliente(new Cliente()
 						.setApellido("Van Derdonckt")
@@ -248,7 +254,7 @@ public class GestorReservaTest {
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinApellidoCliente = new Reserva()
 				.setCliente(new Cliente()
 						.setNombre("Pablo")
@@ -258,7 +264,7 @@ public class GestorReservaTest {
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinTipoDocumentoCliente = new Reserva()
 				.setCliente(new Cliente()
 						.setNombre("Pablo")
@@ -268,7 +274,7 @@ public class GestorReservaTest {
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinNumeroDocumentoCliente = new Reserva()
 				.setCliente(new Cliente()
 						.setNombre("Pablo")
@@ -278,13 +284,13 @@ public class GestorReservaTest {
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinInmueble = new Reserva()
 				.setCliente(cliente)
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinPropietario = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -292,17 +298,19 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}
 						.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-						.setDireccion(direccion))
+						.setDireccion(direccion)
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinNombrePropietario = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -310,19 +318,21 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}
 						.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 						.setDireccion(direccion)
 						.setPropietario(new Propietario()
-								.setApellido("Rebechi")))
+								.setApellido("Rebechi"))
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinApellidoPropietario = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -330,19 +340,21 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}
 						.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 						.setDireccion(direccion)
 						.setPropietario(new Propietario()
-								.setNombre("Esteban")))
+								.setNombre("Esteban"))
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinTipoInmueble = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -350,17 +362,19 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}
 						.setDireccion(direccion)
-						.setPropietario(propietario))
+						.setPropietario(propietario)
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinDireccionInmueble = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -368,17 +382,19 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}
 						.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
-						.setPropietario(propietario))
+						.setPropietario(propietario)
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinLocalidadInmueble = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -386,9 +402,10 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 						.setDireccion(new Direccion()
@@ -400,11 +417,12 @@ public class GestorReservaTest {
 								.setPiso("6")
 								.setDepartamento("6B")
 								.setOtros("Ala izquierda"))
-						.setPropietario(propietario))
+						.setPropietario(propietario)
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinBarrioInmueble = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -412,9 +430,10 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 						.setDireccion(new Direccion()
@@ -425,11 +444,12 @@ public class GestorReservaTest {
 								.setPiso("6")
 								.setDepartamento("6B")
 								.setOtros("Ala izquierda"))
-						.setPropietario(propietario))
+						.setPropietario(propietario)
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinCalleInmueble = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -437,9 +457,10 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 						.setDireccion(new Direccion()
@@ -450,11 +471,12 @@ public class GestorReservaTest {
 								.setPiso("6")
 								.setDepartamento("6B")
 								.setOtros("Ala izquierda"))
-						.setPropietario(propietario))
+						.setPropietario(propietario)
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinAlturaInmueble = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(new Inmueble() {
@@ -462,9 +484,10 @@ public class GestorReservaTest {
 					public Integer getId() {
 						return 12345;
 					};
+
 					@Override
 					public Set<Reserva> getReservas() {
-						return new HashSet<Reserva>();
+						return new HashSet<>();
 					};
 				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 						.setDireccion(new Direccion()
@@ -476,29 +499,30 @@ public class GestorReservaTest {
 								.setPiso("6")
 								.setDepartamento("6B")
 								.setOtros("Ala izquierda"))
-						.setPropietario(propietario))
+						.setPropietario(propietario)
+						.setEstadoInmueble(estadoInmueble))
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinFechaInicio = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(inmueble)
 				.setImporte(300000.0)
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaSinFechaFin = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(inmueble)
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy);
-		
+
 		Reserva reservaSinImporte = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(inmueble)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
 		calendarFechaMañana.setTime(fechahoy);
 		calendarFechaMañana.add(Calendar.DATE, 1);
 		Reserva reservaFechaInicioPosteriorAFechaFin = new Reserva()
@@ -507,34 +531,56 @@ public class GestorReservaTest {
 				.setImporte(300000.0)
 				.setFechaInicio(calendarFechaMañana.getTime())
 				.setFechaFin(fechahoy);
-		
+
 		Reserva reservaImporteMenorIgualCero = new Reserva()
 				.setCliente(cliente)
 				.setInmueble(inmueble)
 				.setImporte(-300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(fechahoy);
-		
+
+		Reserva reservaInmuebleVendido = new Reserva()
+				.setCliente(cliente)
+				.setInmueble(new Inmueble() {
+					@Override
+					public Integer getId() {
+						return 12345;
+					};
+
+					@Override
+					public Set<Reserva> getReservas() {
+						return new HashSet<>();
+					};
+				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+						.setDireccion(direccion)
+						.setPropietario(propietario)
+						.setEstadoInmueble(new EstadoInmueble().setEstado(EstadoInmuebleStr.VENDIDO)))
+				.setImporte(300000.0)
+				.setFechaInicio(fechahoy)
+				.setFechaFin(fechahoy);
+
 		Reserva reservaConflictiva = new Reserva()
 				.setCliente(cliente)
 				.setImporte(300000.0)
 				.setFechaInicio(fechahoy)
 				.setFechaFin(calendarFechaMañana.getTime())
 				.setEstado(new Estado(EstadoStr.ALTA));
-		reservaConflictiva.setInmueble(new Inmueble(){
-					@Override
-					public Set<Reserva> getReservas() {
-						Set<Reserva> reservas = new HashSet<Reserva>();
-						reservas.add(reservaConflictiva);
-						return reservas;
-					}
-					@Override
-					public Integer getId() {
-						return 12345;
-					};
-				}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
+		reservaConflictiva.setInmueble(new Inmueble() {
+			@Override
+			public Set<Reserva> getReservas() {
+				Set<Reserva> reservas = new HashSet<>();
+				reservas.add(reservaConflictiva);
+				return reservas;
+			}
+
+			@Override
+			public Integer getId() {
+				return 12345;
+			};
+		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 				.setDireccion(direccion)
-				.setPropietario(propietario));
+				.setPropietario(propietario)
+				.setEstadoInmueble(estadoInmueble));
 
 		return new Object[] {
 				new Object[] { reservaCorrecta, new ResultadoCrearReserva(null), null }, //reserva correcta
@@ -559,12 +605,13 @@ public class GestorReservaTest {
 				new Object[] { reservaConflictiva, new ResultadoCrearReserva(reservaConflictiva, ErrorCrearReserva.Existe_Otra_Reserva_Activa), null }, //existe otra reserva en el mismo rango de fechas
 				new Object[] { reservaSinImporte, new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Vacío), null }, //reserva sin Importe
 				new Object[] { reservaImporteMenorIgualCero, new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Menor_O_Igual_A_Cero), null }, //reserva con importe menor o igual a cero
+				new Object[] { reservaInmuebleVendido, new ResultadoCrearReserva(null, ErrorCrearReserva.Inmueble_Vendido), null }, //reserva con inmueble vendido
 				new Object[] { reservaCorrecta, null, new GenerarPDFException(new Exception()) }, //el gestorPDF tira una excepción
 				new Object[] { reservaCorrecta, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una excepción
 				new Object[] { reservaCorrecta, null, new Exception() } //el persistidor tira una excepción inesperada
 		};
 	}
-	
+
 	@Test
 	@Parameters
 	/**
@@ -591,7 +638,7 @@ public class GestorReservaTest {
 
 			@Override
 			public void guardarReserva(Reserva reserva) throws PersistenciaException {
-				
+
 			}
 
 			@Override
@@ -693,9 +740,10 @@ public class GestorReservaTest {
 			public Integer getId() {
 				return 12345;
 			};
+
 			@Override
 			public Set<Reserva> getReservas() {
-				return new HashSet<Reserva>();
+				return new HashSet<>();
 			};
 		}.setTipo(new TipoInmueble(TipoInmuebleStr.DEPARTAMENTO))
 				.setDireccion(direccion)

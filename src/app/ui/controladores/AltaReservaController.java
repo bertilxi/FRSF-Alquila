@@ -210,6 +210,9 @@ public class AltaReservaController extends OlimpoController {
 						case Existe_Otra_Reserva_Activa:
 							error.append("Ya existe una reserva para este inmueble en ese periodo de tiempo\r\n");
 							break;
+						case Inmueble_Vendido:
+							error.append("El inmueble ya fue vendido\r\n");
+							break;
 						}
 					}
 					presentador.presentarError("Revise sus campos", error.toString(), stage);

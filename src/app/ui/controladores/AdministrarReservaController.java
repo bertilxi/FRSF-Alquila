@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import app.comun.ConversorFechas;
+import app.datos.clases.EstadoInmuebleStr;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Reserva;
@@ -103,6 +104,10 @@ public class AdministrarReservaController extends OlimpoController {
 	 * Se pasa a la pantalla alta reserva
 	 */
 	public void nuevoAction(ActionEvent event) {
+		if(inmueble != null && inmueble.getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
+			presentador.presentarError("Error al crear reserva", "El inmueble ya fue vendido", stage);
+			return;
+		}
 		AltaReservaController controlador = (AltaReservaController) cambiarmeAScene(AltaReservaController.URLVista, URLVista);
 		if(cliente != null){
 			controlador.setCliente(cliente);

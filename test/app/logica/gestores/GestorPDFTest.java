@@ -95,6 +95,7 @@ public class GestorPDFTest {
 				.setPropietario(propietario);
 		Date fechahoy = new Date();
 		Reserva reserva = new Reserva().setCliente(cliente).setInmueble(inmueble).setImporte(300000.50).setFechaInicio(fechahoy).setFechaFin(fechahoy);
+
 		PDF pdf = gestor.generarPDF(reserva);
 		FileOutputStream fos = new FileOutputStream("testReserva.pdf");
 		fos.write(pdf.getArchivo());
