@@ -28,6 +28,7 @@ import app.datos.entidades.PDF;
 import app.excepciones.GestionException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.print.PrinterJob;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -74,7 +75,7 @@ public class VerPDFController extends OlimpoController {
 
 				JSObject jsobj = (JSObject) visorPDF.getEngine().executeScript("window");
 				jsobj.setMember("java", this);
-				visorPDF.getEngine().executeScript("window.print = function () {window.java.print();};");
+				visorPDF.getEngine().executeScript("window.print = function () { };");
 			} catch(Exception e){
 				presentador.presentarExcepcionInesperada(e);
 			}
@@ -87,7 +88,12 @@ public class VerPDFController extends OlimpoController {
 	}
 
 	@FXML
-	public void print() {
+	public void print() { //TODO definir
+		PrinterJob job = PrinterJob.createPrinterJob();
+		if(job != null && job.showPrintDialog(stage)){
+			visorPDF.getEngine().print(job);
+			job.endJob();
+		}
 		try{
 			coordinador.imprimirPDF(pdf);
 		} catch(GestionException e){
