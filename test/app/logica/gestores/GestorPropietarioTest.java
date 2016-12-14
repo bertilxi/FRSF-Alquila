@@ -154,7 +154,6 @@ public class GestorPropietarioTest {
 		verify(validadorFormatoMock).validarTelefono(propietario.getTelefono());
 		verify(validadorFormatoMock).validarEmail(propietario.getEmail());
 		verify(validadorFormatoMock).validarDireccion(propietario.getDireccion());
-		verify(propietarioServiceMock).obtenerPropietario(any());
 		verify(gestorDatosMock, times(guardar)).obtenerEstados();
 		verify(propietarioServiceMock, times(guardar)).guardarPropietario(propietario);
 	}
@@ -324,7 +323,6 @@ public class GestorPropietarioTest {
 		if(eliminar != 0){
 			assertEquals(EstadoStr.BAJA, propietario.getEstado().getEstado());
 		}
-		verify(propietarioServiceMock).obtenerPropietario(any());
 		verify(gestorDatosMock, times(eliminar)).obtenerEstados();
 		verify(propietarioServiceMock, times(eliminar)).modificarPropietario(propietario);
 	}

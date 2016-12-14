@@ -39,6 +39,7 @@ import app.datos.entidades.Calle;
 import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Direccion;
 import app.datos.entidades.Estado;
+import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Pais;
@@ -86,6 +87,11 @@ public class GestorInmuebleTest {
 
 			@Override
 			public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
+				return new ArrayList<>();
+			}
+
+			@Override
+			public ArrayList<EstadoInmueble> obtenerEstadosInmueble() throws PersistenciaException {
 				return new ArrayList<>();
 			}
 		};

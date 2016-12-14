@@ -134,7 +134,7 @@ public class Inmueble {
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public Inmueble setId(Integer id) {
 		this.id = id;
 		return this;
@@ -370,6 +370,12 @@ public class Inmueble {
 
 	@Override
 	public String toString() {
-		return direccion.toString();
+		if(direccion != null){
+			return direccion.toString();
+		}
+		if(id != null){
+			return "Inmueble N° " + id.toString();
+		}
+		return super.toString();
 	}
 }
