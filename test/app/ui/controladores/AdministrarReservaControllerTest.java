@@ -73,9 +73,12 @@ public class AdministrarReservaControllerTest {
 			public void inicializar(URL location, ResourceBundle resources) {
 				this.coordinador = coordinadorMock;
 				this.setScenographyChanger(scenographyChangerMock);
-				super.inicializar(location, resources);
 			}
 
+			@Override
+			protected void setTitulo(String titulo) {
+
+			}
 		};
 
 		//Los controladores de las vistas deben correrse en un thread de JavaFX
@@ -135,6 +138,11 @@ public class AdministrarReservaControllerTest {
 				this.presentador = presentadorVentanasMock;
 				this.setCliente(new Cliente());
 				this.tablaReservas.getSelectionModel().select(0); //se selecciona la primer reserva de la lista
+			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
 			}
 		};
 

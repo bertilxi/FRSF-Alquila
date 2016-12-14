@@ -19,6 +19,9 @@ package app.ui.controladores;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
@@ -92,6 +95,16 @@ public class LoginControllerTest {
 				cbTipoDocumento.getSelectionModel().select(tipoDocumento);
 				return super.ingresar();
 			};
+
+			@Override
+			public void inicializar(URL location, ResourceBundle resources) {
+
+			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
+			}
 
 			@Override
 			protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno, Boolean useSceneSize) {

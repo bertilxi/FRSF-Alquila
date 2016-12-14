@@ -95,6 +95,11 @@ public class AdministrarInmuebleControllerTest {
 			protected void inicializar(URL location, ResourceBundle resources) {
 
 			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
+			}
 		};
 		administrarInmuebleController.setCoordinador(coordinadorMock);
 		administrarInmuebleController.setPresentador(presentadorMock);

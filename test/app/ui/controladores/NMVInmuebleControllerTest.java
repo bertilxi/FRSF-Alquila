@@ -19,8 +19,10 @@ package app.ui.controladores;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -262,6 +264,16 @@ public class NMVInmuebleControllerTest {
 				tfSuperficieEdificio.setText(superficieEdificio.toString());
 
 				return super.aceptar();
+			}
+
+			@Override
+			protected void inicializar(URL location, ResourceBundle resources) {
+
+			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
 			}
 
 			@Override
@@ -626,6 +638,16 @@ public class NMVInmuebleControllerTest {
 				tfSuperficieEdificio.setText(superficieEdificio.toString());
 
 				return super.aceptar();
+			}
+
+			@Override
+			protected void inicializar(URL location, ResourceBundle resources) {
+
+			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
 			}
 
 			@Override
