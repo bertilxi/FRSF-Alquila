@@ -43,6 +43,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controlador de la pantalla de alta venta
+ *
+ * Pertenece a la taskcard 29 de la iteración 2 y a la historia 8
+ *
+ */
 public class AltaVentaController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/altaVenta.fxml";
@@ -261,6 +267,11 @@ public class AltaVentaController extends OlimpoController {
 		cambiarmeAScene(AdministrarInmuebleController.URLVista);
 	}
 
+	/**
+	 * Muestra una ventana emergente para que el usuario confirme contraseña
+	 *
+	 * @return si es correcta la confirmación de contraseña o no
+	 */
 	protected boolean showConfirmarContraseñaDialog() {
 		try{
 			// Load the fxml file and create a new stage for the popup dialog.

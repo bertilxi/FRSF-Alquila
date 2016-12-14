@@ -20,6 +20,8 @@ import app.logica.resultados.ResultadoCrearVenta.ErrorCrearVenta;
 
 /**
  * Gestor que implementa la capa lógica del ABM Venta y funciones asociadas a una venta.
+ *
+ * Pertenece a la taskcard 30 de la iteración 2 y a la historia 8
  */
 @Service
 public class GestorVenta {
