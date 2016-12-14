@@ -115,6 +115,7 @@ public class Inmueble {
 	public Inmueble() {
 		super();
 		fotos = new HashSet<>();
+		reservas = new HashSet<>();
 	}
 
 	public Inmueble(String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie, TipoInmueble tipo, Direccion direccion, Propietario propietario, Estado estado) {
