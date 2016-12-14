@@ -205,8 +205,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 
 	@FXML
 	public void agregar() {
-		NMVInmuebleController controlador = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 	}
 
 	@FXML
@@ -217,7 +216,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 		nuevaPantalla.formatearModificarInmueble(inmueble);
-		nuevaPantalla.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@FXML
@@ -228,7 +226,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 		nuevaPantalla.formatearVerInmueble(inmueble);
-		nuevaPantalla.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -242,7 +239,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista, URLVista);
 		controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -304,7 +300,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 		else{
 			AltaVentaController controlador = (AltaVentaController) cambiarmeAScene(AltaVentaController.URLVista);
 			controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
-			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 	}
 
@@ -321,7 +316,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		if(inmuebles.isEmpty()){
 			return;
 		}
-		AltaCatalogoController controlador = (AltaCatalogoController) cambiarmeAScene(AltaCatalogoController.URLVista);
+		AltaCatalogoController controlador = (AltaCatalogoController) cambiarmeAScene(AltaCatalogoController.URLVista, URLVista);
 		controlador.setInmuebles(inmuebles);
 	}
 

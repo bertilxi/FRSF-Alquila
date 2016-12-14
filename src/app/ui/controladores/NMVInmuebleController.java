@@ -598,12 +598,13 @@ public class NMVInmuebleController extends OlimpoController {
 	@Override
 	public void salir() {
 		if(URLVistaRetorno != null){
-			OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
-			controlador.setVendedorLogueado(vendedorLogueado);
+			cambiarmeAScene(URLVistaRetorno);
+		}
+		else if(paneVistaRetorno != null){
+			cambiarmeAScene(paneVistaRetorno);
 		}
 		else{
-			AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
-			controlador.setVendedorLogueado(vendedorLogueado);
+			cambiarmeAScene(AdministrarInmuebleController.URLVista);
 		}
 	}
 

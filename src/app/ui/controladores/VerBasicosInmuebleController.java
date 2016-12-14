@@ -65,7 +65,7 @@ public class VerBasicosInmuebleController extends OlimpoController {
 	 * Se setean los campos con los datos del inmueble
 	 *
 	 * @param inmueble
-	 * 			inmueble del que se obtienen los datos
+	 *            inmueble del que se obtienen los datos
 	 */
 	public void setInmueble(Inmueble inmueble) {
 		Platform.runLater(() -> {
@@ -90,7 +90,6 @@ public class VerBasicosInmuebleController extends OlimpoController {
 	@FXML
 	private void handleAtras() {
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
 		switch(persona) {
 		case Cliente:
 			controlador.setCliente(cliente);

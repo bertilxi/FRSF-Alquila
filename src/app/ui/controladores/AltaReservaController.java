@@ -28,7 +28,6 @@ import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
-import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
@@ -71,13 +70,6 @@ public class AltaReservaController extends OlimpoController {
 
 	@FXML
 	private Pane fondo;
-
-	private Vendedor vendedorLogueado;
-
-	@Override
-	public void setVendedorLogueado(Vendedor vendedorLogueado) {
-		this.vendedorLogueado = vendedorLogueado;
-	}
 
 	/**
 	 * Acción que se ejecuta al apretar el botón buscarInmueble.
@@ -244,7 +236,6 @@ public class AltaReservaController extends OlimpoController {
 		}
 		VerPDFController visorPDF = (VerPDFController) cambiarmeAScene(VerPDFController.URLVista, irA);
 		visorPDF.cargarPDF(pdf);
-		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -260,11 +251,9 @@ public class AltaReservaController extends OlimpoController {
 		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
 		if(cliente != null){
 			controlador.setCliente(cliente);
-			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 		else if(inmueble != null){
-			controlador.setCliente(cliente);
-			controlador.setVendedorLogueado(vendedorLogueado);
+			controlador.setInmueble(inmueble);
 		}
 	}
 

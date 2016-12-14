@@ -192,8 +192,7 @@ public class AltaPropietarioController extends OlimpoController {
 				}
 				else{
 					presentador.presentarToast("Se ha creado el propietario con éxito", stage);
-					AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
-					controlador.setVendedorLogueado(vendedorLogueado);
+					cambiarmeAScene(AdministrarPropietarioController.URLVista);
 				}
 			} catch(GestionException e){
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
@@ -201,7 +200,6 @@ public class AltaPropietarioController extends OlimpoController {
 					if(ventana.acepta()){
 						ModificarPropietarioController controlador = (ModificarPropietarioController) cambiarmeAScene(ModificarPropietarioController.URLVista);
 						controlador.setPropietarioEnModificacion(propietario);
-						controlador.setVendedorLogueado(vendedorLogueado);
 					}
 				}
 			} catch(PersistenciaException e){
@@ -216,8 +214,7 @@ public class AltaPropietarioController extends OlimpoController {
 	 */
 	@FXML
 	public void cancelAction() {
-		AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarmeAScene(AdministrarPropietarioController.URLVista);
 	}
 
 	@Override
@@ -236,14 +233,13 @@ public class AltaPropietarioController extends OlimpoController {
 		}
 
 		//se selecciona por defecto a argentina en el combo box país
-		for(Pais p: comboBoxPais.getItems()) {
-			if(p.getNombre().equalsIgnoreCase("argentina")) {
+		for(Pais p: comboBoxPais.getItems()){
+			if(p.getNombre().equalsIgnoreCase("argentina")){
 				comboBoxPais.getSelectionModel().select(p);
 				break;
 			}
 		}
 		actualizarProvincias(comboBoxPais.getSelectionModel().getSelectedItem());
-
 
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
@@ -451,7 +447,7 @@ public class AltaPropietarioController extends OlimpoController {
 	 * También se delega la tarea de vaciar los comboBox de barrios y calles
 	 *
 	 * @param provincia
-	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarLocalidades(Provincia provincia) {
 		comboBoxLocalidad.getItems().clear();
@@ -470,7 +466,7 @@ public class AltaPropietarioController extends OlimpoController {
 	 * También se delega la tarea de vaciar el comboBox de localidades
 	 *
 	 * @param pais
-	 * 			país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarProvincias(Pais pais) {
 		comboBoxProvincia.getItems().clear();
@@ -488,7 +484,7 @@ public class AltaPropietarioController extends OlimpoController {
 	 * Cuando varía la seleccion del comboBox de localidades, se actualizan los comboBox de barrios y calles.
 	 *
 	 * @param loc
-	 * 			localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarBarriosYCalles(Localidad loc) {
 		comboBoxBarrio.getItems().clear();

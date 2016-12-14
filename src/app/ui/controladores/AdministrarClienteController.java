@@ -124,9 +124,8 @@ public class AdministrarClienteController extends OlimpoController {
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
 			return;
 		}
-		VerInmuebleBuscadoController controlador = (VerInmuebleBuscadoController) cambiarmeAScene(VerInmuebleBuscadoController.URLVista);
+		VerInmuebleBuscadoController controlador = (VerInmuebleBuscadoController) cambiarmeAScene(VerInmuebleBuscadoController.URLVista, URLVista);
 		controlador.setInmueble(tablaClientes.getSelectionModel().getSelectedItem().getInmuebleBuscado());
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -138,9 +137,8 @@ public class AdministrarClienteController extends OlimpoController {
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
 			return;
 		}
-		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
+		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista, URLVista);
 		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -154,7 +152,6 @@ public class AdministrarClienteController extends OlimpoController {
 		}
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
 		controlador.setCliente(tablaClientes.getSelectionModel().getSelectedItem());
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -165,7 +162,6 @@ public class AdministrarClienteController extends OlimpoController {
 	private void handleAgregar() {
 		AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
 		controlador.setCliente(null);
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -179,7 +175,6 @@ public class AdministrarClienteController extends OlimpoController {
 		}
 		ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
 		controlador.setClienteEnModificacion(tablaClientes.getSelectionModel().getSelectedItem());
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -230,7 +225,7 @@ public class AdministrarClienteController extends OlimpoController {
 		if(cliente == null){
 			return;
 		}
-		AltaCatalogoController controlador = (AltaCatalogoController) cambiarmeAScene(AltaCatalogoController.URLVista);
+		AltaCatalogoController controlador = (AltaCatalogoController) cambiarmeAScene(AltaCatalogoController.URLVista, URLVista);
 		controlador.setCliente(cliente);
 	}
 }

@@ -48,15 +48,17 @@ public abstract class OlimpoController implements Initializable {
 	public void setVendedorLogueado(Vendedor vendedorLogueado) {
 		this.vendedorLogueado = vendedorLogueado;
 	}
+
 	protected Pane paneVistaRetorno;
 
-	protected OlimpoController agregarScenographyChanger(Node contexto, ScenographyChanger scenographyChanger) {
+	protected void agregarScenographyChanger(Node contexto, ScenographyChanger scenographyChanger) {
 		myScenographyChangers.put(contexto, scenographyChanger);
-		return this;
 	}
 
 	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar, Boolean useStageSize) {
-		return myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar, useStageSize);
+		OlimpoController controlador = myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar, useStageSize);
+		controlador.setVendedorLogueado(vendedorLogueado);
+		return controlador;
 	}
 
 	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar) {
@@ -66,6 +68,7 @@ public abstract class OlimpoController implements Initializable {
 	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar, String URLVistaRetorno, Boolean useStageSize) {
 		OlimpoController nuevoController = myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar, useStageSize);
 		nuevoController.URLVistaRetorno = URLVistaRetorno;
+		nuevoController.setVendedorLogueado(vendedorLogueado);
 		return nuevoController;
 	}
 
@@ -76,6 +79,7 @@ public abstract class OlimpoController implements Initializable {
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, String URLVistaRetorno, Boolean useSceneSize) {
 		OlimpoController nuevoController = parentScenographyChanger.cambiarScenography(URLVistaACambiar, useSceneSize);
 		nuevoController.URLVistaRetorno = URLVistaRetorno;
+		nuevoController.setVendedorLogueado(vendedorLogueado);
 		return nuevoController;
 	}
 
@@ -94,6 +98,7 @@ public abstract class OlimpoController implements Initializable {
 	protected OlimpoController cambiarScene(Node contexto, String URLVistaACambiar, Pane paneVistaRetorno, Boolean useStageSize) {
 		OlimpoController nuevoController = myScenographyChangers.get(contexto).cambiarScenography(URLVistaACambiar, useStageSize);
 		nuevoController.paneVistaRetorno = paneVistaRetorno;
+		nuevoController.setVendedorLogueado(vendedorLogueado);
 		return nuevoController;
 	}
 
@@ -104,6 +109,7 @@ public abstract class OlimpoController implements Initializable {
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, Pane paneVistaRetorno, Boolean useSceneSize) {
 		OlimpoController nuevoController = parentScenographyChanger.cambiarScenography(URLVistaACambiar, useSceneSize);
 		nuevoController.paneVistaRetorno = paneVistaRetorno;
+		nuevoController.setVendedorLogueado(vendedorLogueado);
 		return nuevoController;
 	}
 
@@ -112,7 +118,9 @@ public abstract class OlimpoController implements Initializable {
 	}
 
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar, Boolean useSceneSize) {
-		return parentScenographyChanger.cambiarScenography(URLVistaACambiar, useSceneSize);
+		OlimpoController controlador = parentScenographyChanger.cambiarScenography(URLVistaACambiar, useSceneSize);
+		controlador.setVendedorLogueado(vendedorLogueado);
+		return controlador;
 	}
 
 	protected OlimpoController cambiarmeAScene(String URLVistaACambiar) {
@@ -151,8 +159,7 @@ public abstract class OlimpoController implements Initializable {
 	@FXML
 	public void salir() {
 		if(URLVistaRetorno != null){
-			OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
-			controlador.setVendedorLogueado(vendedorLogueado);
+			cambiarmeAScene(URLVistaRetorno);
 		}
 		else if(paneVistaRetorno != null){
 			cambiarmeAScene(paneVistaRetorno);

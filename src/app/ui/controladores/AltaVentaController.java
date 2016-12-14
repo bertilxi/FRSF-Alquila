@@ -43,67 +43,67 @@ import javafx.stage.Stage;
 
 public class AltaVentaController extends OlimpoController {
 
-    public static final String URLVista = "/app/ui/vistas/altaVenta.fxml";
+	public static final String URLVista = "/app/ui/vistas/altaVenta.fxml";
 
-    @FXML
-    protected Label labelCodigo;
+	@FXML
+	protected Label labelCodigo;
 
-    @FXML
-    protected Label labelTipoInmueble;
+	@FXML
+	protected Label labelTipoInmueble;
 
-    @FXML
-    protected Label labelLocalidad;
+	@FXML
+	protected Label labelLocalidad;
 
-    @FXML
-    protected Label labelBarrio;
+	@FXML
+	protected Label labelBarrio;
 
-    @FXML
-    protected Label labelCalle;
+	@FXML
+	protected Label labelCalle;
 
-    @FXML
-    protected Label labelAltura;
+	@FXML
+	protected Label labelAltura;
 
-    @FXML
-    protected Label labelPiso;
+	@FXML
+	protected Label labelPiso;
 
-    @FXML
-    protected Label labelDepartamento;
+	@FXML
+	protected Label labelDepartamento;
 
-    @FXML
-    protected Label labelOtros;
+	@FXML
+	protected Label labelOtros;
 
-    @FXML
-    protected Label labelNombre;
+	@FXML
+	protected Label labelNombre;
 
-    @FXML
-    protected Label labelApellido;
+	@FXML
+	protected Label labelApellido;
 
-    @FXML
-    protected Label labelTipoDocumento;
+	@FXML
+	protected Label labelTipoDocumento;
 
-    @FXML
-    protected Label labelDocumento;
+	@FXML
+	protected Label labelDocumento;
 
-    @FXML
+	@FXML
 	protected ComboBox<Cliente> comboBoxCliente;
 
-    @FXML
+	@FXML
 	protected TextField textFieldImporte;
 
-    @FXML
+	@FXML
 	protected TextField textFieldMedioDePago;
 
-    protected Inmueble inmueble;
+	protected Inmueble inmueble;
 
-    /**
+	/**
 	 * Setea los campos con los datos del inmueble pasado por parámetro y de su propietario.
 	 *
 	 * @param inmueble
 	 *            inmueble del que se obtienen los datos.
 	 */
-    public void setInmueble(Inmueble inmueble) {
+	public void setInmueble(Inmueble inmueble) {
 		this.inmueble = inmueble;
-		if(inmueble != null) {
+		if(inmueble != null){
 			Propietario propietario = inmueble.getPropietario();
 
 			labelAltura.setText(inmueble.getDireccion().getNumero());
@@ -123,7 +123,7 @@ public class AltaVentaController extends OlimpoController {
 	}
 
 	@Override
-    protected void inicializar(URL location, ResourceBundle resources) {
+	protected void inicializar(URL location, ResourceBundle resources) {
 		this.setTitulo("Nueva Venta");
 
 		try{
@@ -131,7 +131,7 @@ public class AltaVentaController extends OlimpoController {
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		}
-    }
+	}
 
 	/**
 	 * Acción que se ejecuta al apretar el botón aceptar.
@@ -151,9 +151,9 @@ public class AltaVentaController extends OlimpoController {
 			errores.append("Elija un cliente").append("\n");
 		}
 
-		try {
+		try{
 			importe = Double.valueOf(textFieldImporte.getText().trim());
-		} catch (Exception e) {
+		} catch(Exception e){
 			errores.append("Importe incorrecto. Introduzca solo números y un punto para decimales.\n");
 		}
 
@@ -161,9 +161,10 @@ public class AltaVentaController extends OlimpoController {
 			errores.append("Ingrese un medio de pago").append("\n");
 		}
 
-		if(inmueble == null) {
+		if(inmueble == null){
 			errores.append("No hay inmueble seleccionado").append("\n");
-		} else if(inmueble.getPropietario() == null) {
+		}
+		else if(inmueble.getPropietario() == null){
 			errores.append("No se encuentra el propietario del inmueble").append("\n");
 		}
 
@@ -172,7 +173,7 @@ public class AltaVentaController extends OlimpoController {
 		}
 		else{
 			boolean contraseñaCorrecta = showConfirmarContraseñaDialog();
-			if(contraseñaCorrecta) {
+			if(contraseñaCorrecta){
 				Venta venta = new Venta();
 				venta.setCliente(cliente);
 				venta.setFecha(new Date(System.currentTimeMillis()));
@@ -182,11 +183,11 @@ public class AltaVentaController extends OlimpoController {
 				venta.setPropietario(inmueble.getPropietario());
 				venta.setVendedor(vendedorLogueado);
 
-				try {
+				try{
 					ResultadoCrearVenta resultado = coordinador.crearVenta(venta);
-					if (resultado.hayErrores()) {
+					if(resultado.hayErrores()){
 						StringBuilder stringErrores = new StringBuilder();
-						for (ErrorCrearVenta e: resultado.getErrores()) {
+						for(ErrorCrearVenta e: resultado.getErrores()){
 							switch(e) {
 							case Cliente_Igual_A_Propietario:
 								stringErrores.append("El cliente seleccionado es el actual propietario del inmueble.\n");
@@ -221,25 +222,25 @@ public class AltaVentaController extends OlimpoController {
 							}
 						}
 						presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
-					} else {
+					}
+					else{
 						VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada correctamente", "¿Desea imprimir el documento generado?", stage);
-						if(ventana.acepta()) {
+						if(ventana.acepta()){
 							try{
 								coordinador.imprimirPDF(venta.getArchivoPDF());
 							} catch(GestionException ex){
 								presentador.presentarExcepcion(ex, stage);
-							} catch(Exception e) {
+							} catch(Exception e){
 								presentador.presentarExcepcionInesperada(e);
 							}
 						}
-						AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
-						controlador.setVendedorLogueado(vendedorLogueado);
+						cambiarmeAScene(AdministrarInmuebleController.URLVista);
 					}
-				} catch (GestionException e) {
+				} catch(GestionException e){
 					presentador.presentarExcepcion(e, stage);
 				} catch(PersistenciaException e){
 					presentador.presentarExcepcion(e, stage);
-				} catch(Exception e) {
+				} catch(Exception e){
 					presentador.presentarExcepcionInesperada(e);
 				}
 			}
@@ -252,40 +253,38 @@ public class AltaVentaController extends OlimpoController {
 	 */
 	@FXML
 	private void cancelAction() {
-		AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarmeAScene(AdministrarInmuebleController.URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarmeAScene(AdministrarInmuebleController.URLVista);
 	}
 
 	protected boolean showConfirmarContraseñaDialog() {
-		try {
-	        // Load the fxml file and create a new stage for the popup dialog.
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(getClass().getResource(ConfirmarContraseñaController.URLVista));
-	        VBox page = (VBox) loader.load();
+		try{
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource(ConfirmarContraseñaController.URLVista));
+			VBox page = (VBox) loader.load();
 
-	        // Create the dialog Stage.
-	        Stage dialogStage = new Stage();
-	        dialogStage.setResizable(false);
-	        dialogStage.initModality(Modality.WINDOW_MODAL);
-	        dialogStage.setTitle("Confirmar contraseña");
-	        dialogStage.initOwner(stage);
-	        Scene scene = new Scene(page);
-	        dialogStage.setScene(scene);
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setResizable(false);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.setTitle("Confirmar contraseña");
+			dialogStage.initOwner(stage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
 
-	        // Set the evento into the controller.
-	        ConfirmarContraseñaController controlador = loader.getController();
-	        controlador.setDialogStage(dialogStage);
-	        controlador.setVendedorLogueado(vendedorLogueado);
-	        controlador.setCoordinador(coordinador);
-	        controlador.setPresentador(presentador);
+			// Set the event into the controller.
+			ConfirmarContraseñaController controlador = loader.getController();
+			controlador.setDialogStage(dialogStage);
+			controlador.setCoordinador(coordinador);
+			controlador.setPresentador(presentador);
 
-	        // Show the dialog and wait until the user closes it
-	        dialogStage.showAndWait();
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
 
-	        return controlador.isCorrecto();
-	    } catch (IOException e) {
-	        presentador.presentarExcepcion(e, stage);
-	        return false;
-	    }
+			return controlador.isCorrecto();
+		} catch(IOException e){
+			presentador.presentarExcepcion(e, stage);
+			return false;
+		}
 	}
 }

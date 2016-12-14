@@ -154,7 +154,6 @@ public class AdministrarVentaController extends OlimpoController {
 		if(tablaVentas.getSelectionModel().getSelectedItem() != null){
 			VerBasicosInmuebleController controlador = (VerBasicosInmuebleController) cambiarmeAScene(VerBasicosInmuebleController.URLVista);
 			controlador.setInmueble(tablaVentas.getSelectionModel().getSelectedItem().getInmueble());
-			controlador.setVendedorLogueado(vendedorLogueado);
 			switch(tipoPersona) {
 			case Cliente:
 				controlador.setCliente(tablaVentas.getSelectionModel().getSelectedItem().getCliente());
@@ -181,7 +180,6 @@ public class AdministrarVentaController extends OlimpoController {
 
 		VerPDFController visorPDF = (VerPDFController) cambiarScene(fondo, VerPDFController.URLVista, (Pane) fondo.getChildren().get(0));
 		visorPDF.cargarPDF(venta.getArchivoPDF());
-		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	private enum TipoPersona {

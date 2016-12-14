@@ -152,8 +152,7 @@ public class ModificarClienteController extends OlimpoController {
 				}
 				else{
 					presentador.presentarToast("Se ha modificado el cliente con éxito", stage);
-					AdministrarClienteController controlador = (AdministrarClienteController) cambiarmeAScene(AdministrarClienteController.URLVista);
-					controlador.setVendedorLogueado(vendedorLogueado);
+					cambiarmeAScene(AdministrarClienteController.URLVista);
 				}
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
@@ -169,7 +168,6 @@ public class ModificarClienteController extends OlimpoController {
 	private void cargarInmueble() {
 		InmuebleBuscadoController controlador = (InmuebleBuscadoController) cambiarmeAScene(InmuebleBuscadoController.URLVista);
 		controlador.setCliente(clienteEnModificacion);
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -178,8 +176,7 @@ public class ModificarClienteController extends OlimpoController {
 	 */
 	@FXML
 	private void cancelAction() {
-		AdministrarClienteController controlador = (AdministrarClienteController) cambiarmeAScene(AdministrarClienteController.URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarmeAScene(AdministrarClienteController.URLVista);
 	}
 
 	@Override

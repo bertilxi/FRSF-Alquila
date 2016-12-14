@@ -126,7 +126,6 @@ public class AdministrarReservaController extends OlimpoController {
 
 		VerPDFController visorPDF = (VerPDFController) cambiarScene(fondo, VerPDFController.URLVista, (Pane) fondo.getChildren().get(0));
 		visorPDF.cargarPDF(reserva.getArchivoPDF());
-		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**

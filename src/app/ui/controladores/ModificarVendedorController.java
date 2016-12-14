@@ -188,8 +188,7 @@ public class ModificarVendedorController extends OlimpoController {
 	 * Se vuelve a la pantalla desde la que se llamó a ModificarVendedor.
 	 */
 	public void cancelAction(ActionEvent event) {
-		OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		salir();
 	}
 
 	/**
@@ -199,7 +198,6 @@ public class ModificarVendedorController extends OlimpoController {
 	public void verMisVentasAction(ActionEvent event) {
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
 		controlador.setVendedor(vendedor);
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -233,8 +231,7 @@ public class ModificarVendedorController extends OlimpoController {
 				cambiarmeAScene(URLVistaRetorno, true);
 			}
 			else{
-				OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
-				controlador.setVendedorLogueado(vendedorLogueado);
+				cambiarmeAScene(URLVistaRetorno);
 			}
 		}
 		else{

@@ -109,7 +109,6 @@ public class AdministrarVendedorController extends OlimpoController {
 		}
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
 		controlador.setVendedor(tablaVendedores.getSelectionModel().getSelectedItem());
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -117,8 +116,7 @@ public class AdministrarVendedorController extends OlimpoController {
 	 * Se pasa a la pantalla alta vendedor
 	 */
 	public void agregarAction(ActionEvent event) {
-		AltaVendedorController controlador = (AltaVendedorController) cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
 	}
 
 	/**
@@ -132,7 +130,6 @@ public class AdministrarVendedorController extends OlimpoController {
 		}
 		ModificarVendedorController controlador = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVista);
 		controlador.setVendedor(vendedor);
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
