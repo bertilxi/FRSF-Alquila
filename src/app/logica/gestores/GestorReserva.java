@@ -28,6 +28,7 @@ import javax.mail.MessagingException;
 
 import org.springframework.stereotype.Service;
 
+import app.datos.clases.EstadoInmuebleStr;
 import app.datos.clases.EstadoStr;
 import app.datos.entidades.Cliente;
 import app.datos.entidades.Estado;
@@ -101,6 +102,9 @@ public class GestorReserva {
 			errores.add(ErrorCrearReserva.Inmueble_Vacío);
 		}
 		else{
+			if(reserva.getInmueble().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
+				errores.add(ErrorCrearReserva.Inmueble_Vendido);
+			}
 			if(reserva.getInmueble().getPropietario() == null){
 				errores.add(ErrorCrearReserva.Propietario_Vacío);
 			}

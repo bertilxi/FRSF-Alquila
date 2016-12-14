@@ -46,6 +46,7 @@ public class ResultadoCrearReserva extends Resultado<ErrorCrearReserva> {
 		Altura_Inmueble_Vacía,
 		FechaInicio_vacía,
 		FechaFin_vacía,
+		Inmueble_Vendido,
 		Fecha_Inicio_Posterior_A_Fecha_Fin,
 		Existe_Otra_Reserva_Activa,
 		Importe_Vacío,

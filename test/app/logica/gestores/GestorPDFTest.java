@@ -17,7 +17,6 @@
  */
 package app.logica.gestores;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.Date;
@@ -45,7 +44,6 @@ import app.datos.entidades.Provincia;
 import app.datos.entidades.Reserva;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
-import app.excepciones.GestionException;
 import app.ui.controladores.ControladorTest;
 import app.ui.controladores.LoginController;
 
@@ -97,20 +95,21 @@ public class GestorPDFTest {
 				.setPropietario(propietario);
 		Date fechahoy = new Date();
 		Reserva reserva = new Reserva().setCliente(cliente).setInmueble(inmueble).setImporte(300000.50).setFechaInicio(fechahoy).setFechaFin(fechahoy);
+
 		PDF pdf = gestor.generarPDF(reserva);
 		FileOutputStream fos = new FileOutputStream("testReserva.pdf");
 		fos.write(pdf.getArchivo());
 		fos.close();
 	}
-	
+
 	@Test
-	public void testGenerarPDFCatalogo() throws Exception{
-		Inmueble inmueble1= new Inmueble().setId(1);
-		Inmueble inmueble2= new Inmueble().setId(2);
-		Inmueble inmueble3= new Inmueble().setId(3);
-		Inmueble inmueble4= new Inmueble().setId(4);
-		Inmueble inmueble5= new Inmueble().setId(5);
-		Inmueble inmueble6= new Inmueble().setId(6);
+	public void testGenerarPDFCatalogo() throws Exception {
+		Inmueble inmueble1 = new Inmueble().setId(1);
+		Inmueble inmueble2 = new Inmueble().setId(2);
+		Inmueble inmueble3 = new Inmueble().setId(3);
+		Inmueble inmueble4 = new Inmueble().setId(4);
+		Inmueble inmueble5 = new Inmueble().setId(5);
+		Inmueble inmueble6 = new Inmueble().setId(6);
 
 		HashMap<Inmueble, Imagen> mapa = new HashMap<>();
 		mapa.put(inmueble1, null);
@@ -120,11 +119,10 @@ public class GestorPDFTest {
 		mapa.put(inmueble5, null);
 		mapa.put(inmueble6, null);
 
-		
 		CatalogoVista catalogoVista = new CatalogoVista(new Cliente(), mapa);
-		
+
 		GestorPDF gestor = new GestorPDF();
-		
+
 		PDF pdf = gestor.generarPDF(catalogoVista);
 		FileOutputStream fos = new FileOutputStream("testCatalogo.pdf");
 		fos.write(pdf.getArchivo());
