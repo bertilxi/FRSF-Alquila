@@ -15,32 +15,26 @@
  * You should have received a copy of the GNU General Public License
  * along with Olimpo. If not, see <http://www.gnu.org/licenses/>.
  */
-package app.datos.clases;
+package app.comun;
 
-public enum TipoInmuebleStr {
-    LOCAL //local-oficina
-    , CASA //casa
-    , DEPARTAMENTO //departamento
-    , TERRENO //terreno
-    , QUINTA //quinta,
-    , GALPON; //galpón
+import static org.junit.Assert.assertEquals;
 
-    @Override
-    public String toString() {
-        switch (this) {
-            case LOCAL:
-                return "Local";
-            case CASA:
-                return "Casa";
-            case DEPARTAMENTO:
-                return "Departamento";
-            case TERRENO:
-                return "Terreno";
-            case QUINTA:
-                return "Quinta";
-            case GALPON:
-                return "Galpón";
-        }
-        return null;
-    }
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+
+@RunWith(JUnitParamsRunner.class)
+public class FormateadorStringTest {
+
+	@Test
+	@Parameters({ "Juan, Juan",
+			"Juan Pablo, Juan Pablo",
+			",",
+			"abc, Abc",
+			"abc de abc, Abc de Abc" })
+	public void nombrePropioTest(String nombre, String esperado) {
+		assertEquals(esperado, new FormateadorString().nombrePropio(nombre));
+	}
 }

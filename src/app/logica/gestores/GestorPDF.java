@@ -18,6 +18,9 @@
 package app.logica.gestores;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.FutureTask;
@@ -35,6 +38,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import app.comun.ConversorFechas;
 import app.comun.FormateadorString;
 import app.datos.clases.CatalogoVista;
+import app.datos.entidades.Inmueble;
 import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
 import app.datos.entidades.Venta;
@@ -48,7 +52,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 @Service
@@ -155,6 +161,10 @@ public class GestorPDF {
 		ArrayList<Node> paginas = new ArrayList<>();
 		Integer numeroTotalDePaginas = (numeroInmuebles + 2) / 3;
 		Date fechaHoy = new Date();
+
+		ArrayList<Inmueble> inmuebles = new ArrayList<>();
+		catalogo.getFotos().forEach((i, f) -> {inmuebles.add(i);});
+
 		try{
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
@@ -169,12 +179,114 @@ public class GestorPDF {
 						label = (Label) paginaCatalogo.lookup("#labelNumeroPagina");
 						label.setText(numeroPagina + " de " + numeroTotalDePaginas);
 
-						//for(int i = 0; i < 3 && inmueblesProcesados < numeroInmuebles; i++, inmueblesProcesados++){
-						//FXMLLoader loaderFila = new FXMLLoader();
-						//loader.setLocation(getClass().getResource(URLFilaCatalogo));
-						//Pane fila = (Pane) loaderFila.load();
-						//TODO cargar fila
-						//}
+						for(int i = 0; i < 3 && inmueblesProcesados < numeroInmuebles; i++, inmueblesProcesados++){
+							FXMLLoader loaderFila = new FXMLLoader();
+							loaderFila.setLocation(getClass().getResource(URLFilaCatalogo));
+							Pane fila = (Pane) loaderFila.load();
+							Inmueble inmueble = inmuebles.get(i);
+
+							File imagenTMP = new File("imagen_tmp.png");
+							FileOutputStream fos = new FileOutputStream(imagenTMP);
+							fos.write(catalogo.getFotos().get(inmueble).getArchivo());
+							fos.flush();
+							fos.close();
+
+							ImageView imagen = (ImageView) fila.lookup("#imageFoto");
+							imagen.setImage(new javafx.scene.image.Image(imagenTMP.toURI().toString()));
+
+							label = (Label) fila.lookup("#labelCodigo");
+							label.setText("Inmueble Nº " + inmueble.getId());
+
+							label = (Label) fila.lookup("#labelTipoInmueble");
+							label.setText(inmueble.getTipo().toString());
+
+							label = (Label) fila.lookup("#labelPais");
+							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().getProvincia().getPais().toString()));
+
+							label = (Label) fila.lookup("#labelProvincia");
+							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().getProvincia().toString()));
+
+							label = (Label) fila.lookup("#labelLocalidad");
+							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().toString()));
+
+							label = (Label) fila.lookup("#labelBarrio");
+							label.setText(formateador.nombrePropio(inmueble.getDireccion().getBarrio().toString()));
+
+							StringBuilder direccion = new StringBuilder("");
+							direccion.append(inmueble.getDireccion().getCalle());
+							direccion.append(" ");
+							direccion.append(inmueble.getDireccion().getNumero());
+
+							if(inmueble.getDireccion().getPiso() != null){
+								direccion.append(" - Piso ");
+								direccion.append(inmueble.getDireccion().getPiso());
+							}
+							if(inmueble.getDireccion().getDepartamento() != null){
+								direccion.append(" - Dpto. ");
+								direccion.append(inmueble.getDireccion().getDepartamento());
+							}
+							if(inmueble.getDireccion().getOtros() != null){
+								direccion.append(" - ");
+								direccion.append(inmueble.getDireccion().getOtros());
+							}
+							label = (Label) fila.lookup("#labelDireccion");
+							label.setText(formateador.nombrePropio(direccion.toString()));
+
+							label = (Label) fila.lookup("#labelDormitorios");
+							if(inmueble.getDatosEdificio().getDormitorios() != null){
+								label.setText(inmueble.getDatosEdificio().getDormitorios().toString());
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelBaños");
+							if(inmueble.getDatosEdificio().getBaños() != null){
+								label.setText(inmueble.getDatosEdificio().getBaños().toString());
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelGaraje");
+							if(inmueble.getDatosEdificio().getGaraje() != null){
+								label.setText(inmueble.getDatosEdificio().getGaraje()? "SI":"NO");
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelPatio");
+							if(inmueble.getDatosEdificio().getPatio() != null){
+								label.setText(inmueble.getDatosEdificio().getPatio()? "SI":"NO");
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelSuperficieTerreno");
+							if(inmueble.getSuperficie() != null){
+								label.setText(inmueble.getSuperficie() + " metros cuadrados.");
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelSuperficieEdificada");
+							if(inmueble.getDatosEdificio().getSuperficie() != null){
+								label.setText(inmueble.getDatosEdificio().getSuperficie() + " metros cuadrados.");
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelPrecio");
+							DecimalFormat formateadorDouble = new DecimalFormat("#.00");
+							label.setText(formateadorDouble.format(inmueble.getPrecio()) + " USD");
+
+							GridPane gridPaneFilas = (GridPane) paginaCatalogo.lookup("#gridPaneFilas");
+							gridPaneFilas.add(fila,0,i);
+						}
 						paginas.add(paginaCatalogo);
 					}
 					pdf = generarPDF(paginas);
