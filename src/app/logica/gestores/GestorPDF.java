@@ -112,7 +112,7 @@ public class GestorPDF {
 	 *            datos que se utilizaran para generar el PDF de un catalogo
 	 * @return catalogo en PDF
 	 */
-	public PDF generarPDF(CatalogoVista catalogo) {
+	public PDF generarPDF(CatalogoVista catalogo) throws GestionException{
 		//TODO hacer
 		return null;
 	}
