@@ -31,7 +31,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <GridPane fx:id="fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarVentaController">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
@@ -82,6 +81,7 @@
                 <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
                     <Button fx:id="botonVerInmueble" layoutX="26.0" layoutY="26.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerInmueble" text="Ver inmueble" />
                     <Button fx:id="botonVerDocumento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerDocumento" text="Ver documento" />
+                  <Button layoutX="26.0" layoutY="65.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleSalir" text="Salir" />
                 </VBox>
             </HBox>
          </children>

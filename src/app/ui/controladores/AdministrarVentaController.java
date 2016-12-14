@@ -187,6 +187,27 @@ public class AdministrarVentaController extends OlimpoController {
 		visorPDF.cargarPDF(venta.getArchivoPDF());
 	}
 
+	@FXML
+	protected void handleSalir() {
+		switch(tipoPersona) {
+		case Cliente:
+			cambiarmeAScene(AdministrarClienteController.URLVista);
+			break;
+		case Propietario:
+			cambiarmeAScene(AdministrarPropietarioController.URLVista);
+			break;
+		case Vendedor:
+			if(vendedorLogueado.getRoot() == true) {
+				cambiarmeAScene(AdministrarVendedorController.URLVista);
+			} else {
+				ModificarVendedorController controlador = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista);
+				controlador.setVendedor(vendedorLogueado);
+				controlador.mostrarBotonVerVentas();
+			}
+			break;
+		}
+	}
+
 	private enum TipoPersona {
 		Cliente,
 		Propietario,
