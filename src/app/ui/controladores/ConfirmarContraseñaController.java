@@ -8,6 +8,8 @@ import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoAutenticacion;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class ConfirmarContraseñaController extends OlimpoController  {
@@ -69,5 +71,14 @@ public class ConfirmarContraseñaController extends OlimpoController  {
 	@FXML
 	private void cancelAction() {
 		dialogStage.close();
+	}
+
+	@FXML
+	private void handleKeyPressedLogin(KeyEvent e) {
+		if(e.getEventType()==KeyEvent.KEY_PRESSED){
+			if(e.getCode()==KeyCode.ENTER) {
+				acceptAction();
+			}
+    	}
 	}
 }
