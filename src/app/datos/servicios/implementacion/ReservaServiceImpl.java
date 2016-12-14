@@ -60,7 +60,7 @@ public class ReservaServiceImpl implements ReservaService {
 		} catch(Exception e){
 			throw new SaveUpdateException(e);
 		}
-		
+
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class ReservaServiceImpl implements ReservaService {
 		} catch(Exception e){
 			throw new SaveUpdateException(e);
 		}
-		
+
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class ReservaServiceImpl implements ReservaService {
 		ArrayList<Reserva> reservas = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
-			for(Object o: session.getNamedQuery("obtenerReservasInmueble").setParameter("cliente", inmueble).list()){
+			for(Object o: session.getNamedQuery("obtenerReservasInmueble").setParameter("inmueble", inmueble).list()){
 				if(o instanceof Reserva){
 					reservas.add((Reserva) o);
 				}

@@ -29,7 +29,9 @@ import javax.mail.MessagingException;
 import org.springframework.stereotype.Service;
 
 import app.datos.clases.EstadoStr;
+import app.datos.entidades.Cliente;
 import app.datos.entidades.Estado;
+import app.datos.entidades.Inmueble;
 import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
 import app.datos.servicios.ReservaService;
@@ -211,6 +213,34 @@ public class GestorReserva {
 		persistidorReserva.modificarReserva(reserva);
 
 		return new ResultadoEliminarReserva();
+	}
+
+	/**
+	 * Obtiene el listado de reservas de alta de un cliente a la capa de acceso a datos
+	 *
+	 * @param cliente
+	 *            cliente de las reservas a obtener
+	 * @return el listado de vendedores solicitados
+	 *
+	 * @throws PersistenciaException
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
+	public ArrayList<Reserva> obtenerReservas(Cliente cliente) throws PersistenciaException {
+		return persistidorReserva.obtenerReservas(cliente);
+	}
+
+	/**
+	 * Obtiene el listado de reservas de alta de un inmueble a la capa de acceso a datos
+	 *
+	 * @param inmueble
+	 *            inmueble de las reservas a obtener
+	 * @return el listado de vendedores solicitados
+	 *
+	 * @throws PersistenciaException
+	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
+	 */
+	public ArrayList<Reserva> obtenerReservas(Inmueble inmueble) throws PersistenciaException {
+		return persistidorReserva.obtenerReservas(inmueble);
 	}
 
 }

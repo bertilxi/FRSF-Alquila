@@ -226,6 +226,14 @@ public class CoordinadorJavaFX {
 		return gestorReserva.eliminarReserva(reserva);
 	}
 
+	public ArrayList<Reserva> obtenerReservas(Cliente cliente) throws PersistenciaException {
+		return gestorReserva.obtenerReservas(cliente);
+	}
+
+	public ArrayList<Reserva> obtenerReservas(Inmueble inmueble) throws PersistenciaException {
+		return gestorReserva.obtenerReservas(inmueble);
+	}
+
 	public ResultadoCrearVenta crearVenta(Venta venta) throws PersistenciaException, GestionException {
 		return gestorVenta.crearVenta(venta);
 	}
