@@ -104,6 +104,7 @@
         <JUnitParams.version>1.0.5</JUnitParams.version>
         <commons-validator.version>1.4.1</commons-validator.version>
         <itext.version>5.5.10</itext.version>
+        <pdfbox.version>2.0.3</pdfbox.version>
         <googleAPI.version>v1-rev53-1.22.0</googleAPI.version>
         <googleOauthClient.version>1.22.0</googleOauthClient.version>
         <javaxmail.version>1.4</javaxmail.version>
@@ -209,6 +210,12 @@
             <version>${itext.version}</version>
         </dependency>
         
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>${pdfbox.version}</version>
+        </dependency>
+
         <dependency>
         	<groupId>com.google.apis</groupId>
       		<artifactId>google-api-services-gmail</artifactId>
