@@ -136,11 +136,6 @@ public class Inmueble {
 		return id;
 	}
 
-	public Inmueble setId(Integer id) {
-		this.id = id;
-		return this;
-	}
-
 	public String getObservaciones() {
 		return observaciones;
 	}

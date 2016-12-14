@@ -20,7 +20,7 @@ package app.excepciones;
 /**
  * Representa un error en el guardado o modificaci�n de datos sobe la base de datos
  *
- * @author Acosta - Gioria - Moretti - Rebechi
+ *
  */
 public class SaveUpdateException extends PersistenciaException {
 

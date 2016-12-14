@@ -170,8 +170,8 @@ public class GestorPDF {
 		try{
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
+					Integer inmueblesProcesados = 0;
 					for(int numeroPagina = 1; numeroPagina <= numeroTotalDePaginas; numeroPagina++){
-						Integer inmueblesProcesados = 0;
 						FXMLLoader loader = new FXMLLoader();
 						loader.setLocation(getClass().getResource(URLCatalogo));
 						Pane paginaCatalogo = (Pane) loader.load();
@@ -185,8 +185,7 @@ public class GestorPDF {
 							FXMLLoader loaderFila = new FXMLLoader();
 							loaderFila.setLocation(getClass().getResource(URLFilaCatalogo));
 							Pane fila = (Pane) loaderFila.load();
-							Inmueble inmueble = inmuebles.get(i);
-
+							Inmueble inmueble = inmuebles.get(inmueblesProcesados);
 							if(catalogo.getFotos().get(inmueble) != null){
 								File imagenTMP = new File("imagen_tmp.png");
 								FileOutputStream fos = new FileOutputStream(imagenTMP);
@@ -234,7 +233,6 @@ public class GestorPDF {
 								direccion.append(inmueble.getDireccion().getOtros());
 							}
 							label = (Label) fila.lookup("#labelDireccion");
-							System.out.println("*" + direccion.toString() + "*");
 							label.setText(formateador.nombrePropio(direccion.toString()));
 
 							label = (Label) fila.lookup("#labelDormitorios");
