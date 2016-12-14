@@ -115,12 +115,48 @@ public class GestorPDFTest {
 				.setPiso("Piso 1")
 				.setOtros("Otros 1");
 		new IconoAnimadoEspera();
-		Inmueble inmueble1 = new Inmueble().setId(1).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
-		Inmueble inmueble2 = new Inmueble().setId(2).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
-		Inmueble inmueble3 = new Inmueble().setId(3).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
-		Inmueble inmueble4 = new Inmueble().setId(4).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
-		Inmueble inmueble5 = new Inmueble().setId(5).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
-		Inmueble inmueble6 = new Inmueble().setId(6).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble1 = new Inmueble() {
+			@Override
+			public Integer getId() {
+				return 1;
+			}
+		};
+		inmueble1.setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble2 = new Inmueble() {
+			@Override
+			public Integer getId() {
+				return 2;
+			}
+		};
+		inmueble2.setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble3 = new Inmueble() {
+			@Override
+			public Integer getId() {
+				return 3;
+			}
+		};
+		inmueble3.setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble4 = new Inmueble() {
+			@Override
+			public Integer getId() {
+				return 4;
+			}
+		};
+		inmueble4.setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble5 = new Inmueble() {
+			@Override
+			public Integer getId() {
+				return 5;
+			}
+		};
+		inmueble5.setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble6 = new Inmueble() {
+			@Override
+			public Integer getId() {
+				return 6;
+			}
+		};
+		inmueble6.setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
 
 		HashMap<Inmueble, Imagen> mapa = new HashMap<>();
 		mapa.put(inmueble1, null);
