@@ -75,19 +75,22 @@ public class GestorVenta {
 			errores.add(ErrorCrearVenta.Formato_Medio_De_Pago_Incorrecto);
 		}
 
-		if(venta.getCliente().getTipoDocumento().equals(venta.getPropietario().getTipoDocumento()) && venta.getCliente().getNumeroDocumento().equals(venta.getPropietario().getNumeroDocumento())) {
+		if(venta.getCliente() != null && venta.getPropietario() != null && venta.getCliente().getTipoDocumento().equals(venta.getPropietario().getTipoDocumento()) && venta.getCliente().getNumeroDocumento().equals(venta.getPropietario().getNumeroDocumento())) {
 			errores.add(ErrorCrearVenta.Cliente_Igual_A_Propietario);
 		}
 
-		if(venta.getInmueble().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)) {
+		if(venta.getInmueble() != null && venta.getInmueble().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)) {
 			errores.add(ErrorCrearVenta.Inmueble_Ya_Vendido);
 		}
 
-		Date fechaHoy = new Date(System.currentTimeMillis());
-		for(Reserva r: venta.getInmueble().getReservas()) {
-			if (fechaHoy.after(r.getFechaInicio()) && fechaHoy.before(r.getFechaFin()) && !r.getCliente().equals(venta.getCliente())) {
-				errores.add(ErrorCrearVenta.Inmueble_Reservado_Por_Otro_Cliente);
-				break;
+		Date fechaHoy = null;
+		if(venta.getInmueble() != null) {
+			fechaHoy = new Date(System.currentTimeMillis());
+			for(Reserva r: venta.getInmueble().getReservas()) {
+				if (fechaHoy.after(r.getFechaInicio()) && fechaHoy.before(r.getFechaFin()) && !r.getCliente().equals(venta.getCliente())) {
+					errores.add(ErrorCrearVenta.Inmueble_Reservado_Por_Otro_Cliente);
+					break;
+				}
 			}
 		}
 
