@@ -50,7 +50,7 @@ public class Venta {
 	@Column(name = "fecha", nullable = false)
 	private Date fecha;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	@JoinColumn(name = "idarchivo", foreignKey = @ForeignKey(name = "venta_idarchivo_fk"), nullable = false)
 	private PDF archivoPDF;
 

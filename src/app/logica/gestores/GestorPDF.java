@@ -112,7 +112,7 @@ public class GestorPDF {
 	 *            datos que se utilizaran para generar el PDF de un catalogo
 	 * @return catalogo en PDF
 	 */
-	public PDF generarPDF(CatalogoVista catalogo) {
+	public PDF generarPDF(CatalogoVista catalogo) throws GestionException{
 		//TODO hacer
 		return null;
 	}
@@ -265,6 +265,9 @@ public class GestorPDF {
 
 			if(!Platform.isFxApplicationThread()){
 				Platform.runLater(future);
+			}
+			else{
+				future.run();
 			}
 			Throwable excepcion = future.get();
 			if(excepcion != null){

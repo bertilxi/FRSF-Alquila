@@ -20,7 +20,6 @@ package app.ui.controladores;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
@@ -44,10 +43,10 @@ public class AdministrarVentaController extends OlimpoController {
     protected Label labelPersona;
 
     @FXML
-    private TableView<Venta> tablaVentas;
+	protected TableView<Venta> tablaVentas;
 
     @FXML
-    private TableColumn<Venta, Object> columnaCliente;
+    protected TableColumn<Venta, Object> columnaCliente;
     @FXML
     private TableColumn<Venta, String> columnaFecha;
     @FXML
@@ -55,13 +54,13 @@ public class AdministrarVentaController extends OlimpoController {
     @FXML
     private TableColumn<Venta, String> columnaApellidoCliente;
     @FXML
-    private TableColumn<Venta, Object> columnaPropietario;
+    protected TableColumn<Venta, Object> columnaPropietario;
     @FXML
     private TableColumn<Venta, String> columnaNombrePropietario;
     @FXML
     private TableColumn<Venta, String> columnaApellidoPropietario;
     @FXML
-    private TableColumn<Venta, Object> columnaVendedor;
+    protected TableColumn<Venta, Object> columnaVendedor;
     @FXML
     private TableColumn<Venta, String> columnaNombreVendedor;
     @FXML
@@ -73,7 +72,7 @@ public class AdministrarVentaController extends OlimpoController {
     @FXML
     private Button botonVerDocumento;
 
-    private TipoPersona tipoPersona;
+    protected TipoPersona tipoPersona;
 
     public void setCliente(Cliente persona) {
     	if(persona != null) {
@@ -141,7 +140,7 @@ public class AdministrarVentaController extends OlimpoController {
 	 * Acción que se ejecuta al presionar el botón ver inmueble
 	 */
 	@FXML
-	private void handleVerInmueble() {
+	protected void handleVerInmueble() {
 		if(tablaVentas.getSelectionModel().getSelectedItem() != null) {
 			VerBasicosInmuebleController controlador = (VerBasicosInmuebleController) cambiarmeAScene(VerBasicosInmuebleController.URLVista);
 			controlador.setInmueble(tablaVentas.getSelectionModel().getSelectedItem().getInmueble());
@@ -164,16 +163,16 @@ public class AdministrarVentaController extends OlimpoController {
 	 * Acción que se ejecuta al presionar el botón ver documento
 	 */
 	@FXML
-	private void handleVerDocumento() {
+	protected void handleVerDocumento() {
 		if(tablaVentas.getSelectionModel().getSelectedItem() != null){
 			try{
-				File PDFtmp = new File("reserva_tmp.pdf");
+				File PDFtmp = new File("tmp.pdf");
 				FileOutputStream fos = new FileOutputStream(PDFtmp);
 				fos.write(tablaVentas.getSelectionModel().getSelectedItem().getArchivoPDF().getArchivo());
 				fos.flush();
 				fos.close();
 				Desktop.getDesktop().open(PDFtmp);
-			} catch(IOException ex){
+			} catch(Exception ex){
 				presentador.presentarError("Error", "No se pudo abrir el archivo pdf", stage);
 			}
 		}
