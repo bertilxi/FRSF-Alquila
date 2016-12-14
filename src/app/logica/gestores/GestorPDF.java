@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.FutureTask;
 
@@ -72,6 +73,10 @@ public class GestorPDF {
 	private static final String URLDocumentoReserva = "/res/pdf/documentoReserva.fxml";
 
 	private static final String URLDocumentoVenta = "/res/pdf/documentoVenta.fxml";
+	
+	private static final String URLCatalogo = "/res/pdf/catalogoA4.fxml";
+
+	private static final String URLFilaCatalogo = "/res/pdf/filaCatalogoA4.fxml";
 
 	/**
 	 * Método para crear un PDF a partir de una pantalla.
@@ -102,6 +107,42 @@ public class GestorPDF {
 		escritor.close();
 		pdfbaos.close();
 		return (PDF) new PDF().setArchivo(pdfBytes);
+}
+	/**
+	 * Método para crear un PDF a partir de varias pantalla.
+	 *
+	 * @param pantallaAPDF
+	 *            pantalla que se imprimirá en PDF
+	 * @return PDF de una captura de la pantalla pasada
+	 */
+	private PDF generarPDF(ArrayList<Node> pantallasAPDF) throws Exception {
+		Document document = new Document();
+		ByteArrayOutputStream pdfbaos = new ByteArrayOutputStream();
+		PdfWriter escritor = PdfWriter.getInstance(document, pdfbaos);
+		document.open();
+
+		for(Node pantalla : pantallasAPDF){
+			new Scene((Parent) pantalla);
+			WritableImage image = pantalla.snapshot(new SnapshotParameters(), null);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", baos);
+			byte[] imageInByte = baos.toByteArray();
+			baos.flush();
+			baos.close();
+			Image imagen = Image.getInstance(imageInByte);
+			imagen.setAbsolutePosition(0, 0);
+			imagen.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+			document.add(imagen);
+			document.newPage();
+		}
+	
+		document.close();
+		
+		byte[] pdfBytes = pdfbaos.toByteArray();
+		pdfbaos.flush();
+		escritor.close();
+		pdfbaos.close();
+		return (PDF) new PDF().setArchivo(pdfBytes);
 	}
 
 	/**
@@ -109,13 +150,59 @@ public class GestorPDF {
 	 * Pertenece a la taskcard 23 de la iteración 2 y a la historia 5
 	 *
 	 * @param catalogo
-	 *            datos que se utilizaran para generar el PDF de un catalogo
+	 *            datos que se utilizaran para generar el PDF de un catálogo
 	 * @return catalogo en PDF
 	 */
 	public PDF generarPDF(CatalogoVista catalogo) throws GestionException{
-		//TODO hacer
-		return null;
-	}
+		pdf = null;
+		Integer numeroInmuebles = catalogo.getFotos().size();
+		ArrayList<Node> paginas = new ArrayList<>();
+		Integer numeroTotalDePaginas = (numeroInmuebles + 2) / 3;
+		try {
+			FutureTask<Throwable> future = new FutureTask<>(() -> {
+				try{
+					for (int numeroPagina = 1; numeroPagina <= numeroTotalDePaginas; numeroPagina++) {
+						Integer inmueblesProcesados = 0;
+						FXMLLoader loader = new FXMLLoader();
+						loader.setLocation(getClass().getResource(URLDocumentoReserva));
+						Pane paginaCatalogo = (Pane) loader.load();
+						//TODO cargar datos de pagina
+						//for(int i = 0; i < 3 && inmueblesProcesados < numeroInmuebles; i++, inmueblesProcesados++){
+							//FXMLLoader loaderFila = new FXMLLoader();
+							//loader.setLocation(getClass().getResource(URLFilaCatalogo));
+							//Pane fila = (Pane) loaderFila.load();
+							//TODO cargar fila
+						//}
+						paginas.add(paginaCatalogo);
+					}
+					pdf = generarPDF(paginas);
+				} catch(Throwable e){
+						return e;
+				}
+				return null;
+			});
+
+			if(!Platform.isFxApplicationThread()){
+				Platform.runLater(future);
+			}
+			else{
+				future.run();
+			}
+			Throwable excepcion = future.get();
+			if(excepcion != null){
+				throw excepcion;
+			}
+			if(pdf == null){
+				throw new NullPointerException("Error al generar PDF");
+			}
+				
+		} catch (Throwable e) {
+			e.printStackTrace();
+			throw new GenerarPDFException(e);
+		}
+		
+		return pdf;
+}
 
 	/**
 	 * Método para crear un PDF de una reserva a partir de los datos de una ReservaVista.
@@ -131,7 +218,7 @@ public class GestorPDF {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLDocumentoReserva));
 			Pane documentoReserva = (Pane) loader.load();
-
+			
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
 					Label label = (Label) documentoReserva.lookup("#lblNombreOferente");
