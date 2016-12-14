@@ -34,7 +34,6 @@ import app.datos.entidades.EstadoInmueble;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.Localidad;
 import app.datos.entidades.Orientacion;
-import app.datos.entidades.PDF;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Provincia;
@@ -49,7 +48,6 @@ import app.logica.gestores.GestorCatalogo;
 import app.logica.gestores.GestorCliente;
 import app.logica.gestores.GestorDatos;
 import app.logica.gestores.GestorInmueble;
-import app.logica.gestores.GestorPDF;
 import app.logica.gestores.GestorPropietario;
 import app.logica.gestores.GestorReserva;
 import app.logica.gestores.GestorVendedor;
@@ -76,31 +74,28 @@ import app.logica.resultados.ResultadoModificarVendedor;
 public class CoordinadorJavaFX {
 
 	@Resource
-	GestorVendedor gestorVendedor;
+	protected GestorVendedor gestorVendedor;
 
 	@Resource
-	GestorCliente gestorCliente;
+	protected GestorCliente gestorCliente;
 
 	@Resource
-	GestorPropietario gestorPropietario;
+	protected GestorPropietario gestorPropietario;
 
 	@Resource
-	GestorInmueble gestorInmueble;
+	protected GestorInmueble gestorInmueble;
 
 	@Resource
-	GestorDatos gestorDatos;
+	protected GestorDatos gestorDatos;
 
 	@Resource
-	GestorReserva gestorReserva;
+	protected GestorReserva gestorReserva;
 
 	@Resource
-	GestorVenta gestorVenta;
+	protected GestorVenta gestorVenta;
 
 	@Resource
-	GestorCatalogo gestorCatalogo;
-
-	@Resource
-	GestorPDF gestorPDF;
+	protected GestorCatalogo gestorCatalogo;
 
 	public ResultadoAutenticacion autenticarVendedor(DatosLogin login) throws PersistenciaException {
 		return gestorVendedor.autenticarVendedor(login);
@@ -240,9 +235,5 @@ public class CoordinadorJavaFX {
 
 	public ResultadoCrearCatalogo crearCatalogo(CatalogoVista catalogoVista) throws PersistenciaException, GestionException {
 		return gestorCatalogo.crearCatalogo(catalogoVista);
-	}
-
-	public void imprimirPDF(PDF pdf) throws GestionException {
-		gestorPDF.imprimirPDF(pdf);
 	}
 }

@@ -24,11 +24,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import app.comun.ImpresoraPDF;
 import app.datos.entidades.PDF;
-import app.excepciones.GestionException;
+import app.excepciones.ImprimirPDFException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.print.PrinterJob;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -54,6 +54,8 @@ public class VerPDFController extends OlimpoController {
 	protected TextField textFieldCorreo;
 
 	private PDF pdf;
+
+	private ImpresoraPDF impresora = new ImpresoraPDF();
 
 	/**
 	 * Método para cargar el PDF a mostrar
@@ -88,15 +90,10 @@ public class VerPDFController extends OlimpoController {
 	}
 
 	@FXML
-	public void print() { //TODO definir
-		PrinterJob job = PrinterJob.createPrinterJob();
-		if(job != null && job.showPrintDialog(stage)){
-			visorPDF.getEngine().print(job);
-			job.endJob();
-		}
+	public void print() {
 		try{
-			coordinador.imprimirPDF(pdf);
-		} catch(GestionException e){
+			impresora.imprimirPDF(pdf);
+		} catch(ImprimirPDFException e){
 			presentador.presentarExcepcion(e, stage);
 		}
 	}
