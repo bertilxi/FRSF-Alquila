@@ -29,11 +29,15 @@ import junitparams.Parameters;
 public class FormateadorStringTest {
 
 	@Test
-	@Parameters({ "Juan, Juan",
-			"Juan Pablo, Juan Pablo",
+	@Parameters({ "Juan,Juan",
+			"Juan Pablo,Juan Pablo",
 			",",
-			"abc, Abc",
-			"abc de abc, Abc de Abc" })
+			"abc,Abc",
+			"abc de abc,Abc de Abc",
+			"a,A",
+			" ,",
+			"a a,A a",
+			"Sadf 123 - Piso -  Dpto. - ,Sadf 123 - Piso - Dpto. -" })
 	public void nombrePropioTest(String nombre, String esperado) {
 		assertEquals(esperado, new FormateadorString().nombrePropio(nombre));
 	}
