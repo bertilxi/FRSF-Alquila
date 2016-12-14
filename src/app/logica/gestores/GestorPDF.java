@@ -73,7 +73,7 @@ public class GestorPDF {
 	private static final String URLDocumentoReserva = "/res/pdf/documentoReserva.fxml";
 
 	private static final String URLDocumentoVenta = "/res/pdf/documentoVenta.fxml";
-	
+
 	private static final String URLCatalogo = "/res/pdf/catalogoA4.fxml";
 
 	private static final String URLFilaCatalogo = "/res/pdf/filaCatalogoA4.fxml";
@@ -135,9 +135,9 @@ public class GestorPDF {
 			document.add(imagen);
 			document.newPage();
 		}
-	
+
 		document.close();
-		
+
 		byte[] pdfBytes = pdfbaos.toByteArray();
 		pdfbaos.flush();
 		escritor.close();
@@ -195,12 +195,12 @@ public class GestorPDF {
 			if(pdf == null){
 				throw new NullPointerException("Error al generar PDF");
 			}
-				
+
 		} catch (Throwable e) {
 			e.printStackTrace();
 			throw new GenerarPDFException(e);
 		}
-		
+
 		return pdf;
 }
 
@@ -218,7 +218,7 @@ public class GestorPDF {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLDocumentoReserva));
 			Pane documentoReserva = (Pane) loader.load();
-			
+
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
 					Label label = (Label) documentoReserva.lookup("#lblNombreOferente");
@@ -313,8 +313,8 @@ public class GestorPDF {
 					label.setText(formateador.nombrePropio(venta.getInmueble().getPropietario().getNombre()));
 					label = (Label) documentoVenta.lookup("#lblApellidoPropietario");
 					label.setText(formateador.nombrePropio(venta.getInmueble().getPropietario().getApellido()));
-					label = (Label) documentoVenta.lookup("#lblDocumentoComprador");
-					label.setText(venta.getCliente().getTipoDocumento() + " - " + venta.getCliente().getNumeroDocumento());
+					label = (Label) documentoVenta.lookup("#lblDocumentoPropietario");
+					label.setText(venta.getPropietario().getTipoDocumento() + " - " + venta.getPropietario().getNumeroDocumento());
 					label = (Label) documentoVenta.lookup("#lblCodigoInmueble");
 					label.setText(Integer.toString(venta.getInmueble().getId()));
 					label = (Label) documentoVenta.lookup("#lblTipoInmueble");
