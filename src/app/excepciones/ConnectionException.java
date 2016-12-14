@@ -20,7 +20,7 @@ package app.excepciones;
 /**
  * Representa un error de conexi�n con la base de datos
  *
- * @author Acosta - Gioria - Moretti - Rebechi
+ *
  */
 public class ConnectionException extends PersistenciaException {
 

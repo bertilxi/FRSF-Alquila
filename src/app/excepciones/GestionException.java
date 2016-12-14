@@ -20,7 +20,7 @@ package app.excepciones;
 /**
  * Representa un error en la gesti�n de datos
  *
- * @author Acosta - Gioria - Moretti - Rebechi
+ *
  */
 public abstract class GestionException extends Exception {
 
