@@ -35,6 +35,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import app.comun.ConversorFechas;
+import app.datos.clases.EstadoInmuebleStr;
 import app.datos.clases.EstadoStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
@@ -947,6 +948,9 @@ public class NMVInmuebleController extends OlimpoController {
 	}
 
 	public void formatearModificarInmueble(Inmueble inmueble) {
+		if(inmueble.getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
+			salir();
+		}
 		this.inmueble = inmueble;
 		Platform.runLater(() -> {
 			titulo1.set("Modificar inmueble");
