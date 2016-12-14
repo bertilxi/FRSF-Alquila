@@ -28,6 +28,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -44,7 +46,7 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
    <children>
       <Accordion>
         <panes>
-          <TitledPane animated="false" text="Realizar búsqueda">
+          <TitledPane animated="false" contentDisplay="RIGHT" text="Realizar búsqueda">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
@@ -90,6 +92,13 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                      </children>
                   </AnchorPane>
             </content>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.29" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../res/img/lupa%20pequeña.PNG" />
+                     </image>
+                  </ImageView>
+               </graphic>
           </TitledPane>
         </panes>
       </Accordion>
