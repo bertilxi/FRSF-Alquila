@@ -234,7 +234,6 @@ public class GestorPDF {
 								direccion.append(inmueble.getDireccion().getOtros());
 							}
 							label = (Label) fila.lookup("#labelDireccion");
-							System.out.println("*" + direccion.toString() + "*");
 							label.setText(formateador.nombrePropio(direccion.toString()));
 
 							label = (Label) fila.lookup("#labelDormitorios");

@@ -33,6 +33,7 @@ import app.datos.clases.TipoInmuebleStr;
 import app.datos.entidades.Barrio;
 import app.datos.entidades.Calle;
 import app.datos.entidades.Cliente;
+import app.datos.entidades.DatosEdificio;
 import app.datos.entidades.Direccion;
 import app.datos.entidades.Imagen;
 import app.datos.entidades.Inmueble;
@@ -44,6 +45,7 @@ import app.datos.entidades.Provincia;
 import app.datos.entidades.Reserva;
 import app.datos.entidades.TipoDocumento;
 import app.datos.entidades.TipoInmueble;
+import app.ui.componentes.IconoAnimadoEspera;
 import app.ui.controladores.ControladorTest;
 import app.ui.controladores.LoginController;
 
@@ -104,12 +106,20 @@ public class GestorPDFTest {
 
 	@Test
 	public void testGenerarPDFCatalogo() throws Exception {
-		Inmueble inmueble1 = new Inmueble().setId(1);
-		Inmueble inmueble2 = new Inmueble().setId(2);
-		Inmueble inmueble3 = new Inmueble().setId(3);
-		Inmueble inmueble4 = new Inmueble().setId(4);
-		Inmueble inmueble5 = new Inmueble().setId(5);
-		Inmueble inmueble6 = new Inmueble().setId(6);
+		Direccion direccion = new Direccion()
+				.setLocalidad(new Localidad().setNombre("Localidad 1").setProvincia(new Provincia().setNombre("Provincia 1").setPais(new Pais().setNombre("Pais 1"))))
+				.setBarrio(new Barrio().setNombre("Barrio 1"))
+				.setCalle(new Calle().setNombre("Calle 1"))
+				.setNumero("123")
+				.setPiso("Piso 1")
+				.setOtros("Otros 1");
+		new IconoAnimadoEspera();
+		Inmueble inmueble1 = new Inmueble().setId(1).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble2 = new Inmueble().setId(2).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble3 = new Inmueble().setId(3).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble4 = new Inmueble().setId(4).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble5 = new Inmueble().setId(5).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
+		Inmueble inmueble6 = new Inmueble().setId(6).setDireccion(direccion).setTipo(new TipoInmueble(TipoInmuebleStr.CASA)).setDatosEdificio(new DatosEdificio()).setPrecio(10.0);
 
 		HashMap<Inmueble, Imagen> mapa = new HashMap<>();
 		mapa.put(inmueble1, null);
