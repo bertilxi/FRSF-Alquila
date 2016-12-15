@@ -413,6 +413,7 @@ public class GestorPDF {
 	 */
 	public PDF generarPDF(Venta venta) throws GestionException {
 		try{
+			//se carga el fxml
 			pdf = null;
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLDocumentoVenta));
@@ -420,6 +421,7 @@ public class GestorPDF {
 
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
+					//se setean los campos del documento con los datos de la venta
 					Label label = (Label) documentoVenta.lookup("#lblNombreComprador");
 					label.setText(formateador.nombrePropio(venta.getCliente().getNombre()));
 					label = (Label) documentoVenta.lookup("#lblApellidoComprador");
@@ -460,13 +462,15 @@ public class GestorPDF {
 					Date ahora = new Date();
 					label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
 
+					//genera el archivo
 					pdf = generarPDF(documentoVenta);
 				} catch(Throwable e){
-					return e;
+					return e; //si algo falla
 				}
-				return null;
+				return null; //si no falla nada
 			});
 
+			//se asegura de que se corra en el hilo de javaFX
 			if(!Platform.isFxApplicationThread()){
 				Platform.runLater(future);
 			}
@@ -474,6 +478,8 @@ public class GestorPDF {
 				future.run();
 			}
 			Throwable excepcion = future.get();
+
+			//si hubo error se lanza excepción
 			if(excepcion != null){
 				throw excepcion;
 			}
