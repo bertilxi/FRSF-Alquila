@@ -473,7 +473,7 @@ public class NMVInmuebleController extends OlimpoController {
 	private void actualizarLocalidades(Provincia provincia) {
 		cbLocalidad.setEditable(true);
 		cbLocalidad.getEditor().clear();
-		if(provincia == null) {
+		if(provincia == null){
 			cbLocalidad.setEditable(false);
 		}
 		cbLocalidad.getItems().clear();
@@ -497,7 +497,7 @@ public class NMVInmuebleController extends OlimpoController {
 	private void actualizarProvincias(Pais pais) {
 		cbProvincia.setEditable(true);
 		cbProvincia.getEditor().clear();
-		if(pais == null) {
+		if(pais == null){
 			cbProvincia.setEditable(false);
 		}
 		cbProvincia.getItems().clear();
@@ -522,7 +522,7 @@ public class NMVInmuebleController extends OlimpoController {
 		cbCalle.setEditable(true);
 		cbBarrio.getEditor().clear();
 		cbCalle.getEditor().clear();
-		if(loc == null) {
+		if(loc == null){
 			cbBarrio.setEditable(false);
 			cbCalle.setEditable(false);
 		}
@@ -538,14 +538,19 @@ public class NMVInmuebleController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón agregar foto.
+	 */
 	@FXML
 	public void agregarFoto() {
+		//Se abre un cuadro de diálogo para pedir la ruta del archivo
 		File imagen = solicitarArchivo();
 		if(imagen == null){
 			return;
 		}
 
 		try{
+			//Se carga la imagen y se la muestra
 			final ImageView imageView = new ImageView(imagen.toURI().toURL().toExternalForm());
 			imageView.setPreserveRatio(true);
 			imageView.setFitHeight(100);
@@ -555,6 +560,7 @@ public class NMVInmuebleController extends OlimpoController {
 			panelFotos.getChildren().add(imageView);
 			archivosImagenesNuevas.put(imageView, imagen);
 		} catch(MalformedURLException e){
+			//Si ocurre algún error se lo muestra en pantalla
 			presentador.presentarExcepcionInesperada(e, stage);
 		}
 	}
@@ -597,8 +603,12 @@ public class NMVInmuebleController extends OlimpoController {
 		return retorno;
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón quitar foto.
+	 */
 	@FXML
 	public void quitarFoto() {
+		//Se quita la imagen de la vista
 		panelFotos.getChildren().remove(imagenSeleccionada);
 		if(archivosImagenesPreExistentes.get(imagenSeleccionada) != null){
 			archivosImagenesPreExistentes.remove(imagenSeleccionada);
@@ -625,13 +635,13 @@ public class NMVInmuebleController extends OlimpoController {
 		}
 	}
 
-	@FXML
 	/**
 	 * Método que permite guardar los cambios hechos en la vista
 	 * Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
 	 *
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
+	@FXML
 	public ResultadoControlador aceptar() {
 		ResultadoControlador resultado;
 		if(inmueble == null){
@@ -653,6 +663,7 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador crearInmueble() {
+		//Inicialización de variables
 		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoCrearInmueble resultado;
 		StringBuffer erroresBfr = new StringBuffer();
@@ -718,6 +729,7 @@ public class NMVInmuebleController extends OlimpoController {
 			}
 		}
 
+		//Se cargan los datos de la vista al inmueble a guardar
 		inmueble.setDatosEdificio(datos)
 				.setFechaCarga(fechaCarga)
 				.setEstado(new Estado(EstadoStr.ALTA))
@@ -735,6 +747,7 @@ public class NMVInmuebleController extends OlimpoController {
 				.getFotos().addAll(fotos);
 
 		try{
+			//Se llama a la lógica para persistir el inmueble y se recibe el resultado de las validaciones y datos extras de ser necesarios
 			resultado = coordinador.crearInmueble(inmueble);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
@@ -744,6 +757,7 @@ public class NMVInmuebleController extends OlimpoController {
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 
+		//Procesamiento de errores de la lógica
 		if(resultado.hayErrores()){
 			for(ErrorCrearInmueble err: resultado.getErrores()){
 				switch(err) {
@@ -793,9 +807,11 @@ public class NMVInmuebleController extends OlimpoController {
 					break;
 				}
 			}
+			//Se muestran los errores
 			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
+			//Se muestra una notificación de que se creó correctamente el inmueble
 			presentador.presentarToast("Se ha creado el inmueble con éxito", stage);
 		}
 
@@ -809,6 +825,7 @@ public class NMVInmuebleController extends OlimpoController {
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
 	private ResultadoControlador modificarInmueble() {
+		//Inicialización de variables
 		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
 		ResultadoModificarInmueble resultado;
 		StringBuffer erroresBfr = new StringBuffer();
@@ -876,6 +893,7 @@ public class NMVInmuebleController extends OlimpoController {
 			}
 		}
 
+		//Se cargan los datos de la vista al inmueble a modificar
 		inmueble.getFotos().removeAll(imagenesEliminadas);
 		inmueble.setDatosEdificio(datos)
 				.setDireccion(direccion)
@@ -892,6 +910,7 @@ public class NMVInmuebleController extends OlimpoController {
 				.getFotos().addAll(fotos);
 
 		try{
+			//Se llama a la lógica para persistir el inmueble modificado y se recibe el resultado de las validaciones y datos extras de ser necesarios
 			resultado = coordinador.modificarInmueble(inmueble);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
@@ -901,6 +920,7 @@ public class NMVInmuebleController extends OlimpoController {
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 
+		//Procesamiento de errores de la lógica
 		if(resultado.hayErrores()){
 			for(ErrorModificarInmueble err: resultado.getErrores()){
 				switch(err) {
@@ -954,9 +974,11 @@ public class NMVInmuebleController extends OlimpoController {
 					break;
 				}
 			}
+			//Se muestran los errores
 			presentador.presentarError("No se pudo modificar el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
+			//Se muestra una notificación de que se modificó correctamente el inmueble
 			presentador.presentarToast("Se ha modificado el inmueble con éxito", stage);
 		}
 
