@@ -39,5 +39,4 @@
 ehthumbs.db
 Thumbs.db
 /bin/
-/tmp.pdf
-/visorPDF/web/ver.pdf
+!license.jar
