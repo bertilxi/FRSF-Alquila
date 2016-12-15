@@ -24,7 +24,6 @@ import app.datos.entidades.Vendedor;
 import app.ui.ScenographyChanger;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener.Change;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Toggle;
@@ -121,30 +120,52 @@ public class BaseController extends OlimpoController {
 		((ToggleButton) toggle).addEventFilter(MouseEvent.MOUSE_CLICKED, consumeMouseEventfilter);
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón ver mis datos
+	 */
 	@FXML
-	public void verMisDatos(Event event) {
+	public void verMisDatos() {
+		//Cambia a la pantalla de modificar vendedor
 		ModificarVendedorController nuevaPantalla = (ModificarVendedorController) cambiarScene(background, ModificarVendedorController.URLVista, ventanaInicio);
+		//Le seteamos el vendedor logueado para que vea y modifique sus datos
 		nuevaPantalla.setVendedor(vendedorLogueado);
+		//Le permitimos ver sus ventas
 		nuevaPantalla.mostrarBotonVerVentas();
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón clientes
+	 */
 	@FXML
-	public void verClientes(Event event) {
+	public void verClientes() {
+		//Cambia a la pantalla de administración de clientes
 		cambiarScene(background, AdministrarClienteController.URLVista);
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón inmuebles
+	 */
 	@FXML
 	public void verInmuebles() {
+		//Cambia a la pantalla de administración de clientes
 		cambiarScene(background, AdministrarInmuebleController.URLVista);
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón vendedores
+	 */
 	@FXML
 	public void verVendedores() {
+		//Cambia a la pantalla de administración de vendedores
 		cambiarScene(background, AdministrarVendedorController.URLVista);
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón propietarios
+	 */
 	@FXML
 	public void verPropietarios() {
+		//Cambia a la pantalla de administración de propietarios
 		cambiarScene(background, AdministrarPropietarioController.URLVista);
 	}
 
