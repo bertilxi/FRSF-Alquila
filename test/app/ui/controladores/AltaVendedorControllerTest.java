@@ -56,23 +56,40 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class AltaVendedorControllerTest {
 
+	/**
+	 * @param nombre
+	 * 			nombre del vendedor a crear
+	 * @param apellido
+	 * 			apellido del vendedor a crear
+	 * @param tipoDocumento
+	 * 			tipoDocumento del vendedor a crear
+	 * @param numeroDocumento
+	 * 			numeroDocumento del vendedor a crear
+	 * @param contraseña
+	 * 			contraseña ingresada
+	 * @param contraseña2
+	 * 			segunda contraseña ingresada
+	 * @param resultadoCrearVendedorEsperado
+	 * 			apellido del vendedor a crear
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 			indica si se debe presentar una ventana de error
+	 * @param llamaAPresentadorVentanasPresentarExcepcion
+	 * 			indica si se debe presentar una ventana de excepción
+	 * @param llamaAPresentadorVentanasPresentarExcepcionInesperada
+	 * 			indica si se debe presentar una ventana de excepción inesperada
+	 * @param llamaACrearVendedor
+	 * 			indica si se debe llamar al método crear vendedor de la lógica
+	 * @param excepcion
+	 * 			excepción devuelta por la lógica
+	 * @param aceptarVentanaConfirmacion
+	 * 			indica si el usuario acepta la ventana de confirmación
+	 * @param llamaACambiarScene
+	 * 			indica si debe llamar al cambio de pantalla
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
-	public void testCrearVendedor(String nombre,
-			String apellido,
-			TipoDocumento tipoDocumento,
-			String numeroDocumento,
-			String contraseña,
-			String contraseña2,
-			ResultadoCrearVendedor resultadoCrearVendedorEsperado,
-			Integer llamaAPresentadorVentanasPresentarError,
-			Integer llamaAPresentadorVentanasPresentarExcepcion,
-			Integer llamaAPresentadorVentanasPresentarExcepcionInesperada,
-			Integer llamaACrearVendedor,
-			Exception excepcion,
-			Boolean aceptarVentanaConfirmacion,
-			Integer llamaACambiarScene)
-			throws Throwable {
+	public void testCrearVendedor(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String contraseña, String contraseña2, ResultadoCrearVendedor resultadoCrearVendedorEsperado, Integer llamaAPresentadorVentanasPresentarError, Integer llamaAPresentadorVentanasPresentarExcepcion, Integer llamaAPresentadorVentanasPresentarExcepcionInesperada, Integer llamaACrearVendedor, Exception excepcion, Boolean aceptarVentanaConfirmacion, Integer llamaACambiarScene) throws Throwable {
 		//Se crean los mocks necesarios
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
@@ -171,16 +188,18 @@ public class AltaVendedorControllerTest {
 	protected Object[] parametersForTestCrearVendedor() {
 		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
 		return new Object[] {
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCorrecto, 0, 0, 0, 1, null, true, 0 }, //prueba correcta
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCrearNombreIncorrecto, 1, 0, 0, 1, null, true, 0 }, //prueba nombre incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCrearApellidoIncorrecto, 1, 0, 0, 1, null, true, 0 }, //prueba apellido incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCrearDocumentoIncorrecto, 1, 0, 0, 1, null, true, 0 }, //prueba documento incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCrearYaExiste, 1, 0, 0, 1, null, true, 0 }, //prueba ya existe vendedor
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Nombre_Incorrecto, ErrorCrearVendedor.Formato_Apellido_Incorrecto), 1, 0, 0, 1, null, true, 0 }, //prueba nombre y apellido incorrectos
-				new Object[] { "", "Perez", doc, "12345678", "abc", "abc", null, 1, 0, 0, 0, null, true, 0 }, //prueba nombre vacio
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCorrecto, 0, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), true, 1 }, //prueba Vendedor Existente y acepta
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCorrecto, 0, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), false, 0 }, //prueba Vendedor Existente y cancela
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCorrecto, 0, 1, 0, 1, new SaveUpdateException(new Throwable()), false, 0 }, //prueba PersistenciaException
+				//Casos de prueba
+				//nombre,apellido,tipoDocumento,numeroDocumento,contraseña,contraseña2,resultadoCrearVendedorEsperado,llamaAPresentadorVentanasPresentarError,llamaAPresentadorVentanasPresentarExcepcion,llamaAPresentadorVentanasPresentarExcepcionInesperada,llamaACrearVendedor,excepcion,aceptarVentanaConfirmacion,llamaACambiarScene
+				/* 0 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCorrecto, 0, 0, 0, 1, null, true, 0 }, //prueba correcta
+				/* 1 */new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCrearNombreIncorrecto, 1, 0, 0, 1, null, true, 0 }, //prueba nombre incorrecto
+				/* 2 */new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCrearApellidoIncorrecto, 1, 0, 0, 1, null, true, 0 }, //prueba apellido incorrecto
+				/* 3 */new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCrearDocumentoIncorrecto, 1, 0, 0, 1, null, true, 0 }, //prueba documento incorrecto
+				/* 4 */new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCrearYaExiste, 1, 0, 0, 1, null, true, 0 }, //prueba ya existe vendedor
+				/* 5 */new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Nombre_Incorrecto, ErrorCrearVendedor.Formato_Apellido_Incorrecto), 1, 0, 0, 1, null, true, 0 }, //prueba nombre y apellido incorrectos
+				/* 6 */new Object[] { "", "Perez", doc, "12345678", "abc", "abc", null, 1, 0, 0, 0, null, true, 0 }, //prueba nombre vacio
+				/* 7 */new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCorrecto, 0, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), true, 1 }, //prueba Vendedor Existente y acepta
+				/* 8 */new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCorrecto, 0, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), false, 0 }, //prueba Vendedor Existente y cancela
+				/* 9 */new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", resultadoCorrecto, 0, 1, 0, 1, new SaveUpdateException(new Throwable()), false, 0 }, //prueba PersistenciaException
 		};
 	}
 
