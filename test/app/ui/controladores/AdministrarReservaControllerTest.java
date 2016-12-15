@@ -55,9 +55,13 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class AdministrarReservaControllerTest {
 
+	/**
+	 * Se prueba que se llame a la pantalla altaReserva si se presiona el botón alta
+	 * 
+	 * @throws Throwable
+	 */
 	@Test
 	public void testAltaReserva() throws Throwable {
-
 		//Se crean los mocks necesarios
 		ScenographyChanger scenographyChangerMock = mock(ScenographyChanger.class);
 		AltaReservaController altaReservaControllerMock = mock(AltaReservaController.class);
@@ -98,6 +102,25 @@ public class AdministrarReservaControllerTest {
 		;
 	}
 
+	/**
+	 * Se prueba que se elimine una reserva si se presiona el botón eliminar
+	 * 
+	 * @param listaReservas
+	 * 			lista de las reservas en la tabla
+	 * @param llamaAPresentadorVentanasPresentarConfirmacion
+	 * 			indica si se debe llamar a presentar el cuadro de confirmación
+	 * @param aceptarVentanaConfirmacion
+	 * 			indica si el usuario acepta o no la confirmación
+	 * @param resultadoEliminarReservaEsperado
+	 * 			resultado esperado por el test
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 			indica si se debe llamar a mostrar una ventana de error
+	 * @param llamaAPresentadorVentanasPresentarExcepcion
+	 * 			indica si se debe llamar a mostrar una ventana de excepción
+	 * @param excepcion
+	 * 			excepción devuelta por la capa lógica
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
 	public void testEliminarReserva(ArrayList<Reserva> listaReservas,
@@ -172,7 +195,6 @@ public class AdministrarReservaControllerTest {
 		};
 		//Se corre el test en el hilo de JavaFX
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
-
 	}
 
 	/**
@@ -203,10 +225,12 @@ public class AdministrarReservaControllerTest {
 		listaReservas.add(reserva2);
 
 		return new Object[] {
-				new Object[] { listaReservas, 1, true, resultadoSinError, 0, 0, null }, //Reserva correcta y se selecciona eliminar
-				new Object[] { listaReservas, 1, true, resultadoSinError, 0, 1, exception }, //La base de datos devuelve una excepción
-				new Object[] { listaReservas, 1, false, resultadoSinError, 0, 0, null }, //Reserva correcta y no se acepta la ventana de confirmación
-				new Object[] { listaReservasVacia, 0, false, resultadoSinError, 0, 0, null } //La lista de reservas es vacía
+				//Casos de prueba
+				// listaReservas, llamaAPresentadorVentanasPresentarConfirmacion, aceptarVentanaConfirmacion, resultadoEliminarReservaEsperado, llamaAPresentadorVentanasPresentarError, llamaAPresentadorVentanasPresentarExcepcion, excepcion
+				/* 0 */ new Object[] { listaReservas, 1, true, resultadoSinError, 0, 0, null }, //Reserva correcta y se selecciona eliminar
+				/* 1 */ new Object[] { listaReservas, 1, true, resultadoSinError, 0, 1, exception }, //La base de datos devuelve una excepción
+				/* 2 */ new Object[] { listaReservas, 1, false, resultadoSinError, 0, 0, null }, //Reserva correcta y no se acepta la ventana de confirmación
+				/* 3 */ new Object[] { listaReservasVacia, 0, false, resultadoSinError, 0, 0, null } //La lista de reservas es vacía
 		};
 	}
 }

@@ -39,7 +39,18 @@ public class GestorCatalogo {
 	@Resource
 	GestorPDF gestorPDF;
 
-	public ResultadoCrearCatalogo crearCatalogo(CatalogoVista catalogoVista) throws PersistenciaException, GestionException {
+	/**
+	 * Se encarga de validar los datos de un catalogoVista a crear y, en caso de que no haya errores,
+	 * delegar la generación del archivo pdf al gestorPDF
+	 *	 *
+	 * @param catalogoVista
+	 *           clase con los datos necesarios para generar un catálogo
+	 * @return un resultado informando errores correspondientes en caso de que los haya
+	 *
+	 * @throws GestionException
+	 *             se lanza una excepción GenerarPDFException si ocurre un error al generar el PDF
+	 */
+	public ResultadoCrearCatalogo crearCatalogo(CatalogoVista catalogoVista) throws GestionException {
 		ArrayList<ErrorCrearCatalogo> errores = new ArrayList<>();
 		PDF catalogoPDF = null;
 
