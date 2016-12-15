@@ -116,6 +116,7 @@ public class AltaVentaController extends OlimpoController {
 		if(inmueble != null){
 			Propietario propietario = inmueble.getPropietario();
 
+			//seteo en pantalla los datos del inmueble que se va a vender
 			labelAltura.setText(inmueble.getDireccion().getNumero());
 			labelApellido.setText(propietario.getApellido());
 			labelBarrio.setText(inmueble.getDireccion().getBarrio().getNombre());
@@ -153,6 +154,7 @@ public class AltaVentaController extends OlimpoController {
 	public void acceptAction() {
 		StringBuilder errores = new StringBuilder("");
 
+		//obtengo y verifico los datos introducidos
 		Cliente cliente = comboBoxCliente.getValue();
 		Double importe = null;
 		String medioDePago = textFieldMedioDePago.getText().trim();
@@ -178,11 +180,13 @@ public class AltaVentaController extends OlimpoController {
 			errores.append("No se encuentra el propietario del inmueble").append("\n");
 		}
 
+		//si hay errores se muestra al usuario
 		if(!errores.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
 		}
-		else{
+		else{ //si no hay errores se muestra un Dialog emergente para que el vendedor confirme su contraseña
 			boolean contraseñaCorrecta = showConfirmarContraseñaDialog();
+			// si la contraseña es correcta se crea la venta
 			if(contraseñaCorrecta){
 				Venta venta = new Venta();
 				venta.setCliente(cliente);
@@ -193,9 +197,10 @@ public class AltaVentaController extends OlimpoController {
 				venta.setPropietario(inmueble.getPropietario());
 				venta.setVendedor(vendedorLogueado);
 
-				try{
+				try{ //se delega la operación a capa lógica
 					ResultadoCrearVenta resultado = coordinador.crearVenta(venta);
 					if(resultado.hayErrores()){
+						//si hay errores los muestro al usuario
 						StringBuilder stringErrores = new StringBuilder();
 						for(ErrorCrearVenta e: resultado.getErrores()){
 							switch(e) {
@@ -234,9 +239,12 @@ public class AltaVentaController extends OlimpoController {
 						presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 					}
 					else{
+						//si no hay errores muestro una notificación
+						//y pregunto al usuario si quiere imprimir el documento generado
 						presentador.presentarToast("Se ha realizado la venta con éxito", stage);
 						VentanaConfirmacion ventana = presentador.presentarConfirmacion("Venta realizada correctamente", "¿Desea imprimir el documento generado?", stage);
 						if(ventana.acepta()){
+							//si acepta mando a imprimir
 							try{
 								impresora.imprimirPDF(venta.getArchivoPDF());
 							} catch(ImprimirPDFException ex){
@@ -245,6 +253,7 @@ public class AltaVentaController extends OlimpoController {
 								presentador.presentarExcepcionInesperada(e);
 							}
 						}
+						//vuelvo a la vista de listar inmuebles
 						cambiarmeAScene(AdministrarInmuebleController.URLVista);
 					}
 				} catch(GestionException e){
@@ -274,12 +283,12 @@ public class AltaVentaController extends OlimpoController {
 	 */
 	protected boolean showConfirmarContraseñaDialog() {
 		try{
-			// Load the fxml file and create a new stage for the popup dialog.
+			//cargo el fxml y creo el stage para el dialog
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(ConfirmarContraseñaController.URLVista));
 			VBox page = (VBox) loader.load();
 
-			// Create the dialog Stage.
+			// creo el dialog
 			Stage dialogStage = new Stage();
 			dialogStage.setResizable(false);
 			dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -288,14 +297,14 @@ public class AltaVentaController extends OlimpoController {
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
-			// Set the event into the controller.
+			// cargo y seteo el controlador
 			ConfirmarContraseñaController controlador = loader.getController();
 			controlador.setDialogStage(dialogStage);
 			controlador.setCoordinador(coordinador);
 			controlador.setPresentador(presentador);
 			controlador.setVendedorLogueado(vendedorLogueado);
 
-			// Show the dialog and wait until the user closes it
+			//muestro el dialog y espero hasta que el usuario lo cierre
 			dialogStage.showAndWait();
 
 			return controlador.isCorrecto();

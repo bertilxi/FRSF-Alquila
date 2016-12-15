@@ -612,6 +612,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	private void buscarAction() {
 		StringBuilder errores = new StringBuilder("");
 
+		//Se obtienen los datos ingresados por el usuario y se verifican errores
 		Pais pais = comboBoxPais.getValue();
 		Provincia provincia = comboBoxProvincia.getValue();
 		Localidad localidad = comboBoxLocalidad.getValue();
@@ -660,20 +661,23 @@ public class AdministrarInmuebleController extends OlimpoController {
 		if(precioMaximo != null && precioMinimo != null && precioMaximo < precioMinimo){
 			errores.append("El precio máximo es menor al precio mínimo.\n");
 		}
+
+		//si hay errores se muestra al usuario
 		if(!errores.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
 		}
 		else{
-
 			tablaInmuebles.getItems().clear();
+
+			// si no se introdujo ningún filtro de búsqueda
 			if(pais == null && provincia == null && localidad == null && barrio == null && estadoInmueble == null && tipoInmueble == null && vacioCD && vacioPMa && vacioPMi){
 				try{
 					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles());
-				} catch(PersistenciaException e){
+				} catch(PersistenciaException e){ //fallo en la capa de persistencia
 					presentador.presentarExcepcion(e, stage);
 				}
 			}
-			else{
+			else{ // si se introdujo algún filtro de búsqueda
 				try{
 					FiltroInmueble filtro = new FiltroInmueble.Builder()
 							.barrio(barrio)
@@ -687,7 +691,9 @@ public class AdministrarInmuebleController extends OlimpoController {
 							.tipoInmueble(((tipoInmueble != null) ? tipoInmueble.getTipo() : (null)))
 							.build();
 					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles(filtro));
-				} catch(Exception e){
+				} catch(PersistenciaException e) { // fallo en la capa de persistencia
+					presentador.presentarExcepcion(e, stage);
+				} catch(Exception e){ //alguna otra excepción inesperada
 					presentador.presentarExcepcionInesperada(e, stage);
 				}
 			}

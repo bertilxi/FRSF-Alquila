@@ -51,6 +51,7 @@ public class GestorVenta {
 	public ResultadoCrearVenta crearVenta(Venta venta) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearVenta> errores = new ArrayList<>();
 
+		//se validan los datos
 		if(venta.getCliente() == null){
 			errores.add(ErrorCrearVenta.Cliente_Vacío);
 		}
@@ -77,14 +78,17 @@ public class GestorVenta {
 			errores.add(ErrorCrearVenta.Formato_Medio_De_Pago_Incorrecto);
 		}
 
+		//verifico si el cliente tiene mismo tipo y número de documento que el propietario. Entonces ya es el propietario del inmueble
 		if(venta.getCliente() != null && venta.getPropietario() != null && venta.getCliente().getTipoDocumento().equals(venta.getPropietario().getTipoDocumento()) && venta.getCliente().getNumeroDocumento().equals(venta.getPropietario().getNumeroDocumento())) {
 			errores.add(ErrorCrearVenta.Cliente_Igual_A_Propietario);
 		}
 
+		//verifico si el inmueble ya está vendido
 		if(venta.getInmueble() != null && venta.getInmueble().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)) {
 			errores.add(ErrorCrearVenta.Inmueble_Ya_Vendido);
 		}
 
+		//verifico si el inmueble está reserado por otro cliente que no sea el que lo quiere comprar
 		Date fechaHoy = null;
 		if(venta.getInmueble() != null) {
 			fechaHoy = new Date(System.currentTimeMillis());
@@ -96,6 +100,7 @@ public class GestorVenta {
 			}
 		}
 
+		//si no hay errores marco al inmueble como vendido, seteo fecha, pdf y mando a persistir
 		if(errores.isEmpty()){
 			ArrayList<EstadoInmueble> estadosInm = gestorDatos.obtenerEstadosInmueble();
 			for(EstadoInmueble ei: estadosInm){
