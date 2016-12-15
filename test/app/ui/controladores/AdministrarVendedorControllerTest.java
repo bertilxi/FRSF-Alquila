@@ -53,6 +53,12 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class AdministrarVendedorControllerTest {
 
+	/**
+	 * Prueba el método agregarVendedor()
+	 * Se comprueba que se llame a la pantalla correspondiente cuando se presiona el boton agregar
+	 * 
+	 * @throws Throwable
+	 */
 	@Test
 	public void testAgregarVendedor() throws Throwable {
 
@@ -97,10 +103,17 @@ public class AdministrarVendedorControllerTest {
 		;
 	}
 
+	/**
+	 * Prueba el método Modificar Vendedor()
+	 * @param listaVendedores
+	 * 			vendedores inicialmente en la tabla de vendedores
+	 * @param llamaAModificar
+	 * 			indica si se debe llamar a la pantalla modificar vendedor
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
-	public void testModificarVendedor(ArrayList<Vendedor> listaVendedores, Integer llamaAModificar, String urlModificarVendedor) throws Throwable {
-
+	public void testModificarVendedor(ArrayList<Vendedor> listaVendedores, Integer llamaAModificar) throws Throwable {
 		//Se crean los mocks necesarios
 		ScenographyChanger scenographyChangerMock = mock(ScenographyChanger.class);
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
@@ -137,12 +150,11 @@ public class AdministrarVendedorControllerTest {
 				//Método a probar
 				administrarVendedorController.modificarAction(null);
 				//Se hacen las verificaciones pertinentes para comprobar que el controlador se comporte adecuadamente
-				Mockito.verify(scenographyChangerMock, times(llamaAModificar)).cambiarScenography(urlModificarVendedor, false);
+				Mockito.verify(scenographyChangerMock, times(llamaAModificar)).cambiarScenography(ModificarVendedorController.URLVista, false);
 			}
 		};
 		//Se corre el test en el hilo de JavaFX
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
-
 	}
 
 	/**
@@ -152,7 +164,6 @@ public class AdministrarVendedorControllerTest {
 	 * 		Objeto con:
 	 *         listaVendedores para rellenar la tabla,
 	 *         las veces que se debería llamar para cambiar la scene a la vista modificar,
-	 *         la url de la vista a la cual se debería cambiar
 	 */
 	protected Object[] parametersForTestModificarVendedor() {
 		Vendedor vendedor = new Vendedor()
@@ -160,13 +171,14 @@ public class AdministrarVendedorControllerTest {
 				.setApellido("Perez")
 				.setNumeroDocumento("1234");
 
-		ArrayList<Vendedor> listaVendedores = new ArrayList<>();
+		ArrayList<Vendedor> listaVendedoresConUnVendedor = new ArrayList<>();
 		ArrayList<Vendedor> listaVendedoresVacia = new ArrayList<>();
-		listaVendedores.add(vendedor);
+		listaVendedoresConUnVendedor.add(vendedor);
 
 		return new Object[] {
-				new Object[] { listaVendedores, 1, ModificarVendedorController.URLVista },
-				new Object[] { listaVendedoresVacia, 0, ModificarVendedorController.URLVista }
+				//Casos de prueba
+				/* 0 */ new Object[] { listaVendedoresConUnVendedor, 1},
+				/* 1 */ new Object[] { listaVendedoresVacia, 0}
 		};
 	}
 
