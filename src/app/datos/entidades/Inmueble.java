@@ -101,7 +101,7 @@ public class Inmueble {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idestadoinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "inmueble_idestadoinmueble_fk"), nullable = false)
-	private EstadoInmueble estadoInmueble;
+	private EstadoInmueble estadoInmueble; //Establece si el inmueble fue vendido o no
 
 	@OneToOne(mappedBy = "inmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	private DatosEdificio datosEdificio;

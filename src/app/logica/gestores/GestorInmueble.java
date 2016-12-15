@@ -258,6 +258,7 @@ public class GestorInmueble {
 					.setTipo(inmuebleAuxiliar.getTipo())
 					.setInmueble(inmuebleAuxiliar)
 					.setHistorialDatosEdificio(historialDatosEdificioAuxiliar)
+					.setEstadoInmueble(inmuebleAuxiliar.getEstadoInmueble())
 					.getFotos().addAll(inmuebleAuxiliar.getFotos());
 			persistidorHistorial.guardarHistorialInmueble(historialInmuebleAuxiliar);
 
