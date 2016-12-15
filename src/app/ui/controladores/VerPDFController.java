@@ -28,6 +28,13 @@ import java.util.concurrent.FutureTask;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.DownloadHandler;
 import com.teamdev.jxbrowser.chromium.DownloadItem;
+import com.teamdev.jxbrowser.chromium.events.FailLoadingEvent;
+import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
+import com.teamdev.jxbrowser.chromium.events.FrameLoadEvent;
+import com.teamdev.jxbrowser.chromium.events.LoadEvent;
+import com.teamdev.jxbrowser.chromium.events.LoadListener;
+import com.teamdev.jxbrowser.chromium.events.ProvisionalLoadingEvent;
+import com.teamdev.jxbrowser.chromium.events.StartLoadingEvent;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 
 import app.datos.entidades.PDF;
@@ -45,7 +52,7 @@ public class VerPDFController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/verPDF.fxml";
 
-	private static final String URL_PDF = "visorPDF/web/ver.pdf";
+	public static final String URL_PDF = "ver.pdf";
 
 	@FXML
 	protected BorderPane borderPanePDF;
@@ -75,42 +82,83 @@ public class VerPDFController extends OlimpoController {
 				String url = "file:///" + pdfFile.getAbsolutePath();
 				browser.loadURL(url);
 				browser.setDownloadHandler(new DownloadHandler() {
-		            public boolean allowDownload(DownloadItem download) {
-		            		String tipo = "(*.pdf)";
-		            		ArrayList<String> tiposFiltro = new ArrayList<>();
-		            		tiposFiltro.add("*.pdf");
+					@Override
+					public boolean allowDownload(DownloadItem download) {
+						return download(download);
+					}
+				});
+				browser.addLoadListener(new LoadListener() {
 
-		            		ExtensionFilter filtro = new ExtensionFilter("Archivo de imágen " + tipo, tiposFiltro);
+					@Override
+					public void onStartLoadingFrame(StartLoadingEvent arg0) {
 
-		            		FileChooser archivoSeleccionado = new FileChooser();
-		            		archivoSeleccionado.getExtensionFilters().add(filtro);
+					}
 
-		            		FutureTask<Boolean> future = new FutureTask<>(() -> {
-		            			File pdfAGuardar = null;
-		            			pdfAGuardar = archivoSeleccionado.showSaveDialog(stage);
-		            			download.setDestinationFile(pdfAGuardar);
-		            			return true;
-		    				});
+					@Override
+					public void onProvisionalLoadingFrame(ProvisionalLoadingEvent arg0) {
 
-		    				Platform.runLater(future);
-		    				boolean b = false;
-		    				try {
-		    					b = future.get();
-							} catch (CancellationException e) {
-								//el usuario cancela
-								//no se hace nada
-							} catch (Exception e) { //cualquier otra excepción
-								Platform.runLater(() -> {
-									presentador.presentarError("Error", "No se pudo guardar el pdf deseado", stage);
-								});
-							}
-		    				return b;
-		            }
+					}
+
+					@Override
+					public void onFinishLoadingFrame(FinishLoadingEvent arg0) {
+						arg0.getBrowser().setZoomLevel(-4.029320239182773);
+					}
+
+					@Override
+					public void onFailLoadingFrame(FailLoadingEvent arg0) {
+
+					}
+
+					@Override
+					public void onDocumentLoadedInMainFrame(LoadEvent arg0) {
+
+					}
+
+					@Override
+					public void onDocumentLoadedInFrame(FrameLoadEvent arg0) {
+
+					}
 				});
 			} catch(Exception e){
 				presentador.presentarExcepcionInesperada(e);
 			}
 		});
+	}
+
+	private Boolean download(DownloadItem download) {
+		String tipo = "(*.pdf ; *.PDF)";
+		ArrayList<String> tiposFiltro = new ArrayList<>();
+		tiposFiltro.add("*.pdf");
+		tiposFiltro.add("*.PDF");
+
+		ExtensionFilter filtro = new ExtensionFilter("Archivo de imágen " + tipo, tiposFiltro);
+
+		FileChooser archivoSeleccionado = new FileChooser();
+		archivoSeleccionado.getExtensionFilters().add(filtro);
+
+		FutureTask<Boolean> future = new FutureTask<>(() -> {
+			File pdfAGuardar = null;
+			pdfAGuardar = archivoSeleccionado.showSaveDialog(stage);
+			download.setDestinationFile(pdfAGuardar);
+			return true;
+		});
+
+		Platform.runLater(future);
+		Boolean b = false;
+		try{
+			b = future.get();
+		} catch(CancellationException e){
+			//el usuario cancela
+			//no se hace nada
+		} catch(Exception e){ //cualquier otra excepción
+			Platform.runLater(() -> {
+				presentador.presentarError("Error", "No se pudo guardar el pdf deseado", stage);
+			});
+		}
+		if(b == null){
+			b = false;
+		}
+		return b;
 	}
 
 	@Override

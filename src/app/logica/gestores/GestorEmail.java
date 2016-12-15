@@ -59,6 +59,9 @@ import app.datos.entidades.Archivo;
 
 @Service
 public class GestorEmail {
+
+	public static final String URL_RESERVA = "reserva.pdf";
+
 	/** Application name. */
 	private final String APPLICATION_NAME =
 			"Olimpo";
@@ -109,7 +112,7 @@ public class GestorEmail {
 		// Print the labels in the user's account.
 		String user = "me";
 
-		File archivoTMP = new File("reserva.pdf");
+		File archivoTMP = new File(URL_RESERVA);
 		FileOutputStream fos = new FileOutputStream(archivoTMP);
 		fos.write(archivo.getArchivo());
 		fos.flush();
