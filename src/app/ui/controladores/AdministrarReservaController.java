@@ -104,11 +104,14 @@ public class AdministrarReservaController extends OlimpoController {
 	 * Se pasa a la pantalla alta reserva
 	 */
 	public void nuevoAction(ActionEvent event) {
+		//Se verifica que se haya seleccionado un inmueble y que este no esté vendido
 		if(inmueble != null && inmueble.getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
 			presentador.presentarError("Error al crear reserva", "El inmueble ya fue vendido", stage);
 			return;
 		}
+		//Se llama a la pantalla alta reserva
 		AltaReservaController controlador = (AltaReservaController) cambiarmeAScene(AltaReservaController.URLVista, URLVista);
+		//Se le pasan a la pantalla los datos del cliente o inmueble según corresponda
 		if(cliente != null){
 			controlador.setCliente(cliente);
 			controlador.setVendedorLogueado(vendedorLogueado);
@@ -121,14 +124,16 @@ public class AdministrarReservaController extends OlimpoController {
 
 	/**
 	 * Acción que se ejecuta al presionar el botón ver
-	 * Se pasa a la pantalla modificar reserva
+	 * Se pasa a la pantalla de ver pdf
 	 */
 	public void verAction(ActionEvent event) {
 		Reserva reserva = tablaReservas.getSelectionModel().getSelectedItem();
+		//Se comprueba que se haya seleccionado una reserva
 		if(reserva == null){
 			return;
 		}
-
+		
+		//Se llama a la pantalla que muestra los PDFs
 		VerPDFController visorPDF = (VerPDFController) cambiarScene(fondo, VerPDFController.URLVista, (Pane) fondo.getChildren().get(0));
 		visorPDF.cargarPDF(reserva.getArchivoPDF());
 	}
@@ -136,31 +141,37 @@ public class AdministrarReservaController extends OlimpoController {
 	/**
 	 * Acción que se ejecuta al presionar el botón eliminar
 	 * Se muestra una ventana emergente para confirmar la operación
+	 * Si acepta se da de baja la reserva
 	 */
 	public void eliminarAction(ActionEvent event) {
 		Reserva reserva = tablaReservas.getSelectionModel().getSelectedItem();
+		//Se comprueba que se haya seleccionado una reserva
 		if(reserva == null){
 			return;
 		}
+		//Se muestra una ventana para que el usuario confirme la operación
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar reserva", "Está a punto de eliminar una reserva.\n¿Desea continuar?", this.stage);
 		if(ventana.acepta()){
 			ResultadoEliminarReserva resultado = new ResultadoEliminarReserva();
 			try{
+				//Se da de baja la reserva
 				resultado = coordinador.eliminarReserva(reserva);
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
 
+			//Se muestran los errores devueltos por el método de la lógica
 			if(resultado.hayErrores()){
 				StringBuilder stringErrores = new StringBuilder();
 				for(ErrorEliminarReserva err: resultado.getErrores()){
 					switch(err) {
-
+						//Por el momento no hay errores
 					}
 				}
 				presentador.presentarError("Ha ocurrido un error", stringErrores.toString(), stage);
 			}
 			else{
+				//Si no hay errores se muestra una notificación y se remueve la reserva de la lista
 				tablaReservas.getItems().remove(reserva);
 				presentador.presentarToast("Se ha eliminado la reserva con éxito", stage);
 			}
