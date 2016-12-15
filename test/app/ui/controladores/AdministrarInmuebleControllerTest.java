@@ -19,12 +19,15 @@ package app.ui.controladores;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
 
+import app.datos.entidades.Direccion;
 import app.datos.entidades.Inmueble;
 import app.excepciones.ObjNotFoundException;
 import app.excepciones.PersistenciaException;
@@ -43,8 +46,35 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class AdministrarInmuebleControllerTest {
 
-	@Test
-	@Parameters
+	/**
+	 * Método que devuelve los parámetros para probar el método bajaInmueble()
+	 *
+	 * @return parámetros de prueba
+	 */
+	protected Object[] parametersForTestEliminarInmueble() {
+		Inmueble inmueble = new Inmueble().setDireccion(new Direccion());
+
+		Boolean acepta = true;
+
+		ResultadoControlador resultadoControladorCorrecto = new ResultadoControlador();
+		ResultadoControlador resultadoControladorErrorPersistencia = new ResultadoControlador(ErrorControlador.Error_Persistencia);
+		ResultadoControlador resultadoControladorErrorDesconocido = new ResultadoControlador(ErrorControlador.Error_Desconocido);
+
+		ResultadoEliminarInmueble resultadoLogicaCorrecto = new ResultadoEliminarInmueble();
+
+		Throwable excepcionPersistencia = new ObjNotFoundException("", new Exception());
+		Throwable excepcionInesperada = new Exception();
+
+		return new Object[] {
+				//Casos de prueba
+				//inmueble,acepta,resultadoControlador,resultadoLogica,excepcion
+				/* 0 */new Object[] { inmueble, acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario acepta y el inmueble se elimina correctamente
+				/* 1 */new Object[] { inmueble, !acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario no acepta, pero de haber aceptado, se hubiese eliminado el inmueble correctamente
+				/* 2 */new Object[] { inmueble, acepta, resultadoControladorErrorPersistencia, null, excepcionPersistencia }, //test donde el controlador tira una excepción de persistencia
+				/* 3 */new Object[] { inmueble, acepta, resultadoControladorErrorDesconocido, null, excepcionInesperada } //test donde el controlador tira una excepción inesperada
+		};
+	}
+
 	/**
 	 * Prueba el método eliminarInmueble(), el cual corresponde con la taskcard 13 de la iteración 1 y a la historia 3
 	 *
@@ -58,7 +88,10 @@ public class AdministrarInmuebleControllerTest {
 	 *            resultado que devuelve el gestor
 	 * @param excepcion
 	 */
+	@Test
+	@Parameters
 	public void testEliminarInmueble(Inmueble inmueble, Boolean acepta, ResultadoControlador resultadoControlador, ResultadoEliminarInmueble resultadoLogica, Throwable excepcion) throws Exception {
+		//Se crean los mocks de la prueba
 		CoordinadorJavaFX coordinadorMock = new CoordinadorJavaFX() {
 			@Override
 			public ResultadoEliminarInmueble eliminarInmueble(Inmueble inmbueble) throws PersistenciaException {
@@ -81,58 +114,44 @@ public class AdministrarInmuebleControllerTest {
 		};
 		PresentadorVentanas presentadorMock = new PresentadorVentanasMock(acepta);
 
+		//Se crea el controlador a probar, se sobreescriben algunos métodos para setear los mocks y setear los datos que ingresaría el usuario en la vista
 		AdministrarInmuebleController administrarInmuebleController = new AdministrarInmuebleController() {
 			@Override
 			public ResultadoControlador eliminarInmueble() {
 				tablaInmuebles.getSelectionModel().select(inmueble);
 				return super.eliminarInmueble();
 			}
+
+			@Override
+			protected void inicializar(URL location, ResourceBundle resources) {
+
+			}
+
+			@Override
+			protected void setTitulo(String titulo) {
+
+			}
 		};
 		administrarInmuebleController.setCoordinador(coordinadorMock);
 		administrarInmuebleController.setPresentador(presentadorMock);
 
+		//Se crea lo necesario para correr la prueba en el hilo de JavaFX porque los controladores de las vistas deben correrse en un thread de JavaFX
 		ControladorTest corredorTestEnJavaFXThread = new ControladorTest(AdministrarInmuebleController.URLVista, administrarInmuebleController);
-
 		administrarInmuebleController.setStage(corredorTestEnJavaFXThread.getStagePrueba());
 
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
+				//Se hacen las verificaciones pertinentes para comprobar que el controlador se comporte adecuadamente
 				assertEquals(resultadoControlador, administrarInmuebleController.eliminarInmueble());
 			}
 		};
 
 		try{
+			//Se corre el test en el hilo de JavaFX
 			corredorTestEnJavaFXThread.apply(test, null).evaluate();
 		} catch(Throwable e){
 			throw new Exception(e);
 		}
-	}
-
-	/**
-	 * Método que devuelve los parámetros para probar el método bajaInmueble()
-	 *
-	 * @return parámetros de prueba
-	 */
-	protected Object[] parametersForTestEliminarInmueble() {
-		Inmueble inmueble = new Inmueble();
-
-		Boolean acepta = true;
-
-		ResultadoControlador resultadoControladorCorrecto = new ResultadoControlador();
-		ResultadoControlador resultadoControladorErrorPersistencia = new ResultadoControlador(ErrorControlador.Error_Persistencia);
-		ResultadoControlador resultadoControladorErrorDesconocido = new ResultadoControlador(ErrorControlador.Error_Desconocido);
-
-		ResultadoEliminarInmueble resultadoLogicaCorrecto = new ResultadoEliminarInmueble();
-
-		Throwable excepcionPersistencia = new ObjNotFoundException("", new Exception());
-		Throwable excepcionInesperada = new Exception();
-
-		return new Object[] {
-				new Object[] { inmueble, acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario acepta y el inmueble se elimina correctamente
-				new Object[] { inmueble, !acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario no acepta, pero de haber aceptado, se hubiese eliminado el inmueble correctamente
-				new Object[] { inmueble, acepta, resultadoControladorErrorPersistencia, null, excepcionPersistencia }, //test donde el controlador tira una excepción de persistencia
-				new Object[] { inmueble, acepta, resultadoControladorErrorDesconocido, null, excepcionInesperada } //test donde el controlador tira unaexcepción inesperada
-		};
 	}
 }

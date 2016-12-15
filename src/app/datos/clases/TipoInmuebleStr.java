@@ -29,17 +29,17 @@ public enum TipoInmuebleStr {
     public String toString() {
         switch (this) {
             case LOCAL:
-                return "L";
+                return "Local";
             case CASA:
-                return "C";
+                return "Casa";
             case DEPARTAMENTO:
-                return "D";
+                return "Departamento";
             case TERRENO:
-                return "T";
+                return "Terreno";
             case QUINTA:
-                return "Q";
+                return "Quinta";
             case GALPON:
-                return "G";
+                return "Galpón";
         }
         return null;
     }

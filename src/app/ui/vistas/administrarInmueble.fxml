@@ -28,6 +28,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -40,12 +42,11 @@ Vista de administración de inmuebles que se encarga de manejar el listado y la 
 Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
  -->
 
-
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarInmuebleController">
    <children>
       <Accordion>
         <panes>
-          <TitledPane animated="false" text="Realizar búsqueda">
+          <TitledPane animated="false" contentDisplay="RIGHT" text="Realizar búsqueda">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
@@ -68,13 +69,13 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                            </rowConstraints>
                            <children>
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Pais" GridPane.columnIndex="1" />
-                              <ComboBox fx:id="comboBoxPais" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" />
+                              <ComboBox fx:id="comboBoxPais" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Provincia" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <ComboBox fx:id="comboBoxProvincia" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="comboBoxProvincia" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Localidad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="comboBoxLocalidad" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="comboBoxLocalidad" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Barrio" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <ComboBox fx:id="comboBoxBarrio" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="comboBoxBarrio" editable="true" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Estado del inmueble" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <ComboBox fx:id="comboBoxEstadoInmueble" maxHeight="1000.0" maxWidth="1000.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                               <Label focusTraversable="false" maxHeight="1000.0" maxWidth="1000.0" text="Tipo de inmueble" GridPane.columnIndex="4" />
@@ -91,10 +92,17 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                      </children>
                   </AnchorPane>
             </content>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.29" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../res/img/lupa%20pequeña.PNG" />
+                     </image>
+                  </ImageView>
+               </graphic>
           </TitledPane>
         </panes>
       </Accordion>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" VBox.vgrow="ALWAYS">
          <children>
             <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" HBox.hgrow="ALWAYS">
                <children>
@@ -110,10 +118,11 @@ Pertenece a la taskcard 13 de la iteración 1 y a la historia 3
                   </TableView>
                </children>
             </VBox>
-            <VBox fx:id="vboxBotones" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="152.0" minWidth="150.0" prefWidth="152.0" styleClass="buttonbar">
+            <VBox fx:id="vboxBotones" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" styleClass="buttonbar" HBox.hgrow="NEVER">
                <children>
                   <Button fx:id="btVerMas" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#verMas" text="Ver más" />
                   <Button fx:id="btVerReservas" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#verReservas" text="Ver reservas" />
+                  <Button fx:id="btGenerarCatalogo" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#generarCatalogo" text="Generar catálogo" />
                   <Button fx:id="btAgregar" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
                   <Button fx:id="btModificar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
                   <Button fx:id="btEliminar" disable="true" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#eliminarInmueble" text="Eliminar" />

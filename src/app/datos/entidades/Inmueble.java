@@ -115,6 +115,7 @@ public class Inmueble {
 	public Inmueble() {
 		super();
 		fotos = new HashSet<>();
+		reservas = new HashSet<>();
 	}
 
 	public Inmueble(String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie, TipoInmueble tipo, Direccion direccion, Propietario propietario, Estado estado) {
@@ -133,11 +134,6 @@ public class Inmueble {
 
 	public Integer getId() {
 		return id;
-	}
-	
-	public Inmueble setId(Integer id) {
-		this.id = id;
-		return this;
 	}
 
 	public String getObservaciones() {
@@ -370,6 +366,12 @@ public class Inmueble {
 
 	@Override
 	public String toString() {
-		return direccion.toString();
+		if(direccion != null){
+			return direccion.toString();
+		}
+		if(id != null){
+			return "Inmueble N° " + id.toString();
+		}
+		return super.toString();
 	}
 }

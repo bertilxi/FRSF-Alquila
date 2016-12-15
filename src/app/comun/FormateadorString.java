@@ -69,7 +69,7 @@ public class FormateadorString {
 
 		//Si la entrada consiste solo de espacios en blanco, se devuelve una cadena vacía
 		entrada.trim();
-		if(entrada == ""){
+		if(entrada.equals("")){
 			return "";
 		}
 
@@ -87,7 +87,9 @@ public class FormateadorString {
 				salida.append(parte + " ");
 			}
 			else{
-				salida.append(parte.substring(0, 1).toUpperCase() + parte.substring(1) + " ");
+				if(!parte.equals("")){
+					salida.append(parte.substring(0, 1).toUpperCase() + parte.substring(1) + " ");
+				}
 			}
 		}
 

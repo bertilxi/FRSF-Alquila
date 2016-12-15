@@ -43,6 +43,8 @@ import javafx.util.StringConverter;
 
 /**
  * Controlador de la vista para dar de alta un propietario
+ *
+ * Task card 8 de la iteración 1, historia de usuario 2
  */
 public class AltaPropietarioController extends OlimpoController {
 
@@ -90,6 +92,7 @@ public class AltaPropietarioController extends OlimpoController {
 
 		StringBuilder error = new StringBuilder("");
 
+		//obtengo datos introducidos por el usuario
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
@@ -105,6 +108,7 @@ public class AltaPropietarioController extends OlimpoController {
 		Barrio barrio = comboBoxBarrio.getValue();
 		Calle calle = comboBoxCalle.getValue();
 
+		//verifico que no estén vacíos
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\n");
 		}
@@ -136,11 +140,11 @@ public class AltaPropietarioController extends OlimpoController {
 			error.append("Elija una localidad").append("\n");
 		}
 
-		if(!error.toString().isEmpty()){
+		if(!error.toString().isEmpty()){ //si hay algún error lo muestro al usuario
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
-
+			//Si no hay errores se crean las entidades con los datos introducidos
 			Direccion direccion = new Direccion();
 			direccion.setNumero(alturaCalle)
 					.setCalle(calle)
@@ -159,9 +163,9 @@ public class AltaPropietarioController extends OlimpoController {
 					.setEmail(correoElectronico)
 					.setDireccion(direccion);
 
-			try{
+			try{ //relevo la operación a capa lógica
 				ResultadoCrearPropietario resultado = coordinador.crearPropietario(propietario);
-				if(resultado.hayErrores()){
+				if(resultado.hayErrores()){ // si hay algún error se muestra al usuario
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorCrearPropietario err: resultado.getErrores()){
 						switch(err) {
@@ -190,21 +194,21 @@ public class AltaPropietarioController extends OlimpoController {
 					}
 					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				}
-				else{
+				else{ //si no hay errores se muestra notificación y se vuelve a la pantalla de listar propietarios
 					presentador.presentarToast("Se ha creado el propietario con éxito", stage);
-					AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
-					controlador.setVendedorLogueado(vendedorLogueado);
+					cambiarmeAScene(AdministrarPropietarioController.URLVista);
 				}
-			} catch(GestionException e){
+			} catch(GestionException e){ //excepción originada en gestor
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
+					//el propietario existe pero fué dado de baja
 					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El propietario ya existe", "El propietario ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
 					if(ventana.acepta()){
+						//usuario acepta volver a darle de alta. Se pasa a la pantalla de modificar propietario
 						ModificarPropietarioController controlador = (ModificarPropietarioController) cambiarmeAScene(ModificarPropietarioController.URLVista);
 						controlador.setPropietarioEnModificacion(propietario);
-						controlador.setVendedorLogueado(vendedorLogueado);
 					}
 				}
-			} catch(PersistenciaException e){
+			} catch(PersistenciaException e){ //excepción originada en la capa de persistencia
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
@@ -216,8 +220,7 @@ public class AltaPropietarioController extends OlimpoController {
 	 */
 	@FXML
 	public void cancelAction() {
-		AdministrarPropietarioController controlador = (AdministrarPropietarioController) cambiarmeAScene(AdministrarPropietarioController.URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarmeAScene(AdministrarPropietarioController.URLVista);
 	}
 
 	@Override
@@ -236,15 +239,15 @@ public class AltaPropietarioController extends OlimpoController {
 		}
 
 		//se selecciona por defecto a argentina en el combo box país
-		for(Pais p: comboBoxPais.getItems()) {
-			if(p.getNombre().equalsIgnoreCase("argentina")) {
+		for(Pais p: comboBoxPais.getItems()){
+			if(p.getNombre().equalsIgnoreCase("argentina")){
 				comboBoxPais.getSelectionModel().select(p);
 				break;
 			}
 		}
 		actualizarProvincias(comboBoxPais.getSelectionModel().getSelectedItem());
 
-
+		//cada vez que cambia el item seleccionado
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
 		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(
@@ -451,9 +454,14 @@ public class AltaPropietarioController extends OlimpoController {
 	 * También se delega la tarea de vaciar los comboBox de barrios y calles
 	 *
 	 * @param provincia
-	 * 			provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarLocalidades(Provincia provincia) {
+		comboBoxLocalidad.setEditable(true);
+		comboBoxLocalidad.getEditor().clear();
+		if(provincia == null) {
+			comboBoxLocalidad.setEditable(false);
+		}
 		comboBoxLocalidad.getItems().clear();
 		if(provincia != null && provincia.getId() != null){
 			try{
@@ -470,9 +478,14 @@ public class AltaPropietarioController extends OlimpoController {
 	 * También se delega la tarea de vaciar el comboBox de localidades
 	 *
 	 * @param pais
-	 * 			país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarProvincias(Pais pais) {
+		comboBoxProvincia.setEditable(true);
+		comboBoxProvincia.getEditor().clear();
+		if(pais == null) {
+			comboBoxProvincia.setEditable(false);
+		}
 		comboBoxProvincia.getItems().clear();
 		if(pais != null && pais.getId() != null){
 			try{
@@ -488,9 +501,17 @@ public class AltaPropietarioController extends OlimpoController {
 	 * Cuando varía la seleccion del comboBox de localidades, se actualizan los comboBox de barrios y calles.
 	 *
 	 * @param loc
-	 * 			localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 *            localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarBarriosYCalles(Localidad loc) {
+		comboBoxBarrio.setEditable(true);
+		comboBoxCalle.setEditable(true);
+		comboBoxBarrio.getEditor().clear();
+		comboBoxCalle.getEditor().clear();
+		if(loc == null) {
+			comboBoxBarrio.setEditable(false);
+			comboBoxCalle.setEditable(false);
+		}
 		comboBoxBarrio.getItems().clear();
 		comboBoxCalle.getItems().clear();
 		if(loc != null && loc.getId() != null){
@@ -501,7 +522,5 @@ public class AltaPropietarioController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
-		comboBoxBarrio.getEditor().clear();
-		comboBoxCalle.getEditor().clear();
 	}
 }

@@ -28,7 +28,6 @@ import app.datos.entidades.Cliente;
 import app.datos.entidades.Inmueble;
 import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
-import app.datos.entidades.Vendedor;
 import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearReserva;
 import app.logica.resultados.ResultadoCrearReserva.ErrorCrearReserva;
@@ -72,13 +71,6 @@ public class AltaReservaController extends OlimpoController {
 	@FXML
 	private Pane fondo;
 
-	private Vendedor vendedorLogueado;
-
-	@Override
-	public void setVendedorLogueado(Vendedor vendedorLogueado) {
-		this.vendedorLogueado = vendedorLogueado;
-	}
-
 	/**
 	 * Acción que se ejecuta al apretar el botón buscarInmueble.
 	 *
@@ -87,7 +79,7 @@ public class AltaReservaController extends OlimpoController {
 	public void buscarInmuebleAction() {
 		final ArrayList<Inmueble> inmueblesNuevos = new ArrayList<>();
 		AdministrarInmuebleController vistaInmuebles = (AdministrarInmuebleController) this.cambiarScene(fondo, AdministrarInmuebleController.URLVista, (Pane) fondo.getChildren().get(0));
-		vistaInmuebles.formatearObtenerInmuebles(new ArrayList<>(), inmueblesNuevos, () -> {
+		vistaInmuebles.formatearObtenerInmueblesNoVendidos(new ArrayList<>(), inmueblesNuevos, () -> {
 			seleccionarInmueble(inmueblesNuevos);
 		}, false);
 	}
@@ -218,6 +210,9 @@ public class AltaReservaController extends OlimpoController {
 						case Existe_Otra_Reserva_Activa:
 							error.append("Ya existe una reserva para este inmueble en ese periodo de tiempo\r\n");
 							break;
+						case Inmueble_Vendido:
+							error.append("El inmueble ya fue vendido\r\n");
+							break;
 						}
 					}
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
@@ -235,16 +230,8 @@ public class AltaReservaController extends OlimpoController {
 	}
 
 	private void mostrarPDF(PDF pdf) {
-		String irA = null;
-		if(URLVistaRetorno != null){
-			irA = URLVistaRetorno;
-		}
-		else{
-			irA = AdministrarClienteController.URLVista;
-		}
-		VerPDFController visorPDF = (VerPDFController) cambiarmeAScene(VerPDFController.URLVista, irA);
+		VerPDFController visorPDF = (VerPDFController) cambiarmeAScene(VerPDFController.URLVista, InicioController.URLVista);
 		visorPDF.cargarPDF(pdf);
-		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -257,14 +244,13 @@ public class AltaReservaController extends OlimpoController {
 
 	@Override
 	public void salir() {
-		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista);
 		if(cliente != null){
+			AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista, AdministrarClienteController.URLVista);
 			controlador.setCliente(cliente);
-			controlador.setVendedorLogueado(vendedorLogueado);
 		}
 		else if(inmueble != null){
-			controlador.setCliente(cliente);
-			controlador.setVendedorLogueado(vendedorLogueado);
+			AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista, AdministrarInmuebleController.URLVista);
+			controlador.setInmueble(inmueble);
 		}
 	}
 

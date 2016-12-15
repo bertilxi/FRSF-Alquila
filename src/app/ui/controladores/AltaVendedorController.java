@@ -62,6 +62,13 @@ public class AltaVendedorController extends OlimpoController {
 
 	private EncriptadorPassword encriptador = new EncriptadorPassword();
 
+	private String nombre;
+	private String apellido;
+	private String numeroDocumento;
+	private String password1;
+	private String password2;
+	private TipoDocumento tipoDoc;
+
 	/**
 	 * Acción que se ejecuta al apretar el botón aceptar.
 	 *
@@ -70,15 +77,85 @@ public class AltaVendedorController extends OlimpoController {
 	 */
 	public void acceptAction() {
 
+		cargarDatos();
+
 		StringBuilder error = new StringBuilder("");
 
-		String nombre = textFieldNombre.getText().trim();
-		String apellido = textFieldApellido.getText().trim();
-		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
-		String password1 = passwordFieldContraseña.getText();
-		String password2 = passwordFieldRepiteContraseña.getText();
-		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
+		validarVistaAltaVendedor(error);
 
+		if(!error.toString().isEmpty()){
+			presentador.presentarError("Revise sus campos", error.toString(), stage);
+		}
+		else{
+			crearVendedor();
+		}
+	}
+
+	private void crearVendedor() {
+		Vendedor vendedor = new Vendedor();
+		vendedor.setNombre(nombre)
+				.setApellido(apellido)
+				.setNumeroDocumento(numeroDocumento)
+				.setTipoDocumento(tipoDoc)
+				.setSalt(encriptador.generarSal())
+				.setPassword(encriptador.encriptar(password1.toCharArray(), vendedor.getSalt()));
+
+		ResultadoCrearVendedor resultadoCrearVendedor = null;
+
+		try{
+			resultadoCrearVendedor = coordinador.crearVendedor(vendedor);
+			StringBuilder error = new StringBuilder("");
+			List<ErrorCrearVendedor> listaErrores = resultadoCrearVendedor.getErrores();
+
+			parsearErroresLogica(error, listaErrores);
+
+			if(!error.toString().isEmpty()){
+				presentador.presentarError("Revise sus campos", error.toString(), stage);
+			}
+			else{
+				presentador.presentarToast("Se ha creado el vendedor con éxito", stage);
+				salir();
+			}
+
+		} catch(PersistenciaException e){
+			presentador.presentarExcepcion(e, stage);
+		} catch(EntidadExistenteConEstadoBajaException e){
+			manejarVendedorExistenteBaja(vendedor);
+		} catch(Exception e){
+			presentador.presentarExcepcionInesperada(e, stage); //falta el stage
+		}
+	}
+
+	private void manejarVendedorExistenteBaja(Vendedor vendedor) {
+		VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor está dado de baja. Si continúa podrá darlo de alta nuevamente. ¿Desea continuar?", stage);
+		if(ventana.acepta()){
+			try{
+				vendedor = coordinador.obtenerVendedor(vendedor);
+			} catch(PersistenciaException e1){
+				presentador.presentarExcepcion(e1, stage);
+			}
+			ModificarVendedorController controlador = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVistaRetorno);
+			controlador.setVendedor(vendedor);
+			controlador.setAltaVendedor();
+		}
+	}
+
+	private void parsearErroresLogica(StringBuilder error, List<ErrorCrearVendedor> listaErrores) {
+		if(listaErrores.contains(ErrorCrearVendedor.Formato_Nombre_Incorrecto)){
+			error.append("Nombre Incorrecto").append("\r\n");
+		}
+		if(listaErrores.contains(ErrorCrearVendedor.Formato_Apellido_Incorrecto)){
+			error.append("Apellido Incorrecto").append("\r\n");
+		}
+		if(listaErrores.contains(ErrorCrearVendedor.Formato_Documento_Incorrecto)){
+			error.append("Documento Incorrecto").append("\r\n");
+		}
+		if(listaErrores.contains(ErrorCrearVendedor.Ya_Existe_Vendedor)){
+			error.append("Ya existe un vendedor registrado con ese documento").append("\r\n");
+		}
+	}
+
+	private void validarVistaAltaVendedor(StringBuilder error) {
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\r\n");
 		}
@@ -105,65 +182,15 @@ public class AltaVendedorController extends OlimpoController {
 		if(!password1.equals(password2)){
 			error.append("Sus contraseñas no coinciden, Ingreselas nuevamente").append("\r\n ");
 		}
+	}
 
-		if(!error.toString().isEmpty()){
-			presentador.presentarError("Revise sus campos", error.toString(), stage);
-		}
-		else{
-			Vendedor vendedor = new Vendedor();
-			vendedor.setNombre(nombre)
-					.setApellido(apellido)
-					.setNumeroDocumento(numeroDocumento)
-					.setTipoDocumento(tipoDoc)
-					.setSalt(encriptador.generarSal())
-					.setPassword(encriptador.encriptar(password1.toCharArray(), vendedor.getSalt()));
-
-			ResultadoCrearVendedor resultadoCrearVendedor = null;
-
-			try{
-				resultadoCrearVendedor = coordinador.crearVendedor(vendedor);
-				error.delete(0, error.length());
-				List<ErrorCrearVendedor> listaErrores = resultadoCrearVendedor.getErrores();
-				if(listaErrores.contains(ErrorCrearVendedor.Formato_Nombre_Incorrecto)){
-					error.append("Nombre Incorrecto").append("\r\n");
-				}
-				if(listaErrores.contains(ErrorCrearVendedor.Formato_Apellido_Incorrecto)){
-					error.append("Apellido Incorrecto").append("\r\n");
-				}
-				if(listaErrores.contains(ErrorCrearVendedor.Formato_Documento_Incorrecto)){
-					error.append("Documento Incorrecto").append("\r\n");
-				}
-				if(listaErrores.contains(ErrorCrearVendedor.Ya_Existe_Vendedor)){
-					error.append("Ya existe un vendedor registrado con ese documento").append("\r\n");
-				}
-
-				if(!error.toString().isEmpty()){
-					presentador.presentarError("Revise sus campos", error.toString(), stage);
-				}
-				else{
-					presentador.presentarToast("Se ha creado el vendedor con éxito", stage);
-					salir();
-				}
-
-			} catch(PersistenciaException e){
-				presentador.presentarExcepcion(e, stage);
-			} catch(EntidadExistenteConEstadoBajaException e){
-				VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor está dado de baja. Si continúa podrá darlo de alta nuevamente. ¿Desea continuar?", stage);
-				if(ventana.acepta()){
-					try{
-						vendedor = coordinador.obtenerVendedor(vendedor);
-					} catch(PersistenciaException e1){
-						presentador.presentarExcepcion(e1, stage);
-					}
-					ModificarVendedorController controlador = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVistaRetorno);
-					controlador.setVendedor(vendedor);
-					controlador.setAltaVendedor();
-					controlador.setVendedorLogueado(vendedorLogueado);
-				}
-			} catch(Exception e){
-				presentador.presentarExcepcionInesperada(e, stage); //falta el stage
-			}
-		}
+	private void cargarDatos() {
+		nombre = textFieldNombre.getText().trim();
+		apellido = textFieldApellido.getText().trim();
+		numeroDocumento = textFieldNumeroDocumento.getText().trim();
+		password1 = passwordFieldContraseña.getText();
+		password2 = passwordFieldRepiteContraseña.getText();
+		tipoDoc = comboBoxTipoDocumento.getValue();
 	}
 
 	/**
@@ -181,8 +208,7 @@ public class AltaVendedorController extends OlimpoController {
 				cambiarmeAScene(URLVistaRetorno, true);
 			}
 			else{
-				OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
-				controlador.setVendedorLogueado(vendedorLogueado);
+				cambiarmeAScene(URLVistaRetorno);
 			}
 		}
 		else{

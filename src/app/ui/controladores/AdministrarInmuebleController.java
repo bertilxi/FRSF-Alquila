@@ -38,6 +38,8 @@ import app.ui.controladores.resultado.ResultadoControlador;
 import app.ui.controladores.resultado.ResultadoControlador.ErrorControlador;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,6 +49,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 
 /**
  * Controlador de la vista de administración de inmuebles que se encarga de manejar el listado y la eliminación de inmuebles
@@ -93,6 +96,9 @@ public class AdministrarInmuebleController extends OlimpoController {
 	private Button btSalir;
 
 	@FXML
+	private Button btGenerarCatalogo;
+
+	@FXML
 	private VBox vboxBotones;
 
 	@FXML
@@ -114,7 +120,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	@FXML
 	private TextField textFieldPrecioMaximo;
 
-	private ArrayList<Inmueble> inmueblesNoMostrar;
+	private ArrayList<Inmueble> inmueblesNoMostrar = new ArrayList<>();
 
 	private ArrayList<Inmueble> inmueblesSeleccionados;
 
@@ -149,6 +155,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 			presentador.presentarExcepcion(e, stage);
 		}
 
+		tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		tablaInmuebles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			Boolean noHayInmuebleSeleccionado = newValue == null;
 			btVerMas.setDisable(noHayInmuebleSeleccionado);
@@ -156,6 +163,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 			btModificar.setDisable(noHayInmuebleSeleccionado);
 			btEliminar.setDisable(noHayInmuebleSeleccionado);
 			btVender.setDisable(noHayInmuebleSeleccionado);
+			btGenerarCatalogo.setDisable(noHayInmuebleSeleccionado);
 		});
 
 		columnaTipoInmueble.setCellValueFactory(param -> {
@@ -196,23 +204,185 @@ public class AdministrarInmuebleController extends OlimpoController {
 			}
 
 		});
+
+		//se setean los converters para cuando se ingrese un item no existente a través
+		//del editor de texto de los comboBox editables
+		comboBoxPais.setConverter(new StringConverter<Pais>() {
+
+			@Override
+			public String toString(Pais object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Pais fromString(String nombre) {
+				nombre = nombre.toLowerCase().trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Pais pais: comboBoxPais.getItems()){
+					if(nombre.equals(pais.getNombre())){
+						return pais;
+					}
+				}
+				Pais pais = new Pais();
+				pais.setNombre(nombre);
+				return pais;
+			}
+		});
+
+		comboBoxProvincia.setConverter(new StringConverter<Provincia>() {
+
+			@Override
+			public String toString(Provincia object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Provincia fromString(String nombre) {
+				nombre = nombre.toLowerCase().trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Provincia prov: comboBoxProvincia.getItems()){
+					if(nombre.equals(prov.getNombre())){
+						return prov;
+					}
+				}
+				Provincia prov = new Provincia();
+				prov.setNombre(nombre);
+				prov.setPais(comboBoxPais.getValue());
+				return prov;
+			}
+		});
+
+		comboBoxLocalidad.setConverter(new StringConverter<Localidad>() {
+
+			@Override
+			public String toString(Localidad object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Localidad fromString(String nombre) {
+				nombre = nombre.toLowerCase().trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Localidad loc: comboBoxLocalidad.getItems()){
+					if(nombre.equals(loc.getNombre())){
+						return loc;
+					}
+				}
+				Localidad loc = new Localidad();
+				loc.setNombre(nombre);
+				loc.setProvincia(comboBoxProvincia.getValue());
+				return loc;
+			}
+		});
+
+		comboBoxBarrio.setConverter(new StringConverter<Barrio>() {
+
+			@Override
+			public String toString(Barrio object) {
+				if(object == null){
+					return null;
+				}
+				return object.toString();
+			}
+
+			@Override
+			public Barrio fromString(String nombre) {
+				nombre = nombre.toLowerCase().trim();
+				if(nombre.isEmpty()){
+					return null;
+				}
+				for(Barrio bar: comboBoxBarrio.getItems()){
+					if(nombre.equals(bar.getNombre())){
+						return bar;
+					}
+				}
+				Barrio bar = new Barrio();
+				bar.setNombre(nombre);
+				bar.setLocalidad(comboBoxLocalidad.getValue());
+				return bar;
+			}
+		});
+
+		//Cuando el foco sale de los comboBox que estaban siendo editados
+		//el texto ingresado se convierte en un item y se lo selecciona
+		comboBoxPais.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					comboBoxPais.getSelectionModel().select(comboBoxPais.getConverter().fromString(comboBoxPais.getEditor().getText()));
+
+				}
+			}
+		});
+
+		comboBoxProvincia.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					comboBoxProvincia.getSelectionModel().select(comboBoxProvincia.getConverter().fromString(comboBoxProvincia.getEditor().getText()));
+
+				}
+			}
+		});
+
+		comboBoxLocalidad.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					comboBoxLocalidad.getSelectionModel().select(comboBoxLocalidad.getConverter().fromString(comboBoxLocalidad.getEditor().getText()));
+
+				}
+			}
+		});
+
+		comboBoxBarrio.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+				if(!newPropertyValue){
+					comboBoxBarrio.getSelectionModel().select(comboBoxBarrio.getConverter().fromString(comboBoxBarrio.getEditor().getText()));
+
+				}
+			}
+		});
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón agregar.
+	 */
 	@FXML
 	public void agregar() {
-		NMVInmuebleController controlador = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		//Cambia a la pantalla de agregar inmueble
+		cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 	}
 
+	/**
+	 * Método que se llama al hacer click en el botón modificar.
+	 */
 	@FXML
 	public void modificar() {
 		Inmueble inmueble = tablaInmuebles.getSelectionModel().getSelectedItem();
-		if(inmueble == null){
+		if(inmueble == null || inmueble.getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
 			return;
 		}
+		//Cambia a la pantalla de modificar inmueble
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
+		//Le seteamos el inmueble que queremos modificar
 		nuevaPantalla.formatearModificarInmueble(inmueble);
-		nuevaPantalla.setVendedorLogueado(vendedorLogueado);
 	}
 
 	@FXML
@@ -223,7 +393,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		NMVInmuebleController nuevaPantalla = (NMVInmuebleController) cambiarmeAScene(NMVInmuebleController.URLVista, URLVista);
 		nuevaPantalla.formatearVerInmueble(inmueble);
-		nuevaPantalla.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -237,7 +406,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 		}
 		AdministrarReservaController controlador = (AdministrarReservaController) cambiarmeAScene(AdministrarReservaController.URLVista, URLVista);
 		controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -248,6 +416,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	 */
 	@FXML
 	public ResultadoControlador eliminarInmueble() {
+		//Inicialización de variables
 		ArrayList<ErrorControlador> erroresControlador = new ArrayList<>();
 		ResultadoEliminarInmueble resultado;
 		StringBuffer erroresBfr = new StringBuffer();
@@ -257,11 +426,15 @@ public class AdministrarInmuebleController extends OlimpoController {
 		if(inmueble == null){
 			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
+
+		//Se pregunta si quiere eliminar el inmueble
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar inmueble", "Está a punto de eliminar a el inmueble.\n ¿Está seguro que desea hacerlo?", this.stage);
 		if(!ventana.acepta()){
 			return new ResultadoControlador();
 		}
+
 		try{
+			//Se llama a la lógica para eliminar el inmueble y se recibe el resultado de las validaciones y datos extras de ser necesarios
 			resultado = coordinador.eliminarInmueble(inmueble);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
@@ -271,16 +444,20 @@ public class AdministrarInmuebleController extends OlimpoController {
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 
+		//Procesamiento de errores de la lógica
 		if(resultado.hayErrores()){
 			for(ErrorEliminarInmueble err: resultado.getErrores()){
 				switch(err) {
 
 				}
 			}
+			//Se muestran los errores
 			presentador.presentarError("No se pudo crear el inmueble", erroresBfr.toString(), stage);
 		}
 		else{
+			//Se muestra una notificación de que se eliminó correctamente el inmueble
 			presentador.presentarToast("Se ha eliminado el inmueble con éxito", stage);
+			//Se quita el inmueble de la vista
 			tablaInmuebles.getItems().remove(inmueble);
 		}
 
@@ -299,8 +476,27 @@ public class AdministrarInmuebleController extends OlimpoController {
 		else{
 			AltaVentaController controlador = (AltaVentaController) cambiarmeAScene(AltaVentaController.URLVista);
 			controlador.setInmueble(tablaInmuebles.getSelectionModel().getSelectedItem());
-			controlador.setVendedorLogueado(vendedorLogueado);
 		}
+	}
+
+	@FXML
+	/**
+	 * Método que permite acceder a la pantalla de generar catálogo
+	 */
+	public void generarCatalogo() {
+		ArrayList<Inmueble> inmuebles = new ArrayList<>(tablaInmuebles.getSelectionModel().getSelectedItems());
+		ArrayList<Inmueble> inmueblesVendidos = new ArrayList<>();
+		for(Inmueble inmueble: inmuebles){
+			if(inmueble.getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)){
+				inmueblesVendidos.add(inmueble);
+			}
+		}
+		inmuebles.removeAll(inmueblesVendidos);
+		if(inmuebles.isEmpty()){
+			return;
+		}
+		AltaCatalogoController controlador = (AltaCatalogoController) cambiarmeAScene(AltaCatalogoController.URLVista, URLVista);
+		controlador.setInmuebles(inmuebles);
 	}
 
 	@FXML
@@ -310,7 +506,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 		salir();
 	}
 
-	public void formatearObtenerInmuebles(ArrayList<Inmueble> inmuebles, ArrayList<Inmueble> inmueblesNuevos, Runnable accionCierre, Boolean multiple) {
+	public void formatearObtenerInmueblesNoVendidos(ArrayList<Inmueble> inmuebles, ArrayList<Inmueble> inmueblesNuevos, Runnable accionCierre, Boolean multiple) {
 		this.inmueblesNoMostrar = inmuebles;
 		this.inmueblesSeleccionados = inmueblesNuevos;
 		this.accionCierre = accionCierre;
@@ -321,6 +517,13 @@ public class AdministrarInmuebleController extends OlimpoController {
 		btSalir.setVisible(true);
 		btSalir.setDisable(false);
 		Platform.runLater(() -> {
+			buscarAction();
+			for(EstadoInmueble estadoInmueble: comboBoxEstadoInmueble.getItems()){
+				if(estadoInmueble.getEstado().equals(EstadoInmuebleStr.NO_VENDIDO)){
+					comboBoxEstadoInmueble.getSelectionModel().select(estadoInmueble);
+					break;
+				}
+			}
 			tablaInmuebles.getItems().removeAll(inmueblesNoMostrar);
 			if(multiple){
 				tablaInmuebles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -332,25 +535,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 	}
 
 	/**
-	 * Cuando varía la seleccion del comboBox de países, se actualiza el comboBox de provincias.
-	 * También se delega la tarea de vaciar el comboBox de localidades
-	 *
-	 * @param pais
-	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
-	 */
-	private void actualizarProvincias(Pais pais) {
-		comboBoxProvincia.getItems().clear();
-		if(pais != null){
-			try{
-				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
-			} catch(PersistenciaException e){
-				presentador.presentarExcepcion(e, stage);
-			}
-		}
-		actualizarLocalidades(null);
-	}
-
-	/**
 	 * Cuando varía la seleccion del comboBox de provincias, se actualiza el comboBox de localidades.
 	 * También se delega la tarea de vaciar el comboBox de barrios
 	 *
@@ -358,8 +542,13 @@ public class AdministrarInmuebleController extends OlimpoController {
 	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarLocalidades(Provincia provincia) {
+		comboBoxLocalidad.setEditable(true);
+		comboBoxLocalidad.getEditor().clear();
+		if(provincia == null){
+			comboBoxLocalidad.setEditable(false);
+		}
 		comboBoxLocalidad.getItems().clear();
-		if(provincia != null){
+		if(provincia != null && provincia.getId() != null){
 			try{
 				comboBoxLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
 			} catch(PersistenciaException e){
@@ -370,16 +559,45 @@ public class AdministrarInmuebleController extends OlimpoController {
 	}
 
 	/**
+	 * Cuando varía la seleccion del comboBox de países, se actualiza el comboBox de provincias.
+	 * También se delega la tarea de vaciar el comboBox de localidades
+	 *
+	 * @param pais
+	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
+	private void actualizarProvincias(Pais pais) {
+		comboBoxProvincia.setEditable(true);
+		comboBoxProvincia.getEditor().clear();
+		if(pais == null){
+			comboBoxProvincia.setEditable(false);
+		}
+		comboBoxProvincia.getItems().clear();
+		if(pais != null && pais.getId() != null){
+			try{
+				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+		actualizarLocalidades(null);
+	}
+
+	/**
 	 * Cuando varía la seleccion del comboBox de localidades, se actualiza el comboBox de barrios.
 	 *
-	 * @param localidad
-	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 * @param loc
+	 *            localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
-	private void actualizarBarrios(Localidad localidad) {
+	private void actualizarBarrios(Localidad loc) {
+		comboBoxBarrio.setEditable(true);
+		comboBoxBarrio.getEditor().clear();
+		if(loc == null){
+			comboBoxBarrio.setEditable(false);
+		}
 		comboBoxBarrio.getItems().clear();
-		if(localidad != null){
+		if(loc != null && loc.getId() != null){
 			try{
-				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(localidad));
+				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(loc));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
@@ -394,6 +612,7 @@ public class AdministrarInmuebleController extends OlimpoController {
 	private void buscarAction() {
 		StringBuilder errores = new StringBuilder("");
 
+		//Se obtienen los datos ingresados por el usuario y se verifican errores
 		Pais pais = comboBoxPais.getValue();
 		Provincia provincia = comboBoxProvincia.getValue();
 		Localidad localidad = comboBoxLocalidad.getValue();
@@ -439,20 +658,26 @@ public class AdministrarInmuebleController extends OlimpoController {
 			vacioPMi = true;
 		}
 
+		if(precioMaximo != null && precioMinimo != null && precioMaximo < precioMinimo){
+			errores.append("El precio máximo es menor al precio mínimo.\n");
+		}
+
+		//si hay errores se muestra al usuario
 		if(!errores.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
 		}
 		else{
-
 			tablaInmuebles.getItems().clear();
+
+			// si no se introdujo ningún filtro de búsqueda
 			if(pais == null && provincia == null && localidad == null && barrio == null && estadoInmueble == null && tipoInmueble == null && vacioCD && vacioPMa && vacioPMi){
 				try{
 					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles());
-				} catch(PersistenciaException e){
+				} catch(PersistenciaException e){ //fallo en la capa de persistencia
 					presentador.presentarExcepcion(e, stage);
 				}
 			}
-			else{
+			else{ // si se introdujo algún filtro de búsqueda
 				try{
 					FiltroInmueble filtro = new FiltroInmueble.Builder()
 							.barrio(barrio)
@@ -466,10 +691,13 @@ public class AdministrarInmuebleController extends OlimpoController {
 							.tipoInmueble(((tipoInmueble != null) ? tipoInmueble.getTipo() : (null)))
 							.build();
 					tablaInmuebles.getItems().addAll(coordinador.obtenerInmuebles(filtro));
-				} catch(Exception e){
+				} catch(PersistenciaException e) { // fallo en la capa de persistencia
+					presentador.presentarExcepcion(e, stage);
+				} catch(Exception e){ //alguna otra excepción inesperada
 					presentador.presentarExcepcionInesperada(e, stage);
 				}
 			}
+			tablaInmuebles.getItems().removeAll(inmueblesNoMostrar);
 		}
 	}
 }

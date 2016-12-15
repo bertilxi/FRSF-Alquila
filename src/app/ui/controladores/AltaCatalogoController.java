@@ -48,14 +48,14 @@ public class AltaCatalogoController extends OlimpoController {
 
 	@FXML
 	protected Button btnGenerarCatalogo;
-	
+
 	protected Map<Node, RenglonInmuebleController> renglones = new HashMap<>();
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
 		this.agregarScenographyChanger(fondo, new ScenographyChanger(stage, presentador, coordinador, fondo));
 		this.setTitulo("Nuevo catalogo");
-		
+
 		btnGenerarCatalogo.setDisable(true);
 		listaInmuebles.getChildren().addListener(new ListChangeListener<Node>() {
 			@Override
@@ -63,14 +63,14 @@ public class AltaCatalogoController extends OlimpoController {
 				btnGenerarCatalogo.setDisable(c.getList().isEmpty() || cbCliente.getValue() == null);
 			}
 		});
-		
+
 		cbCliente.valueProperty().addListener(new ChangeListener<Cliente>() {
 			@Override
 			public void changed(ObservableValue<? extends Cliente> observable, Cliente oldValue, Cliente newValue) {
 				btnGenerarCatalogo.setDisable(listaInmuebles.getChildren().isEmpty() || newValue == null);
 			}
 		});
-		
+
 		try{
 			cbCliente.getItems().addAll(coordinador.obtenerClientes());
 		} catch(PersistenciaException e){
@@ -82,7 +82,7 @@ public class AltaCatalogoController extends OlimpoController {
 	public void agregarInmueble() {
 		final ArrayList<Inmueble> inmueblesNuevos = new ArrayList<>();
 		AdministrarInmuebleController vistaInmuebles = (AdministrarInmuebleController) this.cambiarScene(fondo, AdministrarInmuebleController.URLVista, (Pane) fondo.getChildren().get(0));
-		vistaInmuebles.formatearObtenerInmuebles(inmuebles, inmueblesNuevos, () -> {
+		vistaInmuebles.formatearObtenerInmueblesNoVendidos(inmuebles, inmueblesNuevos, () -> {
 			agregarInmuebles(inmueblesNuevos);
 		}, true);
 	}
@@ -183,7 +183,6 @@ public class AltaCatalogoController extends OlimpoController {
 		}
 		VerPDFController visorPDF = (VerPDFController) cambiarmeAScene(VerPDFController.URLVista, irA);
 		visorPDF.cargarPDF(pdf);
-		visorPDF.setVendedorLogueado(vendedorLogueado);
 	}
 
 	public void setCliente(Cliente cliente) {
@@ -195,16 +194,5 @@ public class AltaCatalogoController extends OlimpoController {
 
 	public void setInmuebles(ArrayList<Inmueble> inmuebles) {
 		agregarInmuebles(inmuebles);
-	}
-
-	@Override
-	@FXML
-	public void salir() {
-		if(URLVistaRetorno != null){
-			cambiarmeAScene(URLVistaRetorno);
-		}
-		else{
-			cambiarmeAScene(AdministrarClienteController.URLVista);
-		}
 	}
 }

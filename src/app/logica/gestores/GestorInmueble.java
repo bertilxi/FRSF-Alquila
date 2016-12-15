@@ -81,6 +81,30 @@ public class GestorInmueble {
 	public ResultadoCrearInmueble crearInmueble(Inmueble inmueble) throws PersistenciaException {
 		Set<ErrorCrearInmueble> errores = new HashSet<>();
 
+		validarInmuebleAlta(inmueble, errores);
+
+		if(errores.isEmpty()){
+			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
+			for(Estado e: estados){
+				if(e.getEstado().equals(EstadoStr.ALTA)){
+					inmueble.setEstado(e);
+					break;
+				}
+			}
+			ArrayList<EstadoInmueble> estadosInm = gestorDatos.obtenerEstadosInmueble();
+			for(EstadoInmueble ei: estadosInm){
+				if(ei.getEstado().equals(EstadoInmuebleStr.NO_VENDIDO)){
+					inmueble.setEstadoInmueble(ei);
+					break;
+				}
+			}
+			persistidorInmueble.guardarInmueble(inmueble);
+		}
+
+		return new ResultadoCrearInmueble(errores.toArray(new ErrorCrearInmueble[0]));
+	}
+
+	private void validarInmuebleAlta(Inmueble inmueble, Set<ErrorCrearInmueble> errores) throws PersistenciaException {
 		if(inmueble.getFechaCarga() == null){
 			errores.add(ErrorCrearInmueble.Fecha_Vacia);
 		}
@@ -128,26 +152,6 @@ public class GestorInmueble {
 		if(!validarDatosEdificio(inmueble.getDatosEdificio())){
 			errores.add(ErrorCrearInmueble.Datos_Edificio_Incorrectos);
 		}
-
-		if(errores.isEmpty()){
-			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
-			for(Estado e: estados){
-				if(e.getEstado().equals(EstadoStr.ALTA)){
-					inmueble.setEstado(e);
-					break;
-				}
-			}
-			ArrayList<EstadoInmueble> estadosInm = gestorDatos.obtenerEstadosInmueble();
-			for(EstadoInmueble ei: estadosInm){
-				if(ei.getEstado().equals(EstadoInmuebleStr.NO_VENDIDO)){
-					inmueble.setEstadoInmueble(ei);
-					break;
-				}
-			}
-			persistidorInmueble.guardarInmueble(inmueble);
-		}
-
-		return new ResultadoCrearInmueble(errores.toArray(new ErrorCrearInmueble[0]));
 	}
 
 	/**

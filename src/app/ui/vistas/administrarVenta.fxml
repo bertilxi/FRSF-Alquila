@@ -25,52 +25,66 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarVentaController">
+<GridPane fx:id="fondo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.AdministrarVentaController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
+   </rowConstraints>
    <children>
-      <Label fx:id="labelPersona" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="1000.0" styleClass="label-medium" text="Persona: Apellido y Nombre">
-         <VBox.margin>
-            <Insets left="10.0" top="10.0" />
-         </VBox.margin>
-      </Label>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" VBox.vgrow="SOMETIMES">
-          <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" HBox.hgrow="ALWAYS">
-              <TableView fx:id="tablaVentas" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                  <columns>
-                      <TableColumn fx:id="columnaFecha" editable="false" minWidth="100.0" prefWidth="100.0" text="Fecha" />
-                      <TableColumn fx:id="columnaCliente" editable="false" prefWidth="65.0" text="Cliente">
-                     <columns>
-                        <TableColumn fx:id="columnaNombreCliente" editable="false" minWidth="30.0" prefWidth="150.0" text="Nombre" />
-                        <TableColumn fx:id="columnaApellidoCliente" editable="false" minWidth="30.0" prefWidth="150.0" text="Apellido" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn fx:id="columnaPropietario" editable="false" prefWidth="65.0" text="Propietario">
-                     <columns>
-                        <TableColumn fx:id="columnaNombrePropietario" editable="false" minWidth="30.0" prefWidth="150.0" text="Nombre" />
-                        <TableColumn fx:id="columnaApellidoPropietario" editable="false" minWidth="30.0" prefWidth="150.0" text="Apellido" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn fx:id="columnaVendedor" editable="false" prefWidth="65.0" text="Vendedor">
-                     <columns>
-                        <TableColumn fx:id="columnaNombreVendedor" editable="false" minWidth="30.0" prefWidth="150.0" text="Nombre" />
-                        <TableColumn fx:id="columnaApellidoVendedor" editable="false" minWidth="30.0" prefWidth="150.0" text="Apellido" />
-                     </columns>
-                  </TableColumn>
-                  </columns>
-                  <columnResizePolicy>
-                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                  </columnResizePolicy>
-                  <VBox.margin>
-                      <Insets />
-                  </VBox.margin>
-              </TableView>
-          </VBox>
-          <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
-              <Button fx:id="botonVerInmueble" layoutX="26.0" layoutY="26.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerInmueble" text="Ver inmueble" />
-              <Button fx:id="botonVerDocumento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerDocumento" text="Ver documento" />
-          </VBox>
-      </HBox>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="920.0">
+         <children>
+            <Label fx:id="labelPersona" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="1000.0" styleClass="label-medium" text="Persona: Apellido y Nombre">
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../estilos/style.css" VBox.vgrow="SOMETIMES">
+                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="grid-pane" HBox.hgrow="ALWAYS">
+                    <TableView fx:id="tablaVentas" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="columnaFecha" editable="false" minWidth="100.0" prefWidth="100.0" text="Fecha" />
+                            <TableColumn fx:id="columnaCliente" editable="false" prefWidth="65.0" text="Cliente">
+                           <columns>
+                              <TableColumn fx:id="columnaNombreCliente" editable="false" minWidth="30.0" prefWidth="150.0" text="Nombre" />
+                              <TableColumn fx:id="columnaApellidoCliente" editable="false" minWidth="30.0" prefWidth="150.0" text="Apellido" />
+                           </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="columnaPropietario" editable="false" prefWidth="65.0" text="Propietario">
+                           <columns>
+                              <TableColumn fx:id="columnaNombrePropietario" editable="false" minWidth="30.0" prefWidth="150.0" text="Nombre" />
+                              <TableColumn fx:id="columnaApellidoPropietario" editable="false" minWidth="30.0" prefWidth="150.0" text="Apellido" />
+                           </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="columnaVendedor" editable="false" prefWidth="65.0" text="Vendedor">
+                           <columns>
+                              <TableColumn fx:id="columnaNombreVendedor" editable="false" minWidth="30.0" prefWidth="150.0" text="Nombre" />
+                              <TableColumn fx:id="columnaApellidoVendedor" editable="false" minWidth="30.0" prefWidth="150.0" text="Apellido" />
+                           </columns>
+                        </TableColumn>
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        </columnResizePolicy>
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </TableView>
+                </VBox>
+                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" styleClass="buttonbar">
+                    <Button fx:id="botonVerInmueble" layoutX="26.0" layoutY="26.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerInmueble" text="Ver inmueble" />
+                    <Button fx:id="botonVerDocumento" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleVerDocumento" text="Ver documento" />
+                  <Button layoutX="26.0" layoutY="65.0" maxHeight="1000.0" maxWidth="1000.0" mnemonicParsing="false" onAction="#handleSalir" text="Salir" />
+                </VBox>
+            </HBox>
+         </children>
+      </VBox>
    </children>
-</VBox>
+</GridPane>

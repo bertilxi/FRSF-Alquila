@@ -22,7 +22,7 @@ import javafx.stage.Window;
 /**
  * Representa una ventana que muestra un mensaje de error
  *
- * @author Acosta - Gioria - Moretti - Rebechi
+ *
  */
 public class VentanaError extends CustomAlert {
 

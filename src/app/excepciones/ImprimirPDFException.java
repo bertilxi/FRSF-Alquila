@@ -1,6 +1,6 @@
 package app.excepciones;
 
-public class ImprimirPDFException extends GestionException {
+public class ImprimirPDFException extends Exception {
 
 	/**
 	 *

@@ -20,7 +20,7 @@ package app.excepciones;
 /**
  * Representa un error en una petici�n de datos a la base de datos
  *
- * @author Acosta - Gioria - Moretti - Rebechi
+ *
  */
 public class ConsultaException extends PersistenciaException {
 

@@ -17,6 +17,7 @@
  */
 package app.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,10 +26,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import app.logica.CoordinadorJavaFX;
+import app.logica.gestores.GestorEmail;
 import app.ui.componentes.IconoAplicacion;
 import app.ui.componentes.ventanas.PresentadorVentanas;
 import app.ui.componentes.ventanas.VentanaEsperaBaseDeDatos;
 import app.ui.controladores.OlimpoController;
+import app.ui.controladores.VerPDFController;
 import app.ui.controladores.WindowTitleController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -38,6 +41,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application {
 
@@ -68,12 +72,23 @@ public class Main extends Application {
 
 		//Iniciar el stage en el centro de la pantalla
 		this.primaryStage.centerOnScreen();
-		
+
 		//Setear icono y titulo de aplicacion
 		primaryStage.getIcons().add(new IconoAplicacion());
 
 		//Setear acción de cierre
 		primaryStage.setOnCloseRequest((e) -> {
+			//Borrar archivos temporales
+			File pdfFile = new File(GestorEmail.URL_RESERVA);
+			if(pdfFile.exists()){
+				pdfFile.delete();
+			}
+			pdfFile = new File(VerPDFController.URL_PDF);
+			if(pdfFile.exists()){
+				pdfFile.delete();
+			}
+
+			//Cerrar hibernate
 			SessionFactory sessionFact = (SessionFactory) appContext.getBean("sessionFactory");
 			sessionFact.close();
 		});
@@ -147,7 +162,7 @@ public class Main extends Application {
 				primaryStage.show();
 			} catch(IOException e){
 				e.printStackTrace();
-				Platform.exit();
+				primaryStage.fireEvent(new WindowEvent(primaryStage, WindowEvent.WINDOW_CLOSE_REQUEST));
 			}
 		});
 	}

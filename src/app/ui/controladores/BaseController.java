@@ -125,6 +125,7 @@ public class BaseController extends OlimpoController {
 	public void verMisDatos(Event event) {
 		ModificarVendedorController nuevaPantalla = (ModificarVendedorController) cambiarScene(background, ModificarVendedorController.URLVista, ventanaInicio);
 		nuevaPantalla.setVendedor(vendedorLogueado);
+		nuevaPantalla.mostrarBotonVerVentas();
 	}
 
 	@FXML
@@ -134,8 +135,7 @@ public class BaseController extends OlimpoController {
 
 	@FXML
 	public void verInmuebles() {
-		AdministrarInmuebleController controlador = (AdministrarInmuebleController) cambiarScene(background, AdministrarInmuebleController.URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarScene(background, AdministrarInmuebleController.URLVista);
 	}
 
 	@FXML
@@ -151,8 +151,7 @@ public class BaseController extends OlimpoController {
 	@FXML
 	@Override
 	public void salir() {
-		OlimpoController controlador = cambiarmeAScene(URLVistaRetorno, true);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarmeAScene(URLVistaRetorno, true);
 	}
 
 	public void formatearConVendedor(Vendedor vendedor) {

@@ -104,12 +104,13 @@ public class AdministrarVendedorController extends OlimpoController {
 	 */
 	@FXML
 	private void handleVerVentas() {
+		//Se comprueba que efectivamente haya un vendedor seleccionado
 		if(tablaVendedores.getSelectionModel().getSelectedItem() == null){
 			return;
 		}
+		//Se llama a la pantalla de ver ventas
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
 		controlador.setVendedor(tablaVendedores.getSelectionModel().getSelectedItem());
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -117,8 +118,8 @@ public class AdministrarVendedorController extends OlimpoController {
 	 * Se pasa a la pantalla alta vendedor
 	 */
 	public void agregarAction(ActionEvent event) {
-		AltaVendedorController controlador = (AltaVendedorController) cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		//Se llama a la pantalla alta vendedor
+		cambiarmeAScene(AltaVendedorController.URLVista, URLVista);
 	}
 
 	/**
@@ -126,13 +127,14 @@ public class AdministrarVendedorController extends OlimpoController {
 	 * Se pasa a la pantalla modificar vendedor
 	 */
 	public void modificarAction(ActionEvent event) {
+		//Se comprueba que efectivamente haya un vendedor seleccionado
 		Vendedor vendedor = tablaVendedores.getSelectionModel().getSelectedItem();
 		if(vendedor == null){
 			return;
 		}
+		//Se llama a la pantalla de modificar vendedor
 		ModificarVendedorController controlador = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista, URLVista);
 		controlador.setVendedor(vendedor);
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -140,30 +142,42 @@ public class AdministrarVendedorController extends OlimpoController {
 	 * Se muestra una ventana emergente para confirmar la operación
 	 */
 	public void eliminarAction(ActionEvent event) {
+		//Se comprueba que efectivamente haya un vendedor seleccionado
 		Vendedor vendedor = tablaVendedores.getSelectionModel().getSelectedItem();
 		if(vendedor == null){
 			return;
 		}
+		
+		//Se pregunta al usuario si quiere eliminar el vendedor
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar vendedor", "Está a punto de eliminar al vendedor.\n¿Desea continuar?", this.stage);
 		if(ventana.acepta()){
 			try{
+				//Se llama a la lógica para eliminar el inmueble y se recibe el resultado de las validaciones
 				ResultadoEliminarVendedor resultado = coordinador.eliminarVendedor(vendedor);
 				if(resultado.hayErrores()){
 					StringBuilder stringErrores = new StringBuilder();
+					//Procesamiento de errores de la lógica
 					for(ErrorEliminarVendedor err: resultado.getErrores()){
 						switch(err) {
-
+							//Por el momento no hay errores que se puedan mostrar
 						}
 					}
+					//Se muestran los errores devueltos por la vista
 					presentador.presentarError("No se pudo eliminar el vendedor", stringErrores.toString(), stage);
 
 				}
 				else{
+					//Si no hubo errores
+					//Se quita el inmueble de la vista
 					tablaVendedores.getItems().remove(vendedor);
+					//Se muestra una notificación de que se eliminó correctamente el inmueble
 					presentador.presentarToast("Se ha eliminado al vendedor " + vendedor.getNombre() + " con éxito", stage);
 				}
+			//Se muestran las excepciones, en caso de que ocurra alguno
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
+			} catch(Exception e){
+				presentador.presentarExcepcionInesperada(e,stage);
 			}
 		}
 	}

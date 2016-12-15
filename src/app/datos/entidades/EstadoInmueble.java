@@ -12,13 +12,13 @@ import javax.persistence.Table;
 
 import app.datos.clases.EstadoInmuebleStr;
 
-@NamedQuery(name = "obtenerEstadosInmueble", query = "SELECT e FROM EstadoInmueble e")
-@Entity
-@Table(name = "estadoinmueble")
-/*
+/**
  * Entidad que modela los estados por los cuales pueden pasar un inmueble.
  * Pertenece a la taskcard 33 de la iteración 2 y a la historia de usuario 8
  */
+@NamedQuery(name = "obtenerEstadosInmueble", query = "SELECT e FROM EstadoInmueble e")
+@Entity
+@Table(name = "estadoinmueble")
 public class EstadoInmueble {
 
 	@Id

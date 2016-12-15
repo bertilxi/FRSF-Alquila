@@ -35,6 +35,8 @@ import javafx.scene.control.TextField;
 /**
  * Controlador de la vista para dar de alta un cliente
  *
+ * Task card 17 de la iteración 1, historia de usuario 2
+ *
  * Modificada en TaskCard 27 de la iteración 2
  */
 public class AltaClienteController extends OlimpoController {
@@ -68,7 +70,8 @@ public class AltaClienteController extends OlimpoController {
 	 *            cliente del que se obtienen los datos. Si no hay cliente, es <code>null</code>
 	 */
 	public void setCliente(Cliente cliente) {
-		if(cliente != null){
+		if(cliente != null){ //esta rama es utilizada para volver a setear los campos en pantalla con los datos introducidos por el
+			    			//usuario anteriormente en caso de que se vuelva atrás desde la pantalla de cargar inmueble buscado
 			this.cliente = cliente;
 			textFieldNombre.setText(cliente.getNombre());
 			textFieldApellido.setText(cliente.getApellido());
@@ -77,7 +80,7 @@ public class AltaClienteController extends OlimpoController {
 			comboBoxTipoDocumento.setValue(cliente.getTipoDocumento());
 			textFieldCorreo.setText(cliente.getCorreo());
 		}
-		else{
+		else{ //si se entra a la pantalla a crear un cliente desde la pantalla de listar clientes
 			this.cliente = new Cliente();
 		}
 	}
@@ -93,6 +96,7 @@ public class AltaClienteController extends OlimpoController {
 
 		StringBuilder error = new StringBuilder("");
 
+		//obtengo datos introducidos por el usuario
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
@@ -100,6 +104,7 @@ public class AltaClienteController extends OlimpoController {
 		String correo = textFieldCorreo.getText().trim();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
+		//verifico que no estén vacíos
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\n");
 		}
@@ -124,10 +129,11 @@ public class AltaClienteController extends OlimpoController {
 			error.append("Debe cargar un inmueble buscado al cliente").append("\n");
 		}
 
-		if(!error.toString().isEmpty()){
+		if(!error.toString().isEmpty()){  //si hay algún error lo muestro al usuario
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
+			//Si no hay errores se crean las entidades con los datos introducidos
 			cliente.setNombre(nombre)
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
@@ -136,8 +142,10 @@ public class AltaClienteController extends OlimpoController {
 					.setCorreo(correo);
 
 			try{
+				//relevo la operación a capa lógica
 				ResultadoCrearCliente resultado = coordinador.crearCliente(cliente);
 				if(resultado.hayErrores()){
+					// si hay algún error se muestra al usuario
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorCrearCliente err: resultado.getErrores()){
 						switch(err) {
@@ -164,20 +172,21 @@ public class AltaClienteController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				}
 				else{
+					//si no hay errores se muestra notificación y se vuelve a la pantalla de listar clientes
 					presentador.presentarToast("Se ha creado el cliente con éxito", stage);
-					AdministrarClienteController controlador = (AdministrarClienteController) cambiarmeAScene(AdministrarClienteController.URLVista);
-					controlador.setVendedorLogueado(vendedorLogueado);
+					cambiarmeAScene(AdministrarClienteController.URLVista);
 				}
-			} catch(GestionException e){
+			} catch(GestionException e){ //excepción originada en gestor
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
+					//el cliente existe pero fué dado de baja
 					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El cliente ya existe", "El cliente ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
 					if(ventana.acepta()){
+						//usuario acepta volver a darle de alta. Se pasa a la pantalla de modificar cliente
 						ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
 						controlador.setClienteEnModificacion(cliente);
-						controlador.setVendedorLogueado(vendedorLogueado);
 					}
 				}
-			} catch(PersistenciaException e){
+			} catch(PersistenciaException e){//excepción originada en la capa de persistencia
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
@@ -189,15 +198,16 @@ public class AltaClienteController extends OlimpoController {
 	 */
 	@FXML
 	private void cargarInmueble() {
+		//se guardan en el cliente los datos introducidos por el usuario
 		cliente.setNombre(textFieldNombre.getText().trim())
 				.setApellido(textFieldApellido.getText().trim())
 				.setTipoDocumento(comboBoxTipoDocumento.getValue())
 				.setNumeroDocumento(textFieldNumeroDocumento.getText().trim())
 				.setTelefono(textFieldTelefono.getText().trim())
 				.setCorreo(textFieldCorreo.getText().trim());
+		//se pasa a la pantalla de cargar inmueble
 		InmuebleBuscadoController controlador = (InmuebleBuscadoController) cambiarmeAScene(InmuebleBuscadoController.URLVista);
 		controlador.setCliente(cliente);
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -206,8 +216,7 @@ public class AltaClienteController extends OlimpoController {
 	 */
 	@FXML
 	private void cancelAction() {
-		AdministrarClienteController controlador = (AdministrarClienteController) cambiarmeAScene(AdministrarClienteController.URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		salir();
 	}
 
 	@Override

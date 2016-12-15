@@ -20,6 +20,8 @@ import app.logica.resultados.ResultadoCrearVenta.ErrorCrearVenta;
 
 /**
  * Gestor que implementa la capa lógica del ABM Venta y funciones asociadas a una venta.
+ *
+ * Pertenece a la taskcard 30 de la iteración 2 y a la historia 8
  */
 @Service
 public class GestorVenta {
@@ -49,6 +51,7 @@ public class GestorVenta {
 	public ResultadoCrearVenta crearVenta(Venta venta) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearVenta> errores = new ArrayList<>();
 
+		//se validan los datos
 		if(venta.getCliente() == null){
 			errores.add(ErrorCrearVenta.Cliente_Vacío);
 		}
@@ -75,22 +78,29 @@ public class GestorVenta {
 			errores.add(ErrorCrearVenta.Formato_Medio_De_Pago_Incorrecto);
 		}
 
-		if(venta.getCliente().getTipoDocumento().equals(venta.getPropietario().getTipoDocumento()) && venta.getCliente().getNumeroDocumento().equals(venta.getPropietario().getNumeroDocumento())) {
+		//verifico si el cliente tiene mismo tipo y número de documento que el propietario. Entonces ya es el propietario del inmueble
+		if(venta.getCliente() != null && venta.getPropietario() != null && venta.getCliente().getTipoDocumento().equals(venta.getPropietario().getTipoDocumento()) && venta.getCliente().getNumeroDocumento().equals(venta.getPropietario().getNumeroDocumento())) {
 			errores.add(ErrorCrearVenta.Cliente_Igual_A_Propietario);
 		}
 
-		if(venta.getInmueble().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)) {
+		//verifico si el inmueble ya está vendido
+		if(venta.getInmueble() != null && venta.getInmueble().getEstadoInmueble().getEstado().equals(EstadoInmuebleStr.VENDIDO)) {
 			errores.add(ErrorCrearVenta.Inmueble_Ya_Vendido);
 		}
 
-		Date fechaHoy = new Date(System.currentTimeMillis());
-		for(Reserva r: venta.getInmueble().getReservas()) {
-			if (fechaHoy.after(r.getFechaInicio()) && fechaHoy.before(r.getFechaFin()) && !r.getCliente().equals(venta.getCliente())) {
-				errores.add(ErrorCrearVenta.Inmueble_Reservado_Por_Otro_Cliente);
-				break;
+		//verifico si el inmueble está reserado por otro cliente que no sea el que lo quiere comprar
+		Date fechaHoy = null;
+		if(venta.getInmueble() != null) {
+			fechaHoy = new Date(System.currentTimeMillis());
+			for(Reserva r: venta.getInmueble().getReservas()) {
+				if (fechaHoy.after(r.getFechaInicio()) && fechaHoy.before(r.getFechaFin()) && !r.getCliente().equals(venta.getCliente())) {
+					errores.add(ErrorCrearVenta.Inmueble_Reservado_Por_Otro_Cliente);
+					break;
+				}
 			}
 		}
 
+		//si no hay errores marco al inmueble como vendido, seteo fecha, pdf y mando a persistir
 		if(errores.isEmpty()){
 			ArrayList<EstadoInmueble> estadosInm = gestorDatos.obtenerEstadosInmueble();
 			for(EstadoInmueble ei: estadosInm){

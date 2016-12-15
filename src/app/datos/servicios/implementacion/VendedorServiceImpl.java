@@ -35,6 +35,11 @@ import app.excepciones.ConsultaException;
 import app.excepciones.PersistenciaException;
 import app.excepciones.SaveUpdateException;
 
+/**
+ * Permite persistir y obtener un vendedor, y listar vendedores
+ * Task card 6 de la iteración 1, historia de usuario 1
+ *
+ */
 @Repository
 public class VendedorServiceImpl implements VendedorService {
 
@@ -50,7 +55,7 @@ public class VendedorServiceImpl implements VendedorService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public void guardarVendedor(Vendedor vendedor) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
@@ -62,7 +67,7 @@ public class VendedorServiceImpl implements VendedorService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class)//si falla hace rollback de la transacción
 	public void modificarVendedor(Vendedor vendedor) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
@@ -77,7 +82,7 @@ public class VendedorServiceImpl implements VendedorService {
 	public Vendedor obtenerVendedor(FiltroVendedor filtro) throws PersistenciaException {
 		Vendedor vendedor = null;
 		Session session = getSessionFactory().getCurrentSession();
-		try{
+		try{ //named query ubicada en entidad vendedor
 			vendedor = (Vendedor) session.getNamedQuery("obtenerVendedor").setParameter("tipoDocumento", filtro.getTipoDocumento()).setParameter("documento", filtro.getDocumento()).uniqueResult();
 		} catch(NoResultException e){
 			return null;
@@ -94,7 +99,7 @@ public class VendedorServiceImpl implements VendedorService {
 	public ArrayList<Vendedor> listarVendedores() throws PersistenciaException {
 		ArrayList<Vendedor> vendedores = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
-		try{
+		try{ //named query ubicada en entidad vendedor
 			for(Object o: session.getNamedQuery("listarVendedores").list()){
 				if(o instanceof Vendedor){
 					vendedores.add((Vendedor) o);

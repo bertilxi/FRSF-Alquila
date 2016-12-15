@@ -22,12 +22,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.WebView?>
 
 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="920.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.controladores.VerPDFController">
     <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
@@ -47,11 +47,9 @@
                 <Insets bottom="10.0" left="15.0" right="15.0" top="20.0" />
             </padding>
          <children>
-            <WebView fx:id="visorPDF" minHeight="-1.0" minWidth="-1.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+            <BorderPane fx:id="borderPanePDF" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#salir" prefHeight="40.0" prefWidth="150.0" styleClass="button-cancel" text="Salir" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
          </children>
         </GridPane>
-        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="buttonbar">
-            <Button maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#salir" prefHeight="40.0" prefWidth="150.0" styleClass="button-action" text="Salir" HBox.hgrow="ALWAYS" />
-        </HBox>
     </VBox>
 </HBox>

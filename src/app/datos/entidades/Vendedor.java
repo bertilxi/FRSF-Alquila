@@ -43,6 +43,7 @@ import app.comun.FormateadorString;
 @Table(name = "vendedor", uniqueConstraints = @UniqueConstraint(name = "vendedor_numerodocumento_idtipo_uk", columnNames = { "numerodocumento", "idtipo" }))
 /**
  * Entidad que modela a un vendedor
+ *  Task card 2 de la iteración 1, historia de usuario 1
  */
 public class Vendedor {
 
@@ -66,7 +67,7 @@ public class Vendedor {
 	private String salt;
 
 	@Column(name = "root", nullable = false)
-	private Boolean root;
+	private Boolean root; //representa si es un vendedor con permisos privilegiados
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"), nullable = false)
@@ -216,14 +217,6 @@ public class Vendedor {
 		else if(!tipoDocumento.equals(vendedor.tipoDocumento)){
 			return false;
 		}
-		if(ventas == null){
-			if(vendedor.ventas != null){
-				return false;
-			}
-		}
-		else if(!ventas.equals(vendedor.ventas)){
-			return false;
-		}
 		return true;
 	}
 
@@ -234,7 +227,6 @@ public class Vendedor {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((numeroDocumento == null) ? 0 : numeroDocumento.hashCode());
 		result = prime * result + ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
-		result = prime * result + ((ventas == null) ? 0 : ventas.hashCode());
 		return result;
 	}
 

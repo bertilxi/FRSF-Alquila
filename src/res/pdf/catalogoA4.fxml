@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root maxHeight="1122.0" maxWidth="793.0" minHeight="1122.0" minWidth="793.0" prefHeight="1122.0" prefWidth="793.0" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1684.0" maxWidth="1191.0" minHeight="1684.0" minWidth="1191.0" prefHeight="1684.0" prefWidth="1191.0" stylesheets="@estiloPDF.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <GridPane maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" prefHeight="110.0" prefWidth="793.0" styleClass="grid-pane" stylesheets="@../estiloPDF.css" BorderPane.alignment="CENTER">
+      <GridPane maxHeight="1000" maxWidth="1220.0" minHeight="0.0" minWidth="0.0" prefHeight="159.0" prefWidth="1191.0" styleClass="grid-pane" stylesheets="@estiloPDF.css" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints halignment="CENTER" maxWidth="605.0" minWidth="0.0" prefWidth="120.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="615.0" minWidth="90.0" prefWidth="522.0" />
+          <ColumnConstraints halignment="CENTER" maxWidth="605.0" minWidth="0.0" prefWidth="146.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="90.0" prefWidth="852.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="683.0" minWidth="90.0" prefWidth="151.0" />
         </columnConstraints>
         <rowConstraints>
@@ -24,7 +24,7 @@
           <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <ImageView fitHeight="140.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
 				<image>
                   <Image url="@../img/icono-128.png" />
                	</image>
@@ -36,7 +36,7 @@
                </GridPane.margin>
             </ImageView>
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-catalogo-encabezado" text="OLIMPO INMOBILIARIA" textAlignment="CENTER" GridPane.columnIndex="1" />
-            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-catalogo-medium" text="'Donde viven los Dioses'" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" prefHeight="41.0" prefWidth="859.0" styleClass="label-catalogo-medium" text="'Donde viven los Dioses'" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-medium" text="CATÁLOGO DE INMUEBLES" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-catalogo-medium" text="Fecha de emisión" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="labelFechaEmision" alignment="CENTER" contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-catalogo-medium" text="21/12/2016" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -45,10 +45,10 @@
       </GridPane>
    </top>
    <bottom>
-      <GridPane alignment="CENTER" prefHeight="134.0" prefWidth="793.0" styleClass="grid-pane" BorderPane.alignment="CENTER">
+      <GridPane alignment="CENTER" prefHeight="165.0" prefWidth="1191.0" styleClass="grid-pane" stylesheets="@estiloPDF.css" BorderPane.alignment="CENTER">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="2.0" prefWidth="44.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="392.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="2.0" prefWidth="11.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="663.0" minWidth="10.0" prefWidth="660.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="251.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -60,7 +60,7 @@
         </rowConstraints>
          <children>
         	<Label contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-medium" text="Boulevard Gálvez 1492 - Santa Fe - Argentina" textAlignment="CENTER" GridPane.columnIndex="1" />
-            <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
                   <Image url="@../img/house-logo.png" />
                </image>
@@ -68,7 +68,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </ImageView>
-            <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="false" GridPane.rowIndex="2">
+            <ImageView fitHeight="32.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="false" GridPane.rowIndex="2">
                <image>
                   <Image url="@../img/facebook.png" />
                </image>
@@ -76,7 +76,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </ImageView>
-            <ImageView fitHeight="27.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+            <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
                <image>
                   <Image url="@../img/linkedin.png" />
                </image>
@@ -89,20 +89,30 @@
             <Label contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-medium" text="Olimpo Inmobiliaria" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-catalogo-medium" text="Página" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label fx:id="labelNumeroPagina" alignment="CENTER" contentDisplay="CENTER" maxHeight="1000" maxWidth="1000" minHeight="0.0" minWidth="0.0" styleClass="label-catalogo-medium" text="1 de 7" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <ImageView fitHeight="32.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="false">
+               <image>
+                  <Image url="@../img/maps.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </ImageView>
          </children>
       </GridPane>
    </bottom>
    <center>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane fx:id="gridPaneFilas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="351.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="551.0" minWidth="10.0" prefWidth="442.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="2000.0" minWidth="10.0" prefWidth="442.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </GridPane>
    </center>
-</fx:root>
+</BorderPane>

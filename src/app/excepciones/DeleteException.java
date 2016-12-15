@@ -20,7 +20,7 @@ package app.excepciones;
 /**
  * Representa un error al borrar datos de la base de datos
  *
- * @author Acosta - Gioria - Moretti - Rebechi
+ *
  */
 public class DeleteException extends PersistenciaException {
 

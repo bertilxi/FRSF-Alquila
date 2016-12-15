@@ -188,8 +188,7 @@ public class ModificarVendedorController extends OlimpoController {
 	 * Se vuelve a la pantalla desde la que se llamó a ModificarVendedor.
 	 */
 	public void cancelAction(ActionEvent event) {
-		OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		salir();
 	}
 
 	/**
@@ -199,7 +198,6 @@ public class ModificarVendedorController extends OlimpoController {
 	public void verMisVentasAction(ActionEvent event) {
 		AdministrarVentaController controlador = (AdministrarVentaController) cambiarmeAScene(AdministrarVentaController.URLVista);
 		controlador.setVendedor(vendedor);
-		controlador.setVendedorLogueado(vendedorLogueado);
 	}
 
 	/**
@@ -233,8 +231,7 @@ public class ModificarVendedorController extends OlimpoController {
 				cambiarmeAScene(URLVistaRetorno, true);
 			}
 			else{
-				OlimpoController controlador = cambiarmeAScene(URLVistaRetorno);
-				controlador.setVendedorLogueado(vendedorLogueado);
+				cambiarmeAScene(URLVistaRetorno);
 			}
 		}
 		else{
@@ -256,7 +253,6 @@ public class ModificarVendedorController extends OlimpoController {
 		passwordFieldContraseñaNueva.setDisable(true);
 		passwordFieldRepiteContraseña.setDisable(true);
 		checkBoxCambiarContraseña.setSelected(false);
-		verMisVentasButton.setVisible(false);
 	}
 
 	/**
@@ -266,19 +262,20 @@ public class ModificarVendedorController extends OlimpoController {
 	 *            vendedor del que se obtienen los datos.
 	 */
 	public void setVendedor(Vendedor vendedor) {
-		//TODO cambiar
 		this.setTitulo("Modificar vendedor");
 		this.vendedor = vendedor;
 		textFieldNombre.setText(vendedor.getNombre());
 		textFieldApellido.setText(vendedor.getApellido());
 		textFieldNumeroDocumento.setText(vendedor.getNumeroDocumento());
 		comboBoxTipoDocumento.getSelectionModel().select(vendedor.getTipoDocumento());
+	}
+
+	public void mostrarBotonVerVentas() {
 		verMisVentasButton.setVisible(true);
 	}
 
 	public void setAltaVendedor() {
 		this.esAltaNuevamente = true;
 	}
-
 
 }

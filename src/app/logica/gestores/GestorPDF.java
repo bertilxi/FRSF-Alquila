@@ -17,11 +17,11 @@
  */
 package app.logica.gestores;
 
-import java.awt.Desktop;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.FutureTask;
 
@@ -30,20 +30,20 @@ import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Service;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import app.comun.ConversorFechas;
 import app.comun.FormateadorString;
 import app.datos.clases.CatalogoVista;
+import app.datos.entidades.Inmueble;
 import app.datos.entidades.PDF;
 import app.datos.entidades.Reserva;
 import app.datos.entidades.Venta;
 import app.excepciones.GenerarPDFException;
 import app.excepciones.GestionException;
-import app.excepciones.ImprimirPDFException;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +52,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 @Service
@@ -72,6 +74,10 @@ public class GestorPDF {
 	private static final String URLDocumentoReserva = "/res/pdf/documentoReserva.fxml";
 
 	private static final String URLDocumentoVenta = "/res/pdf/documentoVenta.fxml";
+
+	private static final String URLCatalogo = "/res/pdf/catalogoA4.fxml";
+
+	private static final String URLFilaCatalogo = "/res/pdf/filaCatalogoA4.fxml";
 
 	/**
 	 * Método para crear un PDF a partir de una pantalla.
@@ -105,16 +111,214 @@ public class GestorPDF {
 	}
 
 	/**
+	 * Método para crear un PDF a partir de varias pantalla.
+	 *
+	 * @param pantallaAPDF
+	 *            pantalla que se imprimirá en PDF
+	 * @return PDF de una captura de la pantalla pasada
+	 */
+	private PDF generarPDF(ArrayList<Node> pantallasAPDF) throws Exception {
+		Document document = new Document();
+		ByteArrayOutputStream pdfbaos = new ByteArrayOutputStream();
+		PdfWriter escritor = PdfWriter.getInstance(document, pdfbaos);
+		document.open();
+
+		for(Node pantalla: pantallasAPDF){
+			new Scene((Parent) pantalla);
+			WritableImage image = pantalla.snapshot(new SnapshotParameters(), null);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", baos);
+			byte[] imageInByte = baos.toByteArray();
+			baos.flush();
+			baos.close();
+			Image imagen = Image.getInstance(imageInByte);
+			imagen.setAbsolutePosition(0, 0);
+			imagen.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+			document.add(imagen);
+			document.newPage();
+		}
+
+		document.close();
+
+		byte[] pdfBytes = pdfbaos.toByteArray();
+		pdfbaos.flush();
+		escritor.close();
+		pdfbaos.close();
+		return (PDF) new PDF().setArchivo(pdfBytes);
+	}
+
+	/**
 	 * Método para crear un PDF de un catalogo a partir de los datos de un CatalogoVista.
 	 * Pertenece a la taskcard 23 de la iteración 2 y a la historia 5
 	 *
 	 * @param catalogo
-	 *            datos que se utilizaran para generar el PDF de un catalogo
+	 *            datos que se utilizaran para generar el PDF de un catálogo
 	 * @return catalogo en PDF
 	 */
-	public PDF generarPDF(CatalogoVista catalogo) throws GestionException{
-		//TODO hacer
-		return null;
+	public PDF generarPDF(CatalogoVista catalogo) throws GestionException {
+		pdf = null;
+		Integer numeroInmuebles = catalogo.getFotos().size();
+		ArrayList<Node> paginas = new ArrayList<>();
+		Integer numeroTotalDePaginas = (numeroInmuebles + 2) / 3;
+		Date fechaHoy = new Date();
+
+		ArrayList<Inmueble> inmuebles = new ArrayList<>();
+		catalogo.getFotos().forEach((i, f) -> {
+			inmuebles.add(i);
+		});
+
+		try{
+			FutureTask<Throwable> future = new FutureTask<>(() -> {
+				try{
+					Integer inmueblesProcesados = 0;
+					for(int numeroPagina = 1; numeroPagina <= numeroTotalDePaginas; numeroPagina++){
+						FXMLLoader loader = new FXMLLoader();
+						loader.setLocation(getClass().getResource(URLCatalogo));
+						Pane paginaCatalogo = (Pane) loader.load();
+
+						Label label = (Label) paginaCatalogo.lookup("#labelFechaEmision");
+						label.setText(formateador.nombrePropio(conversorFechas.diaMesYAnioToString(fechaHoy)));
+						label = (Label) paginaCatalogo.lookup("#labelNumeroPagina");
+						label.setText(numeroPagina + " de " + numeroTotalDePaginas);
+
+						for(int i = 0; i < 3 && inmueblesProcesados < numeroInmuebles; i++, inmueblesProcesados++){
+							FXMLLoader loaderFila = new FXMLLoader();
+							loaderFila.setLocation(getClass().getResource(URLFilaCatalogo));
+							Pane fila = (Pane) loaderFila.load();
+							Inmueble inmueble = inmuebles.get(inmueblesProcesados);
+							if(catalogo.getFotos().get(inmueble) != null){
+								File imagenTMP = new File("imagen_tmp.png");
+								FileOutputStream fos = new FileOutputStream(imagenTMP);
+								fos.write(catalogo.getFotos().get(inmueble).getArchivo());
+								fos.flush();
+								fos.close();
+
+								ImageView imagen = (ImageView) fila.lookup("#imageFoto");
+								imagen.setImage(new javafx.scene.image.Image(imagenTMP.toURI().toString()));
+							}
+
+							label = (Label) fila.lookup("#labelCodigo");
+							label.setText("Inmueble Nº " + inmueble.getId());
+
+							label = (Label) fila.lookup("#labelTipoInmueble");
+							label.setText(inmueble.getTipo().toString());
+
+							label = (Label) fila.lookup("#labelPais");
+							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().getProvincia().getPais().toString()));
+
+							label = (Label) fila.lookup("#labelProvincia");
+							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().getProvincia().toString()));
+
+							label = (Label) fila.lookup("#labelLocalidad");
+							label.setText(formateador.nombrePropio(inmueble.getDireccion().getLocalidad().toString()));
+
+							label = (Label) fila.lookup("#labelBarrio");
+							label.setText(formateador.nombrePropio(inmueble.getDireccion().getBarrio().toString()));
+
+							StringBuilder direccion = new StringBuilder("");
+							direccion.append(inmueble.getDireccion().getCalle());
+							direccion.append(" ");
+							direccion.append(inmueble.getDireccion().getNumero());
+
+							if(inmueble.getDireccion().getPiso() != null){
+								direccion.append(" - Piso ");
+								direccion.append(inmueble.getDireccion().getPiso());
+							}
+							if(inmueble.getDireccion().getDepartamento() != null){
+								direccion.append(" - Dpto. ");
+								direccion.append(inmueble.getDireccion().getDepartamento());
+							}
+							if(inmueble.getDireccion().getOtros() != null){
+								direccion.append(" - ");
+								direccion.append(inmueble.getDireccion().getOtros());
+							}
+							label = (Label) fila.lookup("#labelDireccion");
+							label.setText(formateador.nombrePropio(direccion.toString()));
+
+							label = (Label) fila.lookup("#labelDormitorios");
+							if(inmueble.getDatosEdificio().getDormitorios() != null){
+								label.setText(inmueble.getDatosEdificio().getDormitorios().toString());
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelBaños");
+							if(inmueble.getDatosEdificio().getBaños() != null){
+								label.setText(inmueble.getDatosEdificio().getBaños().toString());
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelGaraje");
+							if(inmueble.getDatosEdificio().getGaraje() != null){
+								label.setText(inmueble.getDatosEdificio().getGaraje() ? "SI" : "NO");
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelPatio");
+							if(inmueble.getDatosEdificio().getPatio() != null){
+								label.setText(inmueble.getDatosEdificio().getPatio() ? "SI" : "NO");
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelSuperficieTerreno");
+							if(inmueble.getSuperficie() != null){
+								label.setText(inmueble.getSuperficie() + " metros cuadrados.");
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelSuperficieEdificada");
+							if(inmueble.getDatosEdificio().getSuperficie() != null){
+								label.setText(inmueble.getDatosEdificio().getSuperficie() + " metros cuadrados.");
+							}
+							else{
+								label.setText("-");
+							}
+
+							label = (Label) fila.lookup("#labelPrecio");
+							DecimalFormat formateadorDouble = new DecimalFormat("#.00");
+							label.setText(formateadorDouble.format(inmueble.getPrecio()) + " USD");
+
+							GridPane gridPaneFilas = (GridPane) paginaCatalogo.lookup("#gridPaneFilas");
+							gridPaneFilas.add(fila, 0, i);
+						}
+						paginas.add(paginaCatalogo);
+					}
+					pdf = generarPDF(paginas);
+				} catch(Throwable e){
+					return e;
+				}
+				return null;
+			});
+
+			if(!Platform.isFxApplicationThread()){
+				Platform.runLater(future);
+			}
+			else{
+				future.run();
+			}
+			Throwable excepcion = future.get();
+			if(excepcion != null){
+				throw excepcion;
+			}
+			if(pdf == null){
+				throw new NullPointerException("Error al generar PDF");
+			}
+
+		} catch(Throwable e){
+			e.printStackTrace();
+			throw new GenerarPDFException(e);
+		}
+
+		return pdf;
 	}
 
 	/**
@@ -209,6 +413,7 @@ public class GestorPDF {
 	 */
 	public PDF generarPDF(Venta venta) throws GestionException {
 		try{
+			//se carga el fxml
 			pdf = null;
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLDocumentoVenta));
@@ -216,6 +421,7 @@ public class GestorPDF {
 
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
+					//se setean los campos del documento con los datos de la venta
 					Label label = (Label) documentoVenta.lookup("#lblNombreComprador");
 					label.setText(formateador.nombrePropio(venta.getCliente().getNombre()));
 					label = (Label) documentoVenta.lookup("#lblApellidoComprador");
@@ -226,8 +432,8 @@ public class GestorPDF {
 					label.setText(formateador.nombrePropio(venta.getInmueble().getPropietario().getNombre()));
 					label = (Label) documentoVenta.lookup("#lblApellidoPropietario");
 					label.setText(formateador.nombrePropio(venta.getInmueble().getPropietario().getApellido()));
-					label = (Label) documentoVenta.lookup("#lblDocumentoComprador");
-					label.setText(venta.getCliente().getTipoDocumento() + " - " + venta.getCliente().getNumeroDocumento());
+					label = (Label) documentoVenta.lookup("#lblDocumentoPropietario");
+					label.setText(venta.getPropietario().getTipoDocumento() + " - " + venta.getPropietario().getNumeroDocumento());
 					label = (Label) documentoVenta.lookup("#lblCodigoInmueble");
 					label.setText(Integer.toString(venta.getInmueble().getId()));
 					label = (Label) documentoVenta.lookup("#lblTipoInmueble");
@@ -256,13 +462,15 @@ public class GestorPDF {
 					Date ahora = new Date();
 					label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
 
+					//genera el archivo
 					pdf = generarPDF(documentoVenta);
 				} catch(Throwable e){
-					return e;
+					return e; //si algo falla
 				}
-				return null;
+				return null; //si no falla nada
 			});
 
+			//se asegura de que se corra en el hilo de javaFX
 			if(!Platform.isFxApplicationThread()){
 				Platform.runLater(future);
 			}
@@ -270,6 +478,8 @@ public class GestorPDF {
 				future.run();
 			}
 			Throwable excepcion = future.get();
+
+			//si hubo error se lanza excepción
 			if(excepcion != null){
 				throw excepcion;
 			}
@@ -281,18 +491,5 @@ public class GestorPDF {
 		}
 
 		return pdf;
-	}
-
-	public void imprimirPDF(PDF p) throws GestionException {
-		try{
-			File PDFtmp = new File("tmp.pdf");
-			FileOutputStream fos = new FileOutputStream(PDFtmp);
-			fos.write(p.getArchivo());
-			fos.flush();
-			fos.close();
-			Desktop.getDesktop().print(PDFtmp);
-		} catch(IOException ex){
-			throw new ImprimirPDFException(ex);
-		}
 	}
 }

@@ -36,21 +36,27 @@ public class AdministrarVentaControllerTest {
 	@Test
 	@Parameters
 	public void testRolesDeIngresoYEgreso(Cliente cliente,
-										Propietario propietario,
-										Vendedor vendedor,
-										boolean presionaVerInmueble,
-										boolean presionaVerDocumento,
-										Integer llamaAPresentadorVentanasPresentarError,
-										Exception excepcion) throws Throwable {
+			Propietario propietario,
+			Vendedor vendedor,
+			boolean presionaVerInmueble,
+			boolean presionaVerDocumento,
+			Integer llamaAPresentadorVentanasPresentarError,
+			Exception excepcion) throws Throwable {
 
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
 		VentanaError ventanaErrorMock = mock(VentanaError.class);
 		VerBasicosInmuebleController controladorMock = mock(VerBasicosInmuebleController.class);
 
 		when(presentadorVentanasMock.presentarError(any(), any(), any())).thenReturn(ventanaErrorMock);
-		if(cliente != null) Mockito.doNothing().when(controladorMock).setCliente(cliente);
-		if(propietario != null) Mockito.doNothing().when(controladorMock).setPropietario(propietario);
-		if(vendedor != null) Mockito.doNothing().when(controladorMock).setVendedor(vendedor);
+		if(cliente != null){
+			Mockito.doNothing().when(controladorMock).setCliente(cliente);
+		}
+		if(propietario != null){
+			Mockito.doNothing().when(controladorMock).setPropietario(propietario);
+		}
+		if(vendedor != null){
+			Mockito.doNothing().when(controladorMock).setVendedor(vendedor);
+		}
 		Mockito.doNothing().when(controladorMock).setVendedorLogueado(any());
 		Mockito.doNothing().when(controladorMock).setInmueble(any());
 
@@ -72,7 +78,7 @@ public class AdministrarVentaControllerTest {
 				if(tablaVentas.getSelectionModel().getSelectedItem() != null){
 					try{
 						//se intenta abrir el pdf
-						if(excepcion != null) {
+						if(excepcion != null){
 							throw excepcion;
 						}
 					} catch(Exception ex){
@@ -89,56 +95,75 @@ public class AdministrarVentaControllerTest {
 
 			@Override
 			protected OlimpoController cambiarmeAScene(String url) {
+				controladorMock.setVendedorLogueado(vendedorLogueado);
 				return controladorMock;
 			}
 
 		};
 
 		//Los controladores de las vistas deben correrse en un thread de JavaFX
-				ControladorTest corredorTestEnJavaFXThread = new ControladorTest(AdministrarVentaController.URLVista, administrarVentaController);
-				Statement test = new Statement() {
-					@Override
-					public void evaluate() throws Throwable {
-						if(cliente != null) administrarVentaController.setCliente(cliente);
-						if(propietario != null) administrarVentaController.setPropietario(propietario);
-						if(vendedor != null) administrarVentaController.setVendedor(vendedor);
+		ControladorTest corredorTestEnJavaFXThread = new ControladorTest(AdministrarVentaController.URLVista, administrarVentaController);
+		Statement correr_test = new Statement() {
+			@Override
+			public void evaluate() throws Throwable {
+				if(cliente != null){
+					administrarVentaController.setCliente(cliente);
+				}
+				if(propietario != null){
+					administrarVentaController.setPropietario(propietario);
+				}
+				if(vendedor != null){
+					administrarVentaController.setVendedor(vendedor);
+				}
+			}
+		};
+		Statement evaluar_test = new Statement() {
+			@Override
+			public void evaluate() throws Throwable {
+				if(cliente != null){
+					assertEquals(false, administrarVentaController.columnaCliente.isVisible());
+					assertEquals(true, administrarVentaController.columnaPropietario.isVisible());
+					assertEquals(true, administrarVentaController.columnaVendedor.isVisible());
+				}
+				if(propietario != null){
+					assertEquals(true, administrarVentaController.columnaCliente.isVisible());
+					assertEquals(false, administrarVentaController.columnaPropietario.isVisible());
+					assertEquals(true, administrarVentaController.columnaVendedor.isVisible());
+				}
+				if(vendedor != null){
+					assertEquals(true, administrarVentaController.columnaCliente.isVisible());
+					assertEquals(true, administrarVentaController.columnaPropietario.isVisible());
+					assertEquals(false, administrarVentaController.columnaVendedor.isVisible());
+				}
 
-						if(cliente != null) {
-							assertEquals(false, administrarVentaController.columnaCliente.isVisible());
-							assertEquals(true, administrarVentaController.columnaPropietario.isVisible());
-							assertEquals(true, administrarVentaController.columnaVendedor.isVisible());
-						}
-						if(propietario != null) {
-							assertEquals(true, administrarVentaController.columnaCliente.isVisible());
-							assertEquals(false, administrarVentaController.columnaPropietario.isVisible());
-							assertEquals(true, administrarVentaController.columnaVendedor.isVisible());
-						}
-						if(vendedor != null) {
-							assertEquals(true, administrarVentaController.columnaCliente.isVisible());
-							assertEquals(true, administrarVentaController.columnaPropietario.isVisible());
-							assertEquals(false, administrarVentaController.columnaVendedor.isVisible());
-						}
-
-						if(presionaVerDocumento) {
-							administrarVentaController.handleVerDocumento();
-						}
-						if(presionaVerInmueble) {
-							administrarVentaController.handleVerInmueble();
-							Mockito.verify(controladorMock).setInmueble(any());
-							Mockito.verify(controladorMock).setVendedorLogueado(any());
-							if(cliente != null) Mockito.verify(controladorMock).setCliente(cliente);
-							if(propietario != null) Mockito.verify(controladorMock).setPropietario(propietario);
-							if(vendedor != null) Mockito.verify(controladorMock).setVendedor(vendedor);
-
-						}
-
-						Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarError)).presentarError(eq("Error"), eq("No se pudo abrir el archivo pdf"), any());
+				if(presionaVerDocumento){
+					administrarVentaController.handleVerDocumento();
+				}
+				if(presionaVerInmueble){
+					administrarVentaController.handleVerInmueble();
+					Mockito.verify(controladorMock).setInmueble(any());
+					Mockito.verify(controladorMock).setVendedorLogueado(any());
+					if(cliente != null){
+						Mockito.verify(controladorMock).setCliente(cliente);
 					}
-				};
+					if(propietario != null){
+						Mockito.verify(controladorMock).setPropietario(propietario);
+					}
+					if(vendedor != null){
+						Mockito.verify(controladorMock).setVendedor(vendedor);
+					}
 
-				//Se corre el test en el hilo de JavaFX
-				corredorTestEnJavaFXThread.apply(test, null).evaluate();
+				}
+
+				Mockito.verify(presentadorVentanasMock, times(llamaAPresentadorVentanasPresentarError)).presentarError(eq("Error"), eq("No se pudo abrir el archivo pdf"), any());
+			}
+		};
+
+		//Se corre el test en el hilo de JavaFX
+		corredorTestEnJavaFXThread.apply(correr_test, null).evaluate();
+		corredorTestEnJavaFXThread.apply(evaluar_test, null).evaluate();
 	}
+
 	protected Object[] parametersForTestRolesDeIngresoYEgreso() {
 		Cliente cliente = new Cliente();
 		cliente.setNombre("Juan").setApellido("Pérez");
@@ -155,15 +180,15 @@ public class AdministrarVentaControllerTest {
 
 		return new Object[] {
 				//cliente,propietario,vendedor,presionaVerInmueble,presionaVerDocumento,llamaAPresentadorVentanasPresentarError,excepcion
-				/*0*/new Object[] { cliente, null, null, true, false, 0, null }, // se accede para un cliente, se presiona ver inmueble
-				/*1*/new Object[] { cliente, null, null, false, true, 0, null }, // se accede para un cliente, se presiona ver documento
-				/*2*/new Object[] { cliente, null, null, false, true, 1, new IOException() }, // se accede para un cliente, se presiona ver documento y ocurre excepcion al abrir pdf
-				/*3*/new Object[] { null, propietario, null, true, false, 0, null }, // se accede para un propietario, se presiona ver inmueble
-				/*4*/new Object[] { null, propietario, null, false, true, 0, null }, // se accede para un propietario, se presiona ver documento
-				/*5*/new Object[] { null, propietario, null, false, true, 1, new IOException() }, // se accede para un propietario, se presiona ver documento y ocurre excepcion al abrir pdf
-				/*6*/new Object[] { null, null, vendedor, true, false, 0, null }, // se accede para un vendedor, se presiona ver inmueble
-				/*7*/new Object[] { null, null, vendedor, false, true, 0, null }, // se accede para un vendedor, se presiona ver documento
-				/*8*/new Object[] { null, null, vendedor, false, true, 1, new IOException() }, // se accede para un vendedor, se presiona ver documento y ocurre excepcion al abrir pdf
+				/* 0 */new Object[] { cliente, null, null, true, false, 0, null }, // se accede para un cliente, se presiona ver inmueble
+				/* 1 */new Object[] { cliente, null, null, false, true, 0, null }, // se accede para un cliente, se presiona ver documento
+				/* 2 */new Object[] { cliente, null, null, false, true, 1, new IOException() }, // se accede para un cliente, se presiona ver documento y ocurre excepcion al abrir pdf
+				/* 3 */new Object[] { null, propietario, null, true, false, 0, null }, // se accede para un propietario, se presiona ver inmueble
+				/* 4 */new Object[] { null, propietario, null, false, true, 0, null }, // se accede para un propietario, se presiona ver documento
+				/* 5 */new Object[] { null, propietario, null, false, true, 1, new IOException() }, // se accede para un propietario, se presiona ver documento y ocurre excepcion al abrir pdf
+				/* 6 */new Object[] { null, null, vendedor, true, false, 0, null }, // se accede para un vendedor, se presiona ver inmueble
+				/* 7 */new Object[] { null, null, vendedor, false, true, 0, null }, // se accede para un vendedor, se presiona ver documento
+				/* 8 */new Object[] { null, null, vendedor, false, true, 1, new IOException() }, // se accede para un vendedor, se presiona ver documento y ocurre excepcion al abrir pdf
 
 		};
 	}

@@ -17,9 +17,6 @@
  */
 package app.ui.controladores;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
@@ -28,98 +25,116 @@ import app.datos.entidades.Cliente;
 import app.datos.entidades.Propietario;
 import app.datos.entidades.Vendedor;
 import app.datos.entidades.Venta;
+import app.ui.ScenographyChanger;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 
+/**
+ * Controlador de la pantalla que lista las ventas de una persona (puede ser vendedor, cliente o propietario)
+ *
+ * Pertenece a la taskcard 29 de la iteración 2 y a la historia 8
+ */
 public class AdministrarVentaController extends OlimpoController {
 
-    public static final String URLVista = "/app/ui/vistas/administrarVenta.fxml";
+	public static final String URLVista = "/app/ui/vistas/administrarVenta.fxml";
 
-    @FXML
-    protected Label labelPersona;
+	@FXML
+	protected Label labelPersona;
 
-    @FXML
+	@FXML
 	protected TableView<Venta> tablaVentas;
 
-    @FXML
-    protected TableColumn<Venta, Object> columnaCliente;
-    @FXML
-    private TableColumn<Venta, String> columnaFecha;
-    @FXML
-    private TableColumn<Venta, String> columnaNombreCliente;
-    @FXML
-    private TableColumn<Venta, String> columnaApellidoCliente;
-    @FXML
-    protected TableColumn<Venta, Object> columnaPropietario;
-    @FXML
-    private TableColumn<Venta, String> columnaNombrePropietario;
-    @FXML
-    private TableColumn<Venta, String> columnaApellidoPropietario;
-    @FXML
-    protected TableColumn<Venta, Object> columnaVendedor;
-    @FXML
-    private TableColumn<Venta, String> columnaNombreVendedor;
-    @FXML
-    private TableColumn<Venta, String> columnaApellidoVendedor;
+	@FXML
+	protected TableColumn<Venta, Object> columnaCliente;
+	@FXML
+	private TableColumn<Venta, String> columnaFecha;
+	@FXML
+	private TableColumn<Venta, String> columnaNombreCliente;
+	@FXML
+	private TableColumn<Venta, String> columnaApellidoCliente;
+	@FXML
+	protected TableColumn<Venta, Object> columnaPropietario;
+	@FXML
+	private TableColumn<Venta, String> columnaNombrePropietario;
+	@FXML
+	private TableColumn<Venta, String> columnaApellidoPropietario;
+	@FXML
+	protected TableColumn<Venta, Object> columnaVendedor;
+	@FXML
+	private TableColumn<Venta, String> columnaNombreVendedor;
+	@FXML
+	private TableColumn<Venta, String> columnaApellidoVendedor;
 
-    @FXML
-    private Button botonVerInmueble;
+	@FXML
+	private Button botonVerInmueble;
 
-    @FXML
-    private Button botonVerDocumento;
+	@FXML
+	private Button botonVerDocumento;
 
-    protected TipoPersona tipoPersona;
+	@FXML
+	private Pane fondo;
 
-    public void setCliente(Cliente persona) {
-    	if(persona != null) {
-    		labelPersona.setText("Cliente: " + persona.getApellido() + ", " + persona.getNombre());
-    		tablaVentas.getItems().addAll(persona.getVentas());
-    	}
-    	columnaCliente.setVisible(false);
-    	tipoPersona = TipoPersona.Cliente;
-    }
+	protected TipoPersona tipoPersona;
 
-    public void setPropietario(Propietario persona) {
-    	if(persona != null) {
-    		labelPersona.setText("Propietario: " + persona.getApellido() + ", " + persona.getNombre());
-    		tablaVentas.getItems().addAll(persona.getVentas());
-    	}
-    	columnaPropietario.setVisible(false);
-    	tipoPersona = TipoPersona.Propietario;
-    }
+	public void setCliente(Cliente persona) {
+		Platform.runLater(() -> {
+			if(persona != null){
+				labelPersona.setText("Cliente: " + persona.getApellido() + ", " + persona.getNombre());
+				tablaVentas.getItems().addAll(persona.getVentas());
+			}
+			columnaCliente.setVisible(false);
+			tipoPersona = TipoPersona.Cliente;
+		});
+	}
 
-    public void setVendedor(Vendedor persona) {
-    	if(persona != null) {
-    		labelPersona.setText("Vendedor: " + persona.getApellido() + ", " + persona.getNombre());
-    		tablaVentas.getItems().addAll(persona.getVentas());
-    	}
-    	columnaVendedor.setVisible(false);
-    	tipoPersona = TipoPersona.Vendedor;
-    }
+	public void setPropietario(Propietario persona) {
+		Platform.runLater(() -> {
+			if(persona != null){
+				labelPersona.setText("Propietario: " + persona.getApellido() + ", " + persona.getNombre());
+				tablaVentas.getItems().addAll(persona.getVentas());
+			}
+			columnaPropietario.setVisible(false);
+			tipoPersona = TipoPersona.Propietario;
+		});
+	}
 
-    @Override
-    protected void inicializar(URL location, ResourceBundle resources) {
-    	this.setTitulo("Ventas");
+	public void setVendedor(Vendedor persona) {
+		Platform.runLater(() -> {
+			if(persona != null){
+				labelPersona.setText("Vendedor: " + persona.getApellido() + ", " + persona.getNombre());
+				tablaVentas.getItems().addAll(persona.getVentas());
+			}
+			columnaVendedor.setVisible(false);
+			tipoPersona = TipoPersona.Vendedor;
+		});
+	}
 
-    	columnaFecha.setCellValueFactory(cellData -> new SimpleStringProperty(((cellData.getValue().getFecha()!=null)?(new SimpleDateFormat("dd/MM/yyyy").format(cellData.getValue().getFecha())):(null))));
-    	columnaNombreCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getNombre()));
-    	columnaApellidoCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getApellido()));
-    	columnaNombrePropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPropietario().getNombre()));
-    	columnaApellidoPropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPropietario().getApellido()));
-    	columnaNombreVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedor().getNombre()));
-    	columnaApellidoVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedor().getApellido()));
+	@Override
+	protected void inicializar(URL location, ResourceBundle resources) {
+		this.agregarScenographyChanger(fondo, new ScenographyChanger(stage, presentador, coordinador, fondo));
+		this.setTitulo("Ventas");
 
-    	habilitarBotones(null);
+		columnaFecha.setCellValueFactory(cellData -> new SimpleStringProperty(((cellData.getValue().getFecha() != null) ? (new SimpleDateFormat("dd/MM/yyyy").format(cellData.getValue().getFecha())) : (null))));
+		columnaNombreCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getNombre()));
+		columnaApellidoCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getApellido()));
+		columnaNombrePropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPropietario().getNombre()));
+		columnaApellidoPropietario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPropietario().getApellido()));
+		columnaNombreVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedor().getNombre()));
+		columnaApellidoVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedor().getApellido()));
+
+		habilitarBotones(null);
 
 		tablaVentas.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> habilitarBotones(newValue));
-    }
+	}
 
-    /**
+	/**
 	 * Habilita o deshabilita botones según si hay una venta seleccionada o no
 	 *
 	 * @param venta
@@ -141,10 +156,9 @@ public class AdministrarVentaController extends OlimpoController {
 	 */
 	@FXML
 	protected void handleVerInmueble() {
-		if(tablaVentas.getSelectionModel().getSelectedItem() != null) {
+		if(tablaVentas.getSelectionModel().getSelectedItem() != null){
 			VerBasicosInmuebleController controlador = (VerBasicosInmuebleController) cambiarmeAScene(VerBasicosInmuebleController.URLVista);
 			controlador.setInmueble(tablaVentas.getSelectionModel().getSelectedItem().getInmueble());
-			controlador.setVendedorLogueado(vendedorLogueado);
 			switch(tipoPersona) {
 			case Cliente:
 				controlador.setCliente(tablaVentas.getSelectionModel().getSelectedItem().getCliente());
@@ -164,21 +178,37 @@ public class AdministrarVentaController extends OlimpoController {
 	 */
 	@FXML
 	protected void handleVerDocumento() {
-		if(tablaVentas.getSelectionModel().getSelectedItem() != null){
-			try{
-				File PDFtmp = new File("tmp.pdf");
-				FileOutputStream fos = new FileOutputStream(PDFtmp);
-				fos.write(tablaVentas.getSelectionModel().getSelectedItem().getArchivoPDF().getArchivo());
-				fos.flush();
-				fos.close();
-				Desktop.getDesktop().open(PDFtmp);
-			} catch(Exception ex){
-				presentador.presentarError("Error", "No se pudo abrir el archivo pdf", stage);
+		Venta venta = tablaVentas.getSelectionModel().getSelectedItem();
+		if(venta == null){
+			return;
+		}
+
+		VerPDFController visorPDF = (VerPDFController) cambiarScene(fondo, VerPDFController.URLVista, (Pane) fondo.getChildren().get(0));
+		visorPDF.cargarPDF(venta.getArchivoPDF());
+	}
+
+	@FXML
+	protected void handleSalir() {
+		switch(tipoPersona) {
+		case Cliente:
+			cambiarmeAScene(AdministrarClienteController.URLVista);
+			break;
+		case Propietario:
+			cambiarmeAScene(AdministrarPropietarioController.URLVista);
+			break;
+		case Vendedor:
+			if(vendedorLogueado.getRoot() == true) {
+				cambiarmeAScene(AdministrarVendedorController.URLVista);
+			} else {
+				ModificarVendedorController controlador = (ModificarVendedorController) cambiarmeAScene(ModificarVendedorController.URLVista);
+				controlador.setVendedor(vendedorLogueado);
+				controlador.mostrarBotonVerVentas();
 			}
+			break;
 		}
 	}
 
-	public enum TipoPersona {
+	private enum TipoPersona {
 		Cliente,
 		Propietario,
 		Vendedor

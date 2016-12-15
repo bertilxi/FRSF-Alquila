@@ -145,7 +145,8 @@ public class InmuebleBuscadoController extends OlimpoController {
 		InmuebleBuscado inmueble = cliente.getInmuebleBuscado();
 		Platform.runLater(() -> {
 			if(inmueble != null){
-				alta = false;
+				alta = false; //si el cliente tiene inmueble se está modificando, no dando de alta
+				//se setean los datos actuales
 				listaBarriosSeleccionados.addAll(inmueble.getBarrios());
 				listaLocalidadesSeleccionadas.addAll(inmueble.getLocalidades());
 				checkBoxAguaCaliente.setSelected(inmueble.getAguaCaliente());
@@ -187,9 +188,10 @@ public class InmuebleBuscadoController extends OlimpoController {
 					}
 				}
 			}
-			else{
+			else{ //si el cliente no tiene inmueble, se lo está dando de alta
 				alta = true;
 			}
+			//cargo las tablas
 			tablaBarrios.getItems().clear();
 			tablaBarrios.getItems().addAll(listaBarriosSeleccionados);
 			tablaLocalidades.getItems().clear();
@@ -215,6 +217,7 @@ public class InmuebleBuscadoController extends OlimpoController {
 
 		StringBuffer errores = new StringBuffer("");
 
+		//obtengo datos introducidos por el usuario
 		try{
 			supeficieMinima = Double.valueOf(textFieldSuperficie.getText().trim());
 		} catch(Exception e){
@@ -245,10 +248,11 @@ public class InmuebleBuscadoController extends OlimpoController {
 			errores.append("Baños incorrecto. Introduzca solo números\n");
 		}
 
-		if(!errores.toString().isEmpty()){
+		if(!errores.toString().isEmpty()){ //si hay algún error lo muestro al usuario
 			presentador.presentarError("Revise sus campos", errores.toString(), stage);
 		}
 		else{
+			//Si no hay errores se terminan de obtener los datos que no se verifican
 			Boolean propiedadHorizontal = checkBoxPropiedadHorizontal.isSelected();
 			Boolean garage = checkBoxGarage.isSelected();
 			Boolean patio = checkBoxPatio.isSelected();
@@ -269,11 +273,13 @@ public class InmuebleBuscadoController extends OlimpoController {
 			Boolean quinta = checkBoxQuinta.isSelected();
 
 			InmuebleBuscado inmuebleBuscado = cliente.getInmuebleBuscado();
-			if(alta){
+			if(alta){ //si se está dando de alta el cliente, se crea un nuevo inmueble
 				inmuebleBuscado = new InmuebleBuscado();
 				cliente.setInmuebleBuscado(inmuebleBuscado);
 				inmuebleBuscado.setCliente(cliente);
 			}
+
+			//cargo los datos al inmueble
 			inmuebleBuscado.setSuperficieMin(supeficieMinima)
 					.setAntiguedadMax(antiguedadMaxima)
 					.setDormitoriosMin(dormitoriosMinimos)
@@ -331,19 +337,17 @@ public class InmuebleBuscadoController extends OlimpoController {
 						break;
 					}
 				}
-			} catch(PersistenciaException e){
+			} catch(PersistenciaException e){ //excepción originada en la capa de persistencia
 				presentador.presentarExcepcion(e, stage);
 			}
 
-			if(alta){
+			if(alta){ //si se está dando de alta vuelvo a la vista de alta cliente
 				AltaClienteController controlador = (AltaClienteController) cambiarmeAScene(AltaClienteController.URLVista);
 				controlador.setCliente(cliente);
-				controlador.setVendedorLogueado(vendedorLogueado);
 			}
-			else{
+			else{ //si se está modificando vuelvo a la vista de modificar cliente
 				ModificarClienteController controlador = (ModificarClienteController) cambiarmeAScene(ModificarClienteController.URLVista);
 				controlador.setClienteEnModificacion(cliente);
-				controlador.setVendedorLogueado(vendedorLogueado);
 			}
 		}
 	}
@@ -355,12 +359,10 @@ public class InmuebleBuscadoController extends OlimpoController {
 	@FXML
 	private void cancelAction() {
 		if(alta){
-			OlimpoController controlador = cambiarmeAScene(AltaClienteController.URLVista);
-			controlador.setVendedorLogueado(vendedorLogueado);
+			cambiarmeAScene(AltaClienteController.URLVista);
 		}
 		else{
-			OlimpoController controlador = cambiarmeAScene(ModificarClienteController.URLVista);
-			controlador.setVendedorLogueado(vendedorLogueado);
+			cambiarmeAScene(ModificarClienteController.URLVista);
 		}
 	}
 
@@ -382,10 +384,12 @@ public class InmuebleBuscadoController extends OlimpoController {
 		botonQuitarBarrio.setDisable(true);
 		botonQuitarLocalidad.setDisable(true);
 
+		//setea qué datos se muestran en cada columna
 		columnaNombreLocalidad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
 		columnaNombreBarrio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
 		columnaNombreLocalidadDelBarrio.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocalidad().toString()));
 
+		//cada vez que cambia el item seleccionado
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
 		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(

@@ -154,7 +154,6 @@ public class GestorPropietarioTest {
 		verify(validadorFormatoMock).validarTelefono(propietario.getTelefono());
 		verify(validadorFormatoMock).validarEmail(propietario.getEmail());
 		verify(validadorFormatoMock).validarDireccion(propietario.getDireccion());
-		verify(propietarioServiceMock).obtenerPropietario(any());
 		verify(gestorDatosMock, times(guardar)).obtenerEstados();
 		verify(propietarioServiceMock, times(guardar)).guardarPropietario(propietario);
 	}
@@ -298,7 +297,6 @@ public class GestorPropietarioTest {
 		estados.add(new Estado(EstadoStr.BAJA));
 
 		//Setear valores esperados a los mocks
-		when(propietarioServiceMock.obtenerPropietario(any())).thenReturn(resObtenerPropietario);
 		when(gestorDatosMock.obtenerEstados()).thenReturn(estados);
 
 		//Setear la excepcion devuelta por la base de datos, si corresponde
@@ -324,7 +322,6 @@ public class GestorPropietarioTest {
 		if(eliminar != 0){
 			assertEquals(EstadoStr.BAJA, propietario.getEstado().getEstado());
 		}
-		verify(propietarioServiceMock).obtenerPropietario(any());
 		verify(gestorDatosMock, times(eliminar)).obtenerEstados();
 		verify(propietarioServiceMock, times(eliminar)).modificarPropietario(propietario);
 	}

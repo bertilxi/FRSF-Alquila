@@ -100,10 +100,10 @@ public class VerInmuebleBuscadoController extends OlimpoController {
 	 * Se setean los campos con los datos del inmueble
 	 *
 	 * @param inmueble
-	 * 			inmueble del que se obtienen los datos
+	 *            inmueble del que se obtienen los datos
 	 */
 	public void setInmueble(InmuebleBuscado inmueble) {
-		Platform.runLater(() -> {
+		Platform.runLater(() -> { //se setean los datos del inmueble buscado que se quiere ver
 			labelAguaCaliente.setText((inmueble.getAguaCaliente()) ? ("Si") : ("No"));
 			labelAguaCorriente.setText((inmueble.getAguaCorriente()) ? ("Si") : ("No"));
 			labelCloaca.setText((inmueble.getCloacas()) ? ("Si") : ("No"));
@@ -163,8 +163,7 @@ public class VerInmuebleBuscadoController extends OlimpoController {
 	 */
 	@FXML
 	private void handleAtras() {
-		OlimpoController controlador = cambiarmeAScene(AdministrarClienteController.URLVista);
-		controlador.setVendedorLogueado(vendedorLogueado);
+		cambiarmeAScene(AdministrarClienteController.URLVista);
 	}
 
 	@Override

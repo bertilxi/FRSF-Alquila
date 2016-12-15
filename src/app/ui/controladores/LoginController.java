@@ -33,6 +33,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * Controlador de la vista de login que se encarga de manejar el ingreso de un vendedor al sistema
@@ -127,6 +129,15 @@ public class LoginController extends OlimpoController {
 		}
 
 		stage.centerOnScreen();
+	}
+
+	@FXML
+	private void handleKeyPressedLogin(KeyEvent e) {
+		if(e.getEventType()==KeyEvent.KEY_PRESSED){
+			if(e.getCode()==KeyCode.ENTER) {
+				ingresar();
+			}
+    	}
 	}
 
 }
