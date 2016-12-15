@@ -103,7 +103,7 @@ public class VerInmuebleBuscadoController extends OlimpoController {
 	 *            inmueble del que se obtienen los datos
 	 */
 	public void setInmueble(InmuebleBuscado inmueble) {
-		Platform.runLater(() -> {
+		Platform.runLater(() -> { //se setean los datos del inmueble buscado que se quiere ver
 			labelAguaCaliente.setText((inmueble.getAguaCaliente()) ? ("Si") : ("No"));
 			labelAguaCorriente.setText((inmueble.getAguaCorriente()) ? ("Si") : ("No"));
 			labelCloaca.setText((inmueble.getCloacas()) ? ("Si") : ("No"));

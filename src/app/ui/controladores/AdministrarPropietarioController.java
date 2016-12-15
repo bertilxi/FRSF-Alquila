@@ -68,12 +68,14 @@ public class AdministrarPropietarioController extends OlimpoController {
 	public void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar propietarios");
 
+		//lista los propietarios
 		try{
 			tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());
 		} catch(PersistenciaException e){
 			presentador.presentarError("Error", "No se pudieron listar los propietarios", stage);
 		}
 
+		//setea qué datos se muestran en cada columna
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));
 		columnaNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
@@ -81,6 +83,7 @@ public class AdministrarPropietarioController extends OlimpoController {
 
 		habilitarBotones(null);
 
+		//cada vez que cambia el item seleccionado
 		tablaPropietarios.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}
@@ -165,13 +168,15 @@ public class AdministrarPropietarioController extends OlimpoController {
 		if(tablaPropietarios.getSelectionModel().getSelectedItem() == null){
 			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
+
+		//solicito confirmación al usuario
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar propietario", "Está a punto de eliminar al propietario.\n ¿Está seguro que desea hacerlo?", this.stage);
 		if(!ventana.acepta()){
-			return new ResultadoControlador();
+			return new ResultadoControlador(); //si no acepta
 		}
 		try{
 			ResultadoEliminarPropietario resultado = coordinador.eliminarPropietario(tablaPropietarios.getSelectionModel().getSelectedItem());
-			if(resultado.hayErrores()){
+			if(resultado.hayErrores()){ // si hay errores lo muestro al usuario
 				StringBuilder stringErrores = new StringBuilder();
 				for(ErrorEliminarPropietario err: resultado.getErrores()){
 					switch(err) {
@@ -181,16 +186,17 @@ public class AdministrarPropietarioController extends OlimpoController {
 				presentador.presentarError("No se pudo eliminar el propietario", stringErrores.toString(), stage);
 
 			}
-			else{
+			else{ //si no hay errores muestro notificación
 				presentador.presentarToast("Se ha eliminado el propietario con éxito", stage);
 			}
+			//actualizo la tabla
 			tablaPropietarios.getItems().clear();
 			tablaPropietarios.getItems().addAll(coordinador.obtenerPropietarios());
 			return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
-		} catch(PersistenciaException e){
+		} catch(PersistenciaException e){ //falla en la capa de persistencia
 			presentador.presentarExcepcion(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
-		} catch(Exception e){
+		} catch(Exception e){ // alguna otra excepción inesperada
 			presentador.presentarExcepcionInesperada(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
