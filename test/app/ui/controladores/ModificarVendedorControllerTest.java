@@ -54,25 +54,44 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class ModificarVendedorControllerTest {
 
+	/**
+	 * @param nombre
+	 * 			nombre del vendedor a modificar
+	 * @param apellido
+	 * 			apellido del vendedor a modificar
+	 * @param tipoDocumento
+	 * 			tipo de documenteo del vendedor a modificar
+	 * @param numeroDocumento
+	 * 			número de documento del vendedor a modificar
+	 * @param resultadoEncriptar
+	 * 			resultado devuelto por el mock encriptadorPassword
+	 * @param contraseñaAntigua
+	 * 			contraseña antigua del vendedor
+	 * @param contraseñaNueva
+	 * 			contraseña nueva del vendedor
+	 * @param contraseñaNueva2
+	 * 			campo repetir contraseña del vendedor
+	 * @param resultadoModificarVendedorEsperado
+	 * 			resultado devuelto por la lógica
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 			indica si se debe llamar a presentar una ventana de error
+	 * @param llamaAPresentadorVentanasPresentarExcepcion
+	 * 			indica si se debe llamar a presentar una ventana de excepción
+	 * @param llamaAPresentadorVentanasPresentarExcepcionInesperada
+	 * 			indica si se debe llamar a presentar una ventana de excepción inesperada
+	 * @param llamaAModificarVendedor
+	 * 			indica si se debe llamar a modificar un vendedor en la capa lógica
+	 * @param excepcion
+	 * 			excepción devuelta por la capa lógica
+	 * @param llamaACambiarScene
+	 * 			indica si se debe llamar a cambiar de pantalla
+	 * @param checkBoxSeleccionado
+	 * 			checkBox de cambiar contraseña seleccionado o no seleccionado
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
-	public void testModificarVendedor(String nombre,
-			String apellido,
-			TipoDocumento tipoDocumento,
-			String numeroDocumento,
-			String resultadoEncriptar,
-			String contraseñaAntigua,
-			String contraseñaNueva,
-			String contraseñaNueva2,
-			ResultadoModificarVendedor resultadoModificarVendedorEsperado,
-			Integer llamaAPresentadorVentanasPresentarError,
-			Integer llamaAPresentadorVentanasPresentarExcepcion,
-			Integer llamaAPresentadorVentanasPresentarExcepcionInesperada,
-			Integer llamaAModificarVendedor,
-			Exception excepcion,
-			Integer llamaACambiarScene,
-			Boolean checkBoxSeleccionado)
-			throws Throwable {
+	public void testModificarVendedor(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String resultadoEncriptar, String contraseñaAntigua, String contraseñaNueva, String contraseñaNueva2, ResultadoModificarVendedor resultadoModificarVendedorEsperado, Integer llamaAPresentadorVentanasPresentarError, Integer llamaAPresentadorVentanasPresentarExcepcion, Integer llamaAPresentadorVentanasPresentarExcepcionInesperada, Integer llamaAModificarVendedor, Exception excepcion, Integer llamaACambiarScene, Boolean checkBoxSeleccionado) throws Throwable {
 		//Se crean los mocks necesarios
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
@@ -167,16 +186,18 @@ public class ModificarVendedorControllerTest {
 	protected Object[] parametersForTestModificarVendedor() {
 		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
 		return new Object[] {
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoCorrecto, 0, 0, 0, 1, null, 0, false }, //prueba correcta
-				new Object[] { "Juan", "Perez", doc, "12345678", "ac", "abc", "abc", "abc", resultadoCorrecto, 1, 0, 0, 0, null, 0, true }, //prueba contraseña antigua incorrecta
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abdc", resultadoCorrecto, 1, 0, 0, 0, null, 0, true }, //prueba contraseñas nuevas no coinciden
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoModificarNombreIncorrecto, 1, 0, 0, 1, null, 0, false }, //prueba nombre incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoModificarApellidoIncorrecto, 1, 0, 0, 1, null, 0, false }, //prueba apellido incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoModificarDocumentoIncorrecto, 1, 0, 0, 1, null, 0, false }, //prueba documento incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoCrearYaExiste, 1, 0, 0, 1, null, 0, false }, //prueba ya existe vendedor
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Nombre_Incorrecto, ErrorModificarVendedor.Formato_Apellido_Incorrecto), 1, 0, 0, 1, null, 0, false }, //prueba nombre y apellido incorrectos
-				new Object[] { "", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", null, 1, 0, 0, 0, null, 0, false }, //prueba nombre vacio
-				new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoCorrecto, 0, 1, 0, 1, new SaveUpdateException(new Throwable()), 0, false }, //prueba PersistenciaException
+				//Casos de prueba
+				//nombre, apellido, tipoDocumento, numeroDocumento, resultadoEncriptar, contraseñaAntigua, contraseñaNueva, contraseñaNueva2, resultadoModificarVendedorEsperado, llamaAPresentadorVentanasPresentarError, llamaAPresentadorVentanasPresentarExcepcion, llamaAPresentadorVentanasPresentarExcepcionInesperada, llamaAModificarVendedor, excepcion, llamaACambiarScene, checkBoxSeleccionado
+				/* 0 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoCorrecto, 0, 0, 0, 1, null, 0, false }, //prueba correcta
+				/* 1 */ new Object[] { "Juan", "Perez", doc, "12345678", "ac", "abc", "abc", "abc", resultadoCorrecto, 1, 0, 0, 0, null, 0, true }, //prueba contraseña antigua incorrecta
+				/* 2 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abdc", resultadoCorrecto, 1, 0, 0, 0, null, 0, true }, //prueba contraseñas nuevas no coinciden
+				/* 3 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoModificarNombreIncorrecto, 1, 0, 0, 1, null, 0, false }, //prueba nombre incorrecto
+				/* 4 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoModificarApellidoIncorrecto, 1, 0, 0, 1, null, 0, false }, //prueba apellido incorrecto
+				/* 5 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoModificarDocumentoIncorrecto, 1, 0, 0, 1, null, 0, false }, //prueba documento incorrecto
+				/* 6 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoCrearYaExiste, 1, 0, 0, 1, null, 0, false }, //prueba ya existe vendedor
+				/* 7 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Nombre_Incorrecto, ErrorModificarVendedor.Formato_Apellido_Incorrecto), 1, 0, 0, 1, null, 0, false }, //prueba nombre y apellido incorrectos
+				/* 8 */ new Object[] { "", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", null, 1, 0, 0, 0, null, 0, false }, //prueba nombre vacio
+				/* 9 */ new Object[] { "Juan", "Perez", doc, "12345678", "abc", "abc", "abc", "abc", resultadoCorrecto, 0, 1, 0, 1, new SaveUpdateException(new Throwable()), 0, false }, //prueba PersistenciaException
 		};
 	}
 
