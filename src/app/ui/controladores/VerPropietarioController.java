@@ -68,7 +68,7 @@ public class VerPropietarioController extends OlimpoController {
 	 * @param propietario
 	 *            propietario del que se obtienen los datos.
 	 */
-	public void setPropietario(Propietario propietario) {
+	public void setPropietario(Propietario propietario) { //se cargan los datos del propietario que se quiere ver
 		textFieldAlturaCalle.setText(propietario.getDireccion().getNumero());
 		textFieldApellido.setText(propietario.getApellido());
 		textFieldBarrio.setText(propietario.getDireccion().getBarrio().getNombre());

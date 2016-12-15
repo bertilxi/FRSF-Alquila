@@ -67,7 +67,7 @@ public class Vendedor {
 	private String salt;
 
 	@Column(name = "root", nullable = false)
-	private Boolean root;
+	private Boolean root; //representa si es un vendedor con permisos privilegiados
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idtipo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "vendedor_idtipo_fk"), nullable = false)

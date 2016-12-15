@@ -111,6 +111,7 @@ public class GestorVendedor {
 	public ResultadoCrearVendedor crearVendedor(Vendedor vendedor) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearVendedor> errores = new ArrayList<>();
 
+		// valida formato de datos
 		if(!validador.validarNombre(vendedor.getNombre())){
 			errores.add(ErrorCrearVendedor.Formato_Nombre_Incorrecto);
 		}
@@ -123,21 +124,22 @@ public class GestorVendedor {
 			errores.add(ErrorCrearVendedor.Formato_Documento_Incorrecto);
 		}
 
+		//valida si existe un vendedor con ese tipo y número de documento
 		Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento()));
 		if(null != vendedorAuxiliar){
 			if(vendedorAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
-				errores.add(ErrorCrearVendedor.Ya_Existe_Vendedor);
+				errores.add(ErrorCrearVendedor.Ya_Existe_Vendedor); // si existe y tiene estado alta
 			}
-			else{
+			else{ // si existe y tiene estado baja
 				throw new EntidadExistenteConEstadoBajaException();
 			}
 		}
 
-		if(errores.isEmpty()){
+		if(errores.isEmpty()){ //si no hay errores
 			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 			for(Estado e: estados){
 				if(e.getEstado().equals(EstadoStr.ALTA)){
-					vendedor.setEstado(e);
+					vendedor.setEstado(e); //seteo el estado en alta
 				}
 			}
 			persistidorVendedor.guardarVendedor(vendedor);
@@ -160,6 +162,7 @@ public class GestorVendedor {
 	public ResultadoModificarVendedor modificarVendedor(Vendedor vendedor) throws PersistenciaException {
 		ArrayList<ErrorModificarVendedor> errores = new ArrayList<>();
 
+		// valida formato de datos
 		if(!validador.validarNombre(vendedor.getNombre())){
 			errores.add(ErrorModificarVendedor.Formato_Nombre_Incorrecto);
 		}
@@ -172,18 +175,19 @@ public class GestorVendedor {
 			errores.add(ErrorModificarVendedor.Formato_Documento_Incorrecto);
 		}
 
+		//verifica si existe otro vendedor con los nuevos tipo y número de documento
 		Vendedor vendedorAuxiliar = persistidorVendedor.obtenerVendedor(new FiltroVendedor(vendedor.getTipoDocumento().getTipo(), vendedor.getNumeroDocumento()));
 
 		if(vendedorAuxiliar != null && !vendedor.equals(vendedorAuxiliar)){
 			errores.add(ErrorModificarVendedor.Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo);
 		}
 
-		if(errores.isEmpty()){
+		if(errores.isEmpty()){ //si no hay errores
 			if(vendedor.getEstado().getEstado().equals(EstadoStr.BAJA)){
 				ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 				for(Estado e: estados){
 					if(e.getEstado().equals(EstadoStr.ALTA)){
-						vendedor.setEstado(e);
+						vendedor.setEstado(e); //si el estado es baja, se setea en alta
 					}
 				}
 			}
@@ -205,6 +209,7 @@ public class GestorVendedor {
 	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoEliminarVendedor eliminarVendedor(Vendedor vendedor) throws PersistenciaException {
+		//se setea el estado en baja y se manda a guardar
 		ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 		for(Estado e: estados){
 			if(e.getEstado().equals(EstadoStr.BAJA)){

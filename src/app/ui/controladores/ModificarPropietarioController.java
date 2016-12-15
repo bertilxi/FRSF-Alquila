@@ -87,7 +87,7 @@ public class ModificarPropietarioController extends OlimpoController {
 	 *            propietario del que se obtienen los datos.
 	 */
 	public void setPropietarioEnModificacion(Propietario propietarioEnModificacion) {
-		Platform.runLater(() -> {
+		Platform.runLater(() -> { //se cargan los datos del propietario que se quiere modificar
 			this.propietarioEnModificacion = propietarioEnModificacion;
 			textFieldNombre.setText(propietarioEnModificacion.getNombre());
 			textFieldApellido.setText(propietarioEnModificacion.getApellido());
@@ -118,6 +118,7 @@ public class ModificarPropietarioController extends OlimpoController {
 
 		StringBuilder error = new StringBuilder("");
 
+		//obtengo datos introducidos por el usuario
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
@@ -133,6 +134,7 @@ public class ModificarPropietarioController extends OlimpoController {
 		Barrio barrio = comboBoxBarrio.getValue();
 		Calle calle = comboBoxCalle.getValue();
 
+		//verifico que no estén vacíos
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\n");
 		}
@@ -164,11 +166,11 @@ public class ModificarPropietarioController extends OlimpoController {
 			error.append("Elija una localidad").append("\n");
 		}
 
-		if(!error.toString().isEmpty()){
+		if(!error.toString().isEmpty()){//si hay algún error lo muestro al usuario
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
-
+			//Si no hay errores se modifican las entidades con los datos introducidos
 			propietarioEnModificacion.getDireccion().setNumero(alturaCalle)
 					.setCalle(calle)
 					.setBarrio(barrio)
@@ -184,9 +186,9 @@ public class ModificarPropietarioController extends OlimpoController {
 					.setTelefono(telefono)
 					.setEmail(correoElectronico);
 
-			try{
+			try{ //relevo la operación a capa lógica
 				ResultadoModificarPropietario resultado = coordinador.modificarPropietario(propietarioEnModificacion);
-				if(resultado.hayErrores()){
+				if(resultado.hayErrores()){ // si hay algún error se muestra al usuario
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorModificarPropietario err: resultado.getErrores()){
 						switch(err) {
@@ -215,11 +217,11 @@ public class ModificarPropietarioController extends OlimpoController {
 					}
 					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				}
-				else{
+				else{ //si no hay errores se muestra notificación y se vuelve a la pantalla de listar propietarios
 					presentador.presentarToast("Se ha modificado el propietario con éxito", stage);
 					cambiarmeAScene(AdministrarPropietarioController.URLVista);
 				}
-			} catch(PersistenciaException e){
+			} catch(PersistenciaException e){ //excepción originada en la capa de persistencia
 				presentador.presentarExcepcion(e, stage);
 			}
 		}

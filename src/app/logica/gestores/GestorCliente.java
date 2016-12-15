@@ -74,6 +74,7 @@ public class GestorCliente {
 	public ResultadoCrearCliente crearCliente(Cliente cliente) throws PersistenciaException, GestionException {
 		ArrayList<ErrorCrearCliente> errores = new ArrayList<>();
 
+		// valida formato de datos
 		if(!validador.validarNombre(cliente.getNombre())){
 			errores.add(ErrorCrearCliente.Formato_Nombre_Incorrecto);
 		}
@@ -94,23 +95,24 @@ public class GestorCliente {
 			errores.add(ErrorCrearCliente.Formato_Correo_Incorrecto);
 		}
 
+		//valida si existe un cliente con ese tipo y número de documento
 		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
 				cliente.getNumeroDocumento()));
 
 		if(null != clienteAuxiliar){
 			if(clienteAuxiliar.getEstado().getEstado().equals(EstadoStr.ALTA)){
-				errores.add(ErrorCrearCliente.Ya_Existe_Cliente);
+				errores.add(ErrorCrearCliente.Ya_Existe_Cliente);// si existe y tiene estado alta
 			}
-			else{
+			else{// si existe y tiene estado baja
 				throw new EntidadExistenteConEstadoBajaException();
 			}
 		}
 
-		if(errores.isEmpty()){
+		if(errores.isEmpty()){//si no hay errores
 			ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 			for(Estado e: estados){
 				if(e.getEstado().equals(EstadoStr.ALTA)){
-					cliente.setEstado(e);
+					cliente.setEstado(e);//seteo el estado en alta
 				}
 			}
 			persistidorCliente.guardarCliente(cliente);
@@ -135,6 +137,7 @@ public class GestorCliente {
 	public ResultadoModificarCliente modificarCliente(Cliente cliente) throws PersistenciaException {
 		ArrayList<ErrorModificarCliente> errores = new ArrayList<>();
 
+		// valida formato de datos
 		if(!validador.validarNombre(cliente.getNombre())){
 			errores.add(ErrorModificarCliente.Formato_Nombre_Incorrecto);
 		}
@@ -155,6 +158,7 @@ public class GestorCliente {
 			errores.add(ErrorModificarCliente.Formato_Correo_Incorrecto);
 		}
 
+		//verifica si existe otro cliente con los nuevos tipo y número de documento
 		Cliente clienteAuxiliar = persistidorCliente.obtenerCliente(new FiltroCliente(cliente.getTipoDocumento().getTipo(),
 				cliente.getNumeroDocumento()));
 
@@ -162,12 +166,12 @@ public class GestorCliente {
 			errores.add(ErrorModificarCliente.Otro_Cliente_Posee_Mismo_Documento_Y_Tipo);
 		}
 
-		if(errores.isEmpty()){
+		if(errores.isEmpty()){//si no hay errores
 			if(cliente.getEstado().getEstado().equals(EstadoStr.BAJA)){
 				ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 				for(Estado e: estados){
 					if(e.getEstado().equals(EstadoStr.ALTA)){
-						cliente.setEstado(e);
+						cliente.setEstado(e); //si el estado es baja, se setea en alta
 					}
 				}
 			}
@@ -189,6 +193,7 @@ public class GestorCliente {
 	 *             se lanza esta excepción al ocurrir un error interactuando con la capa de acceso a datos
 	 */
 	public ResultadoEliminarCliente eliminarCliente(Cliente cliente) throws PersistenciaException {
+		//se setea el estado en baja y se manda a guardar
 		ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 		for(Estado e: estados){
 			if(e.getEstado().equals(EstadoStr.BAJA)){

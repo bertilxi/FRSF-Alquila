@@ -92,6 +92,7 @@ public class AltaPropietarioController extends OlimpoController {
 
 		StringBuilder error = new StringBuilder("");
 
+		//obtengo datos introducidos por el usuario
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
@@ -107,6 +108,7 @@ public class AltaPropietarioController extends OlimpoController {
 		Barrio barrio = comboBoxBarrio.getValue();
 		Calle calle = comboBoxCalle.getValue();
 
+		//verifico que no estén vacíos
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\n");
 		}
@@ -138,11 +140,11 @@ public class AltaPropietarioController extends OlimpoController {
 			error.append("Elija una localidad").append("\n");
 		}
 
-		if(!error.toString().isEmpty()){
+		if(!error.toString().isEmpty()){ //si hay algún error lo muestro al usuario
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
-
+			//Si no hay errores se crean las entidades con los datos introducidos
 			Direccion direccion = new Direccion();
 			direccion.setNumero(alturaCalle)
 					.setCalle(calle)
@@ -161,9 +163,9 @@ public class AltaPropietarioController extends OlimpoController {
 					.setEmail(correoElectronico)
 					.setDireccion(direccion);
 
-			try{
+			try{ //relevo la operación a capa lógica
 				ResultadoCrearPropietario resultado = coordinador.crearPropietario(propietario);
-				if(resultado.hayErrores()){
+				if(resultado.hayErrores()){ // si hay algún error se muestra al usuario
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorCrearPropietario err: resultado.getErrores()){
 						switch(err) {
@@ -192,19 +194,21 @@ public class AltaPropietarioController extends OlimpoController {
 					}
 					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				}
-				else{
+				else{ //si no hay errores se muestra notificación y se vuelve a la pantalla de listar propietarios
 					presentador.presentarToast("Se ha creado el propietario con éxito", stage);
 					cambiarmeAScene(AdministrarPropietarioController.URLVista);
 				}
-			} catch(GestionException e){
+			} catch(GestionException e){ //excepción originada en gestor
 				if(e.getClass().equals(EntidadExistenteConEstadoBajaException.class)){
+					//el propietario existe pero fué dado de baja
 					VentanaConfirmacion ventana = presentador.presentarConfirmacion("El propietario ya existe", "El propietario ya existía anteriormente pero fué dado de baja.\n ¿Desea volver a darle de alta?", stage);
 					if(ventana.acepta()){
+						//usuario acepta volver a darle de alta. Se pasa a la pantalla de modificar propietario
 						ModificarPropietarioController controlador = (ModificarPropietarioController) cambiarmeAScene(ModificarPropietarioController.URLVista);
 						controlador.setPropietarioEnModificacion(propietario);
 					}
 				}
-			} catch(PersistenciaException e){
+			} catch(PersistenciaException e){ //excepción originada en la capa de persistencia
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
@@ -243,6 +247,7 @@ public class AltaPropietarioController extends OlimpoController {
 		}
 		actualizarProvincias(comboBoxPais.getSelectionModel().getSelectedItem());
 
+		//cada vez que cambia el item seleccionado
 		comboBoxPais.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> actualizarProvincias(newValue));
 		comboBoxProvincia.getSelectionModel().selectedItemProperty().addListener(

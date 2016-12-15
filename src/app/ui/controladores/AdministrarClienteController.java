@@ -71,6 +71,8 @@ public class AdministrarClienteController extends OlimpoController {
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		setTitulo("Administrar clientes");
+
+		//lista los clientes
 		try{
 			tablaClientes.getItems().addAll(coordinador.obtenerClientes());
 		} catch(PersistenciaException e){
@@ -79,6 +81,7 @@ public class AdministrarClienteController extends OlimpoController {
 			presentador.presentarExcepcionInesperada(e, stage);
 		}
 
+		//setea qué datos se muestran en cada columna
 		columnaNumeroDocumento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroDocumento()));
 		columnaNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
 		columnaApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
@@ -86,6 +89,7 @@ public class AdministrarClienteController extends OlimpoController {
 
 		habilitarBotones(null);
 
+		//cada vez que cambia el item seleccionado
 		tablaClientes.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> habilitarBotones(newValue));
 	}
@@ -188,13 +192,15 @@ public class AdministrarClienteController extends OlimpoController {
 		if(tablaClientes.getSelectionModel().getSelectedItem() == null){
 			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
+		//solicito confirmación al usuario
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("Eliminar cliente", "Está a punto de eliminar al cliente.\n ¿Está seguro que desea hacerlo?", this.stage);
 		if(!ventana.acepta()){
-			return new ResultadoControlador();
+			return new ResultadoControlador();//si no acepta
 		}
 		try{
 			ResultadoEliminarCliente resultado = coordinador.eliminarCliente(tablaClientes.getSelectionModel().getSelectedItem());
 			if(resultado.hayErrores()){
+				// si hay errores lo muestro al usuario
 				StringBuilder stringErrores = new StringBuilder();
 				for(ErrorEliminarCliente err: resultado.getErrores()){
 					switch(err) {
@@ -204,16 +210,17 @@ public class AdministrarClienteController extends OlimpoController {
 				presentador.presentarError("No se pudo eliminar el cliente", stringErrores.toString(), stage);
 
 			}
-			else{
+			else{ //si no hay errores muestro notificación
 				presentador.presentarToast("Se ha eliminado el cliente con éxito", stage);
 			}
+			//actualizo la tabla
 			tablaClientes.getItems().clear();
 			tablaClientes.getItems().addAll(coordinador.obtenerClientes());
 			return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
-		} catch(PersistenciaException e){
+		} catch(PersistenciaException e){ //falla en la capa de persistencia
 			presentador.presentarExcepcion(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Persistencia);
-		} catch(Exception e){
+		} catch(Exception e){// alguna otra excepción inesperada
 			presentador.presentarExcepcionInesperada(e, stage);
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}

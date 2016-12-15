@@ -66,6 +66,7 @@ public class ModificarClienteController extends OlimpoController {
 	 *            cliente del que se obtienen los datos.
 	 */
 	public void setClienteEnModificacion(Cliente clienteEnModificacion) {
+		//se setean los datos del cliente en modificación
 		this.clienteEnModificacion = clienteEnModificacion;
 		textFieldNombre.setText(clienteEnModificacion.getNombre());
 		textFieldApellido.setText(clienteEnModificacion.getApellido());
@@ -86,6 +87,7 @@ public class ModificarClienteController extends OlimpoController {
 
 		StringBuilder error = new StringBuilder("");
 
+		//obtengo datos introducidos por el usuario
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
@@ -93,6 +95,7 @@ public class ModificarClienteController extends OlimpoController {
 		String correo = textFieldCorreo.getText().trim();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
+		//verifico que no estén vacíos
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\r\n");
 		}
@@ -113,10 +116,11 @@ public class ModificarClienteController extends OlimpoController {
 			error.append("Inserte una dirección de correo electrónico").append("\n");
 		}
 
-		if(!error.toString().isEmpty()){
+		if(!error.toString().isEmpty()){  //si hay algún error lo muestro al usuario
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
+			//Si no hay errores se modifican las entidades con los datos introducidos
 			clienteEnModificacion.setNombre(nombre)
 					.setApellido(apellido)
 					.setTipoDocumento(tipoDoc)
@@ -125,8 +129,10 @@ public class ModificarClienteController extends OlimpoController {
 					.setCorreo(correo);
 
 			try{
+				//relevo la operación a capa lógica
 				ResultadoModificarCliente resultado = coordinador.modificarCliente(clienteEnModificacion);
 				if(resultado.hayErrores()){
+					// si hay algún error se muestra al usuario
 					StringBuilder stringErrores = new StringBuilder();
 					for(ErrorModificarCliente err: resultado.getErrores()){
 						switch(err) {
@@ -153,10 +159,11 @@ public class ModificarClienteController extends OlimpoController {
 					presentador.presentarError("Revise sus campos", stringErrores.toString(), stage);
 				}
 				else{
+					//si no hay errores se muestra notificación y se vuelve a la pantalla de listar clientes
 					presentador.presentarToast("Se ha modificado el cliente con éxito", stage);
 					cambiarmeAScene(AdministrarClienteController.URLVista);
 				}
-			} catch(PersistenciaException e){
+			} catch(PersistenciaException e){ //excepción originada en la capa de persistencia
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
