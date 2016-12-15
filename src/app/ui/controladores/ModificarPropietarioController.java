@@ -457,6 +457,11 @@ public class ModificarPropietarioController extends OlimpoController {
 	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarLocalidades(Provincia provincia) {
+		comboBoxLocalidad.setEditable(true);
+		comboBoxLocalidad.getEditor().clear();
+		if(provincia == null) {
+			comboBoxLocalidad.setEditable(false);
+		}
 		comboBoxLocalidad.getItems().clear();
 		if(provincia != null && provincia.getId() != null){
 			try{
@@ -476,6 +481,11 @@ public class ModificarPropietarioController extends OlimpoController {
 	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarProvincias(Pais pais) {
+		comboBoxProvincia.setEditable(true);
+		comboBoxProvincia.getEditor().clear();
+		if(pais == null) {
+			comboBoxProvincia.setEditable(false);
+		}
 		comboBoxProvincia.getItems().clear();
 		if(pais != null && pais.getId() != null){
 			try{
@@ -494,6 +504,14 @@ public class ModificarPropietarioController extends OlimpoController {
 	 *            localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarBarriosYCalles(Localidad loc) {
+		comboBoxBarrio.setEditable(true);
+		comboBoxCalle.setEditable(true);
+		comboBoxBarrio.getEditor().clear();
+		comboBoxCalle.getEditor().clear();
+		if(loc == null) {
+			comboBoxBarrio.setEditable(false);
+			comboBoxCalle.setEditable(false);
+		}
 		comboBoxBarrio.getItems().clear();
 		comboBoxCalle.getItems().clear();
 		if(loc != null && loc.getId() != null){
@@ -504,7 +522,5 @@ public class ModificarPropietarioController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
-		comboBoxBarrio.getEditor().clear();
-		comboBoxCalle.getEditor().clear();
 	}
 }
