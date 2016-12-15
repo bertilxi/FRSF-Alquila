@@ -60,6 +60,39 @@ public class AltaPropietarioControllerTest {
 
 	private static Propietario propietario;
 
+	/**
+	 * Test para probar al controlador de alta propietario cuando el usuario presiona aceptar
+	 *
+	 * @param nombre
+	 * 			nombre que se introduce por el usuario
+	 * @param apellido
+	 * 			apellido que se introduce por el usuario
+	 * @param tipoDocumento
+	 * 			tipo de documento que se introduce por el usuario
+	 * @param numeroDocumento
+	 * 			número de documento que se introduce por el usuario
+	 * @param telefono
+	 * 			teléfono que se introduce por el usuario
+	 * @param email
+	 * 			email que se introduce por el usuario
+	 * @param direccion
+	 * 			dirección que se introduce por el usuario
+	 * @param resultadoCrearPropietarioEsperado
+	 * 			resultado que se espera que retorne el método a probar
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 			1 si llama al método presentar error del presentador de ventanas, 0 si no
+	 * @param llamaAPresentadorVentanasPresentarExcepcion
+	 * 			1 si llama al método presentar excepción del presentador de ventanas, 0 si no
+	 * @param llamaACrearPropietario
+	 * 			1 si llama al método crear propietario de la capa lógica, 0 si no
+	 * @param excepcion
+	 * 			excepción que se simula lanzar desde la capa lógica
+	 * @param aceptarVentanaConfirmacion
+	 * 			si el usuario acepta la ventana de confirmación
+	 * @param llamaACambiarScene
+	 * 			1 si llama al método cambiar scene, 0 si no
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
 	public void testCrearPropietario(String nombre,
@@ -174,32 +207,33 @@ public class AltaPropietarioControllerTest {
 		Localidad localidad = new Localidad("Capital", provincia);
 		Direccion dir = new Direccion("1865", "1", "B", new Calle("San martín", localidad), new Barrio("Centro", localidad), localidad, "");
 		return new Object[] {
+				//nombre,apellido,tipoDocumento,nroDocumento,telefono,email,direccion,resultadoEsperado,llamaAPresentadorVentanasPresentarError,llamaAPresentadorVentanasPresentarExcepcion,llamaACrearPropietario,excepcion,aceptarVentanaConfirmacion,llamaACambiarScene
 				//prueba correcta
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 0, 1, null, true, 0 },
+				/*0*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 0, 1, null, true, 0 },
 				//prueba nombre incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearNombreIncorrecto, 1, 0, 1, null, true, 0 },
+				/*1*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearNombreIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba apellido incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearApellidoIncorrecto, 1, 0, 1, null, true, 0 },
+				/*2*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearApellidoIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba documento incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearDocumentoIncorrecto, 1, 0, 1, null, true, 0 },
+				/*3*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearDocumentoIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba teléfono incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearTelefonoIncorrecto, 1, 0, 1, null, true, 0 },
+				/*4*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearTelefonoIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba email incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearEmailIncorrecto, 1, 0, 1, null, true, 0 },
+				/*5*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearEmailIncorrecto, 1, 0, 1, null, true, 0 },
 				//prueba direccion incorrecta
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearDireccionIncorrecta, 1, 0, 1, null, true, 0 },
+				/*6*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearDireccionIncorrecta, 1, 0, 1, null, true, 0 },
 				//prueba ya existe propietario
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearYaExiste, 1, 0, 1, null, true, 0 },
+				/*7*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCrearYaExiste, 1, 0, 1, null, true, 0 },
 				//prueba ya existe propietario
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto, ErrorCrearPropietario.Formato_Apellido_Incorrecto), 1, 0, 1, null, true, 0 },
+				/*8*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto, ErrorCrearPropietario.Formato_Apellido_Incorrecto), 1, 0, 1, null, true, 0 },
 				//prueba nombre vacio
-				new Object[] { "", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, null, 1, 0, 0, null, true, 0 },
+				/*9*/ new Object[] { "", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, null, 1, 0, 0, null, true, 0 },
 				//prueba propietario Existente y acepta
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), true, 1 },
+				/*10*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), true, 1 },
 				//prueba propietario Existente y cancela
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), false, 0 },
+				/*11*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 0, 1, new EntidadExistenteConEstadoBajaException(), false, 0 },
 				//prueba PersistenciaException
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 1, 1, new SaveUpdateException(new Throwable()), false, 0 }
+				/*12*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "juanperez@hotmail.com", dir, resultadoCorrecto, 0, 1, 1, new SaveUpdateException(new Throwable()), false, 0 }
 
 		};
 	}

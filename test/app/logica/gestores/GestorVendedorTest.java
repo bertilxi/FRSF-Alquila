@@ -202,15 +202,33 @@ public class GestorVendedorTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, null, 1, resultadoCorrecto },
-				new Object[] { false, true, true, null, 0, resultadoCrearNombreIncorrecto },
-				new Object[] { true, false, true, null, 0, resultadoCrearApellidoIncorrecto },
-				new Object[] { true, true, false, null, 0, resultadoCrearDocumentoIncorrecto },
-				new Object[] { false, false, true, null, 0, new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Nombre_Incorrecto, ErrorCrearVendedor.Formato_Apellido_Incorrecto) },
-				new Object[] { true, true, true, vendedor, 0, resultadoCrearYaExiste }
+				//validoNombre,validoApellido,validoDocumento,resultadoObtenerVendedor,guardar,resultadoEsperado
+				/*0*/ new Object[] { true, true, true, null, 1, resultadoCorrecto },
+				/*1*/ new Object[] { false, true, true, null, 0, resultadoCrearNombreIncorrecto },
+				/*2*/ new Object[] { true, false, true, null, 0, resultadoCrearApellidoIncorrecto },
+				/*3*/ new Object[] { true, true, false, null, 0, resultadoCrearDocumentoIncorrecto },
+				/*4*/ new Object[] { false, false, true, null, 0, new ResultadoCrearVendedor(ErrorCrearVendedor.Formato_Nombre_Incorrecto, ErrorCrearVendedor.Formato_Apellido_Incorrecto) },
+				/*5*/ new Object[] { true, true, true, vendedor, 0, resultadoCrearYaExiste }
 		};
 	}
 
+	/**
+	 * Test para la función crearVendedor
+	 *
+	 * @param resValNombre
+	 * 			resultado que va a devolver el validador mock al validar nombre
+	 * @param resValApellido
+	 * 			resultado que va a devolver el validador mock al validar apellido
+	 * @param resValDocumento
+	 * 			resultado que va a devolver el validador mock al validar documento
+	 * @param resObtenerVendedor
+	 * 			resultado que va a devolver el persistidor mock al obtener vendedor
+	 * @param guardar
+	 * 			1 si va a guardar, 0 si no
+	 * @param resultadoCrearVendedorEsperado
+	 * 			resultado esperado que retorne el método a probar
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
 	public void testCrearVendedor(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Vendedor resObtenerVendedor, Integer guardar, ResultadoCrearVendedor resultadoCrearVendedorEsperado) throws Exception {
@@ -219,7 +237,7 @@ public class GestorVendedorTest {
 		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
 		GestorDatos gestorDatosMock = mock(GestorDatos.class);
 
-		//Clase anónima necesaria para inyectar dependencias hasta que funcione Spring
+		//Clase anónima necesaria para inyectar dependencias
 		GestorVendedor gestorVendedor = new GestorVendedor() {
 			{
 				this.persistidorVendedor = vendedorServiceMock;
@@ -312,15 +330,33 @@ public class GestorVendedorTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, vendedorM, 1, resultadoCorrectoModificar },
-				new Object[] { false, true, true, vendedorM, 0, resultadoModificarNombreIncorrecto },
-				new Object[] { true, false, true, vendedorM, 0, resultadoModificarApellidoIncorrecto },
-				new Object[] { true, true, false, vendedorM, 0, resultadoModificarDocumentoIncorrecto },
-				new Object[] { false, false, true, vendedorM, 0, new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Nombre_Incorrecto, ErrorModificarVendedor.Formato_Apellido_Incorrecto) },
-				new Object[] { true, true, true, vendedorM2, 0, resultadoModificarYaExiste }
+				//validoNombre,validoApellido,validoDocumento,resultadoObtenerVendedor,modificar,resultadoEsperado
+				/*0*/ new Object[] { true, true, true, vendedorM, 1, resultadoCorrectoModificar },
+				/*0*/ new Object[] { false, true, true, vendedorM, 0, resultadoModificarNombreIncorrecto },
+				/*0*/ new Object[] { true, false, true, vendedorM, 0, resultadoModificarApellidoIncorrecto },
+				/*0*/ new Object[] { true, true, false, vendedorM, 0, resultadoModificarDocumentoIncorrecto },
+				/*0*/ new Object[] { false, false, true, vendedorM, 0, new ResultadoModificarVendedor(ErrorModificarVendedor.Formato_Nombre_Incorrecto, ErrorModificarVendedor.Formato_Apellido_Incorrecto) },
+				/*0*/ new Object[] { true, true, true, vendedorM2, 0, resultadoModificarYaExiste }
 		};
 	}
 
+	/**
+	 * Test para la función modificarVendedor
+	 *
+	 * @param resValNombre
+	 * 			resultado que va a devolver el validador mock al validar nombre
+	 * @param resValApellido
+	 * 			resultado que va a devolver el validador mock al validar apellido
+	 * @param resValDocumento
+	 * 			resultado que va a devolver el validador mock al validar documento
+	 * @param resObtenerVendedor
+	 * 			resultado que va a devolver el persistidor mock al obtener vendedor
+	 * @param modificar
+	 * 			1 si va a modificar, 0 si no
+	 * @param resultadoModificarVendedorEsperado
+	 * 			resultado esperado que retorne el método a probar
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
 	public void testModificarVendedor(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Vendedor resObtenerVendedor, Integer modificar, ResultadoModificarVendedor resultadoModificarVendedorEsperado) throws Exception {
@@ -329,7 +365,7 @@ public class GestorVendedorTest {
 		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
 		GestorDatos gestorDatosMock = mock(GestorDatos.class);
 
-		//Clase anónima necesaria para inyectar dependencias hasta que funcione Spring
+		//Clase anónima necesaria para inyectar dependencias
 		GestorVendedor gestorVendedor = new GestorVendedor() {
 			{
 				this.persistidorVendedor = vendedorServiceMock;
@@ -393,7 +429,8 @@ public class GestorVendedorTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { vendedorE, 1, resultadoCorrectoEliminar },
+				//resultadoObtenerVendedor, eliminar, resultadoEsperado
+				/*0*/ new Object[] { vendedorE, 1, resultadoCorrectoEliminar },
 		};
 	}
 
@@ -404,7 +441,7 @@ public class GestorVendedorTest {
 		VendedorService vendedorServiceMock = mock(VendedorService.class);
 		GestorDatos gestorDatosMock = mock(GestorDatos.class);
 
-		//Clase anónima necesaria para inyectar dependencias hasta que funcione Spring
+		//Clase anónima necesaria para inyectar dependencias
 		GestorVendedor gestorVendedor = new GestorVendedor() {
 			{
 				this.persistidorVendedor = vendedorServiceMock;
