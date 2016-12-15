@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="466.0" maxWidth="1191.0" minHeight="466.0" minWidth="1191.0" prefHeight="466.0" prefWidth="1191.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="466.0" maxWidth="1191.0" minHeight="466.0" minWidth="1191.0" prefHeight="466.0" prefWidth="1191.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="567.0" minWidth="567.0" prefWidth="567.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="567.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="10.0" prefWidth="110.0" />
+    <ColumnConstraints hgrow="NEVER" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="0.0" prefWidth="322.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="9.0" prefWidth="11.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="920.0" minWidth="10.0" prefWidth="155.0" />
   </columnConstraints>
