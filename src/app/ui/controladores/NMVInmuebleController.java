@@ -471,6 +471,11 @@ public class NMVInmuebleController extends OlimpoController {
 	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarLocalidades(Provincia provincia) {
+		cbLocalidad.setEditable(true);
+		cbLocalidad.getEditor().clear();
+		if(provincia == null) {
+			cbLocalidad.setEditable(false);
+		}
 		cbLocalidad.getItems().clear();
 		if(provincia != null && provincia.getId() != null){
 			try{
@@ -490,6 +495,11 @@ public class NMVInmuebleController extends OlimpoController {
 	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarProvincias(Pais pais) {
+		cbProvincia.setEditable(true);
+		cbProvincia.getEditor().clear();
+		if(pais == null) {
+			cbProvincia.setEditable(false);
+		}
 		cbProvincia.getItems().clear();
 		if(pais != null && pais.getId() != null){
 			try{
@@ -508,6 +518,14 @@ public class NMVInmuebleController extends OlimpoController {
 	 *            localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarBarriosYCalles(Localidad loc) {
+		cbBarrio.setEditable(true);
+		cbCalle.setEditable(true);
+		cbBarrio.getEditor().clear();
+		cbCalle.getEditor().clear();
+		if(loc == null) {
+			cbBarrio.setEditable(false);
+			cbCalle.setEditable(false);
+		}
 		cbBarrio.getItems().clear();
 		cbCalle.getItems().clear();
 		if(loc != null && loc.getId() != null){
@@ -518,8 +536,6 @@ public class NMVInmuebleController extends OlimpoController {
 				presentador.presentarExcepcion(e, stage);
 			}
 		}
-		cbBarrio.getEditor().clear();
-		cbCalle.getEditor().clear();
 	}
 
 	@FXML

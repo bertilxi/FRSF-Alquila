@@ -515,25 +515,6 @@ public class AdministrarInmuebleController extends OlimpoController {
 	}
 
 	/**
-	 * Cuando varía la seleccion del comboBox de países, se actualiza el comboBox de provincias.
-	 * También se delega la tarea de vaciar el comboBox de localidades
-	 *
-	 * @param pais
-	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
-	 */
-	private void actualizarProvincias(Pais pais) {
-		comboBoxProvincia.getItems().clear();
-		if(pais != null){
-			try{
-				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
-			} catch(PersistenciaException e){
-				presentador.presentarExcepcion(e, stage);
-			}
-		}
-		actualizarLocalidades(null);
-	}
-
-	/**
 	 * Cuando varía la seleccion del comboBox de provincias, se actualiza el comboBox de localidades.
 	 * También se delega la tarea de vaciar el comboBox de barrios
 	 *
@@ -541,8 +522,13 @@ public class AdministrarInmuebleController extends OlimpoController {
 	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
 	private void actualizarLocalidades(Provincia provincia) {
+		comboBoxLocalidad.setEditable(true);
+		comboBoxLocalidad.getEditor().clear();
+		if(provincia == null) {
+			comboBoxLocalidad.setEditable(false);
+		}
 		comboBoxLocalidad.getItems().clear();
-		if(provincia != null){
+		if(provincia != null && provincia.getId() != null){
 			try{
 				comboBoxLocalidad.getItems().addAll(coordinador.obtenerLocalidadesDe(provincia));
 			} catch(PersistenciaException e){
@@ -553,16 +539,45 @@ public class AdministrarInmuebleController extends OlimpoController {
 	}
 
 	/**
+	 * Cuando varía la seleccion del comboBox de países, se actualiza el comboBox de provincias.
+	 * También se delega la tarea de vaciar el comboBox de localidades
+	 *
+	 * @param pais
+	 *            país que fué seleccionado en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 */
+	private void actualizarProvincias(Pais pais) {
+		comboBoxProvincia.setEditable(true);
+		comboBoxProvincia.getEditor().clear();
+		if(pais == null) {
+			comboBoxProvincia.setEditable(false);
+		}
+		comboBoxProvincia.getItems().clear();
+		if(pais != null && pais.getId() != null){
+			try{
+				comboBoxProvincia.getItems().addAll(coordinador.obtenerProvinciasDe(pais));
+			} catch(PersistenciaException e){
+				presentador.presentarExcepcion(e, stage);
+			}
+		}
+		actualizarLocalidades(null);
+	}
+
+	/**
 	 * Cuando varía la seleccion del comboBox de localidades, se actualiza el comboBox de barrios.
 	 *
-	 * @param localidad
-	 *            provincia que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
+	 * @param loc
+	 *            localidad que fué seleccionada en el comboBox. Si no hay nada seleccionado, es <code>null</code>
 	 */
-	private void actualizarBarrios(Localidad localidad) {
+	private void actualizarBarrios(Localidad loc) {
+		comboBoxBarrio.setEditable(true);
+		comboBoxBarrio.getEditor().clear();
+		if(loc == null) {
+			comboBoxBarrio.setEditable(false);
+		}
 		comboBoxBarrio.getItems().clear();
-		if(localidad != null){
+		if(loc != null && loc.getId() != null){
 			try{
-				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(localidad));
+				comboBoxBarrio.getItems().addAll(coordinador.obtenerBarriosDe(loc));
 			} catch(PersistenciaException e){
 				presentador.presentarExcepcion(e, stage);
 			}
