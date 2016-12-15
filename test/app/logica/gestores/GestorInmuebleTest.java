@@ -301,36 +301,57 @@ public class GestorInmuebleTest {
 		};
 
 		return new Object[] {
-				new Object[] { inmuebleCorrecto, new ResultadoCrearInmueble(), validadorCorrecto, propietario, null }, //inmueble correcto
-				new Object[] { inmuebleSinFecha, new ResultadoCrearInmueble(ErrorCrearInmueble.Fecha_Vacia), validadorCorrecto, propietario, null }, //inmueble sin fecha de carga
-				new Object[] { inmuebleSinPropietario, new ResultadoCrearInmueble(ErrorCrearInmueble.Propietario_Vacio), validadorCorrecto, propietario, null }, //inmueble sin propietario
-				new Object[] { inmuebleSinTipo, new ResultadoCrearInmueble(ErrorCrearInmueble.Tipo_Vacio), validadorCorrecto, propietario, null }, //inmueble sin TipoInmueble
-				new Object[] { inmuebleSinPrecio, new ResultadoCrearInmueble(ErrorCrearInmueble.Precio_Vacio), validadorCorrecto, propietario, null }, //inmueble sin precio
-				new Object[] { inmuebleCorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Formato_Direccion_Incorrecto), validadorFormatoDireccionIncorrecto, propietario, null }, //inmueble con formato de direccion incorrecta
-				new Object[] { inmueblePrecioIncorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Precio_Incorrecto), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de precio incorrecto
-				new Object[] { inmuebleFrenteIncorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Frente_Incorrecto), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de frente incorrecto
-				new Object[] { inmuebleFondoIncorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Fondo_Incorrecto), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de fondo incorrecto
-				new Object[] { inmuebleSuperficieIncorrecta, new ResultadoCrearInmueble(ErrorCrearInmueble.Superficie_Incorrecta), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de superficie incorrecto
-				new Object[] { inmuebleDatosEdificioIncorrectos, new ResultadoCrearInmueble(ErrorCrearInmueble.Datos_Edificio_Incorrectos), validadorCorrecto, propietario, null }, //inmueble con datosEdificio Incorrectos
-				new Object[] { inmuebleCorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Propietario_Inexistente), validadorCorrecto, null, null }, //propietario del inmueble no está persistido
-				new Object[] { inmuebleCorrecto, null, validadorCorrecto, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una PersistenciaException
-				new Object[] { inmuebleCorrecto, null, validadorCorrecto, null, new Exception() } //el persistidor tira una excepción inesperada
+				//Casos de prueba
+				//inmueble, resultado, validadorMock, propietario, excepcion
+				/* 0 */ new Object[] { inmuebleCorrecto, new ResultadoCrearInmueble(), validadorCorrecto, propietario, null }, //inmueble correcto
+				/* 1 */ new Object[] { inmuebleSinFecha, new ResultadoCrearInmueble(ErrorCrearInmueble.Fecha_Vacia), validadorCorrecto, propietario, null }, //inmueble sin fecha de carga
+				/* 2 */ new Object[] { inmuebleSinPropietario, new ResultadoCrearInmueble(ErrorCrearInmueble.Propietario_Vacio), validadorCorrecto, propietario, null }, //inmueble sin propietario
+				/* 3 */ new Object[] { inmuebleSinTipo, new ResultadoCrearInmueble(ErrorCrearInmueble.Tipo_Vacio), validadorCorrecto, propietario, null }, //inmueble sin TipoInmueble
+				/* 4 */ new Object[] { inmuebleSinPrecio, new ResultadoCrearInmueble(ErrorCrearInmueble.Precio_Vacio), validadorCorrecto, propietario, null }, //inmueble sin precio
+				/* 5 */ new Object[] { inmuebleCorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Formato_Direccion_Incorrecto), validadorFormatoDireccionIncorrecto, propietario, null }, //inmueble con formato de direccion incorrecta
+				/* 6 */ new Object[] { inmueblePrecioIncorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Precio_Incorrecto), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de precio incorrecto
+				/* 7 */ new Object[] { inmuebleFrenteIncorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Frente_Incorrecto), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de frente incorrecto
+				/* 8 */ new Object[] { inmuebleFondoIncorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Fondo_Incorrecto), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de fondo incorrecto
+				/* 9 */ new Object[] { inmuebleSuperficieIncorrecta, new ResultadoCrearInmueble(ErrorCrearInmueble.Superficie_Incorrecta), validadorDoubleIncorrecto, propietario, null }, //inmueble con formato de superficie incorrecto
+				/* 10 */ new Object[] { inmuebleDatosEdificioIncorrectos, new ResultadoCrearInmueble(ErrorCrearInmueble.Datos_Edificio_Incorrectos), validadorCorrecto, propietario, null }, //inmueble con datosEdificio Incorrectos
+				/* 11 */ new Object[] { inmuebleCorrecto, new ResultadoCrearInmueble(ErrorCrearInmueble.Propietario_Inexistente), validadorCorrecto, null, null }, //propietario del inmueble no está persistido
+				/* 12 */ new Object[] { inmuebleCorrecto, null, validadorCorrecto, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una PersistenciaException
+				/* 13 */ new Object[] { inmuebleCorrecto, null, validadorCorrecto, null, new Exception() } //el persistidor tira una excepción inesperada
 		};
 	}
 
+	/**
+	 * Prueba el método modificarInmueble(), el cual corresponde con la taskcard 14 de la iteración 1 y a la historia 3
+	 *
+	 * @param inmueble
+	 *          inmueble a modificar
+	 * @param resultadoValidarFondo
+	 * 			resultado devuelto por el mock validador al validar el fondo del inmueble
+	 * @param resultadoValidarFrente
+	 * 			resultado devuelto por el mock validador al validar el frente del inmueble
+	 * @param resultadoValidarSuperficie
+	 * 			resultado devuelto por el mock validador al validar la superficie del inmueble
+	 * @param resultadoValidarDireccion
+	 * 			resultado devuelto por el mock validador al validar la dirección del inmueble
+	 * @param resultadoValidarDatosEdificioEsperado
+	 * 			resultado devuelto por el mock validador al validar el fondo del inmueble
+	 * @param resultadoValidarPrecio
+	 * 			resultado devuelto por el mock validador al validar el precio del inmueble
+	 * @param retornaInmueble
+	 * 			indica si el persistidor devuelve un inmueble
+	 * @param retornaPropietario
+	 * 			indica si el persistidor devuelve un propietario
+	 * @param resultadoEsperado
+	 *          resultado que se espera que devuelva el gestor
+	 * @param propietario
+	 *            propietario "en la base de datos" a comparar con el propietario del inmueble a guardar para verificar que exista en la base de datos
+	 * @param excepcion
+	 *            es la excepcion que debe lanzar el mock del persistidor, si la prueba involucra procesar una excepcion de dicho persistidor, debe ser nulo propietario para que se use
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
-	public void testModificarInmueble(Inmueble inmueble,
-			Boolean resultadoValidarFondo,
-			Boolean resultadoValidarFrente,
-			Boolean resultadoValidarSuperficie,
-			Boolean resultadoValidarDireccion,
-			Boolean resultadoValidarDatosEdificio,
-			Boolean resultadoValidarPrecio,
-			Boolean retornaInmueble,
-			Boolean retornaPropietario,
-			ResultadoModificarInmueble resultado,
-			Throwable excepcion) throws Exception {
+	public void testModificarInmueble(Inmueble inmueble, Boolean resultadoValidarFondo, Boolean resultadoValidarFrente, Boolean resultadoValidarSuperficie, Boolean resultadoValidarDireccion, Boolean resultadoValidarDatosEdificioEsperado, Boolean resultadoValidarPrecio, Boolean retornaInmueble, Boolean retornaPropietario, ResultadoModificarInmueble resultadoEsperado, Throwable excepcion) throws Exception {
 		GestorPropietario gestorPropietarioMock = Mockito.mock(GestorPropietario.class);
 		InmuebleService persistidorInmuebleMock = Mockito.mock(InmuebleService.class);
 		HistorialService persistidorHistorialMock = Mockito.mock(HistorialService.class);
@@ -373,9 +394,9 @@ public class GestorInmuebleTest {
 			@Override
 			public void evaluate() throws Throwable {
 				if(excepcion == null){
-					assertEquals(resultado, gestorInmueble.modificarInmueble(inmueble));
-					assertEquals(resultadoValidarDatosEdificio, gestorInmueble.validarDatosEdificio(inmueble.getDatosEdificio()));
-					if(!resultado.hayErrores()){
+					assertEquals(resultadoEsperado, gestorInmueble.modificarInmueble(inmueble));
+					assertEquals(resultadoValidarDatosEdificioEsperado, gestorInmueble.validarDatosEdificio(inmueble.getDatosEdificio()));
+					if(!resultadoEsperado.hayErrores()){
 						Mockito.verify(persistidorInmuebleMock).modificarInmueble(any());
 						Mockito.verify(persistidorHistorialMock).guardarHistorialInmueble(any());
 					}
@@ -496,21 +517,23 @@ public class GestorInmuebleTest {
 				.setPrecio(20000.0);
 
 		return new Object[] {
-				new Object[] { inmuebleCorrecto, true, true, true, true, true, true, true, true, resultadoModificarCorrecto, null }, //inmueble correcto
-				new Object[] { inmuebleSinFecha, true, true, true, true, true, true, true, true, resultadoModificarFecha_Vacia, null }, //inmueble sin fecha de carga
-				new Object[] { inmuebleSinPropietario, true, true, true, true, true, true, true, true, resultadoModificarPropietario_Vacio, null }, //inmueble sin propietario
-				new Object[] { inmuebleSinTipo, true, true, true, true, true, true, true, true, resultadoModificarTipo_Vacio, null }, //inmueble sin TipoInmueble
-				new Object[] { inmuebleSinPrecio, true, true, true, true, true, true, true, true, resultadoModificarPrecio_Vacio, null }, //inmueble sin precio
-				new Object[] { inmuebleFondoIncorrecto, false, true, true, true, true, true, true, true, resultadoModificarFondo_Incorrecto, null }, //inmueble con formato de fondo incorrecto
-				new Object[] { inmuebleFrenteIncorrecto, true, false, true, true, true, true, true, true, resultadoModificarFrente_Incorrecto, null }, //inmueble con formato de frente incorrecto
-				new Object[] { inmuebleSuperficieIncorrecta, true, true, false, true, true, true, true, true, resultadoModificarSuperficie_Incorrecta, null }, //inmueble con formato de superficie incorrecto
-				new Object[] { inmuebleCorrecto, true, true, true, false, true, true, true, true, resultadoModificarFormato_Direccion_Incorrecto, null }, //inmueble con formato de direccion incorrecta
-				new Object[] { inmuebleDatosEdificioIncorrectos, true, true, true, true, false, true, true, true, resultadoModificarDatos_Edificio_Incorrectos, null }, //inmueble con datosEdificio Incorrectos
-				new Object[] { inmuebleCorrecto, true, true, true, true, true, false, true, true, resultadoModificarPrecio_Incorrecto, null }, //inmueble con formato de precio incorrecto
-				new Object[] { inmuebleCorrecto, true, true, true, true, true, true, true, false, resultadoModificarPropietario_Inexistente, null }, //propietario del inmueble no está persistido
-				new Object[] { inmuebleCorrecto, true, true, true, true, true, true, false, true, resultadoModificarInmueble_Inexistente, null }, //Inmueble no está persistido
-				new Object[] { inmuebleCorrecto, true, true, true, true, true, true, true, true, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una PersistenciaException
-				new Object[] { inmuebleCorrecto, true, true, true, true, true, true, true, true, null, new SaveUpdateException(new Exception()) }, //el persistidor tira una SaveUpdateException
+				//Casos de prueba
+				// inmueble, resultadoValidarFondo, resultadoValidarFrente, resultadoValidarSuperficie, resultadoValidarDireccion, resultadoValidarDatosEdificio, resultadoValidarPrecio, retornaInmueble, retornaPropietario, resultado, excepcion
+				/* 0 */ new Object[] { inmuebleCorrecto, true, true, true, true, true, true, true, true, resultadoModificarCorrecto, null }, //inmueble correcto
+				/* 1 */ new Object[] { inmuebleSinFecha, true, true, true, true, true, true, true, true, resultadoModificarFecha_Vacia, null }, //inmueble sin fecha de carga
+				/* 2 */ new Object[] { inmuebleSinPropietario, true, true, true, true, true, true, true, true, resultadoModificarPropietario_Vacio, null }, //inmueble sin propietario
+				/* 3 */ new Object[] { inmuebleSinTipo, true, true, true, true, true, true, true, true, resultadoModificarTipo_Vacio, null }, //inmueble sin TipoInmueble
+				/* 4 */ new Object[] { inmuebleSinPrecio, true, true, true, true, true, true, true, true, resultadoModificarPrecio_Vacio, null }, //inmueble sin precio
+				/* 5 */ new Object[] { inmuebleFondoIncorrecto, false, true, true, true, true, true, true, true, resultadoModificarFondo_Incorrecto, null }, //inmueble con formato de fondo incorrecto
+				/* 6 */ new Object[] { inmuebleFrenteIncorrecto, true, false, true, true, true, true, true, true, resultadoModificarFrente_Incorrecto, null }, //inmueble con formato de frente incorrecto
+				/* 7 */ new Object[] { inmuebleSuperficieIncorrecta, true, true, false, true, true, true, true, true, resultadoModificarSuperficie_Incorrecta, null }, //inmueble con formato de superficie incorrecto
+				/* 8 */ new Object[] { inmuebleCorrecto, true, true, true, false, true, true, true, true, resultadoModificarFormato_Direccion_Incorrecto, null }, //inmueble con formato de direccion incorrecta
+				/* 9 */ new Object[] { inmuebleDatosEdificioIncorrectos, true, true, true, true, false, true, true, true, resultadoModificarDatos_Edificio_Incorrectos, null }, //inmueble con datosEdificio Incorrectos
+				/* 10 */ new Object[] { inmuebleCorrecto, true, true, true, true, true, false, true, true, resultadoModificarPrecio_Incorrecto, null }, //inmueble con formato de precio incorrecto
+				/* 11 */ new Object[] { inmuebleCorrecto, true, true, true, true, true, true, true, false, resultadoModificarPropietario_Inexistente, null }, //propietario del inmueble no está persistido
+				/* 12 */ new Object[] { inmuebleCorrecto, true, true, true, true, true, true, false, true, resultadoModificarInmueble_Inexistente, null }, //Inmueble no está persistido
+				/* 13 */ new Object[] { inmuebleCorrecto, true, true, true, true, true, true, true, true, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una PersistenciaException
+				/* 14 */ new Object[] { inmuebleCorrecto, true, true, true, true, true, true, true, true, null, new SaveUpdateException(new Exception()) }, //el persistidor tira una SaveUpdateException
 		};
 	}
 

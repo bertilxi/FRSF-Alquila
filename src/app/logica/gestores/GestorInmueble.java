@@ -104,6 +104,14 @@ public class GestorInmueble {
 		return new ResultadoCrearInmueble(errores.toArray(new ErrorCrearInmueble[0]));
 	}
 
+	/**
+	 * Método auxiliar que encapsula la validación de los atributos del inmueble a crear
+	 *
+	 * @param inmueble
+	 *            inmueble a validar
+	 * @param errores
+	 *            lista de errores encontrados
+	 */
 	private void validarInmuebleAlta(Inmueble inmueble, Set<ErrorCrearInmueble> errores) throws PersistenciaException {
 		if(inmueble.getFechaCarga() == null){
 			errores.add(ErrorCrearInmueble.Fecha_Vacia);
@@ -170,50 +178,7 @@ public class GestorInmueble {
 	public ResultadoModificarInmueble modificarInmueble(Inmueble inmueble) throws PersistenciaException {
 		ArrayList<ErrorModificarInmueble> errores = new ArrayList<>();
 
-		if(inmueble.getFechaCarga() == null){
-			errores.add(ErrorModificarInmueble.Fecha_Vacia);
-		}
-
-		if(inmueble.getPropietario() != null){
-			Propietario propietario = gestorPropietario.obtenerPropietario(new FiltroPropietario(inmueble.getPropietario().getTipoDocumento().getTipo(), inmueble.getPropietario().getNumeroDocumento()));
-			if(propietario == null){
-				errores.add(ErrorModificarInmueble.Propietario_Inexistente);
-			}
-		}
-		else{
-			errores.add(ErrorModificarInmueble.Propietario_Vacio);
-		}
-
-		if(inmueble.getPrecio() == null){
-			errores.add(ErrorModificarInmueble.Precio_Vacio);
-		}
-		if(!validador.validarDoublePositivo(inmueble.getPrecio())){
-			errores.add(ErrorModificarInmueble.Precio_Incorrecto);
-		}
-
-		if(inmueble.getFondo() != null && !validador.validarDoublePositivo(inmueble.getFondo())){
-			errores.add(ErrorModificarInmueble.Fondo_Incorrecto);
-		}
-
-		if(inmueble.getFrente() != null && !validador.validarDoublePositivo(inmueble.getFrente())){
-			errores.add(ErrorModificarInmueble.Frente_Incorrecto);
-		}
-
-		if(inmueble.getSuperficie() != null && !validador.validarDoublePositivo(inmueble.getSuperficie())){
-			errores.add(ErrorModificarInmueble.Superficie_Incorrecta);
-		}
-
-		if(inmueble.getTipo() == null){
-			errores.add(ErrorModificarInmueble.Tipo_Vacio);
-		}
-
-		if(!validador.validarDireccion(inmueble.getDireccion())){
-			errores.add(ErrorModificarInmueble.Formato_Direccion_Incorrecto);
-		}
-
-		if(!validarDatosEdificio(inmueble.getDatosEdificio())){
-			errores.add(ErrorModificarInmueble.Datos_Edificio_Incorrectos);
-		}
+		validarInmuebleModificar(inmueble, errores);
 
 		Inmueble inmuebleAuxiliar = persistidorInmueble.obtenerInmueble(inmueble.getId());
 		if(inmuebleAuxiliar == null){
@@ -269,6 +234,62 @@ public class GestorInmueble {
 	}
 
 	/**
+	 * Método auxiliar que encapsula la validación de los atributos del inmueble a modificar
+	 *
+	 * @param inmueble
+	 *            inmueble a validar
+	 * @param errores
+	 *            lista de errores encontrados
+	 */
+	private void validarInmuebleModificar(Inmueble inmueble, ArrayList<ErrorModificarInmueble> errores)
+			throws PersistenciaException {
+		if(inmueble.getFechaCarga() == null){
+			errores.add(ErrorModificarInmueble.Fecha_Vacia);
+		}
+
+		if(inmueble.getPropietario() != null){
+			Propietario propietario = gestorPropietario.obtenerPropietario(new FiltroPropietario(inmueble.getPropietario().getTipoDocumento().getTipo(), inmueble.getPropietario().getNumeroDocumento()));
+			if(propietario == null){
+				errores.add(ErrorModificarInmueble.Propietario_Inexistente);
+			}
+		}
+		else{
+			errores.add(ErrorModificarInmueble.Propietario_Vacio);
+		}
+
+		if(inmueble.getPrecio() == null){
+			errores.add(ErrorModificarInmueble.Precio_Vacio);
+		}
+		if(!validador.validarDoublePositivo(inmueble.getPrecio())){
+			errores.add(ErrorModificarInmueble.Precio_Incorrecto);
+		}
+
+		if(inmueble.getFondo() != null && !validador.validarDoublePositivo(inmueble.getFondo())){
+			errores.add(ErrorModificarInmueble.Fondo_Incorrecto);
+		}
+
+		if(inmueble.getFrente() != null && !validador.validarDoublePositivo(inmueble.getFrente())){
+			errores.add(ErrorModificarInmueble.Frente_Incorrecto);
+		}
+
+		if(inmueble.getSuperficie() != null && !validador.validarDoublePositivo(inmueble.getSuperficie())){
+			errores.add(ErrorModificarInmueble.Superficie_Incorrecta);
+		}
+
+		if(inmueble.getTipo() == null){
+			errores.add(ErrorModificarInmueble.Tipo_Vacio);
+		}
+
+		if(!validador.validarDireccion(inmueble.getDireccion())){
+			errores.add(ErrorModificarInmueble.Formato_Direccion_Incorrecto);
+		}
+
+		if(!validarDatosEdificio(inmueble.getDatosEdificio())){
+			errores.add(ErrorModificarInmueble.Datos_Edificio_Incorrectos);
+		}
+	}
+
+	/**
 	 * Se encarga de validar que exista el inmueble a eliminar, se setea el estado en BAJA y,
 	 * en caso de que no haya errores, delegar el guardado del objeto a la capa de acceso a datos.
 	 *
@@ -320,6 +341,15 @@ public class GestorInmueble {
 		return persistidorInmueble.listarInmuebles(filtro);
 	}
 
+	/**
+	 * Método auxiliar que encapsula la validación de los atributos del edificio
+	 *
+	 * @param datosEdificio
+	 *            datos del edificio a validar
+	 *            
+	 * @return 	True si los datos son correctos
+	 * 			False si no son correctos
+	 */
 	protected Boolean validarDatosEdificio(DatosEdificio datosEdificio) {
 		if(datosEdificio == null){
 			return false;
