@@ -177,11 +177,30 @@ public class AdministrarVendedorControllerTest {
 
 		return new Object[] {
 				//Casos de prueba
-				/* 0 */ new Object[] { listaVendedoresConUnVendedor, 1},
-				/* 1 */ new Object[] { listaVendedoresVacia, 0}
+				//listaVendedores, llamaAModificar
+				/* 0 */ new Object[] { listaVendedoresConUnVendedor, 1}, //Si hay un vendedor seleccionado se debe llamar a la pantalla modificar
+				/* 1 */ new Object[] { listaVendedoresVacia, 0} //Si la lista es vacía no se debería llamar a modificar
 		};
 	}
 
+	/**
+	 * Prueba el método eliminar Vendedor()
+	 * @param listaVendedores
+	 *			vendedores inicialmente en la tabla de vendedores
+	 * @param llamaAPresentadorVentanasPresentarConfirmacion
+	 * 			indica si se debe llamar a la ventana de presentar confirmación
+	 * @param aceptarVentanaConfirmacion
+	 * 			indica si el usuario acepta la ventana de confirmación
+	 * @param resultadoEliminarVendedorEsperado
+	 * 			resultado devuelto por la capa lógica
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 			indica si se debe presentar un error
+	 * @param llamaAPresentadorVentanasPresentarExcepcion
+	 * 			indica si se debe presentar una excepcion
+	 * @param excepcion
+	 * 			excepcion lanzada por la capa lógica
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
 	public void testEliminarVendedor(ArrayList<Vendedor> listaVendedores,
@@ -259,7 +278,6 @@ public class AdministrarVendedorControllerTest {
 		};
 		//Se corre el test en el hilo de JavaFX
 		corredorTestEnJavaFXThread.apply(test, null).evaluate();
-
 	}
 
 	/**
@@ -295,11 +313,12 @@ public class AdministrarVendedorControllerTest {
 		listaVendedores.add(vendedor2);
 
 		return new Object[] {
-				new Object[] { listaVendedores, 1, true, resultadoSinError, 0, 0, null },
-				new Object[] { listaVendedores, 1, true, resultadoSinError, 0, 1, exception },
-				new Object[] { listaVendedores, 1, false, resultadoSinError, 0, 0, null },
-				new Object[] { listaVendedoresVacia, 0, false, resultadoSinError, 0, 0, null },
-				new Object[] { listaVendedoresVacia, 0, false, resultadoSinError, 0, 0, null }
+				//Casos de prueba
+				//listaVendedores, llamaAPresentadorVentanasPresentarConfirmacion, aceptarVentanaConfirmacion, resultadoEliminarVendedorEsperado, llamaAPresentadorVentanasPresentarError, llamaAPresentadorVentanasPresentarExcepcion, excepcion
+				/* 0 */ new Object[] { listaVendedores, 1, true, resultadoSinError, 0, 0, null }, //test correcto, se acepta la confirmación y sin errores
+				/* 1 */ new Object[] { listaVendedores, 1, true, resultadoSinError, 0, 1, exception }, //la lógica devuelve una excepción
+				/* 2 */ new Object[] { listaVendedores, 1, false, resultadoSinError, 0, 0, null }, //no se acepta la ventna de confirmación
+				/* 3 */ new Object[] { listaVendedoresVacia, 0, false, resultadoSinError, 0, 0, null }, //la lista de vendedores es vacía
 		};
 	}
 }

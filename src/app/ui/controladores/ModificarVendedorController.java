@@ -85,9 +85,7 @@ public class ModificarVendedorController extends OlimpoController {
 	 * Si la capa lógica retorna errores, éstos se muestran al usuario.
 	 */
 	public void acceptAction() {
-
-		StringBuilder error = new StringBuilder("");
-
+		//Se toman los datos de la vista
 		String nombre = textFieldNombre.getText().trim();
 		String apellido = textFieldApellido.getText().trim();
 		String numeroDocumento = textFieldNumeroDocumento.getText().trim();
@@ -96,6 +94,9 @@ public class ModificarVendedorController extends OlimpoController {
 		String password2 = passwordFieldRepiteContraseña.getText();
 		TipoDocumento tipoDoc = comboBoxTipoDocumento.getValue();
 
+		StringBuilder error = new StringBuilder("");
+
+		//Se validan los campos
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\r\n");
 		}
@@ -111,6 +112,7 @@ public class ModificarVendedorController extends OlimpoController {
 			error.append("Inserte un numero de documento").append("\r\n");
 		}
 
+		//Si el usuario quiere cambiar la contraseña, se validan también su contraseña antigua y nueva
 		if(checkBoxCambiarContraseña.isSelected()){
 			if(passwordAntigua.isEmpty()){
 				error.append("Ingrese su antigua contraseña\r\n");
@@ -126,10 +128,12 @@ public class ModificarVendedorController extends OlimpoController {
 			}
 		}
 
+		//Si hay errores se muestra una ventana con un mensaje explicativo de ellos
 		if(!error.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
 		else{
+			//Si no hay errores, se crea un vendedor para luego pasarselo a la capa lógica
 			vendedor.setNombre(nombre)
 					.setApellido(apellido)
 					.setNumeroDocumento(numeroDocumento)
@@ -141,8 +145,11 @@ public class ModificarVendedorController extends OlimpoController {
 			ResultadoModificarVendedor resultadoModificarVendedor = null;
 
 			try{
+				//Se llama a la capa lógica para que cree el vendedor
 				resultadoModificarVendedor = coordinador.modificarVendedor(vendedor);
 				List<ErrorModificarVendedor> listaErrores = resultadoModificarVendedor.getErrores();
+				
+				//Se convierten los errores devueltos a un mensaje a mostrar al usuario
 				if(listaErrores.contains(ErrorModificarVendedor.Formato_Nombre_Incorrecto)){
 					error.append("Nombre Incorrecto").append("\r\n");
 				}
@@ -156,6 +163,7 @@ public class ModificarVendedorController extends OlimpoController {
 					error.append("Ya existe otro vendedor registrado con ese documento").append("\r\n");
 				}
 
+				//Si hay errores se muestran al usuario, si no, se presenta una notificación de éxito
 				if(!error.toString().isEmpty()){
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
@@ -180,7 +188,6 @@ public class ModificarVendedorController extends OlimpoController {
 				presentador.presentarExcepcionInesperada(e, stage);
 			}
 		}
-
 	}
 
 	/**

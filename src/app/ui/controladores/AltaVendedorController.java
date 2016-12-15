@@ -76,13 +76,14 @@ public class AltaVendedorController extends OlimpoController {
 	 * Si la capa lógica retorna errores, éstos se muestran al usuario.
 	 */
 	public void acceptAction() {
-
+		//Se toman los datos ingresados por el usuario
 		cargarDatos();
 
+		//Se validan los datos ingresados por el usuario
 		StringBuilder error = new StringBuilder("");
-
 		validarVistaAltaVendedor(error);
 
+		//Si hay errores, se los muestra en pantalla, si no, se llama a crear un vendedor en la capa lógica
 		if(!error.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
@@ -91,7 +92,11 @@ public class AltaVendedorController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Método que encapsula el llamado de crear un vendedor a la capa lógica y maneja los errores devueltos
+	 */
 	private void crearVendedor() {
+		//Se crea el vendedor a pasarle a la capa lógica
 		Vendedor vendedor = new Vendedor();
 		vendedor.setNombre(nombre)
 				.setApellido(apellido)
@@ -103,12 +108,15 @@ public class AltaVendedorController extends OlimpoController {
 		ResultadoCrearVendedor resultadoCrearVendedor = null;
 
 		try{
+			//Se llama a crear un vendedor en la capa lógica
 			resultadoCrearVendedor = coordinador.crearVendedor(vendedor);
 			StringBuilder error = new StringBuilder("");
 			List<ErrorCrearVendedor> listaErrores = resultadoCrearVendedor.getErrores();
 
+			//Se crea un mensaje apropiado a mostrar según el error recibido
 			parsearErroresLogica(error, listaErrores);
 
+			//Si hay errores, se los muestra en pantalla, si no, se presenta una notificación indicando el éxito de la operación
 			if(!error.toString().isEmpty()){
 				presentador.presentarError("Revise sus campos", error.toString(), stage);
 			}
@@ -116,19 +124,27 @@ public class AltaVendedorController extends OlimpoController {
 				presentador.presentarToast("Se ha creado el vendedor con éxito", stage);
 				salir();
 			}
-
+		//Se manejan las excepciones que puede devolver la lógica
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		} catch(EntidadExistenteConEstadoBajaException e){
+			//Si el vendedor ya existía pero fue dado de baja se debe mostrar una ventana preguntando al usuario si desea darlo de alta
 			manejarVendedorExistenteBaja(vendedor);
 		} catch(Exception e){
 			presentador.presentarExcepcionInesperada(e, stage); //falta el stage
 		}
 	}
 
+	/**
+	 * Método que se llama al querer dar de alta un vendedor que fue dado de baja previamente
+	 * Si el usuario confirma la operación se llama a la pantalla modificar vendedor
+	 * 
+	 * @param vendedor
+	 */
 	private void manejarVendedorExistenteBaja(Vendedor vendedor) {
 		VentanaConfirmacion ventana = presentador.presentarConfirmacion("El vendedor ya existe", "El vendedor está dado de baja. Si continúa podrá darlo de alta nuevamente. ¿Desea continuar?", stage);
 		if(ventana.acepta()){
+			//Si el usuario acepta se llama a la pantalla modificar vendedor
 			try{
 				vendedor = coordinador.obtenerVendedor(vendedor);
 			} catch(PersistenciaException e1){
@@ -140,6 +156,15 @@ public class AltaVendedorController extends OlimpoController {
 		}
 	}
 
+	
+	/**
+	 * Se convierten los errores devueltos por la capa lógica a errores a mostrar al usuario
+	 * 
+	 * @param error
+	 * 			Texto a mostrar al usuario
+	 * @param listaErrores
+	 * 			Lista de errores de la capa lógica
+	 */
 	private void parsearErroresLogica(StringBuilder error, List<ErrorCrearVendedor> listaErrores) {
 		if(listaErrores.contains(ErrorCrearVendedor.Formato_Nombre_Incorrecto)){
 			error.append("Nombre Incorrecto").append("\r\n");
@@ -155,6 +180,12 @@ public class AltaVendedorController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Se valida que los campos ingresados por el usuario sean correctos
+	 * 
+	 * @param error
+	 * 			Texto a mostrar en caso de que haya algún error
+	 */
 	private void validarVistaAltaVendedor(StringBuilder error) {
 		if(nombre.isEmpty()){
 			error.append("Inserte un nombre").append("\r\n");
@@ -184,6 +215,9 @@ public class AltaVendedorController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Se cargan los datos de la vista a variables para su posterior utilización
+	 */
 	private void cargarDatos() {
 		nombre = textFieldNombre.getText().trim();
 		apellido = textFieldApellido.getText().trim();
