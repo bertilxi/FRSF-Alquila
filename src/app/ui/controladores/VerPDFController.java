@@ -35,6 +35,13 @@ import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import netscape.javascript.JSObject;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 /**
  * Controlador de la vista para mostrar un PDF
@@ -71,6 +78,11 @@ public class VerPDFController extends OlimpoController {
 				FileOutputStream fos = new FileOutputStream(pdfFile);
 				fos.write(pdf.getArchivo());
 				fos.close();
+
+				Browser browser = new Browser();
+				BrowserView view = new BrowserView(browser);
+				browser.loadURL("http://www.google.com");
+/*
 				WebEngine engine = visorPDF.getEngine();
 				String url = "file:///" + new File(URL_Visor).getAbsolutePath();
 				engine.load(url);
@@ -78,6 +90,7 @@ public class VerPDFController extends OlimpoController {
 				JSObject jsobj = (JSObject) visorPDF.getEngine().executeScript("window");
 				jsobj.setMember("java", this);
 				visorPDF.getEngine().executeScript("window.print = function () { };");
+				*/
 			} catch(Exception e){
 				presentador.presentarExcepcionInesperada(e);
 			}
