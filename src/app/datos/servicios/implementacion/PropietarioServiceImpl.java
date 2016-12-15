@@ -53,8 +53,11 @@ public class PropietarioServiceImpl implements PropietarioService {
 		return sessionFactory;
 	}
 
+	/* 
+	 * Método para guardar en la base de datos un propietario
+	 */
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public void guardarPropietario(Propietario propietario) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
@@ -64,8 +67,11 @@ public class PropietarioServiceImpl implements PropietarioService {
 		}
 	}
 
+	/* 
+	 * Método para modificar en la base de datos un propietario
+	 */
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public void modificarPropietario(Propietario propietario) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
@@ -75,12 +81,16 @@ public class PropietarioServiceImpl implements PropietarioService {
 		}
 	}
 
+	/* 
+	 * Método para obtener de la base de datos un propietario
+	 */
 	@Override
-	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public Propietario obtenerPropietario(FiltroPropietario filtro) throws PersistenciaException {
 		Propietario propietario = null;
 		Session session = getSessionFactory().getCurrentSession();
 		try{
+			//named query ubicada en entidad propietario
 			propietario = (Propietario) session.getNamedQuery("obtenerPropietario").setParameter("tipoDocumento", filtro.getTipoDocumento()).setParameter("documento", filtro.getDocumento()).uniqueResult();
 		} catch(NoResultException e){
 			return null;
@@ -92,12 +102,16 @@ public class PropietarioServiceImpl implements PropietarioService {
 		return propietario;
 	}
 
+	/* 
+	 * Método para obtener de la base de datos todos los propietarios con estado ALTA
+	 */
 	@Override
-	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
+	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public ArrayList<Propietario> listarPropietarios() throws PersistenciaException {
 		ArrayList<Propietario> propietarios = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
+			//named query ubicada en entidad propietario
 			for(Object o: session.getNamedQuery("obtenerPropietarios").list()){
 				if(o instanceof Propietario){
 					propietarios.add((Propietario) o);
@@ -108,5 +122,4 @@ public class PropietarioServiceImpl implements PropietarioService {
 		}
 		return propietarios;
 	}
-
 }
