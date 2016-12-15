@@ -55,6 +55,9 @@ public class InmuebleServiceImpl implements InmuebleService {
 		return sessionFactory;
 	}
 
+	/* 
+	 * Método para guardar en la base de datos un inmueble
+	 */
 	@Override
 	@Transactional(rollbackFor = PersistenciaException.class)
 	public void guardarInmueble(Inmueble inmueble) throws PersistenciaException {
@@ -67,6 +70,9 @@ public class InmuebleServiceImpl implements InmuebleService {
 
 	}
 
+	/* 
+	 * Método para modificar en la base de datos un inmueble
+	 */
 	@Override
 	@Transactional(rollbackFor = PersistenciaException.class)
 	public void modificarInmueble(Inmueble inmueble) throws PersistenciaException {
@@ -78,12 +84,16 @@ public class InmuebleServiceImpl implements InmuebleService {
 		}
 	}
 
+	/* 
+	 * Método para listar todos los inmuebles en la base de datos
+	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Inmueble> listarInmuebles() throws PersistenciaException {
 		ArrayList<Inmueble> inmuebles = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
+			//named query ubicada en entidad inmueble
 			for(Object o: session.getNamedQuery("obtenerInmuebles").list()){
 				if(o instanceof Inmueble){
 					inmuebles.add((Inmueble) o);
@@ -95,6 +105,9 @@ public class InmuebleServiceImpl implements InmuebleService {
 		return inmuebles;
 	}
 
+	/* 
+	 * Método para listar los inmuebles en la base de datos de acuerdo a los parámetros del filtro
+	 */
 	@Override
 	@Transactional(readOnly = true, rollbackFor = PersistenciaException.class)
 	public ArrayList<Inmueble> listarInmuebles(FiltroInmueble filtro) throws PersistenciaException {
@@ -114,6 +127,9 @@ public class InmuebleServiceImpl implements InmuebleService {
 		return inmuebles;
 	}
 
+	/* 
+	 * Método para obtener un inmueble de la base de datos según el id
+	 */
 	@Override
 	@Transactional(rollbackFor = PersistenciaException.class)
 	public Inmueble obtenerInmueble(Integer id) throws PersistenciaException {
@@ -128,5 +144,4 @@ public class InmuebleServiceImpl implements InmuebleService {
 		}
 		return inmueble;
 	}
-
 }
