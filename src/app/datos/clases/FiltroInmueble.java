@@ -24,6 +24,9 @@ import app.datos.entidades.Localidad;
 import app.datos.entidades.Pais;
 import app.datos.entidades.Provincia;
 
+/**
+ * Clase que representa las opciones de búsqueda de un inmueble
+ */
 public class FiltroInmueble {
 
 	private String consulta;
@@ -57,6 +60,9 @@ public class FiltroInmueble {
 		this.estadoInmueble = filtro.estadoInmueble;
 	}
 
+	/**
+	 * Clase que construye el filtro
+	 */
 	public static class Builder {
 
 		private FiltroInmueble filtroInmueble;
@@ -125,20 +131,32 @@ public class FiltroInmueble {
 		}
 	}
 
+	/**
+	 * Genera la consulta hql para hibernate con los parámetros con los que lo construyeron
+	 */
 	private void setConsulta() {
 		consulta = this.getSelect() + this.getFrom() + this.getWhere() + this.getOrderBy();
 	}
 
+	/**
+	 * Genera el select de la consulta hql para hibernate con los parámetros con los que lo construyeron
+	 */
 	private String getSelect() {
 		String select = "SELECT " + nombreEntidad;
 		return select;
 	}
 
+	/**
+	 * Genera el from de la consulta hql para hibernate con los parámetros con los que lo construyeron
+	 */
 	private String getFrom() {
 		String from = " FROM Inmueble " + nombreEntidad;
 		return from;
 	}
 
+	/**
+	 * Genera el where de la consulta hql para hibernate con los parámetros con los que lo construyeron
+	 */
 	private String getWhere() {
 		String where =
 				((pais != null) ? (nombreEntidad + ".direccion.localidad.provincia.pais.nombre LIKE :pai AND ") : ("")) +
@@ -151,18 +169,21 @@ public class FiltroInmueble {
 						((precioMinimo != null) ? (nombreEntidad + ".precio >= :pmi AND ") : ("")) +
 						((estadoInmueble != null) ? (nombreEntidad + ".estadoInmueble.estado = :esi AND ") : (""));
 
-		if(!where.isEmpty()){
-			where = " WHERE " + where;
-			where = where.substring(0, where.length() - 4);
-		}
+		where = " WHERE " + where + nombreEntidad + ".estado.estado = 'ALTA'";
 		return where;
 	}
 
+	/**
+	 * Genera el order by de la consulta hql para hibernate con los parámetros con los que lo construyeron
+	 */
 	private String getOrderBy() {
 		String orderBy = " ORDER BY " + nombreEntidad + ".fechaCarga ASC";
 		return orderBy;
 	}
 
+	/**
+	 * Setea los parámetros con los que lo construyeron a la consulta hql de hibernate
+	 */
 	public Query setParametros(Query query) {
 		if(pais != null){
 			query.setParameter("pai", "%" + pais + "%");
@@ -194,6 +215,9 @@ public class FiltroInmueble {
 		return query;
 	}
 
+	/**
+	 * Devuelve la consulta hql de hibernate generada al construirse
+	 */
 	public String getConsultaDinamica() {
 		return consulta;
 	}
