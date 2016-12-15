@@ -36,20 +36,20 @@ public class AltaCatalogoController extends OlimpoController {
 	public static final String URLVista = "/app/ui/vistas/altaCatalogo.fxml";
 
 	@FXML
-	private Pane listaInmuebles;
+	protected Pane listaInmuebles;
 
-	private ArrayList<Inmueble> inmuebles = new ArrayList<>();
-
-	@FXML
-	private ComboBox<Cliente> cbCliente;
+	protected ArrayList<Inmueble> inmuebles = new ArrayList<>();
 
 	@FXML
-	private Pane fondo;
+	protected ComboBox<Cliente> cbCliente;
 
 	@FXML
-	private Button btnGenerarCatalogo;
+	protected Pane fondo;
 
-	private Map<Node, RenglonInmuebleController> renglones = new HashMap<>();
+	@FXML
+	protected Button btnGenerarCatalogo;
+
+	protected Map<Node, RenglonInmuebleController> renglones = new HashMap<>();
 
 	@Override
 	protected void inicializar(URL location, ResourceBundle resources) {
@@ -164,7 +164,7 @@ public class AltaCatalogoController extends OlimpoController {
 			if(!errores.isEmpty()){
 				presentador.presentarError("Error al crear el catálogo", errores, stage);
 			}
-			return new ResultadoControlador(ErrorControlador.Datos_Incorrectos);
+			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
 		else{
 			presentador.presentarToast("Se ha creado el catálogo con éxito", stage);
@@ -173,7 +173,7 @@ public class AltaCatalogoController extends OlimpoController {
 		}
 	}
 
-	private void mostrarPDF(PDF pdf) {
+	protected void mostrarPDF(PDF pdf) {
 		String irA = null;
 		if(URLVistaRetorno != null){
 			irA = URLVistaRetorno;
