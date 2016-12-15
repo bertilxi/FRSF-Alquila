@@ -66,28 +66,6 @@ public class InmuebleServiceImplTest {
 		sessionFact.close();
 	}
 
-	@Test
-	@Parameters
-	/**
-	 * Prueba las querys que genera el filtro que se le pasa a listarInmuebles(FiltroInmueble filtro) para verificar que sean válidas.
-	 * Corresponde con la taskcard 21 de la iteración 2 y a la historia 4
-	 *
-	 * @param filtro
-	 *            filtro a probar sus querys
-	 * @throws Exception
-	 */
-	public void testListarInmuebles(FiltroInmueble filtro) throws Exception {
-		System.out.println("Inicio test");
-		try{
-			persistidorInmuble.listarInmuebles(filtro);
-		} catch(Exception e){
-			e.printStackTrace();
-			System.out.println("Fin test");
-			Assert.fail("No debería haber fallado");
-		}
-		System.out.println("Fin test");
-	}
-
 	/**
 	 * Método que devuelve los parámetros para probar el método listarInmuebles(FiltroInmueble filtro)
 	 *
@@ -118,9 +96,33 @@ public class InmuebleServiceImplTest {
 		FiltroInmueble filtroVacio = new FiltroInmueble.Builder().build();
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { filtroCompleto },
-				new Object[] { filtroSinEstadoInmueble },
-				new Object[] { filtroVacio }
+				//Casos de prueba
+				//filtro
+				/* 0 */new Object[] { filtroCompleto },
+				/* 1 */new Object[] { filtroSinEstadoInmueble },
+				/* 2 */new Object[] { filtroVacio }
 		};
+	}
+
+	/**
+	 * Prueba las querys que genera el filtro que se le pasa a listarInmuebles(FiltroInmueble filtro) para verificar que sean válidas.
+	 * Corresponde con la taskcard 21 de la iteración 2 y a la historia 4
+	 *
+	 * @param filtro
+	 *            filtro a probar sus querys
+	 * @throws Exception
+	 */
+	@Test
+	@Parameters
+	public void testListarInmuebles(FiltroInmueble filtro) throws Exception {
+		System.out.println("Inicio test");
+		try{
+			persistidorInmuble.listarInmuebles(filtro);
+		} catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Fin test");
+			Assert.fail("No debería haber fallado");
+		}
+		System.out.println("Fin test");
 	}
 }

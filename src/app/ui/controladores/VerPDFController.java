@@ -22,7 +22,6 @@ import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.FutureTask;
 
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -136,29 +135,26 @@ public class VerPDFController extends OlimpoController {
 		FileChooser archivoSeleccionado = new FileChooser();
 		archivoSeleccionado.getExtensionFilters().add(filtro);
 
-		FutureTask<Boolean> future = new FutureTask<>(() -> {
+		FutureTask<File> future = new FutureTask<>(() -> {
 			File pdfAGuardar = null;
 			pdfAGuardar = archivoSeleccionado.showSaveDialog(stage);
-			download.setDestinationFile(pdfAGuardar);
-			return true;
+			return pdfAGuardar;
 		});
 
 		Platform.runLater(future);
-		Boolean b = false;
+		File pdfAGuardar = null;
 		try{
-			b = future.get();
-		} catch(CancellationException e){
-			//el usuario cancela
-			//no se hace nada
-		} catch(Exception e){ //cualquier otra excepción
+			pdfAGuardar = future.get();
+			if(pdfAGuardar == null){
+				return false;
+			}
+			download.setDestinationFile(pdfAGuardar);
+		} catch(Exception e){
 			Platform.runLater(() -> {
 				presentador.presentarError("Error", "No se pudo guardar el pdf deseado", stage);
 			});
 		}
-		if(b == null){
-			b = false;
-		}
-		return b;
+		return true;
 	}
 
 	@Override

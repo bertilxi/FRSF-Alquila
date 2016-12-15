@@ -25,6 +25,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.teamdev.jxbrowser.chromium.LoggerProvider;
+
 import app.logica.CoordinadorJavaFX;
 import app.logica.gestores.GestorEmail;
 import app.ui.componentes.IconoAplicacion;
@@ -57,6 +59,7 @@ public class Main extends Application {
 			String log = loggers.nextElement();
 			java.util.logging.Logger.getLogger(log).setLevel(java.util.logging.Level.WARNING);
 		}
+		LoggerProvider.setLevel(java.util.logging.Level.WARNING);
 		//Iniciar aplicacion
 		launch(args);
 	}
