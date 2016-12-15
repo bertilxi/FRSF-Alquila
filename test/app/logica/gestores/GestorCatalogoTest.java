@@ -53,32 +53,50 @@ public class GestorCatalogoTest {
 	protected Object[] parametersForTestCrearCatalogo() {
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), 1.0, resultadoCrearCorrecto, null, null, 1 }, //Test correcto
-				new Object[] { null, 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), 1.0, resultadoCrearCliente_inexistente, null, null, 0 }, //Cliente vacío
-				new Object[] { new Cliente(), null, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), 1.0, resultadoCrearCodigo_Inmueble_Inexistente, null, null, 0 }, //Código de inmueble vacío
-				new Object[] { new Cliente(), 1, null, new Direccion(), new Localidad(), new Barrio(), 1.0, resultadoCrearTipo_Inmueble_Inexistente, null, null, 0 }, //Tipo de inmueble vacío
-				new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), null, new Localidad(), new Barrio(), 1.0, resultadoCrearDireccion_Inmueble_Inexistente, null, null, 0 }, //Dirección de inmueble vacía
-				new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), null, new Barrio(), 1.0, resultadoCrearLocalidad_Inmueble_Inexistente, null, null, 0 }, //Localidad de inmueble vacía
-				new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), null, 1.0, resultadoCrearBarrio_Inmueble_Inexistente, null, null, 0 }, //Barrio de inmueble vacío
-				new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), null, resultadoCrearPrecio_Inmueble_Inexistente, null, null, 0 }, //Barrio de inmueble vacío
-				new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), 1.0, null, new GenerarPDFException(new Throwable()), new GenerarPDFException(new Throwable()), 1 } //El gestorPDF tira una excepción
+				//Casos de prueba
+				//cliente, idSet, tipoInmueble, direccion, localidad, barrio, precio, resultadoCrearCatalogoEsperado, excepcion, excepcionEsperada, llamaACrearPDF
+				/* 0 */ new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), 1.0, resultadoCrearCorrecto, null, null, 1 }, //Test correcto
+				/* 1 */ new Object[] { null, 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), 1.0, resultadoCrearCliente_inexistente, null, null, 0 }, //Cliente vacío
+				/* 2 */ new Object[] { new Cliente(), null, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), 1.0, resultadoCrearCodigo_Inmueble_Inexistente, null, null, 0 }, //Código de inmueble vacío
+				/* 3 */ new Object[] { new Cliente(), 1, null, new Direccion(), new Localidad(), new Barrio(), 1.0, resultadoCrearTipo_Inmueble_Inexistente, null, null, 0 }, //Tipo de inmueble vacío
+				/* 4 */ new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), null, new Localidad(), new Barrio(), 1.0, resultadoCrearDireccion_Inmueble_Inexistente, null, null, 0 }, //Dirección de inmueble vacía
+				/* 5 */ new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), null, new Barrio(), 1.0, resultadoCrearLocalidad_Inmueble_Inexistente, null, null, 0 }, //Localidad de inmueble vacía
+				/* 6 */ new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), null, 1.0, resultadoCrearBarrio_Inmueble_Inexistente, null, null, 0 }, //Barrio de inmueble vacío
+				/* 7 */ new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), null, resultadoCrearPrecio_Inmueble_Inexistente, null, null, 0 }, //Barrio de inmueble vacío
+				/* 8 */ new Object[] { new Cliente(), 1, new TipoInmueble(TipoInmuebleStr.CASA), new Direccion(), new Localidad(), new Barrio(), 1.0, null, new GenerarPDFException(new Throwable()), new GenerarPDFException(new Throwable()), 1 } //El gestorPDF tira una excepción
 		};
 	}
 
+	/**
+	 * Prueba el método crearCatalogo(), el cual corresponde con la taskcard 23 de la iteración 2
+	 * 
+	 * @param cliente
+	 * 			cliente al que generarle el catálogo
+	 * @param idSet
+	 * 			código del inmueble para el catálogo
+	 * @param tipoInmueble
+	 * 			tipo del inmueble para el catálogo
+	 * @param direccion
+	 * 			dirección del inmueble para el catálogo
+	 * @param localidad
+	 * 			localidad del inmueble para el catálogo
+	 * @param barrio
+	 * 			barrio del inmueble para el catálogo
+	 * @param precio
+	 * 			precio del inmueble para el catálogo
+	 * @param resultadoCrearCatalogoEsperado
+	 * 			resultado esperado del test
+	 * @param excepcion
+	 * 			excepcion arrojada por el gestorPDF
+	 * @param excepcionEsperada
+	 * 			excepción esperada que sea lanzada por el método
+	 * @param llamaACrearPDF
+	 * 			indica si se debe llamar a crear el pdf
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
-	public void testCrearCatalogo(Cliente cliente,
-			Integer idSet,
-			TipoInmueble tipoInmueble,
-			Direccion direccion,
-			Localidad localidad,
-			Barrio barrio,
-			Double precio,
-			ResultadoCrearCatalogo resultadoCrearCatalogoEsperado,
-			GestionException excepcion,
-			GestionException excepcionEsperada,
-			Integer llamaACrearPDF) throws Exception {
-
+	public void testCrearCatalogo(Cliente cliente, Integer idSet, TipoInmueble tipoInmueble, Direccion direccion, Localidad localidad, Barrio barrio, Double precio, ResultadoCrearCatalogo resultadoCrearCatalogoEsperado, GestionException excepcion, GestionException excepcionEsperada, Integer llamaACrearPDF) throws Exception {
 		//Inicialización de los mocks y el catálogo que se usará para probar
 		GestorPDF gestorPDFMock = mock(GestorPDF.class);
 		if(direccion != null){
