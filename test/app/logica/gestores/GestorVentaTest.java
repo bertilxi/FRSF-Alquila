@@ -50,6 +50,7 @@ public class GestorVentaTest {
 			Exception excepcionPersistencia,
 			Exception excepcionPDF) throws Throwable {
 
+		GestorInmueble gestorInmuebleMock = mock(GestorInmueble.class);
 		GestorDatos gestorDatosMock = mock(GestorDatos.class);
 		GestorPDF gestorPDFMock = mock(GestorPDF.class);
 		VentaService persistidorVentaMock = mock(VentaService.class);
@@ -68,6 +69,7 @@ public class GestorVentaTest {
 			Mockito.doThrow(excepcionPersistencia).when(persistidorVentaMock).guardarVenta(venta);
 		}
 		Mockito.when(validadorMock.validarMedioDePago(venta.getMedioDePago())).thenReturn(medioDePagoValido);
+		Mockito.when(gestorInmuebleMock.modificarInmueble(venta.getInmueble())).thenReturn(null);
 
 		ArrayList<EstadoInmueble> estadosInm = new ArrayList<>();
 		estadosInm.add(new EstadoInmueble(EstadoInmuebleStr.VENDIDO));
@@ -75,6 +77,7 @@ public class GestorVentaTest {
 
 		GestorVenta gestorVenta = new GestorVenta() {
 			{
+				this.gestorInmueble = gestorInmuebleMock;
 				this.persistidorVenta = persistidorVentaMock;
 				this.gestorDatos = gestorDatosMock;
 				this.gestorPDF = gestorPDFMock;
@@ -101,6 +104,7 @@ public class GestorVentaTest {
 		if(resultadoCorrecto){
 			Mockito.verify(gestorDatosMock).obtenerEstadosInmueble();
 			Mockito.verify(gestorPDFMock).generarPDF(venta);
+			Mockito.verify(gestorInmuebleMock).modificarInmueble(venta.getInmueble());
 			Mockito.verify(persistidorVentaMock).guardarVenta(venta);
 
 			assertEquals(EstadoInmuebleStr.VENDIDO, venta.getInmueble().getEstadoInmueble().getEstado());

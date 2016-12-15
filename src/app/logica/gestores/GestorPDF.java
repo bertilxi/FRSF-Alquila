@@ -17,8 +17,9 @@
  */
 package app.logica.gestores;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -186,9 +187,14 @@ public class GestorPDF {
 							Pane fila = (Pane) loaderFila.load();
 							Inmueble inmueble = inmuebles.get(inmueblesProcesados);
 							if(catalogo.getFotos().get(inmueble) != null){
-								ByteArrayInputStream bis = new ByteArrayInputStream(catalogo.getFotos().get(inmueble).getArchivo());
+								File imagenTMP = new File("imagen_tmp.png");
+								FileOutputStream fos = new FileOutputStream(imagenTMP);
+								fos.write(catalogo.getFotos().get(inmueble).getArchivo());
+								fos.flush();
+								fos.close();
+
 								ImageView imagen = (ImageView) fila.lookup("#imageFoto");
-								imagen.setImage(new javafx.scene.image.Image(bis));
+								imagen.setImage(new javafx.scene.image.Image(imagenTMP.toURI().toString()));
 							}
 
 							label = (Label) fila.lookup("#labelCodigo");

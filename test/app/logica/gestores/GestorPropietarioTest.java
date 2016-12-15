@@ -72,34 +72,52 @@ public class GestorPropietarioTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, true, true, true, null, 1, resultadoCrearCorrecto, null, null }, //Test correcto
-				new Object[] { false, true, true, true, true, true, null, 0, resultadoCrearNombreIncorrecto, null, null }, //Nombre Incorrecto
-				new Object[] { true, false, true, true, true, true, null, 0, resultadoCrearApellidoIncorrecto, null, null }, //Apellido Incorrecto
-				new Object[] { true, true, false, true, true, true, null, 0, resultadoCrearDocumentoIncorrecto, null, null }, //Documento Incorrecto
-				new Object[] { true, true, true, false, true, true, null, 0, resultadoCrearTelefonoIncorrecto, null, null }, //Teléfono Incorrecto
-				new Object[] { true, true, true, true, false, true, null, 0, resultadoCrearEmailIncorrecto, null, null }, //Email Incorrecto
-				new Object[] { true, true, true, true, true, false, null, 0, resultadoCrearDireccionIncorrecto, null, null }, //Dirección incorrecta
-				new Object[] { false, false, true, true, true, true, null, 0, new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto, ErrorCrearPropietario.Formato_Apellido_Incorrecto), null, null }, //Nombre y apellido incorrectos
-				new Object[] { true, true, true, true, true, true, propietario, 0, resultadoCrearYaExiste, null, null }, //Ya existe un propietario con el mismo documento
-				new Object[] { true, true, true, true, true, true, null, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) }, //La base de datos tira una excepción
-				new Object[] { true, true, true, true, true, true, propietario2, 0, null, null, new EntidadExistenteConEstadoBajaException() } //El propietario ya existe pero con estado BAJA
+				//Casos de prueba
+				//resValNombre, resValApellido, resValDocumento, resValTelefono, resValEmail, resValDireccion, resObtenerPropietario, guardar, resultadoCrearPropietarioEsperado, excepcion, excepcionEsperada
+				/* 0 */ new Object[] { true, true, true, true, true, true, null, 1, resultadoCrearCorrecto, null, null }, //Test correcto
+				/* 1 */ new Object[] { false, true, true, true, true, true, null, 0, resultadoCrearNombreIncorrecto, null, null }, //Nombre Incorrecto
+				/* 2 */ new Object[] { true, false, true, true, true, true, null, 0, resultadoCrearApellidoIncorrecto, null, null }, //Apellido Incorrecto
+				/* 3 */ new Object[] { true, true, false, true, true, true, null, 0, resultadoCrearDocumentoIncorrecto, null, null }, //Documento Incorrecto
+				/* 4 */ new Object[] { true, true, true, false, true, true, null, 0, resultadoCrearTelefonoIncorrecto, null, null }, //Teléfono Incorrecto
+				/* 5 */ new Object[] { true, true, true, true, false, true, null, 0, resultadoCrearEmailIncorrecto, null, null }, //Email Incorrecto
+				/* 6 */ new Object[] { true, true, true, true, true, false, null, 0, resultadoCrearDireccionIncorrecto, null, null }, //Dirección incorrecta
+				/* 7 */ new Object[] { false, false, true, true, true, true, null, 0, new ResultadoCrearPropietario(ErrorCrearPropietario.Formato_Nombre_Incorrecto, ErrorCrearPropietario.Formato_Apellido_Incorrecto), null, null }, //Nombre y apellido incorrectos
+				/* 8 */ new Object[] { true, true, true, true, true, true, propietario, 0, resultadoCrearYaExiste, null, null }, //Ya existe un propietario con el mismo documento
+				/* 9 */ new Object[] { true, true, true, true, true, true, null, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) }, //La base de datos tira una excepción
+				/* 10 */ new Object[] { true, true, true, true, true, true, propietario2, 0, null, null, new EntidadExistenteConEstadoBajaException() } //El propietario ya existe pero con estado BAJA
 		};
 	}
 
+	/**
+	 * Test para el método crear propietario
+	 * 
+	 * @param resValNombre
+	 * 			resultado devuelto por el mock validador de formato al validar nombre
+	 * @param resValApellido
+	 * 			resultado devuelto por el mock validador de formato al validar apellido
+	 * @param resValDocumento
+	 * 			resultado devuelto por el mock validador de formato al validar documento
+	 * @param resValTelefono
+	 * 			resultado devuelto por el mock validador de formato al validar teléfono
+	 * @param resValEmail
+	 * 			resultado devuelto por el mock validador de formato al validar email
+	 * @param resValDireccion
+	 * 			resultado devuelto por el mock validador de formato al validar dirección
+	 * @param resObtenerPropietario
+	 * 			resultado devuelto por la base de datos al obtener un propietario
+	 * @param guardar
+	 * 			indica si se debe mandar a guardar el propietario
+	 * @param resultadoCrearPropietarioEsperado
+	 * 			resultado esperado del test
+	 * @param excepcion
+	 * 			excepción devuelta por la base de datos
+	 * @param excepcionEsperada
+	 * 			excepción esperada que debería lanzar el gestor
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
-	public void testCrearPropietario(Boolean resValNombre,
-			Boolean resValApellido,
-			Boolean resValDocumento,
-			Boolean resValTelefono,
-			Boolean resValEmail,
-			Boolean resValDireccion,
-			Propietario resObtenerPropietario,
-			Integer guardar,
-			ResultadoCrearPropietario resultadoCrearPropietarioEsperado,
-			Throwable excepcion,
-			Throwable excepcionEsperada) throws Exception {
-
+	public void testCrearPropietario(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValEmail, Boolean resValDireccion, Propietario resObtenerPropietario, Integer guardar, ResultadoCrearPropietario resultadoCrearPropietarioEsperado, Throwable excepcion, Throwable excepcionEsperada) throws Exception {
 		//Inicialización de los mocks
 		PropietarioService propietarioServiceMock = mock(PropietarioService.class);
 		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
@@ -170,33 +188,52 @@ public class GestorPropietarioTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, true, true, true, null, 1, resultadoModificarCorrecto, null, null }, //Test correcto (se modifica el documento)
-				new Object[] { false, true, true, true, true, true, null, 0, resultadoModificarNombreIncorrecto, null, null }, //Nombre Incorrecto
-				new Object[] { true, false, true, true, true, true, null, 0, resultadoModificarApellidoIncorrecto, null, null }, //Apellido Incorrecto
-				new Object[] { true, true, false, true, true, true, null, 0, resultadoModificarDocumentoIncorrecto, null, null }, //Documento Incorrecto
-				new Object[] { true, true, true, false, true, true, null, 0, resultadoModificarTelefonoIncorrecto, null, null }, //Teléfono Incorrecto
-				new Object[] { true, true, true, true, false, true, null, 0, resultadoModificarEmailIncorrecto, null, null }, //Email Incorrecto
-				new Object[] { true, true, true, true, true, false, null, 0, resultadoModificarDireccionIncorrecto, null, null }, //Dirección incorrecta
-				new Object[] { false, false, true, true, true, true, null, 0, new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Nombre_Incorrecto, ErrorModificarPropietario.Formato_Apellido_Incorrecto), null, null }, //Nombre y apellido incorrectos
-				new Object[] { true, true, true, true, true, true, propietario2, 0, resultadoModificarYaSePoseeMismoDocumento, null, null }, //Ya existe un propietario con el mismo documento
-				new Object[] { true, true, true, true, true, true, propietario, 1, resultadoModificarCorrecto, null, null }, //Test correcto, no se cambió el documento
-				new Object[] { true, true, true, true, true, true, null, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) } //La base de datos tira una excepción
+				//Casos de prueba
+				//resValNombre, resValApellido, resValDocumento, resValTelefono, resValEmail, resValDireccion, resObtenerPropietario, modificar, resultadoModificarPropietarioEsperado, excepcion, excepcionEsperada
+				/* 0 */ new Object[] { true, true, true, true, true, true, null, 1, resultadoModificarCorrecto, null, null }, //Test correcto (se modifica el documento)
+				/* 1 */ new Object[] { false, true, true, true, true, true, null, 0, resultadoModificarNombreIncorrecto, null, null }, //Nombre Incorrecto
+				/* 2 */ new Object[] { true, false, true, true, true, true, null, 0, resultadoModificarApellidoIncorrecto, null, null }, //Apellido Incorrecto
+				/* 3 */ new Object[] { true, true, false, true, true, true, null, 0, resultadoModificarDocumentoIncorrecto, null, null }, //Documento Incorrecto
+				/* 4 */ new Object[] { true, true, true, false, true, true, null, 0, resultadoModificarTelefonoIncorrecto, null, null }, //Teléfono Incorrecto
+				/* 5 */ new Object[] { true, true, true, true, false, true, null, 0, resultadoModificarEmailIncorrecto, null, null }, //Email Incorrecto
+				/* 6 */ new Object[] { true, true, true, true, true, false, null, 0, resultadoModificarDireccionIncorrecto, null, null }, //Dirección incorrecta
+				/* 7 */ new Object[] { false, false, true, true, true, true, null, 0, new ResultadoModificarPropietario(ErrorModificarPropietario.Formato_Nombre_Incorrecto, ErrorModificarPropietario.Formato_Apellido_Incorrecto), null, null }, //Nombre y apellido incorrectos
+				/* 8 */ new Object[] { true, true, true, true, true, true, propietario2, 0, resultadoModificarYaSePoseeMismoDocumento, null, null }, //Ya existe un propietario con el mismo documento
+				/* 9 */ new Object[] { true, true, true, true, true, true, propietario, 1, resultadoModificarCorrecto, null, null }, //Test correcto, no se cambió el documento
+				/* 10 */ new Object[] { true, true, true, true, true, true, null, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) } //La base de datos tira una excepción
 		};
 	}
 
+	/**
+	 * Test para el método modificar propietario
+	 * 
+	 * @param resValNombre
+	 * 			resultado devuelto por el mock validador de formato al validar nombre
+	 * @param resValApellido
+	 * 			resultado devuelto por el mock validador de formato al validar apellido
+	 * @param resValDocumento
+	 * 			resultado devuelto por el mock validador de formato al validar documento
+	 * @param resValTelefono
+	 * 			resultado devuelto por el mock validador de formato al validar teléfono
+	 * @param resValEmail
+	 * 			resultado devuelto por el mock validador de formato al validar email
+	 * @param resValDireccion
+	 * 			resultado devuelto por el mock validador de formato al validar dirección
+	 * @param resObtenerPropietario
+	 * 			resultado devuelto por la base de datos al obtener un propietario
+	 * @param modificar
+	 * 			indica si se debe mandar a guardar el propietario modificado
+	 * @param resultadoModificarPropietarioEsperado
+	 * 			resultado esperado del test
+	 * @param excepcion
+	 * 			excepción devuelta por la base de datos
+	 * @param excepcionEsperada
+	 * 			excepción esperada que debería lanzar el gestor
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
-	public void testModificarPropietario(Boolean resValNombre,
-			Boolean resValApellido,
-			Boolean resValDocumento,
-			Boolean resValTelefono,
-			Boolean resValEmail,
-			Boolean resValDireccion,
-			Propietario resObtenerPropietario,
-			Integer modificar,
-			ResultadoModificarPropietario resultadoModificarPropietarioEsperado,
-			Throwable excepcion,
-			Throwable excepcionEsperada) throws Exception {
+	public void testModificarPropietario(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValEmail, Boolean resValDireccion, Propietario resObtenerPropietario, Integer modificar, ResultadoModificarPropietario resultadoModificarPropietarioEsperado, Throwable excepcion, Throwable excepcionEsperada) throws Exception {
 		//Inicialización de los mocks
 		PropietarioService propietarioServiceMock = mock(PropietarioService.class);
 		ValidadorFormato validadorFormatoMock = mock(ValidadorFormato.class);
@@ -268,18 +305,28 @@ public class GestorPropietarioTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { propietario, 1, resultadoEliminarCorrecto, null, null }, //Test correcto
-				new Object[] { propietario, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) } //La base de datos tira una excepción
+				//Casos de prueba
+				//resObtenerPropietario, eliminar, resultadoEliminarPropietarioEsperado, excepcion, excepcionEsperada
+				/* 0 */ new Object[] { propietario, 1, resultadoEliminarCorrecto, null, null }, //Test correcto
+				/* 1 */ new Object[] { propietario, 1, null, new SaveUpdateException(new Exception()), new SaveUpdateException(new Exception()) } //La base de datos tira una excepción
 		};
 	}
 
+	/* @param resObtenerPropietario
+	 * 			resultado devuelto por la base de datos al obtener un propietario
+	 * @param eliminar
+	 * 			indica si se debe eliminar el propietario
+	 * @param resultadoEliminarPropietarioEsperado
+	 * 			resultado esperado del test
+	 * @param excepcion
+	 * 			excepción devuelta por la base de datos
+	 * @param excepcionEsperada
+	 * 			excepción esperada que debería lanzar el gestor
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
-	public void testEliminarPropietario(Propietario resObtenerPropietario,
-			Integer eliminar,
-			ResultadoEliminarPropietario resultadoEliminarPropietarioEsperado,
-			Throwable excepcion,
-			Throwable excepcionEsperada) throws Exception {
+	public void testEliminarPropietario(Propietario resObtenerPropietario, Integer eliminar, ResultadoEliminarPropietario resultadoEliminarPropietarioEsperado, Throwable excepcion, Throwable excepcionEsperada) throws Exception {
 		//Inicialización de los mocks
 		PropietarioService propietarioServiceMock = mock(PropietarioService.class);
 		GestorDatos gestorDatosMock = mock(GestorDatos.class);

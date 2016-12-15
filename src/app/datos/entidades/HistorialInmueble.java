@@ -107,12 +107,16 @@ public class HistorialInmueble {
 	@OneToOne(mappedBy = "historialInmueble", cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
 	private HistorialDatosEdificio historialDatosEdificio;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idestadoinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "historial_inmueble_idestadoinmueble_fk"), nullable = false)
+	private EstadoInmueble estadoInmueble; //Establece si el inmueble fue vendido o no
+
 	public HistorialInmueble() {
 		super();
 		fotos = new HashSet<>();
 	}
 
-	public HistorialInmueble(Date fechaYHoraCambio, String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie, TipoInmueble tipo, Direccion direccion, Propietario propietario, Estado estado, Inmueble inmueble) {
+	public HistorialInmueble(Date fechaYHoraCambio, String observaciones, Date fechaCarga, Double precio, Double frente, Double fondo, Double superficie, TipoInmueble tipo, Direccion direccion, Propietario propietario, Estado estado, Inmueble inmueble, EstadoInmueble estadoInmueble) {
 		this();
 		this.fechaYHoraCambio = fechaYHoraCambio;
 		this.observaciones = observaciones;
@@ -126,6 +130,7 @@ public class HistorialInmueble {
 		this.propietario = propietario;
 		this.estado = estado;
 		this.inmueble = inmueble;
+		this.estadoInmueble = estadoInmueble;
 	}
 
 	public Long getId() {
@@ -259,6 +264,15 @@ public class HistorialInmueble {
 
 	public HistorialInmueble setHistorialDatosEdificio(HistorialDatosEdificio historialDatosEdificio) {
 		this.historialDatosEdificio = historialDatosEdificio;
+		return this;
+	}
+
+	public EstadoInmueble getEstadoInmueble() {
+		return estadoInmueble;
+	}
+
+	public HistorialInmueble setEstadoInmueble(EstadoInmueble estadoInmueble) {
+		this.estadoInmueble = estadoInmueble;
 		return this;
 	}
 

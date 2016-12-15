@@ -53,19 +53,24 @@ public class LoginController extends OlimpoController {
 	@FXML
 	protected ComboBox<TipoDocumento> cbTipoDocumento;
 
+	/**
+	 * Método que se llama al hacer click en el botón registrar.
+	 */
 	@FXML
 	public void registrar() {
+		//Se pasa a la pantalla de registro de vendedor
 		cambiarmeAScene(AltaVendedorController.URLVista, URLVista, true);
 	}
 
-	@FXML
 	/**
-	 * Método que permite a un vendedor entrar al sistema.
+	 * Método que permite a un vendedor entrar al sistema. Se llama al hacer click en el botón ingresar.
 	 * Pertenece a la taskcard 1 de la iteración 1 y a la historia 1
 	 *
 	 * @return ResultadoControlador que resume lo que hizo el controlador
 	 */
+	@FXML
 	public ResultadoControlador ingresar() {
+		//Inicialización de variables
 		Set<ErrorControlador> erroresControlador = new HashSet<>();
 		ResultadoAutenticacion resultado = null;
 		Boolean hayErrores;
@@ -77,14 +82,18 @@ public class LoginController extends OlimpoController {
 		String dni = tfNumeroDocumento.getText().trim();
 		char[] pass = pfContra.getText().toCharArray();
 
+		//Procesamiento de errores de la vista
 		if(tipoDocumento == null || dni.isEmpty() || pass.length < 1){
 			presentador.presentarError("No se ha podido iniciar sesión", "Campos vacíos.", stage);
 			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
+
+		//Se cargan los datos de la vista como datos a utilizar en el login
 		datos = new DatosLogin(tipoDocumento, dni, pass);
 
 		//Inicio transacción al gestor
 		try{
+			//Se llama a la lógica para loguear al vendedor y se recibe el resultado de las validaciones y datos extras de ser necesarios
 			resultado = coordinador.autenticarVendedor(datos);
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
@@ -94,7 +103,7 @@ public class LoginController extends OlimpoController {
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 
-		//Tratamiento de errores
+		//Procesamiento de errores de la lógica
 		hayErrores = resultado.hayErrores();
 		if(hayErrores){
 			for(ErrorAutenticacion r: resultado.getErrores()){
@@ -107,11 +116,14 @@ public class LoginController extends OlimpoController {
 			}
 
 			if(!errores.isEmpty()){
+				//Se muestran los errores
 				presentador.presentarError("No se ha podido iniciar sesión", errores, stage);
 			}
 		}
 		else{
+			//Se pasa a la pantalla de inicio
 			BaseController siguientePantalla = (BaseController) cambiarmeAScene(BaseController.URLVista, URLVista, true);
+			//Se le setea el vendedor logueado
 			siguientePantalla.formatearConVendedor(resultado.getVendedorLogueado());
 		}
 		return new ResultadoControlador(erroresControlador.toArray(new ErrorControlador[0]));
@@ -133,11 +145,11 @@ public class LoginController extends OlimpoController {
 
 	@FXML
 	private void handleKeyPressedLogin(KeyEvent e) {
-		if(e.getEventType()==KeyEvent.KEY_PRESSED){
-			if(e.getCode()==KeyCode.ENTER) {
+		if(e.getEventType() == KeyEvent.KEY_PRESSED){
+			if(e.getCode() == KeyCode.ENTER){
 				ingresar();
 			}
-    	}
+		}
 	}
 
 }

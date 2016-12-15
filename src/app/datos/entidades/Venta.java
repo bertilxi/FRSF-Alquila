@@ -67,7 +67,7 @@ public class Venta {
 	@JoinColumn(name = "idpropietario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "venta_idpropietario_fk"), nullable = false)
 	private Propietario propietario;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "idinmueble", referencedColumnName = "id", foreignKey = @ForeignKey(name = "venta_idinmueble_fk"), nullable = false)
 	private Inmueble inmueble;
 
