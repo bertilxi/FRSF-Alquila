@@ -80,7 +80,7 @@ public class ClienteServiceImpl implements ClienteService {
 	public Cliente obtenerCliente(FiltroCliente filtro) throws PersistenciaException {
 		Cliente cliente;
 		Session session = getSessionFactory().getCurrentSession();
-		try{
+		try{//named query ubicada en entidad Cliente
 			cliente = (Cliente) session.getNamedQuery("obtenerCliente").setParameter("tipoDocumento", filtro.getTipoDocumento()).setParameter("documento", filtro.getDocumento()).uniqueResult();
 		} catch(NoResultException e){
 			return null;
@@ -97,7 +97,7 @@ public class ClienteServiceImpl implements ClienteService {
 	public ArrayList<Cliente> listarClientes() throws PersistenciaException {
 		ArrayList<Cliente> clientes = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
-		try{
+		try{//named query ubicada en entidad Cliente
 			for(Object o: session.getNamedQuery("obtenerClientes").list()){
 				if(o instanceof Cliente){
 					clientes.add((Cliente) o);

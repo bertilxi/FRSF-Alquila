@@ -46,12 +46,16 @@ public class AdministrarPropietarioControllerTest {
 	@Test
 	@Parameters
 	/**
-	 *
+	 * Test para probar eliminar propietario en el controlador administrar cuando el usuario presiona eliminar
 	 *
 	 * @param propietario
+	 * 			propietario a eliminar
 	 * @param acepta
+	 * 			si el usuario acepta la confirmación de eliminar
 	 * @param resultadoControlador
+	 * 			resultado que se espera que retorne el método a probar
 	 * @param resultadoLogica
+	 * 			resultado que devuelve la operación de capa lógica
 	 * @param excepcion
 	 */
 	public void testEliminarPropietario(Propietario propietario, Boolean acepta, ResultadoControlador resultadoControlador, ResultadoEliminarPropietario resultadoLogica, Throwable excepcion) throws Exception {
@@ -130,10 +134,11 @@ public class AdministrarPropietarioControllerTest {
 		Throwable excepcionInesperada = new Exception();
 
 		return new Object[] {
-				new Object[] { propietario, acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario acepta y el propietario se elimina correctamente
-				new Object[] { propietario, !acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario no acepta, pero de haber aceptado, se hubiese eliminado el propietario correctamente
-				new Object[] { propietario, acepta, resultadoControladorErrorPersistencia, null, excepcionPersistencia }, //test donde el controlador tira una excepción de persistencia
-				new Object[] { propietario, acepta, resultadoControladorErrorDesconocido, null, excepcionInesperada } //test donde el controlador tira unaexcepción inesperada
+				//propietario, acepta, resultadoControlador,resultadoLogica,excepcion
+				/*0*/ new Object[] { propietario, acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario acepta y el propietario se elimina correctamente
+				/*1*/ new Object[] { propietario, !acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario no acepta, pero de haber aceptado, se hubiese eliminado el propietario correctamente
+				/*2*/ new Object[] { propietario, acepta, resultadoControladorErrorPersistencia, null, excepcionPersistencia }, //test donde el controlador tira una excepción de persistencia
+				/*3*/ new Object[] { propietario, acepta, resultadoControladorErrorDesconocido, null, excepcionInesperada } //test donde el controlador tira unaexcepción inesperada
 		};
 	}
 }
