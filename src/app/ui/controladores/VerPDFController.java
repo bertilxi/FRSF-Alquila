@@ -19,29 +19,24 @@ package app.ui.controladores;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.FutureTask;
 
-import app.comun.ImpresoraPDF;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.DownloadHandler;
+import com.teamdev.jxbrowser.chromium.DownloadItem;
+import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
+
 import app.datos.entidades.PDF;
-import app.excepciones.ImprimirPDFException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import netscape.javascript.JSObject;
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
-
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 /**
  * Controlador de la vista para mostrar un PDF
@@ -50,25 +45,18 @@ public class VerPDFController extends OlimpoController {
 
 	public static final String URLVista = "/app/ui/vistas/verPDF.fxml";
 
-	private static final String URL_Visor = "visorPDF/web/viewer.html";
-
 	private static final String URL_PDF = "visorPDF/web/ver.pdf";
 
 	@FXML
-	protected WebView visorPDF;
+	protected BorderPane borderPanePDF;
 
 	@FXML
 	protected TextField textFieldCorreo;
-
-	private PDF pdf;
-
-	private ImpresoraPDF impresora = new ImpresoraPDF();
 
 	/**
 	 * Método para cargar el PDF a mostrar
 	 */
 	public void cargarPDF(PDF pdf) {
-		this.pdf = pdf;
 		Platform.runLater(() -> {
 			try{
 				File pdfFile = new File(URL_PDF);
@@ -81,16 +69,44 @@ public class VerPDFController extends OlimpoController {
 
 				Browser browser = new Browser();
 				BrowserView view = new BrowserView(browser);
-				browser.loadURL("http://www.google.com");
-/*
-				WebEngine engine = visorPDF.getEngine();
-				String url = "file:///" + new File(URL_Visor).getAbsolutePath();
-				engine.load(url);
 
-				JSObject jsobj = (JSObject) visorPDF.getEngine().executeScript("window");
-				jsobj.setMember("java", this);
-				visorPDF.getEngine().executeScript("window.print = function () { };");
-				*/
+				borderPanePDF.setCenter(view);
+
+				String url = "file:///" + pdfFile.getAbsolutePath();
+				browser.loadURL(url);
+				browser.setDownloadHandler(new DownloadHandler() {
+		            public boolean allowDownload(DownloadItem download) {
+		            		String tipo = "(*.pdf)";
+		            		ArrayList<String> tiposFiltro = new ArrayList<>();
+		            		tiposFiltro.add("*.pdf");
+
+		            		ExtensionFilter filtro = new ExtensionFilter("Archivo de imágen " + tipo, tiposFiltro);
+
+		            		FileChooser archivoSeleccionado = new FileChooser();
+		            		archivoSeleccionado.getExtensionFilters().add(filtro);
+
+		            		FutureTask<Boolean> future = new FutureTask<>(() -> {
+		            			File pdfAGuardar = null;
+		            			pdfAGuardar = archivoSeleccionado.showSaveDialog(stage);
+		            			download.setDestinationFile(pdfAGuardar);
+		            			return true;
+		    				});
+
+		    				Platform.runLater(future);
+		    				boolean b = false;
+		    				try {
+		    					b = future.get();
+							} catch (CancellationException e) {
+								//el usuario cancela
+								//no se hace nada
+							} catch (Exception e) { //cualquier otra excepción
+								Platform.runLater(() -> {
+									presentador.presentarError("Error", "No se pudo guardar el pdf deseado", stage);
+								});
+							}
+		    				return b;
+		            }
+				});
 			} catch(Exception e){
 				presentador.presentarExcepcionInesperada(e);
 			}
@@ -100,41 +116,5 @@ public class VerPDFController extends OlimpoController {
 	@Override
 	public void inicializar(URL location, ResourceBundle resources) {
 		this.setTitulo("Ver pdf");
-	}
-
-	@FXML
-	public void print() {
-		try{
-			impresora.imprimirPDF(pdf);
-		} catch(ImprimirPDFException e){
-			presentador.presentarExcepcion(e, stage);
-		}
-	}
-
-	@FXML
-	public void download() {
-		try{
-			File pdfAGuardar = null;
-			String tipo = "(*.pdf ; *.PDF)";
-			ArrayList<String> tiposFiltro = new ArrayList<>();
-			tiposFiltro.add("*.pdf");
-			tiposFiltro.add("*.PDF");
-
-			ExtensionFilter filtro = new ExtensionFilter("Archivo de imágen " + tipo, tiposFiltro);
-
-			FileChooser archivoSeleccionado = new FileChooser();
-			archivoSeleccionado.getExtensionFilters().add(filtro);
-
-			pdfAGuardar = archivoSeleccionado.showSaveDialog(stage);
-			if(pdfAGuardar != null){
-				String nombreArchivo = pdfAGuardar.toString();
-				pdfAGuardar = new File(nombreArchivo);
-				FileOutputStream fos = new FileOutputStream(pdfAGuardar);
-				fos.write(pdf.getArchivo());
-				fos.close();
-			}
-		} catch(IOException e){
-			presentador.presentarExcepcionInesperada(e);
-		}
 	}
 }
