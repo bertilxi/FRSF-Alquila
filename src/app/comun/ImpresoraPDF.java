@@ -11,6 +11,8 @@ import app.excepciones.ImprimirPDFException;
 
 /**
  * Clase encargada de imprimir PDF
+ *
+ * Pertenece a la taskcard 31 de la iteración 2 y a la historia 8
  */
 @Service
 public class ImpresoraPDF {
