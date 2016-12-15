@@ -27,6 +27,9 @@ import app.logica.resultados.ResultadoCrearVenta.ErrorCrearVenta;
 public class GestorVenta {
 
 	@Resource
+	protected GestorInmueble gestorInmueble;
+
+	@Resource
 	protected VentaService persistidorVenta;
 
 	@Resource
@@ -109,6 +112,7 @@ public class GestorVenta {
 					break;
 				}
 			}
+			gestorInmueble.modificarInmueble(venta.getInmueble());
 			venta.setFecha(fechaHoy);
 			venta.setArchivoPDF(gestorPDF.generarPDF(venta));
 			persistidorVenta.guardarVenta(venta);
