@@ -1,26 +1,26 @@
 ## Grupo Fernando Esteban
-20  Vista de consulta inmueble  					2
-29  Vista alta y listar venta  						3
-30  Lógica alta venta y generar PDF  				3
-31  Lógica imprimir venta  							1
-33  Agregar EstadoInmueble a inmueble  				1
+20  Vista de consulta inmueble  					2 2
+29  Vista alta y listar venta  						3 3
+30  Lógica alta venta y generar PDF  				3 2
+31  Lógica imprimir venta  							1 2
+33  Agregar EstadoInmueble a inmueble  				1 0.3
 
 ### Total : 10
 
 ## Grupo Daniel Lucas
-23  Lógica alta catálogo de inmueble y generar PDF	3
-24  Vista alta, baja y listar reserva  				3
-26  Lógica envío de mail  							1
-28  Persistidor y entidad reserva  					1
-32  Persistidor y entidad venta  					2
+23  Lógica alta catálogo de inmueble y generar PDF	3 2
+24  Vista alta, baja y listar reserva  				3 3
+26  Lógica envío de mail  							1 1
+28  Persistidor y entidad reserva  					1 1
+32  Persistidor y entidad venta  					2 1
 
 ### Total : 10
 
 ## Grupo Andrés Emiliano
-21  Lógica y persistidor de consulta inmuebles 		3
-22  Vista alta catálogo de inmueble  				3
-25  Lógica alta, baja reserva y generar PDF 		3
-27  Cambios ABM Cliente  							1
+21  Lógica y persistidor de consulta inmuebles 		3 3
+22  Vista alta catálogo de inmueble  				3 falta
+25  Lógica alta, baja reserva y generar PDF 		3 3
+27  Cambios ABM Cliente  							1 1
 
 ### Total : 10
 
