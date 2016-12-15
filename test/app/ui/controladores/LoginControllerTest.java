@@ -50,8 +50,27 @@ public class LoginControllerTest {
 
 	private static Vendedor vendedorRetorno;
 
-	@Test
-	@Parameters
+	/**
+	 * Método que devuelve los parámetros para probar el método ingresar()
+	 *
+	 * @return parámetros de prueba
+	 */
+	protected Object[] parametersForTestIngresar() {
+		vendedorRetorno = new Vendedor();
+		return new Object[] {
+				//Casos de prueba
+				//tipoDocumento, numDoc, contra, resultadoVista, resultadoLogica, excepcion
+				/* 0 */new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "pepe", new ResultadoControlador(), new ResultadoAutenticacion(vendedorRetorno), null }, //prueba ingreso correcto
+				/* 1 */new Object[] { null, "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba TipoDocumento vacio
+				/* 2 */new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba numero de documento vacio
+				/* 3 */new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LE), "12345678", "", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba Contraseña vacia
+				/* 4 */new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.CEDULA_EXTRANJERA), "12345678", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto
+				/* 5 */new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.PASAPORTE), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto con caracteres UTF8
+				/* 6 */new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Persistencia), null, new ObjNotFoundException("Error de persistencia. Test.", new Exception()) }, //Prueba una excepcion de persistencia
+				/* 7 */new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Desconocido), null, new Exception() } //Prueba una excepcion desconocida
+		};
+	}
+
 	/**
 	 * Prueba el método ingresar(), el cual corresponde con la taskcard 1 de la iteración 1 y a la historia 1
 	 *
@@ -69,7 +88,10 @@ public class LoginControllerTest {
 	 *            es la excepcion que debe lanzar el mock de la lógica, si la prueba involucra procesar una excepcion de dicha lógica, debe ser nulo resultadoLogica para que se use
 	 * @throws Exception
 	 */
+	@Test
+	@Parameters
 	public void testIngresar(TipoDocumento tipoDocumento, String numDoc, String contra, ResultadoControlador resultadoVista, ResultadoAutenticacion resultadoLogica, Throwable excepcion) throws Exception {
+		//Se crean los mocks de la prueba
 		CoordinadorJavaFX coordinadorMock = new CoordinadorJavaFX() {
 			@Override
 			public ResultadoAutenticacion autenticarVendedor(DatosLogin login) throws PersistenciaException {
@@ -85,6 +107,7 @@ public class LoginControllerTest {
 		};
 		PresentadorVentanas presentadorMock = new PresentadorVentanasMock();
 
+		//Se crea el controlador a probar, se sobreescriben algunos métodos para setear los mocks y setear los datos que ingresaría el usuario en la vista
 		LoginController loginController = new LoginController() {
 			@Override
 			public ResultadoControlador ingresar() {
@@ -119,41 +142,23 @@ public class LoginControllerTest {
 		loginController.setCoordinador(coordinadorMock);
 		loginController.setPresentador(presentadorMock);
 
+		//Se crea lo necesario para correr la prueba en el hilo de JavaFX porque los controladores de las vistas deben correrse en un thread de JavaFX
 		ControladorTest corredorTestEnJavaFXThread = new ControladorTest(LoginController.URLVista, loginController);
-
 		loginController.setStage(corredorTestEnJavaFXThread.getStagePrueba());
 
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
+				//Se hacen las verificaciones pertinentes para comprobar que el controlador se comporte adecuadamente
 				assertEquals(resultadoVista, loginController.ingresar());
 			}
 		};
 
 		try{
+			//Se corre el test en el hilo de JavaFX
 			corredorTestEnJavaFXThread.apply(test, null).evaluate();
 		} catch(Throwable e){
 			throw new Exception(e);
 		}
 	}
-
-	/**
-	 * Método que devuelve los parámetros para probar el método ingresar()
-	 *
-	 * @return parámetros de prueba
-	 */
-	protected Object[] parametersForTestIngresar() {
-		vendedorRetorno = new Vendedor();
-		return new Object[] {
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "12345678", "pepe", new ResultadoControlador(), new ResultadoAutenticacion(vendedorRetorno), null }, //prueba ingreso correcto
-				new Object[] { null, "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba TipoDocumento vacio
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "", "pepe", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba numero de documento vacio
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LE), "12345678", "", new ResultadoControlador(ErrorControlador.Campos_Vacios), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba Contraseña vacia
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.CEDULA_EXTRANJERA), "12345678", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.PASAPORTE), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Datos_Incorrectos), new ResultadoAutenticacion(null, ErrorAutenticacion.Datos_Incorrectos), null }, //prueba un ingreso incorrecto con caracteres UTF8
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.LC), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Persistencia), null, new ObjNotFoundException("Error de persistencia. Test.", new Exception()) }, //Prueba una excepcion de persistencia
-				new Object[] { (new TipoDocumento()).setTipo(TipoDocumentoStr.DNI), "ñú", "pepe", new ResultadoControlador(ErrorControlador.Error_Desconocido), null, new Exception() } //Prueba una excepcion desconocida
-		};
-	}
-
 }
