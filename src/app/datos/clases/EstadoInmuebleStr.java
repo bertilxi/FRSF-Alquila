@@ -18,5 +18,16 @@
 package app.datos.clases;
 
 public enum EstadoInmuebleStr {
-	VENDIDO, NO_VENDIDO
+	VENDIDO, NO_VENDIDO;
+
+	@Override
+	public String toString() {
+		switch(this) {
+			case VENDIDO:
+				return "Vendido";
+			case NO_VENDIDO:
+				return "Disponible";
+		}
+		return null;
+	}
 }
