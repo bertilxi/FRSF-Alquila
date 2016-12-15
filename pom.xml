@@ -77,13 +77,19 @@
         </plugins>
     </build>
     <repositories>
+    	<repository>
+    		<id>com.teamdev</id>
+    		<url>http://maven.teamdev.com/repository/products</url>
+		</repository>
+        
         <repository>
-            <id>maven-central-repo</id>
-            <url>http://repo1.maven.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+           	<id>maven-central-repo</id>
+           	<url>http://repo1.maven.org/maven2</url>
+           	<snapshots>
+               	<enabled>false</enabled>
+           	</snapshots>
         </repository>
+        
         <repository>
             <id>sonatype-snapshots-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -108,6 +114,7 @@
         <googleAPI.version>v1-rev53-1.22.0</googleAPI.version>
         <googleOauthClient.version>1.22.0</googleOauthClient.version>
         <javaxmail.version>1.4</javaxmail.version>
+        <jxbrowser.version>6.0</jxbrowser.version>
     </properties>
     <dependencies>
 
@@ -240,6 +247,16 @@
     		<version>${javaxmail.version}</version>
 		</dependency>
         
+        <dependency>
+    		<groupId>com.teamdev.jxbrowser</groupId>
+    		<artifactId>jxbrowser-win</artifactId>
+    		<version>${jxbrowser.version}</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.teamdev.jxbrowser</groupId>
+    		<artifactId>jxbrowser-linux64</artifactId>
+    		<version>${jxbrowser.version}</version>
+		</dependency>
     </dependencies>
 
 
