@@ -45,9 +45,12 @@ public class VentaServiceImpl implements VentaService {
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
-
+	
+	/* 
+	 * Método para guardar en la base de datos una venta
+	 */
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class)//si falla hace rollback de la transacción
 	public void guardarVenta(Venta venta) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{

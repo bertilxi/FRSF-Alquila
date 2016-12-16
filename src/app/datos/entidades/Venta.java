@@ -34,6 +34,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "venta")
+/**
+ * Entidad que modela una venta
+ * Pertenece a la taskcard 32 de la iteración 2
+ */
 public class Venta {
 
 	@Id
