@@ -33,6 +33,26 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class AdministrarVentaControllerTest {
 
+	/**
+	 * Test para probar las transiciones correctas desde y hacia la pantalla y la muestra de las
+	 * columnas correctas según el rol para el cual se desean conocer las ventas
+	 *
+	 * @param cliente
+	 * 			cliente para el cual se desean listar las ventas
+	 * @param propietario
+	 * 			propietario para el cual se desean listar las ventas
+	 * @param vendedor
+	 * 			vendedor para el cual se desean listar las ventas
+	 * @param presionaVerInmueble
+	 * 			si el usuario presiona ver inmueble
+	 * @param presionaVerDocumento
+	 * 			si el usuario presiona ver documento
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 			1 si llama al método presentar error del presentador de ventanas
+	 * @param excepcion
+	 * 			excepción que se simula lanzar desde capa lógica
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
 	public void testRolesDeIngresoYEgreso(Cliente cliente,

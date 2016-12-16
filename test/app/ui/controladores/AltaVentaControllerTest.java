@@ -44,6 +44,43 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class AltaVentaControllerTest {
 
+	/**
+	 * Test para el alta venta cuando el usuario presiona el botón aceptar
+	 *
+	 * @param inmuebleAVender
+	 * 				inmueble que se desea vender
+	 * @param clienteSeleccionado
+	 * 				cliente seleccionado por el usuario como comprador
+	 * @param vendedorLogueado
+	 * 				vendedor logueado en ese momento
+	 * @param importe
+	 * 				importe de la venta insertado por el usuario
+	 * @param medioDePago
+	 * 				medio de pago de la venta insertado por el usuario
+	 * @param resultadoCrearVentaEsperado
+	 * 				resultado que retornará el mock de capa lógica
+	 * @param llamaAPresentadorVentanasPresentarConfirmacion
+	 * 				1 si llama al método presentar confirmación del presentador de ventanas, 0 si no
+	 * @param usuarioAceptaConfirmacion
+	 * 				si el usuario acepta la confirmación mostrada
+	 * @param llamaACoordinadorImprimirPDF
+	 * 				1 si llama al método imprimirPDF del coordinador
+	 * @param contraseñaCorrecta
+	 * 				si la contraseña ingresada al confirmar contraseña es correcta
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 				1 si llama al método presentar error del presentador de ventanas, 0 si no
+	 * @param llamaAPresentadorVentanasPresentarExcepcionLogica
+	 * 				1 si llama al método presentar excepción del presentador de ventanas para una excepción de capa lógica, 0 si no
+	 * @param llamaAPresentadorVentanasPresentarExcepcionImprimir
+	 * 				1 si llama al método presentar excepción del presentador de ventanas para una excepción al imprimir, 0 si no
+	 * @param llamaACrearVenta
+	 * 				1 si llama al método crear venta hacia la capa lógica, 0 si no
+	 * @param excepcionCapaLogica
+	 * 				excepción de capa lógica que simula ser lanzada
+	 * @param excepcionAlImprimir
+	 * 				excepción al imprimir que simula ser lanzada
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
 	public void testCrearVenta(Inmueble inmuebleAVender,
@@ -171,6 +208,7 @@ public class AltaVentaControllerTest {
 		Inmueble inmuebleP = new Inmueble().setDireccion(new Direccion());
 
 		return new Object[] {
+				//inmuebleAVender,clienteSeleccionado,vendedorLogueado,importe,medioDePago,resultadoCrearVentaEsperado,llamaAPresentadorVentanasPresentarConfirmacion,usuarioAceptaConfirmacion,llamaACoordinadorImprimirPDF,contraseñaCorrecta,llamaAPresentadorVentanasPresentarError,llamaAPresentadorVentanasPresentarExcepcionLogica,llamaAPresentadorVentanasPresentarExcepcionImprimir,llamaACrearVenta,excepcionCapaLogica,excepcionAlImprimir
 				/*0*/new Object[] { inmueble, cliente, vendedor, "1000000","contado", resultadoCorrecto, 1, true, 1, true, 0, 0, 0, 1, null, null }, //prueba correcta, usuario acepta imprimir pdf
 				/*1*/new Object[] { inmueble, cliente, vendedor, "1000000","contado", resultadoCorrecto, 1, false, 0, true, 0, 0, 0, 1, null, null }, //prueba correcta, usuario no acepta imprimir pdf
 				/*2*/new Object[] { inmueble, cliente, vendedor, "1000000","contado", null, 0, false, 0, false, 0, 0, 0, 0, null, null }, //Datos correctos pero contraseña incorrecta
