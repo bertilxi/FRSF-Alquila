@@ -100,17 +100,39 @@ public class GestorClienteTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, true, true, null, 1, resultadoCorrecto },
-				new Object[] { false, true, true, true, true, null, 0, resultadoCrearNombreIncorrecto },
-				new Object[] { true, false, true, true, true, null, 0, resultadoCrearApellidoIncorrecto },
-				new Object[] { true, true, false, true, true, null, 0, resultadoCrearDocumentoIncorrecto },
-				new Object[] { true, true, true, false, true, null, 0, resultadoCrearTelefonoIncorrecto },
-				new Object[] { true, true, true, true, false, null, 0, resultadoCrearCorreoIncorrecto },
-				new Object[] { false, false, true, true, true, null, 0, new ResultadoCrearCliente(ErrorCrearCliente.Formato_Nombre_Incorrecto, ErrorCrearCliente.Formato_Apellido_Incorrecto) },
-				new Object[] { true, true, true, true, true, cliente, 0, resultadoCrearYaExiste }
+				//resValNombre,resValApellido,resValDocumento,resValTelefono,resValCorreo,resObtenerCliente,guardar,resultadoCrearClienteEsperado
+				/*0*/ new Object[] { true, true, true, true, true, null, 1, resultadoCorrecto },
+				/*1*/ new Object[] { false, true, true, true, true, null, 0, resultadoCrearNombreIncorrecto },
+				/*2*/ new Object[] { true, false, true, true, true, null, 0, resultadoCrearApellidoIncorrecto },
+				/*3*/ new Object[] { true, true, false, true, true, null, 0, resultadoCrearDocumentoIncorrecto },
+				/*4*/ new Object[] { true, true, true, false, true, null, 0, resultadoCrearTelefonoIncorrecto },
+				/*5*/ new Object[] { true, true, true, true, false, null, 0, resultadoCrearCorreoIncorrecto },
+				/*6*/ new Object[] { false, false, true, true, true, null, 0, new ResultadoCrearCliente(ErrorCrearCliente.Formato_Nombre_Incorrecto, ErrorCrearCliente.Formato_Apellido_Incorrecto) },
+				/*7*/ new Object[] { true, true, true, true, true, cliente, 0, resultadoCrearYaExiste }
 		};
 	}
 
+	/**
+	 * Test para probar el método crearCliente
+	 *
+	 * @param resValNombre
+	 * 			resultado devuelto por el mock validador de formato al validar nombre
+	 * @param resValApellido
+	 * 			resultado devuelto por el mock validador de formato al validar apellido
+	 * @param resValDocumento
+	 * 			resultado devuelto por el mock validador de formato al validar documento
+	 * @param resValTelefono
+	 * 			resultado devuelto por el mock validador de formato al validar teléfono
+	 * @param resValCorreo
+	 * 			resultado devuelto por el mock validador de formato al validar correo
+	 * @param resObtenerCliente
+	 * 			resultado devuelto por el mock persistidor al obtener cliente
+	 * @param guardar
+	 * 			1 si se espera que se ejecute el guardar hacia capa de persistencia, 0 si no
+	 * @param resultadoCrearClienteEsperado
+	 * 			resultado que se espera que retorne el método a probar
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
 	public void testCrearCliente(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValCorreo, Cliente resObtenerCliente, Integer guardar, ResultadoCrearCliente resultadoCrearClienteEsperado) throws Exception {
@@ -205,17 +227,39 @@ public class GestorClienteTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { true, true, true, true, true, clienteM, 1, resultadoCorrectoModificar },
-				new Object[] { false, true, true, true, true, clienteM, 0, resultadoModificarNombreIncorrecto },
-				new Object[] { true, false, true, true, true, clienteM, 0, resultadoModificarApellidoIncorrecto },
-				new Object[] { true, true, false, true, true, clienteM, 0, resultadoModificarDocumentoIncorrecto },
-				new Object[] { true, true, true, false, true, clienteM, 0, resultadoModificarTelefonoIncorrecto },
-				new Object[] { true, true, true, true, false, clienteM, 0, resultadoModificarCorreoIncorrecto },
-				new Object[] { false, false, true, true, true, clienteM, 0, new ResultadoModificarCliente(ErrorModificarCliente.Formato_Nombre_Incorrecto, ErrorModificarCliente.Formato_Apellido_Incorrecto) },
-				new Object[] { true, true, true, true, true, clienteM2, 0, resultadoModificarYaSePoseeMismoDocumento }
+				//resValNombre,resValApellido,resValDocumento,resValTelefono,resValCorreo,resObtenerCliente,modificar,resultadoModificarClienteEsperado
+				/*0*/ new Object[] { true, true, true, true, true, clienteM, 1, resultadoCorrectoModificar },
+				/*1*/ new Object[] { false, true, true, true, true, clienteM, 0, resultadoModificarNombreIncorrecto },
+				/*2*/ new Object[] { true, false, true, true, true, clienteM, 0, resultadoModificarApellidoIncorrecto },
+				/*3*/ new Object[] { true, true, false, true, true, clienteM, 0, resultadoModificarDocumentoIncorrecto },
+				/*4*/ new Object[] { true, true, true, false, true, clienteM, 0, resultadoModificarTelefonoIncorrecto },
+				/*5*/ new Object[] { true, true, true, true, false, clienteM, 0, resultadoModificarCorreoIncorrecto },
+				/*6*/ new Object[] { false, false, true, true, true, clienteM, 0, new ResultadoModificarCliente(ErrorModificarCliente.Formato_Nombre_Incorrecto, ErrorModificarCliente.Formato_Apellido_Incorrecto) },
+				/*7*/ new Object[] { true, true, true, true, true, clienteM2, 0, resultadoModificarYaSePoseeMismoDocumento }
 		};
 	}
 
+	/**
+	 * Test para probar el método modificarCliente
+	 *
+	 * @param resValNombre
+	 * 			resultado devuelto por el mock validador de formato al validar nombre
+	 * @param resValApellido
+	 * 			resultado devuelto por el mock validador de formato al validar apellido
+	 * @param resValDocumento
+	 * 			resultado devuelto por el mock validador de formato al validar documento
+	 * @param resValTelefono
+	 * 			resultado devuelto por el mock validador de formato al validar teléfono
+	 * @param resValCorreo
+	 * 			resultado devuelto por el mock validador de formato al validar correo
+	 * @param resObtenerCliente
+	 * 			resultado devuelto por el mock persistidor al obtener cliente
+	 * @param modificar
+	 * 			1 si se espera que se ejecute el modificar hacia capa de persistencia, 0 si no
+	 * @param resultadoModificarClienteEsperado
+	 * 			resultado que se espera que retorne el método a probar
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
 	public void testModificarCliente(Boolean resValNombre, Boolean resValApellido, Boolean resValDocumento, Boolean resValTelefono, Boolean resValCorreo, Cliente resObtenerCliente, Integer modificar, ResultadoModificarCliente resultadoModificarClienteEsperado) throws Exception {
@@ -280,10 +324,22 @@ public class GestorClienteTest {
 
 		//Parámetros de JUnitParams
 		return new Object[] {
-				new Object[] { clienteE, 1, resultadoCorrectoEliminar },
+				//resObtenerCliente,eliminar,resultadoEliminarClienteEsperado
+				/*0*/ new Object[] { clienteE, 1, resultadoCorrectoEliminar },
 		};
 	}
 
+	/**
+	 * Test para probar el método eliminarCliente
+	 *
+	 * @param resObtenerCliente
+	 * 			resultado devuelto por el mock persistidor al obtener cliente
+	 * @param eliminar
+	 * 			1 si se espera que se ejecute el modificar hacia capa de persistencia (ya que es baja lógica), 0 si no
+	 * @param resultadoEliminarClienteEsperado
+	 * 			resultado que se espera retorne el método a probar
+	 * @throws Exception
+	 */
 	@Test
 	@Parameters
 	public void testEliminarCliente(Cliente resObtenerCliente, Integer eliminar, ResultadoEliminarCliente resultadoEliminarClienteEsperado) throws Exception {
