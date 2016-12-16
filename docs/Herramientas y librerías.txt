@@ -6,6 +6,7 @@ SceneBuilder para la creación de interfaces.
 Eclipse o IntelliJ IDEA como IDEs.
 Git para el control de versiones.
 GitHub como servidor git remoto.
+JSpIRIT para detectar Code Smells para realizar el refactoring.
 PostgreSQL como base de datos.
 Maven para el manejo de librerías externas.
 StarUML para la creación de diagramas.
