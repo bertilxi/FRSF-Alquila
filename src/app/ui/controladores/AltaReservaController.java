@@ -104,6 +104,7 @@ public class AltaReservaController extends OlimpoController {
 		Cliente cliente = comboBoxCliente.getValue();
 		Inmueble inmueble = comboBoxInmueble.getValue();
 
+		//Se validan los campos ingresados por el usuario
 		if(cliente == null){
 			error.append("Seleccione un cliente").append("\r\n");
 		}
@@ -124,6 +125,7 @@ public class AltaReservaController extends OlimpoController {
 			error.append("Ingrese una fecha de fin").append("\r\n");
 		}
 
+		//Si hay algún error se muestra una ventana informando de ello
 		if(!error.toString().isEmpty()){
 			presentador.presentarError("Revise sus campos", error.toString(), stage);
 		}
@@ -131,6 +133,7 @@ public class AltaReservaController extends OlimpoController {
 			Date fechaInicio = Date.from(datePickerInicio.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
 			Date fechaFin = Date.from(datePickerFin.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+			//Se crea la reserva para pasársela a la capa lógica
 			Reserva reserva = new Reserva()
 					.setImporte(Double.valueOf(importe))
 					.setFechaFin(fechaFin)
@@ -141,9 +144,11 @@ public class AltaReservaController extends OlimpoController {
 			ResultadoCrearReserva resultadoCrearReserva = null;
 
 			try{
+				//Se llama a la capa lógica para que de de alta la reserva
 				resultadoCrearReserva = coordinador.crearReserva(reserva);
 				error.delete(0, error.length());
 
+				//Se obtienen los errores y se genera un mensaje para mostrarle al usuario con ellos
 				if(resultadoCrearReserva.hayErrores()){
 					for(ErrorCrearReserva e: resultadoCrearReserva.getErrores()){
 						switch(e) {
@@ -215,15 +220,19 @@ public class AltaReservaController extends OlimpoController {
 							break;
 						}
 					}
+					//En caso de haber errores, se le muestran al usuario
 					presentador.presentarError("Revise sus campos", error.toString(), stage);
 				}
 				else{
+					//Si todo es correcto se muestra una notificación y se muestra el pdf con la reserva
 					presentador.presentarToast("Se ha realizado la reserva con éxito", stage);
 					mostrarPDF(resultadoCrearReserva.getPdfReserva());
 				}
 			} catch(PersistenciaException e){
+				//Si la capa lógica lanza una excepción se presenta una ventana de excepción indicando el error
 				presentador.presentarExcepcion(e, stage);
 			} catch(Exception e){
+				//Si ocurre una excepción inesperada, se informa de ello
 				presentador.presentarExcepcionInesperada(e, stage);
 			}
 		}

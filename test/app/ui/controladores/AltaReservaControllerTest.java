@@ -59,21 +59,38 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class AltaReservaControllerTest {
 
+	/**
+	 * Test para probar la función de alta reserva del controlador
+	 * 
+	 * @param inmuebleAReservar
+	 * 			inmueble de la reserva
+	 * @param clienteSeleccionado
+	 * 			cliente asociado a la reserva
+	 * @param importe
+	 * 			importe por el cual se genera la reserva
+	 * @param fechaInicio
+	 * 			fecha de inicio de la reserva
+	 * @param fechaFin
+	 * 			fecha de finalización del período de vigencia de la reserva
+	 * @param resultadoCrearReserva
+	 * 			resultado devuelto por el mock de la capa lógica
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 			indica si se debe presentar una ventana de error
+	 * @param llamaAPresentadorVentanasPresentarExcepcion
+	 * 			indica si se debe presentar una ventana de excepción
+	 * @param llamaAPresentadorVentanasPresentarExcepcionInesperada
+	 * 			indica si se debe presentar una ventana de exepción inesperada
+	 * @param llamaACrearReserva
+	 * 			indica si se debe llamar a crear la reserva en la lógica
+	 * @param excepcion
+	 * 			excepción devuelta por la capa lógica
+	 * @param reservaExitosa
+	 * 			indica se la generación de la reserva debe ser exitosa
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
-	public void testCrearReserva(Inmueble inmuebleAReservar,
-			Cliente clienteSeleccionado,
-			String importe,
-			LocalDate fechaInicio,
-			LocalDate fechaFin,
-			ResultadoCrearReserva resultadoCrearReservaEsperado,
-			Integer llamaAPresentadorVentanasPresentarError,
-			Integer llamaAPresentadorVentanasPresentarExcepcion,
-			Integer llamaAPresentadorVentanasPresentarExcepcionInesperada,
-			Integer llamaACrearReserva,
-			Exception excepcion,
-			Integer reservaExitosa)
-			throws Throwable {
+	public void testCrearReserva(Inmueble inmuebleAReservar, Cliente clienteSeleccionado, String importe, LocalDate fechaInicio, LocalDate fechaFin, ResultadoCrearReserva resultadoCrearReserva, Integer llamaAPresentadorVentanasPresentarError, Integer llamaAPresentadorVentanasPresentarExcepcion, Integer llamaAPresentadorVentanasPresentarExcepcionInesperada, Integer llamaACrearReserva, Exception excepcion, Integer reservaExitosa) throws Throwable {
 		//Se crean los mocks necesarios
 		CoordinadorJavaFX coordinadorMock = mock(CoordinadorJavaFX.class);
 		PresentadorVentanas presentadorVentanasMock = mock(PresentadorVentanas.class);
@@ -99,7 +116,7 @@ public class AltaReservaControllerTest {
 				.setCliente(clienteSeleccionado)
 				.setInmueble(inmuebleAReservar);
 
-		when(coordinadorMock.crearReserva(reserva)).thenReturn(resultadoCrearReservaEsperado);
+		when(coordinadorMock.crearReserva(reserva)).thenReturn(resultadoCrearReserva);
 		if(excepcion != null){
 			when(coordinadorMock.crearReserva(reserva)).thenThrow(excepcion);
 		}
@@ -178,31 +195,33 @@ public class AltaReservaControllerTest {
 		LocalDate fechaFinCorrecta = LocalDate.of(1, 1, 1);
 
 		return new Object[] {
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 0, 0, 0, 1, null, 1 }, //prueba correcta
-				new Object[] { inmueble, null, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 1, 0, 0, 0, null, 0 }, //cliente no seleccionado
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearCliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente null
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNombre_Cliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente sin nombre
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearApellido_Cliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente sin apellido
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearTipoDocumento_Cliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente sin tipo documento
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNúmeroDocumento_Cliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente sin número de documento
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearPropietario_Vacío, 1, 0, 0, 1, null, 0 }, //propietario del inmueble null
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNombre_Propietario_Vacío, 1, 0, 0, 1, null, 0 }, //propietario del inmueble sin nombre
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearApellido_Propietario_Vacío, 1, 0, 0, 1, null, 0 }, //propietario del inmueble sin apellido
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearInmueble_Vacío, 1, 0, 0, 1, null, 0 }, //inmueble null
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearTipo_Inmueble_Vacío, 1, 0, 0, 1, null, 0 }, //inmueble sin tipo inmueble
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearDirección_Inmueble_Vacía, 1, 0, 0, 1, null, 0 }, //inmueble sin dirección
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearLocalidad_Inmueble_Vacía, 1, 0, 0, 1, null, 0 }, //inmueble sin localidad
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearBarrio_Inmueble_Vacío, 1, 0, 0, 1, null, 0 }, //inmueble sin barrio
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearCalle_Inmueble_Vacía, 1, 0, 0, 1, null, 0 }, //inmueble sin calle
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearAltura_Inmueble_Vacía, 1, 0, 0, 1, null, 0 }, //inmueble sin altura
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFechaInicio_vacía, 1, 0, 0, 1, null, 0 }, //sin fecha inicio
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFechaFin_vacía, 1, 0, 0, 1, null, 0 }, //sin fecha fin
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFecha_Inicio_Posterior_A_Fecha_Fin, 1, 0, 0, 1, null, 0 }, //fecha inicio posterior a fecha fin
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearExiste_Otra_Reserva_Activa, 1, 0, 0, 1, null, 0 }, //ya existe otra reserva sobre el inmueble en ese período
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearImporte_Vacío, 1, 0, 0, 1, null, 0 }, //importe null
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearImporte_Menor_O_Igual_A_Cero, 1, 0, 0, 1, null, 0 }, //importe menor o igual a cero
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearInmuebleVendido, 1, 0, 0, 1, null, 0 }, //importe menor o igual a cero
-				new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 0, 1, 0, 1, new SaveUpdateException(new Throwable()), 0 }, //excepcion al guardar en base de datos
+				//Casos de prueba
+				// inmuebleAReservar, clienteSeleccionado, importe, fechaInicio, fechaFin, resultadoCrearReservaEsperado, llamaAPresentadorVentanasPresentarError, llamaAPresentadorVentanasPresentarExcepcion, llamaAPresentadorVentanasPresentarExcepcionInesperada, llamaACrearReserva, excepcion, reservaExitosa
+				/* 0 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 0, 0, 0, 1, null, 1 }, //prueba correcta
+				/* 1 */ new Object[] { inmueble, null, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 1, 0, 0, 0, null, 0 }, //cliente no seleccionado
+				/* 2 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearCliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente null
+				/* 3 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNombre_Cliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente sin nombre
+				/* 4 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearApellido_Cliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente sin apellido
+				/* 5 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearTipoDocumento_Cliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente sin tipo documento
+				/* 6 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNúmeroDocumento_Cliente_Vacío, 1, 0, 0, 1, null, 0 }, //cliente sin número de documento
+				/* 7 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearPropietario_Vacío, 1, 0, 0, 1, null, 0 }, //propietario del inmueble null
+				/* 8 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearNombre_Propietario_Vacío, 1, 0, 0, 1, null, 0 }, //propietario del inmueble sin nombre
+				/* 9 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearApellido_Propietario_Vacío, 1, 0, 0, 1, null, 0 }, //propietario del inmueble sin apellido
+				/* 10 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearInmueble_Vacío, 1, 0, 0, 1, null, 0 }, //inmueble null
+				/* 11 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearTipo_Inmueble_Vacío, 1, 0, 0, 1, null, 0 }, //inmueble sin tipo inmueble
+				/* 12 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearDirección_Inmueble_Vacía, 1, 0, 0, 1, null, 0 }, //inmueble sin dirección
+				/* 13 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearLocalidad_Inmueble_Vacía, 1, 0, 0, 1, null, 0 }, //inmueble sin localidad
+				/* 14 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearBarrio_Inmueble_Vacío, 1, 0, 0, 1, null, 0 }, //inmueble sin barrio
+				/* 15 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearCalle_Inmueble_Vacía, 1, 0, 0, 1, null, 0 }, //inmueble sin calle
+				/* 16 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearAltura_Inmueble_Vacía, 1, 0, 0, 1, null, 0 }, //inmueble sin altura
+				/* 17 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFechaInicio_vacía, 1, 0, 0, 1, null, 0 }, //sin fecha inicio
+				/* 18 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFechaFin_vacía, 1, 0, 0, 1, null, 0 }, //sin fecha fin
+				/* 19 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearFecha_Inicio_Posterior_A_Fecha_Fin, 1, 0, 0, 1, null, 0 }, //fecha inicio posterior a fecha fin
+				/* 20 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearExiste_Otra_Reserva_Activa, 1, 0, 0, 1, null, 0 }, //ya existe otra reserva sobre el inmueble en ese período
+				/* 21 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearImporte_Vacío, 1, 0, 0, 1, null, 0 }, //importe null
+				/* 22 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearImporte_Menor_O_Igual_A_Cero, 1, 0, 0, 1, null, 0 }, //importe menor o igual a cero
+				/* 23 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCrearInmuebleVendido, 1, 0, 0, 1, null, 0 }, //importe menor o igual a cero
+				/* 24 */ new Object[] { inmueble, cliente, "10", fechaInicioCorrecta, fechaFinCorrecta, resultadoCorrecto, 0, 1, 0, 1, new SaveUpdateException(new Throwable()), 0 }, //excepcion al guardar en base de datos
 		};
 	}
 
