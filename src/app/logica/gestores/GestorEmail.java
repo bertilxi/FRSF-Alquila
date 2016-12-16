@@ -105,19 +105,37 @@ public class GestorEmail {
 
 	}
 
+	/**
+	 * Método para el envío de email usando la API de Gmail
+	 * 
+	 * @param destinatario
+	 * 			destinatario del email
+	 * @param asunto
+	 * 			asunto del email
+	 * @param mensaje
+	 * 			cuerpo del mensaje del email
+	 * @param archivo
+	 * 			arhivo que será adjuntado al email
+	 * @throws IOException
+	 * @throws MessagingException
+	 */
 	public void enviarEmail(String destinatario, String asunto, String mensaje, Archivo archivo) throws IOException, MessagingException {
 		// Build a new authorized API client service.
+		//Se obtiene un servicio de cliente de la API
+		//Además se solicitan los permisos necesarios al usuario
 		Gmail service = getGmailService();
 
-		// Print the labels in the user's account.
+		//La palabra clave "me" representa al dueño de la cuenta con la que se enviará el email
 		String user = "me";
-
+		//Se crea un archivo temporal para poder enviarlo como adjunto
 		File archivoTMP = new File(URL_RESERVA);
 		FileOutputStream fos = new FileOutputStream(archivoTMP);
 		fos.write(archivo.getArchivo());
 		fos.flush();
 		fos.close();
+		//Se invoca al método de la API con los parámetros necesarios, se pasa la dirección de email de la inmobiliaria como campo "from" 
 		sendMessage(service, user, createEmailWithAttachment(destinatario, "olimpoagilinmobiliaria2016@gmail.com", asunto, mensaje, archivoTMP));
+		//Finalmente se borra el archivo temporal
 		archivoTMP.delete();
 	}
 

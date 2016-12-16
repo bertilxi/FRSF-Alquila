@@ -51,8 +51,11 @@ public class ReservaServiceImpl implements ReservaService {
 		return sessionFactory;
 	}
 
+	/* 
+	 * Método para guardar en la base de datos una reserva
+	 */
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public void guardarReserva(Reserva reserva) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
@@ -63,8 +66,11 @@ public class ReservaServiceImpl implements ReservaService {
 
 	}
 
+	/* 
+	 * Método para modificar en la base de datos una reserva
+	 */
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public void modificarReserva(Reserva reserva) throws PersistenciaException {
 		Session session = getSessionFactory().getCurrentSession();
 		try{
@@ -75,12 +81,16 @@ public class ReservaServiceImpl implements ReservaService {
 
 	}
 
+	/* 
+	 * Método para obtener todas las reservas de un cliente
+	 */
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public ArrayList<Reserva> obtenerReservas(Cliente cliente) throws PersistenciaException {
 		ArrayList<Reserva> reservas = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
+			//named query ubicada en entidad reserva
 			for(Object o: session.getNamedQuery("obtenerReservasCliente").setParameter("cliente", cliente).list()){
 				if(o instanceof Reserva){
 					reservas.add((Reserva) o);
@@ -92,12 +102,16 @@ public class ReservaServiceImpl implements ReservaService {
 		return reservas;
 	}
 
+	/* 
+	 * Método para obtener todas las reservas de un inmueble
+	 */
 	@Override
-	@Transactional(rollbackFor = PersistenciaException.class)
+	@Transactional(rollbackFor = PersistenciaException.class) //si falla hace rollback de la transacción
 	public ArrayList<Reserva> obtenerReservas(Inmueble inmueble) throws PersistenciaException {
 		ArrayList<Reserva> reservas = new ArrayList<>();
 		Session session = getSessionFactory().getCurrentSession();
 		try{
+			//named query ubicada en entidad reserva
 			for(Object o: session.getNamedQuery("obtenerReservasInmueble").setParameter("inmueble", inmueble).list()){
 				if(o instanceof Reserva){
 					reservas.add((Reserva) o);
@@ -108,5 +122,4 @@ public class ReservaServiceImpl implements ReservaService {
 		}
 		return reservas;
 	}
-
 }
