@@ -1,4 +1,4 @@
-## Grupo Fernando Esteban
+﻿## Grupo Fernando Esteban
 20  Vista de consulta inmueble  					2 2
 29  Vista alta y listar venta  						3 3
 30  Lógica alta venta y generar PDF  				3 2
@@ -18,7 +18,7 @@
 
 ## Grupo Andrés Emiliano
 21  Lógica y persistidor de consulta inmuebles 		3 3
-22  Vista alta catálogo de inmueble  				3 falta
+22  Vista alta catálogo de inmueble  				3 2
 25  Lógica alta, baja reserva y generar PDF 		3 3
 27  Cambios ABM Cliente  							1 1
 

@@ -1,7 +1,7 @@
-## Grupo Fernando Esteban
+﻿## Grupo Fernando Esteban
 
 2 Entidad vendedor                                1 3
-5 Lógica alta, modificación y baja vendedor       4 falta
+5 Lógica alta, modificación y baja vendedor       4 4
 6 Persistidor vendedor                            3 2
 8 Vista alta, modificar y baja propietario        3 3
 17 Vista alta, modificar y baja cliente           3 4
@@ -27,7 +27,7 @@
 1 Vista y lógica del Login                        2 4
 4 Vista principal para la administración          2 1
 11 Entidad inmueble                               1 2
-13 Vista alta, modificar y baja inmueble          3 falta
+13 Vista alta, modificar y baja inmueble          3 2
 16 Entidad cliente                                1 1
 19 Persistidor cliente                            3 2
 
