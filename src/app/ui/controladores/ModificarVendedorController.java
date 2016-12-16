@@ -148,19 +148,23 @@ public class ModificarVendedorController extends OlimpoController {
 				//Se llama a la capa lógica para que cree el vendedor
 				resultadoModificarVendedor = coordinador.modificarVendedor(vendedor);
 				List<ErrorModificarVendedor> listaErrores = resultadoModificarVendedor.getErrores();
-				
+
 				//Se convierten los errores devueltos a un mensaje a mostrar al usuario
-				if(listaErrores.contains(ErrorModificarVendedor.Formato_Nombre_Incorrecto)){
-					error.append("Nombre Incorrecto").append("\r\n");
-				}
-				if(listaErrores.contains(ErrorModificarVendedor.Formato_Apellido_Incorrecto)){
-					error.append("Apellido Incorrecto").append("\r\n");
-				}
-				if(listaErrores.contains(ErrorModificarVendedor.Formato_Documento_Incorrecto)){
-					error.append("Documento Incorrecto").append("\r\n");
-				}
-				if(listaErrores.contains(ErrorModificarVendedor.Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo)){
-					error.append("Ya existe otro vendedor registrado con ese documento").append("\r\n");
+				for(ErrorModificarVendedor errorCrearVendedor: listaErrores){
+					switch(errorCrearVendedor) {
+					case Formato_Apellido_Incorrecto:
+						error.append("Apellido Incorrecto").append("\r\n");
+						break;
+					case Formato_Documento_Incorrecto:
+						error.append("Documento Incorrecto").append("\r\n");
+						break;
+					case Formato_Nombre_Incorrecto:
+						error.append("Nombre Incorrecto").append("\r\n");
+						break;
+					case Otro_Vendedor_Posee_Mismo_Documento_Y_Tipo:
+						error.append("Ya existe otro vendedor registrado con ese documento").append("\r\n");
+						break;
+					}
 				}
 
 				//Si hay errores se muestran al usuario, si no, se presenta una notificación de éxito

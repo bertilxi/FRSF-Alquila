@@ -124,7 +124,7 @@ public class AltaVendedorController extends OlimpoController {
 				presentador.presentarToast("Se ha creado el vendedor con éxito", stage);
 				salir();
 			}
-		//Se manejan las excepciones que puede devolver la lógica
+			//Se manejan las excepciones que puede devolver la lógica
 		} catch(PersistenciaException e){
 			presentador.presentarExcepcion(e, stage);
 		} catch(EntidadExistenteConEstadoBajaException e){
@@ -138,7 +138,7 @@ public class AltaVendedorController extends OlimpoController {
 	/**
 	 * Método que se llama al querer dar de alta un vendedor que fue dado de baja previamente
 	 * Si el usuario confirma la operación se llama a la pantalla modificar vendedor
-	 * 
+	 *
 	 * @param vendedor
 	 */
 	private void manejarVendedorExistenteBaja(Vendedor vendedor) {
@@ -156,35 +156,38 @@ public class AltaVendedorController extends OlimpoController {
 		}
 	}
 
-	
 	/**
 	 * Se convierten los errores devueltos por la capa lógica a errores a mostrar al usuario
-	 * 
+	 *
 	 * @param error
-	 * 			Texto a mostrar al usuario
+	 *            Texto a mostrar al usuario
 	 * @param listaErrores
-	 * 			Lista de errores de la capa lógica
+	 *            Lista de errores de la capa lógica
 	 */
 	private void parsearErroresLogica(StringBuilder error, List<ErrorCrearVendedor> listaErrores) {
-		if(listaErrores.contains(ErrorCrearVendedor.Formato_Nombre_Incorrecto)){
-			error.append("Nombre Incorrecto").append("\r\n");
-		}
-		if(listaErrores.contains(ErrorCrearVendedor.Formato_Apellido_Incorrecto)){
-			error.append("Apellido Incorrecto").append("\r\n");
-		}
-		if(listaErrores.contains(ErrorCrearVendedor.Formato_Documento_Incorrecto)){
-			error.append("Documento Incorrecto").append("\r\n");
-		}
-		if(listaErrores.contains(ErrorCrearVendedor.Ya_Existe_Vendedor)){
-			error.append("Ya existe un vendedor registrado con ese documento").append("\r\n");
+		for(ErrorCrearVendedor errorCrearVendedor: listaErrores){
+			switch(errorCrearVendedor) {
+			case Formato_Apellido_Incorrecto:
+				error.append("Apellido Incorrecto").append("\r\n");
+				break;
+			case Formato_Documento_Incorrecto:
+				error.append("Documento Incorrecto").append("\r\n");
+				break;
+			case Formato_Nombre_Incorrecto:
+				error.append("Nombre Incorrecto").append("\r\n");
+				break;
+			case Ya_Existe_Vendedor:
+				error.append("Ya existe un vendedor registrado con ese documento").append("\r\n");
+				break;
+			}
 		}
 	}
 
 	/**
 	 * Se valida que los campos ingresados por el usuario sean correctos
-	 * 
+	 *
 	 * @param error
-	 * 			Texto a mostrar en caso de que haya algún error
+	 *            Texto a mostrar en caso de que haya algún error
 	 */
 	private void validarVistaAltaVendedor(StringBuilder error) {
 		if(nombre.isEmpty()){
