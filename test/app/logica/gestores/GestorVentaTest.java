@@ -37,12 +37,25 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class GestorVentaTest {
 
-	@Test
-	@Parameters
 	/**
 	 * Prueba el método crearVenta, el cual corresponde con la taskcard 30 de la iteración 2 y a la historia 8
 	 *
+	 * @param venta
+	 * 			venta que se quiere crear
+	 * @param resultadoEsperado
+	 * 			resultado que se espera retorne el método a probar
+	 * @param resultadoCorrecto
+	 * 			si el resultado es correcto y deberían efectuarse los seteos correspondientes y posterior guardado
+	 * @param medioDePagoValido
+	 * 			valor que retorna el mock validador al validad medio de pago
+	 * @param excepcionPersistencia
+	 * 			excepción originada en capa de persistencia que se simula ser lanzada
+	 * @param excepcionPDF
+	 * 			excepción al generar PFD que se simula ser lanzada
+	 * @throws Throwable
 	 */
+	@Test
+	@Parameters
 	public void testCrearVenta(Venta venta,
 			ResultadoCrearVenta resultadoEsperado,
 			boolean resultadoCorrecto,
