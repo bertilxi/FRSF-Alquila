@@ -78,24 +78,41 @@ public class AltaCatalogoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Método que se ejecuta al presionar el botón para agregar inmuebles
+	 */
 	@FXML
 	public void agregarInmueble() {
 		final ArrayList<Inmueble> inmueblesNuevos = new ArrayList<>();
+		//Se va a la vista de consulta inmueble y se agregan a la vista al volver
 		AdministrarInmuebleController vistaInmuebles = (AdministrarInmuebleController) this.cambiarScene(fondo, AdministrarInmuebleController.URLVista, (Pane) fondo.getChildren().get(0));
 		vistaInmuebles.formatearObtenerInmueblesNoVendidos(inmuebles, inmueblesNuevos, () -> {
 			agregarInmuebles(inmueblesNuevos);
 		}, true);
 	}
 
+	/**
+	 * Método que agrega inmuebles a la vista
+	 *
+	 * @param inmueblesNuevos
+	 *            inmuebles a agregar a la vista
+	 */
 	private void agregarInmuebles(ArrayList<Inmueble> inmueblesNuevos) {
 		try{
 			for(Inmueble inmueble: inmueblesNuevos){
+				//Se agrega un renglón a la lista de inmuebles
 				RenglonInmuebleController renglonController = new RenglonInmuebleController(inmueble);
+
+				//Se setea lo que va a hacer el botón eliminarInmueble del renglón
 				renglonController.setEliminarInmueble(() -> {
+
+					//Se quita al inmueble de la vista
 					listaInmuebles.getChildren().remove(renglonController.getRoot());
 					renglones.remove(renglonController.getRoot());
 					inmuebles.remove(inmueble);
 				});
+
+				//Se agrega el inmueble a la vista
 				listaInmuebles.getChildren().add(renglonController.getRoot());
 				renglones.put(renglonController.getRoot(), renglonController);
 				inmuebles.add(inmueble);
@@ -105,8 +122,17 @@ public class AltaCatalogoController extends OlimpoController {
 		}
 	}
 
+	/**
+	 * Acción que se ejecuta al apretar el botón generar catalogo.
+	 *
+	 * Toma datos de la vista, los carga al catálogo y deriva la operación a capa lógica.
+	 * Si la capa lógica retorna errores, se muestran al usuario.
+	 *
+	 * @return ResultadoControlador que resume lo que hizo el controlador
+	 */
 	@FXML
 	public ResultadoControlador generarCatalogo() {
+		//Inicialización de variables
 		ResultadoCrearCatalogo resultado;
 		StringBuffer erroresBfr = new StringBuffer();
 		CatalogoVista catalogo = null;
@@ -119,10 +145,13 @@ public class AltaCatalogoController extends OlimpoController {
 				fotos.put(renglon.getInmueble(), renglon.getFotoSeleccionada());
 			}
 		}
+
+		//Se cargan los datos de la vista al catálogo a crear
 		catalogo = new CatalogoVista(cbCliente.getValue(), fotos);
 
 		//Inicio transacciones al gestor
 		try{
+			//Se llama a la lógica para crear el catálogo y se recibe el resultado de las validaciones y datos extras de ser necesarios
 			resultado = coordinador.crearCatalogo(catalogo);
 		} catch(PersistenciaException | GestionException e){
 			presentador.presentarExcepcion(e, stage);
@@ -132,7 +161,7 @@ public class AltaCatalogoController extends OlimpoController {
 			return new ResultadoControlador(ErrorControlador.Error_Desconocido);
 		}
 
-		//Tratamiento de errores
+		//Procesamiento de errores de la lógica
 		if(resultado.hayErrores()){
 			for(ErrorCrearCatalogo e: resultado.getErrores()){
 				switch(e) {
@@ -162,13 +191,18 @@ public class AltaCatalogoController extends OlimpoController {
 
 			String errores = erroresBfr.toString();
 			if(!errores.isEmpty()){
+				//Se muestran los errores
 				presentador.presentarError("Error al crear el catálogo", errores, stage);
 			}
+			//Se retorna error
 			return new ResultadoControlador(ErrorControlador.Campos_Vacios);
 		}
 		else{
+			//Se muestra una notificación de que se creó correctamente el catálogo
 			presentador.presentarToast("Se ha creado el catálogo con éxito", stage);
+			//Se muestra el catálogo
 			mostrarPDF(resultado.getCatalogoPDF());
+			//Se retorna que no hubo errores
 			return new ResultadoControlador();
 		}
 	}
