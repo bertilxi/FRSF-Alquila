@@ -64,7 +64,7 @@ public class GestorReserva {
 	protected GestorEmail gestorEmail;
 
 	/**
-	 * Método para crear una reserva. Primero se validan las reglas de negocia y luego se persiste.
+	 * Método para crear una reserva. Primero se validan las reglas de negocio y luego se persiste.
 	 * Pertenece a la taskcard 25 de la iteración 2 y a la historia 7
 	 *
 	 * @param reserva
@@ -73,14 +73,17 @@ public class GestorReserva {
 	 * @throws PersistenciaException
 	 *             si falló al persistir
 	 * @throws GestionException
+	 *             si falló al procesar la reserva
 	 */
 	public ResultadoCrearReserva crearReserva(Reserva reserva) throws PersistenciaException, GestionException {
+		//Inicialización de variables
 		Set<ErrorCrearReserva> errores = new HashSet<>();
 		boolean reservaEnConflictoEncontrada = false;
 		boolean fechaInicioVacia = false;
 		boolean fechaFinVacia = false;
 		Reserva reservaEnConflicto = null;
 
+		//Validaciones de lógica
 		if(reserva.getCliente() == null){
 			errores.add(ErrorCrearReserva.Cliente_Vacío);
 		}
@@ -148,6 +151,7 @@ public class GestorReserva {
 		}
 
 		if(!fechaInicioVacia && !fechaFinVacia){
+			//Validamos que el rango de fechas no coincida con el de otra reserva
 			if(reserva.getFechaInicio().compareTo(reserva.getFechaFin()) > 0){
 				errores.add(ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin);
 			}
@@ -179,8 +183,11 @@ public class GestorReserva {
 		}
 
 		if(errores.isEmpty()){
+			//Si no hay errores generamos el pdf de la reserva
 			final PDF pdfReserva = gestorPDF.generarPDF(reserva);
+			//se lo seteamos a reserva
 			reserva.setArchivoPDF(pdfReserva);
+			//también le seteamos el estado
 			Estado estadoAlta = null;
 			for(Estado estado: gestorDatos.obtenerEstados()){
 				if(estado.getEstado().equals(EstadoStr.ALTA)){
@@ -188,6 +195,7 @@ public class GestorReserva {
 				}
 			}
 			reserva.setEstado(estadoAlta);
+			//Mandamos un mail con la reserva (de forma asincrónica)
 			new Thread(() -> {
 				try{
 					if(reserva.getCliente().getCorreo() != null){
@@ -197,15 +205,28 @@ public class GestorReserva {
 					e.printStackTrace();
 				}
 			}).start();
+			//Persistimos la reserva
 			persistidorReserva.guardarReserva(reserva);
+			//Retornamos el PDF generado
 			return new ResultadoCrearReserva(pdfReserva);
 		}
 
+		//Retornamos los errores
 		return new ResultadoCrearReserva(reservaEnConflicto, errores.toArray(new ErrorCrearReserva[0]));
 	}
 
+	/**
+	 * Método para eliminar una reserva. Se hace una baja lógica.
+	 * Pertenece a la taskcard 25 de la iteración 2 y a la historia 7
+	 *
+	 * @param reserva
+	 *            a eliminar
+	 * @return resultado de la operación
+	 * @throws PersistenciaException
+	 *             si falló al persistir
+	 */
 	public ResultadoEliminarReserva eliminarReserva(Reserva reserva) throws PersistenciaException {
-
+		//Seteamos el estado de la reserva
 		ArrayList<Estado> estados = gestorDatos.obtenerEstados();
 		Estado estadoBaja = null;
 		for(Estado estado: estados){
@@ -214,6 +235,7 @@ public class GestorReserva {
 			}
 		}
 		reserva.setEstado(estadoBaja);
+		//Persistimos el cambio
 		persistidorReserva.modificarReserva(reserva);
 
 		return new ResultadoEliminarReserva();

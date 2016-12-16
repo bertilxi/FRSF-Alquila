@@ -87,6 +87,7 @@ public class GestorPDF {
 	 * @return PDF de una captura de la pantalla pasada
 	 */
 	private PDF generarPDF(Node pantallaAPDF) throws Exception {
+		//Se imprime la pantalla en una imagen
 		new Scene((Parent) pantallaAPDF);
 		WritableImage image = pantallaAPDF.snapshot(new SnapshotParameters(), null);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -94,6 +95,8 @@ public class GestorPDF {
 		byte[] imageInByte = baos.toByteArray();
 		baos.flush();
 		baos.close();
+
+		//Se carga la imagen en un PDF
 		Image imagen = Image.getInstance(imageInByte);
 		Document document = new Document();
 		ByteArrayOutputStream pdfbaos = new ByteArrayOutputStream();
@@ -103,10 +106,14 @@ public class GestorPDF {
 		imagen.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
 		document.add(imagen);
 		document.close();
+
+		//Se obtiene el archivo PDF
 		byte[] pdfBytes = pdfbaos.toByteArray();
 		pdfbaos.flush();
 		escritor.close();
 		pdfbaos.close();
+
+		//Se genera un objeto PDF
 		return (PDF) new PDF().setArchivo(pdfBytes);
 	}
 
@@ -331,13 +338,17 @@ public class GestorPDF {
 	 */
 	public PDF generarPDF(Reserva reserva) throws GestionException {
 		try{
+			//Inicialización de parámetros
 			pdf = null;
+
+			//Cargar pantalla que representa al PDF
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(URLDocumentoReserva));
 			Pane documentoReserva = (Pane) loader.load();
 
 			FutureTask<Throwable> future = new FutureTask<>(() -> {
 				try{
+					//Cargar datos a la pantalla que representa al PDF
 					Label label = (Label) documentoReserva.lookup("#lblNombreOferente");
 					label.setText(formateador.nombrePropio(reserva.getCliente().getNombre()));
 					label = (Label) documentoReserva.lookup("#lblApellidoOferente");
@@ -376,6 +387,7 @@ public class GestorPDF {
 					Date ahora = new Date();
 					label.setText(String.format(label.getText(), conversorFechas.horaYMinutosToString(ahora), conversorFechas.diaMesYAnioToString(ahora)));
 
+					//Generación del archivo
 					pdf = generarPDF(documentoReserva);
 				} catch(Throwable e){
 					return e;
@@ -383,12 +395,15 @@ public class GestorPDF {
 				return null;
 			});
 
+			//Asegurarse de que lo anterior se corra en el hilo de javaFX
 			if(!Platform.isFxApplicationThread()){
 				Platform.runLater(future);
 			}
 			else{
 				future.run();
 			}
+
+			//Si hubo error se lanza excepción
 			Throwable excepcion = future.get();
 			if(excepcion != null){
 				throw excepcion;
