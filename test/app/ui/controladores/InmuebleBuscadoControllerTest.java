@@ -53,9 +53,75 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class InmuebleBuscadoControllerTest {
 
+	/**
+	 * Test para probar cargar un inmueble buscado cuando se está creando un cliente y cuando se está modificando un cliente
+	 * al momento en que el usuario presiona el botón de aceptar
+	 *
+	 * @param superficie
+	 * 				introducida por el usuario
+	 * @param antiguedad
+	 * 				introducida por el usuario
+	 * @param dormitorios
+	 * 				introducidos por el usuario
+	 * @param baños
+	 * 				introducidos por el usuario
+	 * @param precio
+	 * 				introducido por el usuario
+	 * @param localidades
+	 * 				introducidas por el usuario
+	 * @param barrios
+	 * 				introducidos por el usuario
+	 * @param local
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param casa
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param departamento
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param terreno
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param galpon
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param quinta
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param propiedadHorizontal
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param garage
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param patio
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param piscina
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param aguaCorriente
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param cloaca
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param gasNatural
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param aguaCaliente
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param telefono
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param lavadero
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param pavimento
+	 * 				si es seleccionado el checkbox por el usuario
+	 * @param clienteNuevo
+	 * 				cliente que se está creando
+	 * @param clienteEnModificacion
+	 * 				cliente que se está modificando
+	 * @param camposCorrectos
+	 *				1 si los campos son correctos, 0 si no
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 				1 si llama al método presentar error del presentador de ventanas, 0 si no
+	 * @param llamaAPresentadorVentanasPresentarExcepcion
+	 * 				1 si llama al método presentar excepción del presentador de ventanas, 0 si no
+	 * @param excepcion
+	 * 				excepción que se simula lanzar desde la capa lógica
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
-	public void testCrearCliente(String superficie,
+	public void testCargarInmuebleBuscado(String superficie,
 			String antiguedad,
 			String dormitorios,
 			String baños,
@@ -209,7 +275,7 @@ public class InmuebleBuscadoControllerTest {
 
 	}
 
-	protected Object[] parametersForTestCrearCliente() {
+	protected Object[] parametersForTestCargarInmuebleBuscado() {
 		ArrayList<Localidad> localidades = new ArrayList<>();
 		localidades.add(new Localidad("Federal", new Provincia("Entre ríos", new Pais("Argentina"))));
 		ArrayList<Barrio> barrios = new ArrayList<>();
@@ -217,22 +283,23 @@ public class InmuebleBuscadoControllerTest {
 		clienteEnModificacion.setInmuebleBuscado(new InmuebleBuscado());
 		clienteEnModificacion.getInmuebleBuscado().setCliente(clienteEnModificacion);
 		return new Object[] {
+				//String superficie,antiguedad,dormitorios,baños,precio,localidades,barrios,local,casa,departamento,terreno,galpon,quinta,propiedadHorizontal,garage,patio,piscina,aguaCorriente,cloaca,gasNatural,aguaCaliente,telefono,lavadero,pavimento,clienteNuevo,clienteEnModificacion,camposCorrectos,llamaAPresentadorVentanasPresentarError,llamaAPresentadorVentanasPresentarExcepcion,excepcion
 				//prueba correcta de inmueble nuevo
-				new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 1, 0, 0, null },
+				/*0*/ new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 1, 0, 0, null },
 				//prueba campo de texto incorrecto de inmueble nuevo
-				new Object[] { "30.0", "abc", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 0, 1, 0, null },
+				/*1*/ new Object[] { "30.0", "abc", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 0, 1, 0, null },
 				//prueba campo texto vacio de inmueble nuevo
-				new Object[] { "30.0", "10", "", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 0, 1, 0, null },
+				/*2*/ new Object[] { "30.0", "10", "", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 0, 1, 0, null },
 				//prueba PersistenciaException de inmueble nuevo
-				new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 1, 0, 1, new SaveUpdateException(new Throwable()) },
+				/*3*/ new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, new Cliente(), null, 1, 0, 1, new SaveUpdateException(new Throwable()) },
 				//prueba correcta de inmueble en modificación
-				new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 1, 0, 0, null },
+				/*4*/ new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 1, 0, 0, null },
 				//prueba campo de texto incorrecto de inmueble en modificación
-				new Object[] { "30.0", "abc", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 0, 1, 0, null },
+				/*5*/ new Object[] { "30.0", "abc", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 0, 1, 0, null },
 				//prueba campo texto vacio de inmueble en modificación
-				new Object[] { "30.0", "10", "", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 0, 1, 0, null },
+				/*6*/ new Object[] { "30.0", "10", "", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 0, 1, 0, null },
 				//prueba PersistenciaException de inmueble en modificación
-				new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 1, 0, 1, new SaveUpdateException(new Throwable()) }
+				/*7*/ new Object[] { "30.0", "10", "2", "1", "3000000.0", localidades, barrios, false, true, true, false, false, false, false, false, true, false, true, true, true, true, false, true, true, null, clienteEnModificacion, 1, 0, 1, new SaveUpdateException(new Throwable()) }
 
 		};
 	}
