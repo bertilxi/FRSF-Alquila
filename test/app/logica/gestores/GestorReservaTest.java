@@ -70,116 +70,6 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class GestorReservaTest {
 
-	@Test
-	@Parameters
-	/**
-	 * Prueba el método crearReserva(), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
-	 *
-	 * @param Reserva
-	 *            reserva a crear
-	 * @param resultado
-	 *            resultado que se espera que devuelva el gestor
-	 * @param excepcion
-	 *            es la excepcion que debe lanzar el mock del persistidor o del gestorPDF, si la prueba involucra procesar una excepcion de dicho persistidor/gestor, debe ser nulo propietario para que
-	 *            se use
-	 * @throws Exception
-	 */
-	public void testCrearReserva(Reserva Reserva, ResultadoCrearReserva resultado, Throwable excepcion) throws Exception {
-		GestorDatos gestorDatosMock = new GestorDatos() {
-
-			@Override
-			public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
-				return new ArrayList<>();
-			}
-		};
-		GestorPDF gestorPDFMock = new GestorPDF() {
-
-			@Override
-			public PDF generarPDF(Reserva reserva) throws GestionException {
-				if(excepcion != null && excepcion instanceof GestionException){
-					throw (GestionException) excepcion;
-				}
-				return new PDF();
-			}
-		};
-		GestorEmail gestorEmailMock = new GestorEmail(true) {
-			@Override
-			public void enviarEmail(String destinatario, String asunto, String mensaje, Archivo archivo)
-					throws IOException, MessagingException {
-
-			}
-		};
-		ReservaService persistidorReservaMock = new ReservaService() {
-
-			@Override
-			public void guardarReserva(Reserva reserva) throws PersistenciaException {
-				if(excepcion != null){
-					if(excepcion instanceof PersistenciaException){
-						throw (PersistenciaException) excepcion;
-					}
-					else if(!(excepcion instanceof GestionException)){
-						new Integer("asd");
-					}
-				}
-			}
-
-			@Override
-			public void modificarReserva(Reserva reserva) throws PersistenciaException {
-
-			}
-
-			@Override
-			public ArrayList<Reserva> obtenerReservas(Cliente cliente) throws PersistenciaException {
-
-				return null;
-			}
-
-			@Override
-			public ArrayList<Reserva> obtenerReservas(Inmueble inmueble) throws PersistenciaException {
-
-				return null;
-			}
-
-		};
-		GestorReserva gestorReserva = new GestorReserva() {
-			{
-				this.gestorPDF = gestorPDFMock;
-				this.persistidorReserva = persistidorReservaMock;
-				this.gestorDatos = gestorDatosMock;
-				this.gestorEmail = gestorEmailMock;
-			}
-		};
-
-		//creamos la prueba
-		Statement test = new Statement() {
-			@Override
-			public void evaluate() throws Throwable {
-				if(resultado != null){
-					assertEquals(resultado, gestorReserva.crearReserva(Reserva));
-				}
-				else{
-					try{
-						gestorReserva.crearReserva(Reserva);
-						Assert.fail("Debería haber fallado!");
-					} catch(PersistenciaException | GestionException e){
-						Assert.assertEquals((excepcion), e);
-					} catch(Exception e){
-						if(excepcion instanceof PersistenciaException){
-							Assert.fail("Debería haber tirado una PersistenciaException y tiro otra Exception!");
-						}
-					}
-				}
-			}
-		};
-
-		//Ejecutamos la prueba
-		try{
-			test.evaluate();
-		} catch(Throwable e){
-			throw new Exception(e);
-		}
-	}
-
 	/**
 	 * Método que devuelve los parámetros para probar el método crearReserva()
 	 *
@@ -583,50 +473,53 @@ public class GestorReservaTest {
 				.setEstadoInmueble(estadoInmueble));
 
 		return new Object[] {
-				new Object[] { reservaCorrecta, new ResultadoCrearReserva(null), null }, //reserva correcta
-				new Object[] { reservaSinCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Cliente_Vacío), null }, //reserva sin cliente
-				new Object[] { reservaSinNombreCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Nombre_Cliente_Vacío), null }, //reserva sin nombre cliente
-				new Object[] { reservaSinApellidoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Apellido_Cliente_Vacío), null }, //reserva sin apellido cliente
-				new Object[] { reservaSinTipoDocumentoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.TipoDocumento_Cliente_Vacío), null }, //reserva sin tipo documento en el cliente
-				new Object[] { reservaSinNumeroDocumentoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.NúmeroDocumento_Cliente_Vacío), null }, //reserva sin numero de documento en el cliente
-				new Object[] { reservaSinInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Inmueble_Vacío), null }, //reserva sin inmueble
-				new Object[] { reservaSinPropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Propietario_Vacío), null }, //reserva sin Propietario
-				new Object[] { reservaSinNombrePropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Nombre_Propietario_Vacío), null }, //reserva sin nombre de Propietario
-				new Object[] { reservaSinApellidoPropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Apellido_Propietario_Vacío), null }, //reserva sin apellido de Propietario
-				new Object[] { reservaSinTipoInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Tipo_Inmueble_Vacío), null }, //reserva sin tipo de Inmueble
-				new Object[] { reservaSinDireccionInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Dirección_Inmueble_Vacía), null }, //reserva sin direccion de inmueble
-				new Object[] { reservaSinLocalidadInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Localidad_Inmueble_Vacía), null }, //reserva sin localidad de inmueble
-				new Object[] { reservaSinBarrioInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Barrio_Inmueble_Vacío), null }, //reserva sin Barrio de inmueble
-				new Object[] { reservaSinCalleInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Calle_Inmueble_Vacía), null }, //reserva sin calle de inmueble
-				new Object[] { reservaSinAlturaInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Altura_Inmueble_Vacía), null }, //reserva sin altura de calle de inmueble
-				new Object[] { reservaSinFechaInicio, new ResultadoCrearReserva(null, ErrorCrearReserva.FechaInicio_vacía), null }, //reserva sin fecha de inicio vacía
-				new Object[] { reservaSinFechaFin, new ResultadoCrearReserva(null, ErrorCrearReserva.FechaFin_vacía), null }, //reserva sin fecha de fin vacía
-				new Object[] { reservaFechaInicioPosteriorAFechaFin, new ResultadoCrearReserva(null, ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin), null }, //reserva con fecha inicio posterior a fecha fin
-				new Object[] { reservaConflictiva, new ResultadoCrearReserva(reservaConflictiva, ErrorCrearReserva.Existe_Otra_Reserva_Activa), null }, //existe otra reserva en el mismo rango de fechas
-				new Object[] { reservaSinImporte, new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Vacío), null }, //reserva sin Importe
-				new Object[] { reservaImporteMenorIgualCero, new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Menor_O_Igual_A_Cero), null }, //reserva con importe menor o igual a cero
-				new Object[] { reservaInmuebleVendido, new ResultadoCrearReserva(null, ErrorCrearReserva.Inmueble_Vendido), null }, //reserva con inmueble vendido
-				new Object[] { reservaCorrecta, null, new GenerarPDFException(new Exception()) }, //el gestorPDF tira una excepción
-				new Object[] { reservaCorrecta, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una excepción
-				new Object[] { reservaCorrecta, null, new Exception() } //el persistidor tira una excepción inesperada
+				//Casos de prueba
+				//reserva, resultado, excepcion
+				/* 0 */new Object[] { reservaCorrecta, new ResultadoCrearReserva(null), null }, //reserva correcta
+				/* 1 */new Object[] { reservaSinCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Cliente_Vacío), null }, //reserva sin cliente
+				/* 2 */new Object[] { reservaSinNombreCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Nombre_Cliente_Vacío), null }, //reserva sin nombre cliente
+				/* 3 */new Object[] { reservaSinApellidoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.Apellido_Cliente_Vacío), null }, //reserva sin apellido cliente
+				/* 4 */new Object[] { reservaSinTipoDocumentoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.TipoDocumento_Cliente_Vacío), null }, //reserva sin tipo documento en el cliente
+				/* 5 */new Object[] { reservaSinNumeroDocumentoCliente, new ResultadoCrearReserva(null, ErrorCrearReserva.NúmeroDocumento_Cliente_Vacío), null }, //reserva sin numero de documento en el cliente
+				/* 6 */new Object[] { reservaSinInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Inmueble_Vacío), null }, //reserva sin inmueble
+				/* 7 */new Object[] { reservaSinPropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Propietario_Vacío), null }, //reserva sin Propietario
+				/* 8 */new Object[] { reservaSinNombrePropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Nombre_Propietario_Vacío), null }, //reserva sin nombre de Propietario
+				/* 9 */new Object[] { reservaSinApellidoPropietario, new ResultadoCrearReserva(null, ErrorCrearReserva.Apellido_Propietario_Vacío), null }, //reserva sin apellido de Propietario
+				/* 10 */new Object[] { reservaSinTipoInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Tipo_Inmueble_Vacío), null }, //reserva sin tipo de Inmueble
+				/* 11 */new Object[] { reservaSinDireccionInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Dirección_Inmueble_Vacía), null }, //reserva sin direccion de inmueble
+				/* 12 */new Object[] { reservaSinLocalidadInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Localidad_Inmueble_Vacía), null }, //reserva sin localidad de inmueble
+				/* 13 */new Object[] { reservaSinBarrioInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Barrio_Inmueble_Vacío), null }, //reserva sin Barrio de inmueble
+				/* 14 */new Object[] { reservaSinCalleInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Calle_Inmueble_Vacía), null }, //reserva sin calle de inmueble
+				/* 15 */new Object[] { reservaSinAlturaInmueble, new ResultadoCrearReserva(null, ErrorCrearReserva.Altura_Inmueble_Vacía), null }, //reserva sin altura de calle de inmueble
+				/* 16 */new Object[] { reservaSinFechaInicio, new ResultadoCrearReserva(null, ErrorCrearReserva.FechaInicio_vacía), null }, //reserva sin fecha de inicio vacía
+				/* 17 */new Object[] { reservaSinFechaFin, new ResultadoCrearReserva(null, ErrorCrearReserva.FechaFin_vacía), null }, //reserva sin fecha de fin vacía
+				/* 18 */new Object[] { reservaFechaInicioPosteriorAFechaFin, new ResultadoCrearReserva(null, ErrorCrearReserva.Fecha_Inicio_Posterior_A_Fecha_Fin), null }, //reserva con fecha inicio posterior a fecha fin
+				/* 19 */new Object[] { reservaConflictiva, new ResultadoCrearReserva(reservaConflictiva, ErrorCrearReserva.Existe_Otra_Reserva_Activa), null }, //existe otra reserva en el mismo rango de fechas
+				/* 20 */new Object[] { reservaSinImporte, new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Vacío), null }, //reserva sin Importe
+				/* 21 */new Object[] { reservaImporteMenorIgualCero, new ResultadoCrearReserva(null, ErrorCrearReserva.Importe_Menor_O_Igual_A_Cero), null }, //reserva con importe menor o igual a cero
+				/* 22 */new Object[] { reservaInmuebleVendido, new ResultadoCrearReserva(null, ErrorCrearReserva.Inmueble_Vendido), null }, //reserva con inmueble vendido
+				/* 23 */new Object[] { reservaCorrecta, null, new GenerarPDFException(new Exception()) }, //el gestorPDF tira una excepción
+				/* 24 */new Object[] { reservaCorrecta, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una excepción
+				/* 25 */new Object[] { reservaCorrecta, null, new Exception() } //el persistidor tira una excepción inesperada
 		};
 	}
 
-	@Test
-	@Parameters
 	/**
-	 * Prueba el método eliminarReserva(), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
+	 * Prueba el método crearReserva(), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
 	 *
-	 * @param Reserva
-	 *            reserva a eliminar
+	 * @param reserva
+	 *            reserva a crear
 	 * @param resultado
 	 *            resultado que se espera que devuelva el gestor
 	 * @param excepcion
-	 *            es la excepcion que debe lanzar el mock del persistidor, si la prueba involucra procesar una excepcion de dicho persistidor, debe ser nulo propietario para que
+	 *            es la excepcion que debe lanzar el mock del persistidor o del gestorPDF, si la prueba involucra procesar una excepcion de dicho persistidor/gestor, debe ser nulo propietario para que
 	 *            se use
 	 * @throws Exception
 	 */
-	public void testEliminarReserva(Reserva Reserva, ResultadoEliminarReserva resultado, Throwable excepcion) throws Exception {
+	@Test
+	@Parameters
+	public void testCrearReserva(Reserva reserva, ResultadoCrearReserva resultado, Throwable excepcion) throws Exception {
+		//Se crean los mocks de la prueba
 		GestorDatos gestorDatosMock = new GestorDatos() {
 
 			@Override
@@ -634,15 +527,27 @@ public class GestorReservaTest {
 				return new ArrayList<>();
 			}
 		};
+		GestorPDF gestorPDFMock = new GestorPDF() {
+
+			@Override
+			public PDF generarPDF(Reserva reserva) throws GestionException {
+				if(excepcion != null && excepcion instanceof GestionException){
+					throw (GestionException) excepcion;
+				}
+				return new PDF();
+			}
+		};
+		GestorEmail gestorEmailMock = new GestorEmail(true) {
+			@Override
+			public void enviarEmail(String destinatario, String asunto, String mensaje, Archivo archivo)
+					throws IOException, MessagingException {
+
+			}
+		};
 		ReservaService persistidorReservaMock = new ReservaService() {
 
 			@Override
 			public void guardarReserva(Reserva reserva) throws PersistenciaException {
-
-			}
-
-			@Override
-			public void modificarReserva(Reserva reserva) throws PersistenciaException {
 				if(excepcion != null){
 					if(excepcion instanceof PersistenciaException){
 						throw (PersistenciaException) excepcion;
@@ -651,6 +556,11 @@ public class GestorReservaTest {
 						new Integer("asd");
 					}
 				}
+			}
+
+			@Override
+			public void modificarReserva(Reserva reserva) throws PersistenciaException {
+
 			}
 
 			@Override
@@ -666,25 +576,30 @@ public class GestorReservaTest {
 			}
 
 		};
+
+		//Se crea el gestor a probar, se sobreescriben algunos métodos para setear los mocks
 		GestorReserva gestorReserva = new GestorReserva() {
 			{
+				this.gestorPDF = gestorPDFMock;
 				this.persistidorReserva = persistidorReservaMock;
 				this.gestorDatos = gestorDatosMock;
+				this.gestorEmail = gestorEmailMock;
 			}
 		};
 
-		//creamos la prueba
+		//Creamos la prueba
 		Statement test = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
 				if(resultado != null){
-					assertEquals(resultado, gestorReserva.eliminarReserva(Reserva));
+					//Se hacen las verificaciones pertinentes para comprobar que el gestor se comporte adecuadamente
+					assertEquals(resultado, gestorReserva.crearReserva(reserva));
 				}
 				else{
 					try{
-						gestorReserva.eliminarReserva(Reserva);
+						gestorReserva.crearReserva(reserva);
 						Assert.fail("Debería haber fallado!");
-					} catch(PersistenciaException e){
+					} catch(PersistenciaException | GestionException e){
 						Assert.assertEquals((excepcion), e);
 					} catch(Exception e){
 						if(excepcion instanceof PersistenciaException){
@@ -759,9 +674,106 @@ public class GestorReservaTest {
 				.setFechaFin(fechahoy);
 
 		return new Object[] {
-				new Object[] { reservaCorrecta, new ResultadoEliminarReserva(), null }, //reserva correcta
-				new Object[] { reservaCorrecta, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una excepción
-				new Object[] { reservaCorrecta, null, new Exception() } //el persistidor tira una excepción inesperada
+				//Casos de prueba
+				//reserva, resultado, excepcion
+				/* 0 */new Object[] { reservaCorrecta, new ResultadoEliminarReserva(), null }, //reserva correcta
+				/* 1 */new Object[] { reservaCorrecta, null, new ObjNotFoundException("", new Exception()) }, //el persistidor tira una excepción
+				/* 2 */new Object[] { reservaCorrecta, null, new Exception() } //el persistidor tira una excepción inesperada
 		};
+	}
+
+	/**
+	 * Prueba el método eliminarReserva(), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
+	 *
+	 * @param reserva
+	 *            reserva a eliminar
+	 * @param resultado
+	 *            resultado que se espera que devuelva el gestor
+	 * @param excepcion
+	 *            es la excepcion que debe lanzar el mock del persistidor, si la prueba involucra procesar una excepcion de dicho persistidor, debe ser nulo propietario para que
+	 *            se use
+	 * @throws Exception
+	 */
+	@Test
+	@Parameters
+	public void testEliminarReserva(Reserva reserva, ResultadoEliminarReserva resultado, Throwable excepcion) throws Exception {
+		//Se crean los mocks de la prueba
+		GestorDatos gestorDatosMock = new GestorDatos() {
+
+			@Override
+			public ArrayList<Estado> obtenerEstados() throws PersistenciaException {
+				return new ArrayList<>();
+			}
+		};
+		ReservaService persistidorReservaMock = new ReservaService() {
+
+			@Override
+			public void guardarReserva(Reserva reserva) throws PersistenciaException {
+
+			}
+
+			@Override
+			public void modificarReserva(Reserva reserva) throws PersistenciaException {
+				if(excepcion != null){
+					if(excepcion instanceof PersistenciaException){
+						throw (PersistenciaException) excepcion;
+					}
+					else if(!(excepcion instanceof GestionException)){
+						new Integer("asd");
+					}
+				}
+			}
+
+			@Override
+			public ArrayList<Reserva> obtenerReservas(Cliente cliente) throws PersistenciaException {
+
+				return null;
+			}
+
+			@Override
+			public ArrayList<Reserva> obtenerReservas(Inmueble inmueble) throws PersistenciaException {
+
+				return null;
+			}
+
+		};
+
+		//Se crea el gestor a probar, se sobreescriben algunos métodos para setear los mocks
+		GestorReserva gestorReserva = new GestorReserva() {
+			{
+				this.persistidorReserva = persistidorReservaMock;
+				this.gestorDatos = gestorDatosMock;
+			}
+		};
+
+		//Creamos la prueba
+		Statement test = new Statement() {
+			@Override
+			public void evaluate() throws Throwable {
+				if(resultado != null){
+					//Se hacen las verificaciones pertinentes para comprobar que el gestor se comporte adecuadamente
+					assertEquals(resultado, gestorReserva.eliminarReserva(reserva));
+				}
+				else{
+					try{
+						gestorReserva.eliminarReserva(reserva);
+						Assert.fail("Debería haber fallado!");
+					} catch(PersistenciaException e){
+						Assert.assertEquals((excepcion), e);
+					} catch(Exception e){
+						if(excepcion instanceof PersistenciaException){
+							Assert.fail("Debería haber tirado una PersistenciaException y tiro otra Exception!");
+						}
+					}
+				}
+			}
+		};
+
+		//Ejecutamos la prueba
+		try{
+			test.evaluate();
+		} catch(Throwable e){
+			throw new Exception(e);
+		}
 	}
 }

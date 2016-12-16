@@ -53,13 +53,13 @@ import app.ui.controladores.LoginController;
 
 public class GestorPDFTest {
 
-	@Test
 	/**
 	 * Prueba el método generarPDF(Reserva reserva), el cual corresponde con la taskcard 25 de la iteración 2 y a la historia 7
 	 * El test es en parte manual ya que genera un archivo pdf que debe comprobarse si es correcto manualmente.
 	 *
 	 * @throws Exception
 	 */
+	@Test
 	public void testGenerarPDFReserva() throws Exception {
 		new ControladorTest(LoginController.URLVista, new LoginController() {
 			@Override

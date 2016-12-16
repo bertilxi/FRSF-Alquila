@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import app.datos.clases.CatalogoVista;
 import app.datos.entidades.PDF;
 import app.excepciones.GestionException;
-import app.excepciones.PersistenciaException;
 import app.logica.resultados.ResultadoCrearCatalogo;
 import app.logica.resultados.ResultadoCrearCatalogo.ErrorCrearCatalogo;
 
@@ -42,9 +41,10 @@ public class GestorCatalogo {
 	/**
 	 * Se encarga de validar los datos de un catalogoVista a crear y, en caso de que no haya errores,
 	 * delegar la generación del archivo pdf al gestorPDF
-	 *	 *
+	 * *
+	 * 
 	 * @param catalogoVista
-	 *           clase con los datos necesarios para generar un catálogo
+	 *            clase con los datos necesarios para generar un catálogo
 	 * @return un resultado informando errores correspondientes en caso de que los haya
 	 *
 	 * @throws GestionException
