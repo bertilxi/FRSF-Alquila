@@ -76,7 +76,7 @@ public class ModificarPropietarioControllerTest {
 	 * @param direccion
 	 * 			dirección  que se introduce por el usuario
 	 * @param resultadoModificarPropietarioEsperado
-	 * 			resultado que se espera que retorne el método a probar
+	 * 			resultado que retornará el mock de capa lógica
 	 * @param llamaAPresentadorVentanasPresentarError
 	 * 			1 si llama al método presentar error del presentador de ventanas, 0 si no
 	 * @param llamaAPresentadorVentanasPresentarExcepcion
