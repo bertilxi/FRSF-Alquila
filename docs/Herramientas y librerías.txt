@@ -1,0 +1,25 @@
+Utilizamos las siguientes herramientas:
+Java como lenguaje de programación.
+Javadoc para la creación de documentación.
+JavaFX el manejo de interfaces, es decir, la capa de presentación.
+SceneBuilder para la creación de interfaces.
+Eclipse o IntelliJ IDEA como IDEs.
+Git para el control de versiones.
+GitHub como servidor git remoto.
+PostgreSQL como base de datos.
+Maven para el manejo de librerías externas.
+StarUML para la creación de diagramas.
+Ms Word para la creación de documentos.
+
+Utilizamos las siguientes librerías:
+Spring Framework para la inyección de dependencias y el manejo de transacciones a la base de datos.
+Hibernate como mapeador objeto-relacional, es decir, la capa de acceso a datos.
+PostgreSQL Driver para conectarse a la base de datos.
+JUnit para la realización de pruebas unitarias.
+Mockito para realizar los mocks de las pruebas.
+JUnitParams para la realización de varios casos de prueba en una sola prueba sólo cambiando los parámetros.
+Apache Commons Validator para realizar validaciones de datos.
+Itext para generar PDFs.
+PDFBox para imprimir PDFs.
+GoogleAPI, GoogleOAuthClient y javax.mail para el envío de correos electrónicos.
+JxBrowser para mostrar PDFs.
