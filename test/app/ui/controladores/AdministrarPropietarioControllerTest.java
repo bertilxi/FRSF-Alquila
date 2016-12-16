@@ -57,6 +57,7 @@ public class AdministrarPropietarioControllerTest {
 	 * @param resultadoLogica
 	 * 			resultado que devuelve la operación de capa lógica
 	 * @param excepcion
+	 * 			excepción que se simula lanzar desde la capa lógica
 	 */
 	public void testEliminarPropietario(Propietario propietario, Boolean acepta, ResultadoControlador resultadoControlador, ResultadoEliminarPropietario resultadoLogica, Throwable excepcion) throws Exception {
 		CoordinadorJavaFX coordinadorMock = new CoordinadorJavaFX() {

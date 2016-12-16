@@ -46,13 +46,18 @@ public class AdministrarClienteControllerTest {
 	@Test
 	@Parameters
 	/**
-	 *
+	 * Test para probar la baja de un cliente en el controlador de administrar clientes
 	 *
 	 * @param cliente
+	 * 			cliente a eliminar
 	 * @param acepta
+	 * 			si usuario acepta confirmación de eliminar
 	 * @param resultadoControlador
+	 * 			resultado que se espera que retorne el método a probar
 	 * @param resultadoLogica
+	 * 			resultado que retornará el mock de la capa lógica
 	 * @param excepcion
+	 * 			excepción que se simula lanzar desde la capa lógica
 	 */
 	public void testEliminarCliente(Cliente cliente, Boolean acepta, ResultadoControlador resultadoControlador, ResultadoEliminarCliente resultadoLogica, Throwable excepcion) throws Exception {
 		CoordinadorJavaFX coordinadorMock = new CoordinadorJavaFX() {
@@ -130,10 +135,11 @@ public class AdministrarClienteControllerTest {
 		Throwable excepcionInesperada = new Exception();
 
 		return new Object[] {
-				new Object[] { cliente, acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario acepta y el cliente se elimina correctamente
-				new Object[] { cliente, !acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario no acepta, pero de haber aceptado, se hubiese eliminado el cliente correctamente
-				new Object[] { cliente, acepta, resultadoControladorErrorPersistencia, null, excepcionPersistencia }, //test donde el controlador tira una excepción de persistencia
-				new Object[] { cliente, acepta, resultadoControladorErrorDesconocido, null, excepcionInesperada } //test donde el controlador tira unaexcepción inesperada
+				//cliente,acepta,resultadoControlador,resultadoLogica,excepcion
+				/*0*/ new Object[] { cliente, acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario acepta y el cliente se elimina correctamente
+				/*1*/ new Object[] { cliente, !acepta, resultadoControladorCorrecto, resultadoLogicaCorrecto, null }, //test donde el usuario no acepta, pero de haber aceptado, se hubiese eliminado el cliente correctamente
+				/*2*/ new Object[] { cliente, acepta, resultadoControladorErrorPersistencia, null, excepcionPersistencia }, //test donde el controlador tira una excepción de persistencia
+				/*3*/ new Object[] { cliente, acepta, resultadoControladorErrorDesconocido, null, excepcionInesperada } //test donde el controlador tira unaexcepción inesperada
 		};
 	}
 }

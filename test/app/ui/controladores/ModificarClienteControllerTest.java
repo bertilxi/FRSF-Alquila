@@ -55,6 +55,33 @@ public class ModificarClienteControllerTest {
 
 	private static Cliente cliente;
 
+	/**
+	 * Test para probar crear un cliente cuando el usuario presiona el botón aceptar
+	 *
+	 * @param nombre
+	 * 			nombre que es introducido por el usuario
+	 * @param apellido
+	 * 			appellido que es introducido por el usuario
+	 * @param tipoDocumento
+	 * 			tipo de documento que es introducido por el usuario
+	 * @param numeroDocumento
+	 * 			número de documento que es introducido por el usuario
+	 * @param telefono
+	 * 			teléfono que es introducido por el usuario
+	 * @param correo
+	 * 			correo que es introducido por el usuario
+	 * @param inmueble
+	 * 			inmueble buscado cargado por el usuario en la pantalla de cargar inmueble buscado
+	 * @param resultadoModificarClienteEsperado
+	 * 			resultado que retornará el mock de capa lógica
+	 * @param llamaAPresentadorVentanasPresentarError
+	 * 			1 si llama al método presentar error del presentador de ventanas, 0 si no
+	 * @param llamaAPresentadorVentanasPresentarExcepcion
+	 * 			1 si llama al método presentar excepción del presentador de ventanas, 0 si no
+	 * @param excepcion
+	 * 			excepción que se simula lanzar desde la capa lógica
+	 * @throws Throwable
+	 */
 	@Test
 	@Parameters
 	public void testModificarCliente(String nombre,
@@ -158,26 +185,27 @@ public class ModificarClienteControllerTest {
 		TipoDocumento doc = new TipoDocumento(TipoDocumentoStr.DNI);
 		InmuebleBuscado inm = new InmuebleBuscado(null, 1000000.00, 10.0, 10, 1, 1, true, true, false, false, true, true, true, true, true, true, false);
 		return new Object[] {
+				//nombre,apellido,tipoDocumento,numeroDocumento,telefono,correo,inmueble,resultadoModificarClienteEsperado,llamaAPresentadorVentanasPresentarError,llamaAPresentadorVentanasPresentarExcepcion,excepcion
 				//prueba correcta
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCorrecto, 0, 0, null },
+				/*0*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCorrecto, 0, 0, null },
 				//prueba nombre incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarNombreIncorrecto, 1, 0, null },
+				/*1*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarNombreIncorrecto, 1, 0, null },
 				//prueba apellido incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarApellidoIncorrecto, 1, 0, null },
+				/*2*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarApellidoIncorrecto, 1, 0, null },
 				//prueba documento incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarDocumentoIncorrecto, 1, 0, null },
+				/*3*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarDocumentoIncorrecto, 1, 0, null },
 				//prueba teléfono incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarTelefonoIncorrecto, 1, 0, null },
+				/*4*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarTelefonoIncorrecto, 1, 0, null },
 				//prueba correo incorrecto
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarCorreoIncorrecto, 1, 0, null },
+				/*5*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarCorreoIncorrecto, 1, 0, null },
 				//prueba ya existe cliente
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarYaExiste, 1, 0, null },
+				/*6*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoModificarYaExiste, 1, 0, null },
 				//prueba ya existe cliente
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, new ResultadoModificarCliente(ErrorModificarCliente.Formato_Nombre_Incorrecto, ErrorModificarCliente.Formato_Apellido_Incorrecto), 1, 0, null },
+				/*7*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, new ResultadoModificarCliente(ErrorModificarCliente.Formato_Nombre_Incorrecto, ErrorModificarCliente.Formato_Apellido_Incorrecto), 1, 0, null },
 				//prueba nombre vacio
-				new Object[] { "", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, null, 1, 0, null },
+				/*8*/ new Object[] { "", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, null, 1, 0, null },
 				//prueba PersistenciaException
-				new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCorrecto, 0, 1, new SaveUpdateException(new Throwable()) }
+				/*9*/ new Object[] { "Juan", "Perez", doc, "12345678", "123-123", "asdf@asf.com", inm, resultadoCorrecto, 0, 1, new SaveUpdateException(new Throwable()) }
 
 		};
 	}
